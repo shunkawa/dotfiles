@@ -1,0 +1,99 @@
+#!/bin/bash
+divider================================================
+divider=$divider$divider
+header="\n %-10s %7s\n"
+format=" %-10s %8s\n"
+width=45
+names=("ABC Classic FM"
+       "ABC News Radio"
+       "ABC Radio National"
+       "triple j"
+       "triple j Unearthed"
+       "891 ABC Adelaide"
+       "612 ABC Brisbane"
+       "666 ABC Canberra"
+       "105.7 ABC Darwin"
+       "936 ABC Hobart"
+       "774 ABC Melbourne"
+       "1233 ABC Newcastle"
+       "720 ABC Perth"
+       "702 ABC Sydney"
+       "ABC Coast FM"
+       "ABC Dig Music"
+       "ABC Jazz"
+       "ABC Country"
+       "ABC Extra"
+       "Special ABC Radio Stream One"
+       "Special ABC Radio Stream Two"
+       "Special ABC Radio Stream Three"
+       "Sleepbot Environmental Broadcast"
+       "Three D Radio")
+stations=("http://shoutmedia.abc.net.au:10322/"
+          "http://shoutmedia.abc.net.au:10324/"
+          "http://shoutmedia.abc.net.au:10320/"
+          "http://shoutmedia.abc.net.au:10326/"
+          "http://shoutmedia.abc.net.au:10364/"
+          "http://shoutmedia.abc.net.au:10352/"
+          "http://shoutmedia.abc.net.au:10346/"
+          "http://shoutmedia.abc.net.au:10354/"
+          "http://shoutmedia.abc.net.au:10360/"
+          "http://shoutmedia.abc.net.au:10358/"
+          "http://shoutmedia.abc.net.au:10350/"
+          "http://shoutmedia.abc.net.au:10356/"
+          "http://shoutmedia.abc.net.au:10348/"
+          "http://shoutmedia.abc.net.au:10336/"
+          "http://shoutmedia.abc.net.au:10334/"
+          "http://shoutmedia.abc.net.au:10328/"
+          "http://shoutmedia.abc.net.au:10330/"
+          "http://shoutmedia.abc.net.au:10332/"
+          "http://shoutmedia.abc.net.au:10366/"
+          "http://shoutmedia.abc.net.au:10338/"
+          "http://shoutmedia.abc.net.au:10340/"
+          "http://shoutmedia.abc.net.au:10368/"
+          "http://alpha.newerastreaming.com:8096"
+          "http://public-radio1.internode.on.net:8002/137")
+
+printf "$header" "#" "Channel"
+printf "%$width.${width}s\n" "$divider"
+printf "$format" \
+       00 "ABC Classic FM" \
+       01 "ABC News Radio" \
+       02 "ABC Radio National" \
+       03 "triple j" \
+       04 "triple j Unearthed" \
+       05 "891 ABC Adelaide" \
+       06 "612 ABC Brisbane" \
+       07 "666 ABC Canberra" \
+       08 "105.7 ABC Darwin" \
+       09 "936 ABC Hobart" \
+       10 "774 ABC Melbourne" \
+       11 "1233 ABC Newcastle" \
+       12 "720 ABC Perth" \
+       13 "702 ABC Sydney" \
+       14 "ABC Coast FM" \
+       15 "ABC Dig Music" \
+       16 "ABC Jazz" \
+       17 "ABC Country" \
+       18 "ABC Extra" \
+       19 "Special ABC Radio Stream One" \
+       20 "Special ABC Radio Stream Two" \
+       21 "Special ABC Radio Stream Three" \
+       22 "Sleepbot Environmental Broadcast" \
+       23 "Three D Radio"
+echo -e
+read -p "Please select a station (00-23): " i
+
+if [ "$i" -eq "$i" ] 2>/dev/null; then
+  if [ $i -le 24 ] && [ $i -ge 0 ]; then
+      echo -e "Okay, let's listen to ${names[$(echo $i | sed 's/^0*//')]}! \n"
+      mpv ${stations[$(echo $i | sed 's/^0*//')]}
+  else
+    echo -e
+    echo -e "r u having a giggle m8?\n"
+    exit 1
+  fi
+else
+  echo -e
+  echo -e "Fine, be that way.\n"
+  exit 1
+fi

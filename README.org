@@ -1,0 +1,5 @@
+#+title: ~/.config/dotfiles
+
+#+begin_src screen
+cd ~/.config/dotfiles/src && for i in *; do stow -v $i -t ~/ -R; done
+#+end_src

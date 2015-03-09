@@ -1,0 +1,8 @@
+#!/bin/bash
+
+PKGDEST="/home/eqyiel/build/repo" \
+       PACKAGER="Ruben Maher <r@rkm.id.au>" \
+       makepkg -srf --sign --key 3311FA17
+
+# repo-add rkm.db.tar.gz package.pkg.tar.xz
+# rsync -avhP ~/build/repo root-sakura:/srv/http/repo.rkm.id.au/

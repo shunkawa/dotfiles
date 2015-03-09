@@ -1,0 +1,1 @@
+/usr/bin/jackd -t 200 -R -T -d alsa -n 2 -r 44100 -p 512 -d hw:USB,0

@@ -1,0 +1,64 @@
+#!/bin/bash
+
+usage() {
+  cat <<EOF
+Usage: rbackup /run/media/eqyiel/Hama3
+  DON'T use a forward slash at the end!
+
+EOF
+  exit 0
+}
+
+go() {
+  echo Syncing to "$1 ..."
+  sudo -s <<EOF
+# save a list of all the packages installed from arch repos
+pacman -Qqn | tee /etc/pacman.d/arch-packages > /dev/null
+# same, but from the aur
+pacman -Qqm | tee /etc/pacman.d/aur-packages > /dev/null
+rsync -avhP \
+  --delete-after \
+  --include="/etc" \
+  --include="/home" \
+  --include="/boot" \
+  --include="/srv" \
+  --exclude="/home/eqyiel/media" \
+  --exclude="/home/lost+found" \
+  --exclude="/bin" \
+  --exclude="/dev" \
+  --exclude="/lib" \
+  --exclude="/lib64" \
+  --exclude="/lost+found/" \
+  --exclude="/media" \
+  --exclude="/mnt" \
+  --exclude="/opt" \
+  --exclude="/proc" \
+  --exclude="/root" \
+  --exclude="/run" \
+  --exclude="/sbin" \
+  --exclude="/srv" \
+  --exclude="/sys" \
+  --exclude="/tmp" \
+  --exclude="/usr" \
+  --exclude="/var" \
+  / "$1"
+EOF
+  echo Syncing to "$1/home/eqyiel ..."
+  # don't run this one as root
+  rsync -avhP \
+        --delete-after -e "ssh -i $HOME/.ssh/id_ecdsa" \
+        --exclude="eqyiel@hoshijiro:/media/Remi/media/music/lib/dummy" \
+        eqyiel@hoshijiro:/media/Remi/media \
+        "$1/home/eqyiel"
+}
+
+if [[ -z "$1" ]]; then
+    echo "Must provide a destination!  See -h or --help for assistance."
+    exit 1
+else
+  if [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]]; then
+      usage
+  else
+    go "$1"
+  fi
+fi

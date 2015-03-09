@@ -1,0 +1,93 @@
+#!/bin/bash
+# Back up files from eigenlicht and eigengrau.
+
+mountpoint ~/media &> /dev/null
+MOUNTED_P=$?
+
+if [ $MOUNTED_P -ne 0 ]; then
+  echo "Mount ~/media first, dummy! （╯°□°）╯︵ ┻━┻"
+  exit 1;
+fi
+
+echo "OK, backing up from eigenlicht."
+BACKUPDIR=eigenlicht-$(date +"%Y-%m-%d")
+ssh root-eigenlicht /bin/bash <<EOF
+mkdir "$BACKUPDIR"
+cd "$BACKUPDIR"
+echo -ne "Saving a list of installed packages ...\r"
+pacman -Qqn | tee /etc/pacman.d/arch-packages > /dev/null
+pacman -Qqm | tee /etc/pacman.d/aur-packages > /dev/null
+echo "Saving a list of installed packages ... OK!"
+echo -ne "Backing up SQL databases ...\r"
+mysqldump --lock-tables -h localhost -u root -p"t_k2oW70RBWzrf_0" \
+  blog > blog-$(date +"%Y-%m-%d").sqlbackup
+mysqldump --lock-tables -h localhost -u root -p"t_k2oW70RBWzrf_0" \
+  piwik > piwik-$(date +"%Y-%m-%d").sqlbackup
+mysqldump --lock-tables -h localhost -u root -p"t_k2oW70RBWzrf_0" \
+  postfix_db > postfix_db-$(date +"%Y-%m-%d").sqlbackup
+mysqldump --lock-tables -h localhost -u root -p"t_k2oW70RBWzrf_0" \
+  roundcube_db > roundcube_db-$(date +"%Y-%m-%d").sqlbackup
+echo "Backing up SQL databases ... OK!"
+echo -ne "Backing up /etc ...\r"
+rsync -avhq /etc ./
+echo "Backing up /etc ... OK!"
+echo -ne "Backing up /home ...\r"
+rsync -avhq /home ./
+echo "Backing up /home ... OK!"
+echo -ne "Backing up /var/lib/znc ...\r"
+rsync -avhq --exclude="users" /var/lib/znc ./
+echo "Backing up /var/lib/znc ... OK!"
+echo -ne "Backing up /srv ...\r"
+rsync -avhq /srv ./
+echo "Backing up /srv ... OK!"
+echo -ne "Backing up /usr/share/webapps ...\r"
+rsync -avhq /usr/share/webapps ./
+echo "Backing up /usr/share/webapps ... OK!"
+cd ..
+echo -ne "Compressing ...\r"
+tar -cvf "$BACKUPDIR.tar" "$BACKUPDIR" &> /dev/null
+echo "Compressing ... OK!"
+rm -rf "$BACKUPDIR"
+chown eqyiel:users "$BACKUPDIR.tar"
+mv "$BACKUPDIR.tar" /home/eqyiel
+EOF
+
+echo "Saving to ~/media/archives ..."
+rsync -avhP --remove-source-files eigenlicht:"$BACKUPDIR.tar" ~/media/archives
+
+echo "OK, backing up from eigengrau."
+BACKUPDIR=eigengrau-$(date +"%Y-%m-%d")
+ssh root-eigengrau /bin/bash <<EOF
+mkdir "$BACKUPDIR"
+cd "$BACKUPDIR"
+echo -ne "Saving a list of installed packages ...\r"
+pacman -Qqn | tee /etc/pacman.d/arch-packages > /dev/null
+pacman -Qqm | tee /etc/pacman.d/aur-packages > /dev/null
+echo "Saving a list of installed packages ... OK!"
+echo -ne "Backing up SQL databases ...\r"
+mysqldump --lock-tables -h localhost -u root -p"{G1IQ(Z[ram=)3Em" \
+  owncloud_db > owncloud_db-$(date +"%Y-%m-%d").sqlbackup
+echo "Backing up SQL databases ... OK!"
+echo -ne "Backing up /etc ...\r"
+rsync -avhq /etc ./
+echo "Backing up /etc ... OK!"
+echo -ne "Backing up /home ...\r"
+rsync -avhq /home ./
+echo "Backing up /home ... OK!"
+echo -ne "Backing up /srv ...\r"
+rsync -avhq /srv ./
+echo "Backing up /srv ... OK!"
+echo -ne "Backing up /usr/share/webapps ...\r"
+rsync -avhq /usr/share/webapps ./
+echo "Backing up /usr/share/webapps ... OK!"
+cd ..
+echo -ne "Compressing ...\r"
+tar -cvf "$BACKUPDIR.tar" "$BACKUPDIR" &> /dev/null
+echo "Compressing ... OK!"
+rm -rf "$BACKUPDIR"
+chown eqyiel:users "$BACKUPDIR.tar"
+mv "$BACKUPDIR.tar" /home/eqyiel
+EOF
+
+echo "Saving to ~/media/archives ..."
+rsync -avhP --remove-source-files eigengrau:"$BACKUPDIR.tar" ~/media/archives

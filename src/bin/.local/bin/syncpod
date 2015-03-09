@@ -1,0 +1,23 @@
+#!/bin/bash
+
+if [[ -d /run/media/eqyiel/iPodClassic ]]; then
+  cd /run/media/eqyiel/iPodClassic
+  scrobblethis /run/media/eqyiel/iPodClassic/.scrobbler.log
+  echo "Getting latest Rockbox build..."
+  curl -O http://build.rockbox.org/data/rockbox-ipod6g.zip
+  rm -rf /run/media/eqyiel/iPodClassic/.rockbox
+  echo "Unpacking..."
+  unzip rockbox-ipod6g.zip
+  rm rockbox-ipod6g.zip
+  echo "Grabbing font pack..."
+  curl -O http://download.rockbox.org/release/3.13/rockbox-fonts-3.13.zip
+  unzip -o rockbox-fonts-3.13.zip
+  rm rockbox-fonts-3.13.zip
+  echo "font: /.rockbox/fonts/16-GNU-Unifont.fnt" >> .rockbox/config.cfg
+  echo "Last.fm logging: on" >> .rockbox/config.cfg
+  rsync --ignore-times --size-only --delete-before -avP \
+        ~/media/music/lib/flac/ \
+        /run/media/eqyiel/iPodClassic/Music/
+else
+  echo "Not mounted!"
+fi

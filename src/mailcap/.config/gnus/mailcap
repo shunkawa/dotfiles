@@ -1,0 +1,36 @@
+# This file tells those programs that support it (mutt et alii) what other
+# programs to use to view files with certain MIME types.  A description of what
+# this file may contain can be found in RFC 1524 or, for a more
+# beginner-friendly overview, section 5.3 or thereabouts of the mutt manual.
+
+# MIME types that appear twice have two different entries: one for viewing the
+# file in a separate application and one (marked with "copiousoutput") for
+# transforming the file into text that can be viewed from within the original
+# program.
+
+# this example from http://sdf.org/tutorials/dotfiles/.mailcap_jwodder
+
+# text/html; lynx -force_html %s; nametemplate=%s.html
+# text/html; lynx -force_html -dump %s; copiousoutput; nametemplate=%s.html
+# text/richtext; richtext %s | $PAGER -fr; needsterminal
+# There's a reason why I bothered to include this next line, but I forgot it.
+# text/*; $PAGER
+# application/html; lynx %s; nametemplate=%s.html
+# application/html; lynx -dump %s; copiousoutput; nametemplate=%s.html
+# application/postscript; ps2ascii %s; copiousoutput
+# application/pdf; ps2ascii %s; copiousoutput; nametemplate=%s.pdf
+# Recent versions of Vim come with a plugin for viewing the contents of
+# tarballs:
+# application/x-tar-gz; vim %s; needsterminal
+# application/x-tar-gz; gunzip -c %s | tar tf -; copiousoutput
+# application/x-gunzip; gzcat; copiousoutput
+# application/x-gzip; gzcat; copiousoutput
+# application/msword; catdoc %s; copiousoutput
+# application/x-tex; $PAGER
+# application/xml; $PAGER
+# application/pgp-signature; $PAGER
+
+# image/*; /usr/bin/sxiv %s
+application/pdf; /usr/bin/evince %s
+application/octet-stream; /usr/bin/evince %s
+# application/msword; tmux new-window -t 0: antiword %s; copiousoutput

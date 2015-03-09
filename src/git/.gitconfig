@@ -1,0 +1,12 @@
+[user]
+        email = r@rkm.id.au
+        name = Ruben Maher
+[core]
+        editor = emacs
+	excludesfile = /home/eqyiel/.gitignore_global
+[merge]
+        tool = emerge
+[color]
+	ui = true
+[push]
+	default = current

@@ -1,0 +1,4 @@
+#!/bin/bash
+activeWinLine=$(xprop -root | grep "_NET_ACTIVE_WINDOW(WINDOW)")
+activeWinId=${activeWinLine:40}
+import -window "$activeWinId" "$XDG_PICTURES_DIR/$(date +%Y-%m-%d-%H%M%S).png"

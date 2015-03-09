@@ -1,0 +1,9 @@
+# ~/.gitignore_global
+*.class
+*.elc
+*.pdf
+*.aux
+*.toc
+*.dvi
+*.log
+*.xmi
