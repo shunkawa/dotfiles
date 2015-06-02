@@ -19,9 +19,12 @@ pacman -Qqm | tee /etc/pacman.d/aur-packages > /dev/null
 rsync -avhP \
   --delete-after \
   --include="/etc" \
-  --include="/home" \
   --include="/boot" \
   --include="/srv" \
+  --include="/var" \
+  --include="/root" \
+  --include="/opt" \
+  --include="/home" \
   --exclude="/home/eqyiel/media" \
   --exclude="/home/lost+found" \
   --exclude="/bin" \
@@ -31,16 +34,12 @@ rsync -avhP \
   --exclude="/lost+found/" \
   --exclude="/media" \
   --exclude="/mnt" \
-  --exclude="/opt" \
   --exclude="/proc" \
-  --exclude="/root" \
   --exclude="/run" \
   --exclude="/sbin" \
-  --exclude="/srv" \
   --exclude="/sys" \
   --exclude="/tmp" \
   --exclude="/usr" \
-  --exclude="/var" \
   / "$1"
 EOF
   echo Syncing to "$1/home/eqyiel ..."

@@ -1,11 +1,16 @@
 #!/bin/bash
 
-if [[ -d /run/media/eqyiel/iPodClassic ]]; then
-  cd /run/media/eqyiel/iPodClassic
-  scrobblethis /run/media/eqyiel/iPodClassic/.scrobbler.log
+topics=("comp2781" "comp3712" "comp3752" "comp3771")
+semester="s1"
+year=2015
+path="/run/media/eqyiel/iPodClassic"
+
+if [[ -d "${path}" ]]; then
+  cd "${path}"
+  scrobblethis "${path}"/.scrobbler.log
   echo "Getting latest Rockbox build..."
   curl -O http://build.rockbox.org/data/rockbox-ipod6g.zip
-  rm -rf /run/media/eqyiel/iPodClassic/.rockbox
+  rm -rf "${path}"/.rockbox
   echo "Unpacking..."
   unzip rockbox-ipod6g.zip
   rm rockbox-ipod6g.zip
@@ -16,8 +21,17 @@ if [[ -d /run/media/eqyiel/iPodClassic ]]; then
   echo "font: /.rockbox/fonts/16-GNU-Unifont.fnt" >> .rockbox/config.cfg
   echo "Last.fm logging: on" >> .rockbox/config.cfg
   rsync --ignore-times --size-only --delete-before -avP \
-        ~/media/music/lib/flac/ \
-        /run/media/eqyiel/iPodClassic/Music/
+        ~/media/music/lib/transcodes/ \
+        "${path}"/Music/
+  # also sync lecture recordings
+  for i in "${topics[@]}"; do
+    if [[ -d "${path}"/Podcasts/"${i}"_"${semester}"_"${year}" ]]; then
+      mkdir "${path}"/Podcasts/"${i}"_"${semester}"_"${year}"
+    fi
+    rsync --ignore-times --size-only --delete-before -avP \
+      ~/doc/flinders/"${i}"_"${semester}"_"${year}"/pod/ \
+      "${path}"/Podcasts/"${i}"_"${semester}"_"${year}"/
+  done
 else
   echo "Not mounted!"
 fi

@@ -22,7 +22,7 @@
 import os, sys, re, feedparser, urllib.request, time
 from datetime import datetime
 
-topics = ["comp2781", "comp3712", "comp3721", "comp3771", "engr3791"]
+topics = ["comp2781", "comp3712", "comp3752", "comp3771"]
 year = 2015
 semester = "s1"
 destdir = "/home/eqyiel/doc/flinders"  # don't use a trailing forward slash
@@ -73,6 +73,7 @@ def get(items, feedtype):
             req = urllib.request.urlopen(url)
         except urllib.error.HTTPError as e:
             print("%s: %s" % (e, url))
+            continue
         # File doesn't exist, or the file we have on disk is smaller than the
         # Content-Length reported.
         if not os.path.isfile("%s/%s" % (path, filename)):

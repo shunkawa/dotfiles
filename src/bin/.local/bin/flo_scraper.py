@@ -26,7 +26,7 @@ import urllib, getpass, os, re, sys, time
 
 semester = "s1"
 year = "2015"
-filetypes = "pdf|archive|text"  # mime types to look for
+filetypes = "pdf|archive|text|powerpoint"  # mime types to look for
 destdir = "/home/eqyiel/doc/flinders"  # don't use a trailing forward slash
 
 
@@ -105,9 +105,10 @@ def get_file(topic, url):
         filename = get_basename(url)
         if filename == "handouts4.pdf":
             # Mariusz is not very creative about naming the files >___>
-            t = time.strptime(req.info().get("Date"), "%a, %d %b %Y %X %Z")
-            dt = datetime.fromtimestamp(time.mktime(t))
-            filename = dt.strftime("%F_%H-%M-%S") + ".pdf"
+            # t = time.strptime(req.info().get("Date"), "%a, %d %b %Y %X %Z")
+            # dt = datetime.fromtimestamp(time.mktime(t))
+            # filename = dt.strftime("%F_%H-%M-%S") + ".pdf"
+            filename = req.info().get("Etag").strip("\"") + ".pdf"
         fullpath = "%s/%s" % (path, filename)
         if not os.path.isfile(fullpath):
             print("%s: file doesn't exist, downloading!" % filename)

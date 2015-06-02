@@ -59,3 +59,8 @@ export LXVST_PATH=~/media/music/plugins/lxvst
 
 # Arch Build System
 export ABSROOT=~/build/abs
+
+get-images-from-pdf () {
+  gs -dBATCH -dNOPAUSE -sDEVICE=png16m -dGraphicsAlphaBits=4 \
+     -dTextAlphaBits=4 -r150 -sOutputFile=./output%d.png ${1};
+}
