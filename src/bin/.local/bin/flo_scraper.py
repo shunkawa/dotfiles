@@ -24,7 +24,7 @@ from bs4 import BeautifulSoup
 from datetime import datetime
 import urllib, getpass, os, re, sys, time
 
-semester = "s1"
+semester = "s2"
 year = "2015"
 filetypes = "pdf|archive|text|powerpoint"  # mime types to look for
 destdir = "/home/eqyiel/doc/flinders"  # don't use a trailing forward slash

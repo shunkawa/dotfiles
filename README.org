@@ -1,5 +1,7 @@
 #+title: ~/.config/dotfiles
 
-#+begin_src screen
-cd ~/.config/dotfiles/src && for i in *; do stow -v $i -t ~/ -R; done
-#+end_src
+#+begin_example
+$ [[ -d ~/.config ]] || mkdir ~/.config && cd ~/.config
+$ git clone --recursive git@github.com:eqyiel/dotfiles.git && cd dotfiles
+$ ./go.py --stow --all
+#+end_example

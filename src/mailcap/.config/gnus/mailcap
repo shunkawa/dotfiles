@@ -30,7 +30,32 @@
 # application/xml; $PAGER
 # application/pgp-signature; $PAGER
 
-# image/*; /usr/bin/sxiv %s
-application/pdf; /usr/bin/evince %s
-application/octet-stream; /usr/bin/evince %s
-# application/msword; tmux new-window -t 0: antiword %s; copiousoutput
+# image/*; sxiv %s
+application/pdf; evince %s
+application/octet-stream; evince %s
+application/msword; libreoffice %s
+application/msword; libreoffice %s
+application/vnd.openxmlformats-officedocument.wordprocessingml.document; libreoffice %s
+application/vnd.openxmlformats-officedocument.wordprocessingml.template; libreoffice %s
+application/vnd.ms-word.document.macroEnabled.12; libreoffice %s
+application/vnd.ms-word.template.macroEnabled.12; libreoffice %s
+application/vnd.ms-excel; libreoffice %s
+application/vnd.ms-excel; libreoffice %s
+application/vnd.ms-excel; libreoffice %s
+application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; libreoffice %s
+application/vnd.openxmlformats-officedocument.spreadsheetml.template; libreoffice %s
+application/vnd.ms-excel.sheet.macroEnabled.12; libreoffice %s
+application/vnd.ms-excel.template.macroEnabled.12; libreoffice %s
+application/vnd.ms-excel.addin.macroEnabled.12; libreoffice %s
+application/vnd.ms-excel.sheet.binary.macroEnabled.12; libreoffice %s
+application/vnd.ms-powerpoint; libreoffice %s
+application/vnd.ms-powerpoint; libreoffice %s
+application/vnd.ms-powerpoint; libreoffice %s
+application/vnd.ms-powerpoint; libreoffice %s
+application/vnd.openxmlformats-officedocument.presentationml.presentation; libreoffice %s
+application/vnd.openxmlformats-officedocument.presentationml.template; libreoffice %s
+application/vnd.openxmlformats-officedocument.presentationml.slideshow; libreoffice %s
+application/vnd.ms-powerpoint.addin.macroEnabled.12; libreoffice %s
+application/vnd.ms-powerpoint.presentation.macroEnabled.12; libreoffice %s
+application/vnd.ms-powerpoint.presentation.macroEnabled.12; libreoffice %s
+application/vnd.ms-powerpoint.slideshow.macroEnabled.12; libreoffice %s

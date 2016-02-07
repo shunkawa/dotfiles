@@ -1,12 +1,18 @@
 [user]
-        email = r@rkm.id.au
-        name = Ruben Maher
+  email = r@rkm.id.au
+  name = Ruben Maher
+  # signingkey = r@rkm.id.au
 [core]
-        editor = emacs
-	excludesfile = /home/eqyiel/.gitignore_global
+  editor = "emacsclient -c -a=\"\""
+  excludesfile = /home/eqyiel/.gitignore_global
+  autocrlf = false
 [merge]
-        tool = emerge
+  tool = emerge
 [color]
-	ui = true
+  ui = true
 [push]
-	default = current
+  default = current
+[sendemail]
+  smtpuser = r@rkm.id.au
+  smtpserver = /usr/bin/msmtp
+  smtpencryption = ssl

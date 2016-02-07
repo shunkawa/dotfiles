@@ -1,52 +1,43 @@
 #!/bin/bash
 # Back up files from my VPS.
 
-mountpoint ~/media &> /dev/null
-MOUNTED_P=$?
+sudo mountpoint /mnt &> /dev/null
+mounted=$?
+target_dir="/mnt/Remi/media/archives/nabiki"
 
-if [ $MOUNTED_P -ne 0 ]; then
-  echo "Mount ~/media first, dummy! （╯°□°）╯︵ ┻━┻"
+if [ $mounted -ne 0 ]; then
+  echo "Mount backup drive first, dummy! （╯°□°）╯︵ ┻━┻"
   exit 1;
 fi
 
-echo "OK, backing up from sakura."
-ssh root-sakura /bin/bash <<EOF
-echo "Backing up SQL databases ... [blog]"
-mysqldump --lock-tables -h localhost -u root \
-  -p"$(pass ls machines/sakura/root@mysql)" \
-  blog > blog.sqlbackup
+echo "OK, backing up from nabiki."
+ssh root@nabiki.rkm.id.au /bin/bash <<EOF
 echo "Backing up SQL databases ... [postfix_db]"
 mysqldump --lock-tables -h localhost -u root \
-  -p"$(pass ls machines/sakura/root@mysql)" \
+  -p"$(pass ls machines/nabiki/root@mysql)" \
   postfix_db > postfix_db.sqlbackup
 echo "Backing up SQL databases ... [owncloud]"
 mysqldump --lock-tables -h localhost -u root \
-  -p"$(pass ls machines/sakura/root@mysql)" \
+  -p"$(pass ls machines/nabiki/root@mysql)" \
   owncloud > owncloud.sqlbackup
+echo "Backing up SQL databases ... [piwik]"
+mysqldump --lock-tables -h localhost -u root \
+  -p"$(pass ls machines/nabiki/root@mysql)" \
+  piwik > piwik.sqlbackup
 echo "Backing up SQL databases ... done!"
 EOF
-rsync -avhPl \
-  --delete-after \
-  --include="/etc" \
-  --include="/boot" \
-  --include="/srv" \
-  --include="/var" \
-  --include="/root" \
-  --include="/opt" \
-  --include="/home" \
-  --exclude="/home/eqyiel/media" \
-  --exclude="/home/lost+found" \
-  --exclude="/bin" \
-  --exclude="/dev" \
-  --exclude="/lib" \
-  --exclude="/lib64" \
-  --exclude="/lost+found/" \
-  --exclude="/media" \
-  --exclude="/mnt" \
-  --exclude="/proc" \
-  --exclude="/run" \
-  --exclude="/sbin" \
-  --exclude="/sys" \
-  --exclude="/tmp" \
-  --exclude="/usr" \
-  root-sakura:/ ~/media/archives/sakura
+
+sudo test -d "${target_dir}" || sudo mkdir "${target_dir}"
+
+sudo rsync -aAX \
+      --exclude="/dev" \
+      --exclude="/proc" \
+      --exclude="/sys" \
+      --exclude="/tmp" \
+      --exclude="/run" \
+      --exclude="/mnt" \
+      --exclude="/media" \
+      --exclude="/lost+found" \
+      --info=progress2 \
+      --delete-after \
+      root@nabiki.rkm.id.au:/ "${target_dir}"

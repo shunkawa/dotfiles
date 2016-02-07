@@ -16,7 +16,7 @@ go() {
 pacman -Qqn | tee /etc/pacman.d/arch-packages > /dev/null
 # same, but from the aur
 pacman -Qqm | tee /etc/pacman.d/aur-packages > /dev/null
-rsync -avhP \
+rsync -avhlP \
   --delete-after \
   --include="/etc" \
   --include="/boot" \
@@ -43,9 +43,8 @@ rsync -avhP \
   / "$1"
 EOF
   echo Syncing to "$1/home/eqyiel ..."
-  # don't run this one as root
-  rsync -avhP \
-        --delete-after -e "ssh -i $HOME/.ssh/id_ecdsa" \
+  sudo rsync -avhlP \
+        --delete-after -e "ssh -i $HOME/.ssh/id_rsa" \
         --exclude="eqyiel@hoshijiro:/media/Remi/media/music/lib/dummy" \
         eqyiel@hoshijiro:/media/Remi/media \
         "$1/home/eqyiel"

@@ -1,170 +1,193 @@
 # ~/.mbsyncrc
 
-Expunge           both
-Create            Both
-Sync              All
-SyncState         *
+Expunge         Both
+Create          Both
+Sync            All
+SyncState       *
 
 # eqyiel@gmail.com
 
-IMAPAccount       gmail
-Host              imap.gmail.com
-User              eqyiel@gmail.com
-PassCmd           "pass ls mail/eqyiel@gmail.com"
-UseIMAPS          yes
-RequireSSL        yes
-CertificateFile   /etc/ssl/certs/ca-certificates.crt
+IMAPAccount     gmail
+Host            imap.gmail.com
+User            eqyiel@gmail.com
+PassCmd         "pass auth-sources/eqyiel@imap.gmail.com | head -n 1"
+UseIMAPS        yes
+RequireSSL      yes
+UseTLSv1        no
+UseTLSv1.2      yes
+CertificateFile /etc/ssl/certs/ca-certificates.crt
 
-IMAPStore         gmail-remote
-Account           gmail
+IMAPStore       gmail-remote
+Account         gmail
 
-MaildirStore      gmail-local
-Path              ~/mail/gmail.com/
-Inbox             ~/mail/gmail.com/
+MaildirStore    gmail-local
+Path            ~/mail/gmail.com/
+Inbox           ~/mail/gmail.com/
 
-Channel           g_all_mail
-Master            ":gmail-remote:[Gmail]/All Mail"
-Slave             ":gmail-local:New"
+Channel         g_all_mail
+Master          ":gmail-remote:[Gmail]/All Mail"
+Slave           ":gmail-local:New"
 
-Channel           g_sent
-Master            ":gmail-remote:[Gmail]/Sent Mail"
-Slave             ":gmail-local:Sent"
+Channel         g_sent
+Master          ":gmail-remote:[Gmail]/Sent Mail"
+Slave           ":gmail-local:Sent"
 
-Channel           g_bin
-Master            ":gmail-remote:[Gmail]/Bin"
-Slave             ":gmail-local:Bin"
+Channel         g_bin
+Master          ":gmail-remote:[Gmail]/Bin"
+Slave           ":gmail-local:Bin"
 
-Channel           g_spam
-Master            ":gmail-remote:[Gmail]/Spam"
-Slave             ":gmail-local:Spam"
+Channel         g_spam
+Master          ":gmail-remote:[Gmail]/Spam"
+Slave           ":gmail-local:Spam"
 
 # mahe0054@flinders.edu.au
 
-IMAPAccount       flinders
-Host              outlook.office365.com
-User              mahe0054@uni.flinders.edu.au
-PassCmd           "pass ls mail/mahe0054@flinders.edu.au"
-Port              993
-UseIMAPS          yes
-RequireSSL        yes
-CertificateFile   /etc/ssl/certs/ca-certificates.crt
+IMAPAccount     flinders
+Host            outlook.office365.com
+User            mahe0054@uni.flinders.edu.au
+PassCmd         "pass auth-sources/mahe0054@outlook.office365.com | head -n 1"
+Port            993
+UseIMAPS        yes
+RequireSSL      yes
+UseTLSv1        no
+UseTLSv1.2      yes
+CertificateFile /etc/ssl/certs/ca-certificates.crt
 
-IMAPStore         flinders-remote
-Account           flinders
+IMAPStore       flinders-remote
+Account         flinders
 
-MaildirStore      flinders-local
-Path              ~/mail/flinders.edu.au/
-Inbox             ~/mail/flinders.edu.au/
+MaildirStore    flinders-local
+Path            ~/mail/flinders.edu.au/
+Inbox           ~/mail/flinders.edu.au/
 
-Channel           f_inbox
-Master            ":flinders-remote:Inbox"
-Slave             ":flinders-local:New"
+Channel         f_inbox
+Master          ":flinders-remote:Inbox"
+Slave           ":flinders-local:New"
 
-Channel           f_keep
-Master            ":flinders-remote:Keep"
-Slave             ":flinders-local:Keep"
+Channel         f_keep
+Master          ":flinders-remote:Keep"
+Slave           ":flinders-local:Keep"
 
-Channel           f_sent
-Master            ":flinders-remote:Sent Items"
-Slave             ":flinders-local:Sent"
+Channel         f_sent
+Master          ":flinders-remote:Sent Items"
+Slave           ":flinders-local:Sent"
 
-Channel           f_deleted
-Master            ":flinders-remote:Deleted Items"
-Slave             ":flinders-local:Bin"
+Channel         f_deleted
+Master          ":flinders-remote:Deleted Items"
+Slave           ":flinders-local:Bin"
 
-Channel           f_junk
-Master            ":flinders-remote:Junk E-Mail"
-Slave             ":flinders-local:Spam"
+Channel         f_junk
+Master          ":flinders-remote:Junk E-Mail"
+Slave           ":flinders-local:Spam"
 
 # r@rkm.id.au
 
-IMAPAccount       rkm
-Host              rkm.id.au
-User              r@rkm.id.au
-PassCmd           "pass ls mail/r@rkm.id.au"
-Port              993
-UseIMAPS          yes
-RequireSSL        yes
-CertificateFile   /etc/ssl/certs/ca-certificates.crt
+IMAPAccount     rkm
+Host            rkm.id.au
+User            r@rkm.id.au
+PassCmd         "pass auth-sources/r@rkm.id.au | head -n 1"
+port            993
+UseIMAPS        yes
+RequireSSL      yes
+UseTLSv1        no
+UseTLSv1.2      yes
+CertificateFile /etc/ssl/certs/ca-certificates.crt
 
-IMAPStore         rkm-remote
-Account           rkm
+IMAPStore       rkm-remote
+Account         rkm
 
-MaildirStore      rkm-local
-Path              ~/mail/rkm.id.au/
-Inbox             ~/mail/rkm.id.au/
+MaildirStore    rkm-local
+Path            ~/mail/rkm.id.au/
+Inbox           ~/mail/rkm.id.au/
 
-Channel           rkm_inbox
-Master            ":rkm-remote:Inbox"
-Slave             ":rkm-local:New"
+Channel         rkm_inbox
+Master          ":rkm-remote:Inbox"
+Slave           ":rkm-local:New"
 
-Channel           rkm_sent
-Master            ":rkm-remote:Sent"
-Slave             ":rkm-local:Sent"
+Channel         rkm_sent
+Master          ":rkm-remote:Sent"
+Slave           ":rkm-local:Sent"
 
-Channel           rkm_keep
-Master            ":rkm-remote:Keep"
-Slave             ":rkm-local:Keep"
+Channel         rkm_keep
+Master          ":rkm-remote:Keep"
+Slave           ":rkm-local:Keep"
 
-Channel           rkm_rss
-Master            ":rkm-remote:RSS"
-Slave             ":rkm-local:RSS"
+Channel         rkm_rss
+Master          ":rkm-remote:RSS"
+Slave           ":rkm-local:RSS"
 
-Channel           rkm_spam
-Master            ":rkm-remote:Spam"
-Slave             ":rkm-local:Spam"
+Channel         rkm_sms
+Master          ":rkm-remote:SMS"
+Slave           ":rkm-local:SMS"
 
-Channel           rkm_sa-learn
-Master            ":rkm-remote:sa-learn"
-Slave             ":rkm-local:sa-learn"
+Channel         rkm_spam
+Master          ":rkm-remote:Spam"
+Slave           ":rkm-local:Spam"
 
-Channel           rkm_sa-unlearn
-Master            ":rkm-remote:sa-unlearn"
-Slave             ":rkm-local:sa-unlearn"
+Channel         rkm_trash
+Master          ":rkm-remote:Trash"
+Slave           ":rkm-local:Trash"
+
+Channel         rkm_drafts
+Master          ":rkm-remote:Drafts"
+Slave           ":rkm-local:Drafts"
+
+Channel         rkm_sa-learn
+Master          ":rkm-remote:sa-learn"
+Slave           ":rkm-local:sa-learn"
+
+Channel         rkm_sa-unlearn
+Master          ":rkm-remote:sa-unlearn"
+Slave           ":rkm-local:sa-unlearn"
 
 # info@huttriverprovince.com.au
 
-IMAPAccount       hrp
-Host              rkm.id.au
-User              info@huttriverprovince.com.au
-PassCmd           "pass ls mail/info@huttriverprovince.com.au"
-Port              993
-UseIMAPS          yes
-RequireSSL        yes
-CertificateFile   /etc/ssl/certs/ca-certificates.crt
+IMAPAccount     hrp
+Host            rkm.id.au
+User            info@huttriverprovince.com.au
+PassCmd         "pass auth-sources/info@huttriverprovince.com.au | head -n 1"
+Port            993
+UseIMAPS        yes
+RequireSSL      yes
+UseTLSv1        no
+UseTLSv1.2      yes
+CertificateFile /etc/ssl/certs/ca-certificates.crt
 
-IMAPStore         hrp-remote
-Account           hrp
+IMAPStore       hrp-remote
+Account         hrp
 
-MaildirStore      hrp-local
-Path              ~/mail/huttriverprovince.com.au/
-Inbox             ~/mail/huttriverprovince.com.au/
+MaildirStore    hrp-local
+Path            ~/mail/huttriverprovince.com.au/
+Inbox           ~/mail/huttriverprovince.com.au/
 
-Channel           hrp_inbox
-Master            ":hrp-remote:Inbox"
-Slave             ":hrp-local:New"
+Channel         hrp_inbox
+Master          ":hrp-remote:Inbox"
+Slave           ":hrp-local:New"
 
-Channel           hrp_sent
-Master            ":hrp-remote:Sent"
-Slave             ":hrp-local:Sent"
+Channel         hrp_sent
+Master          ":hrp-remote:Sent"
+Slave           ":hrp-local:Sent"
 
-Channel           hrp_trash
-Master            ":hrp-remote:Trash"
-Slave             ":hrp-local:Trash"
+Channel         hrp_trash
+Master          ":hrp-remote:Trash"
+Slave           ":hrp-local:Trash"
 
-Channel           hrp_spam
-Master            ":hrp-remote:Spam"
-Slave             ":hrp-local:Spam"
+Channel         hrp_spam
+Master          ":hrp-remote:Spam"
+Slave           ":hrp-local:Spam"
 
 # eqyiel@internode.on.net
 
-IMAPAccount       internode
-Host              mail.internode.on.net
-User              eqyiel
-PassCmd           "pass ls mail/eqyiel@internode.on.net"
-UseIMAPS          yes
-RequireSSL        yes
-CertificateFile   ~/.config/certs/mail.internode.on.net.crt
+IMAPAccount     internode
+Host            mail.internode.on.net
+User            eqyiel
+PassCmd         "pass auth-sources/eqyiel@mail.internode.on.net | head -n 1"
+UseIMAPS        yes
+RequireSSL      yes
+# Internode doesn't support these.
+# UseTLSv1        no
+# UseTLSv1.2      yes
+CertificateFile /etc/ssl/certs/ca-certificates.crt
 
 IMAPStore       internode-remote
 Account         internode
@@ -192,3 +215,7 @@ Slave           ":internode-local:Spam"
 Channel         internode_trash
 Master          ":internode-remote:Trash"
 Slave           ":internode-local:Bin"
+
+# Local Variables:
+# mode: conf-space
+# End:

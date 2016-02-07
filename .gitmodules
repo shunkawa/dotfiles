@@ -4,3 +4,39 @@
 [submodule "src/lib/.local/lib/gnome-terminal-colors-solarized"]
 	path = src/lib/.local/lib/gnome-terminal-colors-solarized
 	url = https://github.com/Anthony25/gnome-terminal-colors-solarized
+[submodule "src/bin/.local/bin/bash-slugify"]
+	path = src/bin/.local/bin/bash-slugify
+	url = https://github.com/benlinton/bash-slugify
+[submodule "src/lib/.local/lib/bash-slugify"]
+	path = src/lib/.local/lib/bash-slugify
+	url = https://github.com/benlinton/bash-slugify
+[submodule "src/lib/.local/lib/Elementary-OS-Terminal-Colors"]
+	path = src/lib/.local/lib/Elementary-OS-Terminal-Colors
+	url = https://github.com/Mayccoll/Elementary-OS-Terminal-Colors
+[submodule "src/share/.local/share/doc/gitmagic"]
+	path = src/share/.local/share/doc/gitmagic
+	url = git://repo.or.cz/gitmagic.git
+[submodule "src/tmux/.local/share/tmux/tmux-yank"]
+	path = src/tmux/.local/share/tmux/tmux-yank
+	url = https://github.com/tmux-plugins/tmux-yank
+[submodule "src/tmux/.local/share/tmux/tmux-copycat"]
+	path = src/tmux/.local/share/tmux/tmux-copycat
+	url = https://github.com/tmux-plugins/tmux-copycat
+[submodule "src/tmux/.local/share/tmux/tmux-sensible"]
+	path = src/tmux/.local/share/tmux/tmux-sensible
+	url = https://github.com/tmux-plugins/tmux-sensible
+[submodule "src/tmux/.local/share/tmux/tmux-pain-control"]
+	path = src/tmux/.local/share/tmux/tmux-pain-control
+	url = https://github.com/tmux-plugins/tmux-pain-control
+[submodule "src/zsh/.local/share/zsh/zsh-syntax-highlighting"]
+	path = src/zsh/.local/share/zsh/zsh-syntax-highlighting
+	url = git://github.com/zsh-users/zsh-syntax-highlighting.git
+[submodule "src/zsh/.local/share/zsh/zaw"]
+	path = src/zsh/.local/share/zsh/zaw
+	url = https://github.com/zsh-users/zaw
+[submodule "src/zsh/.local/share/zsh/zsh-cdr"]
+	path = src/zsh/.local/share/zsh/zsh-cdr
+	url = https://github.com/willghatch/zsh-cdr
+[submodule "src/zsh/.local/share/zsh/zsh-notify"]
+	path = src/zsh/.local/share/zsh/zsh-notify
+	url = https://github.com/marzocchi/zsh-notify

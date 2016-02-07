@@ -22,9 +22,9 @@
 import os, sys, re, feedparser, urllib.request, time
 from datetime import datetime
 
-topics = ["comp2781", "comp3712", "comp3752", "comp3771"]
+topics = ["comp3742"]
 year = 2015
-semester = "s1"
+semester = "s2"
 destdir = "/home/eqyiel/doc/flinders"  # don't use a trailing forward slash
 
 

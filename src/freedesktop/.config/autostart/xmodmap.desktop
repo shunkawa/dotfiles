@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Exec=/usr/bin/xmodmap /home/eqyiel/.Xmodmap
+Hidden=false
+NoDisplay=true
+X-GNOME-Autostart-enabled=true
+Name=Xmodmap

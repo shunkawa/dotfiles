@@ -24,14 +24,14 @@ if [[ -d "${path}" ]]; then
         ~/media/music/lib/transcodes/ \
         "${path}"/Music/
   # also sync lecture recordings
-  for i in "${topics[@]}"; do
-    if [[ -d "${path}"/Podcasts/"${i}"_"${semester}"_"${year}" ]]; then
-      mkdir "${path}"/Podcasts/"${i}"_"${semester}"_"${year}"
-    fi
-    rsync --ignore-times --size-only --delete-before -avP \
-      ~/doc/flinders/"${i}"_"${semester}"_"${year}"/pod/ \
-      "${path}"/Podcasts/"${i}"_"${semester}"_"${year}"/
-  done
+  # for i in "${topics[@]}"; do
+  #   if [[ -d "${path}"/Podcasts/"${i}"_"${semester}"_"${year}" ]]; then
+  #     mkdir -p "${path}"/Podcasts/"${i}"_"${semester}"_"${year}"
+  #   fi
+  #   rsync --ignore-times --size-only --delete-before -avP \
+  #     ~/doc/flinders/"${i}"_"${semester}"_"${year}"/pod/ \
+  #     "${path}"/Podcasts/"${i}"_"${semester}"_"${year}"/
+  # done
 else
   echo "Not mounted!"
 fi

@@ -1,0 +1,3 @@
+#!/bin/bash
+
+ssh nabiki-initramfs "echo -ne \"$(pass ls machines/nabiki/cryptsetup | head -n 1)\" >/lib/cryptsetup/passfifo"

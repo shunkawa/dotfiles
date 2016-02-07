@@ -1,4 +1,4 @@
-! ~/.Xmodmap -*- mode: conf-unix; -*-
+! ~/.Xmodmap
 
 ! get current mappings: xmodmap -pke
 ! get current modifier table: xmodmap -pm
@@ -11,7 +11,7 @@ clear mod3
 clear mod4
 clear mod5
 keycode 66 = Hyper_L
-keycode 135 = Hyper_R
+keycode 135 = Multi_key
 keycode 204 = NoSymbol
 keycode 205 = NoSymbol
 keycode 206 = NoSymbol
@@ -22,3 +22,7 @@ add mod2 = Num_Lock
 add mod3 = Hyper_L Hyper_R
 add mod4 = Super_L Super_R
 add mod5 = ISO_Level3_Shift Mode_switch
+
+! Local Variables:
+! mode: conf-unix
+! End:
