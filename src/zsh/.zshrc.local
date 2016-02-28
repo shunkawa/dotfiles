@@ -38,6 +38,10 @@ HISTFILE=~/.zsh_history
 HISTSIZE=1000000
 SAVEHIST=1000000
 
+if [[ -z $(pgrep gpg-agent) ]]; then
+  eval $(gpg-agent --daemon --enable-ssh-support --sh)
+fi
+
 # Set dircolors for ls
 d=${HOME}/.local/lib/dircolors-solarized/dircolors.ansi-light
 test -r $d && eval "$(dircolors $d)"
