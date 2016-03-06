@@ -1,0 +1,1 @@
+../../lib/grml-etc-core/etc/zsh/zshrc

@@ -4,12 +4,6 @@
 [submodule "src/lib/.local/lib/gnome-terminal-colors-solarized"]
 	path = src/lib/.local/lib/gnome-terminal-colors-solarized
 	url = https://github.com/Anthony25/gnome-terminal-colors-solarized
-[submodule "src/bin/.local/bin/bash-slugify"]
-	path = src/bin/.local/bin/bash-slugify
-	url = https://github.com/benlinton/bash-slugify
-[submodule "src/lib/.local/lib/bash-slugify"]
-	path = src/lib/.local/lib/bash-slugify
-	url = https://github.com/benlinton/bash-slugify
 [submodule "src/lib/.local/lib/Elementary-OS-Terminal-Colors"]
 	path = src/lib/.local/lib/Elementary-OS-Terminal-Colors
 	url = https://github.com/Mayccoll/Elementary-OS-Terminal-Colors
@@ -40,3 +34,6 @@
 [submodule "src/zsh/.local/share/zsh/zsh-notify"]
 	path = src/zsh/.local/share/zsh/zsh-notify
 	url = https://github.com/marzocchi/zsh-notify
+[submodule "lib/grml-etc-core"]
+	path = lib/grml-etc-core
+	url = https://github.com/grml/grml-etc-core

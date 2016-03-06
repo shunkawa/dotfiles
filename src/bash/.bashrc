@@ -49,3 +49,17 @@ NVM_DIR=~/.nvm
 . $(brew --prefix nvm)/nvm.sh
 
 PYTHONPATH="$HOME/.local/share/python"
+
+. "${HOME}/.nix-profile/etc/profile.d/nix.sh"
+NIX_PATH="/nix/var/nix/profiles/per-user/rkm/channels/nixos"
+
+function ec2() {
+  export AWS_ACCESS_KEY="$(pass mango/aws/$1/access-key-id | head -n 1)"
+  export AWS_SECRET_KEY="$(pass mango/aws/$1/secret-access-key | head -n 1)"
+  export EC2_URL="https://ec2.ap-southeast-2.amazonaws.com"
+  # for nixops
+  export EC2_ACCESS_KEY=$AWS_ACCESS_KEY
+  export EC2_SECRET_KEY=$AWS_SECRET_KEY
+}
+
+eval "$(direnv hook bash)"
