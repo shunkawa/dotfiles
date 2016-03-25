@@ -1,21 +1,37 @@
-# ~/.zshrc -*- mode: shell-script; -*-
+# ~/.zshrc.local
 
-autoload -Uz compinit
-compinit -u
-setopt completealiases
-autoload -U colors && colors
-setopt complete_in_word
-autoload -U select-word-style
-select-word-style bash
-setopt glob_complete
-setopt no_case_glob
-setopt globdots
-setopt kshoptionprint
-zstyle ":completion:*" matcher-list "m:{a-zA-Z}={A-Za-z}" \
-       "r:|[._-]=* r:|=*" "l:|=* r:|=*"
-setopt append_history share_history histignorealldups
-setopt brace_ccl
-setopt auto_cd
+stty -ixon # disable stop
+# Get rid of pause on control-S
+# stty stop '^[[5~' # Pause key
+
+if islinux; then
+   # Arch Build System
+   ABSROOT="${HOME}/build/abs"
+   # Android
+   ANDROID_HOME="/opt/android-sdk"
+   alias emacs="GTK_THEME=Adwaita:dark emacs"
+   PATH="${HOME}/.local/bin:${PATH}"
+   MANPATH="${HOME}/.local/share/man:${MANPATH}"
+   INFOPATH="${HOME}/.local/share/info:${INFOPATH}"
+   BROWSER="firefox"
+   GTAGSLIBPATH="${HOME}/.cache/gtags"
+fi
+
+if isdarwin; then
+    NPM_PACKAGES="$HOME/.npm-packages"
+    PATH="/usr/local/opt/coreutils/libexec/gnubin:${PATH}"
+    PATH="${HOME}/.local/bin:${PATH}"
+    PATH="${NPM_PACKAGES}/bin:${PATH}"
+    PATH="${HOME}/Library/Python/3.5/bin:${PATH}"
+    PATH="$(brew --prefix php54):${PATH}"
+    MANPATH="/usr/local/opt/coreutils/libexec/gnuman:${MANPATH}"
+    MANPATH="${NPM_PACKAGES}/share/man:${MANPATH}"
+    NODE_PATH="$NPM_PACKAGES/lib/node_modules:$NODE_PATH"
+    NVM_DIR="${HOME}/.nvm"
+    source $(brew --prefix nvm)/nvm.sh
+    source "${HOME}/.nix-profile/etc/profile.d/nix.sh"
+    NIX_PATH="/nix/var/nix/profiles/per-user/rkm/channels/nixos"
+fi
 
 # Prevent accidentally clobbering files
 alias rm="rm -iv"
@@ -26,7 +42,7 @@ set -o noclobber
 alias cower="cower --color=auto"
 alias exif-rename="jhead -autorot -n%Y-%m-%d-%04i"
 alias lsoctal="stat -c \"%a %n\""
-alias curl="curl --config ~/.config/curl/curlrc"
+alias curl="curl --config ${HOME}/.config/curl/curlrc"
 
 # pacman
 alias rmakepkg="PKGDEST=~/build/repo makepkg -srf --sign --key 3311FA17"
@@ -34,7 +50,7 @@ PACKAGER="Ruben Maher <r@rkm.id.au>"
 
 # alias emacs="GTK_THEME=Adwaita:dark emacs"
 
-HISTFILE=~/.zsh_history
+HISTFILE="${HOME}/.zsh_history"
 HISTSIZE=1000000
 SAVEHIST=1000000
 
@@ -43,21 +59,17 @@ if [[ -z $(pgrep gpg-agent) ]]; then
 fi
 
 # Set dircolors for ls
-d=${HOME}/.local/lib/dircolors-solarized/dircolors.ansi-light
+d="${HOME}/.local/lib/dircolors-solarized/dircolors.ansi-dark"
 test -r $d && eval "$(dircolors $d)"
 
-export TERM=xterm-256color
+TERM=xterm-256color
 [ -n "$TMUX" ] && export TERM=screen-256color
-export LESSHISTFILE=/dev/null # don't want ~/.lesshst
-export PATH=${HOME}/.local/bin:${PATH}
-export LC_COLLATE="C"
-export MANPATH=${HOME}/.local/share/man:
-export INFOPATH=${HOME}/.local/share/info:
-export PAGER=less
-export EDITOR="emacsclient -t -a vi"
-export VISUAL="emacsclient -t -a vi"
-export BROWSER=firefox
-export TEXMFHOME=/home/eqyiel/.local/share/texmf
+LESSHISTFILE=/dev/null # don't want ~/.lesshst
+LC_COLLATE="C"
+PAGER=less
+EDITOR="emacsclient -t -a vi"
+VISUAL="emacsclient -t -a vi"
+TEXMFHOME="${HOME}/.local/share/texmf"
 
 # Tramp doesn't work if the prompt doesn't match its regexp
 if [[ "$TERM" == "dumb" ]]
@@ -70,44 +82,51 @@ then
   PS1='$ '
 fi
 
+gpg_p="$(pgrep gpg-agent)"
+
+if [[ $? -eq 1 ]]; then
+    eval "$(gpg-agent --daemon --enable-ssh-support --sh)"
+fi
+SSH_AUTH_SOCK="/Users/rkm/.gnupg/S.gpg-agent.ssh"
+
 # for certain calibre plugins, Windows VSTs
-export WINEARCH=win32
-export WINEPREFIX=~/.wine32
+WINEARCH=win32
+WINEPREFIX="${HOME}/.wine32"
 
 # for Ardour
-# export VST_PATH=~/media/music/plugins/vst
-# export LADSPA_PATH=~/media/music/plugins/ladspa:/usr/lib/ladspa
-# export LV2_PATH=~/media/music/plugins/lv2:/usr/lib/lv2
-# export LXVST_PATH=~/media/music/plugins/lxvst
+# VST_PATH=~/media/music/plugins/vst
+# LADSPA_PATH=~/media/music/plugins/ladspa:/usr/lib/ladspa
+# LV2_PATH=~/media/music/plugins/lv2:/usr/lib/lv2
+# LXVST_PATH=~/media/music/plugins/lxvst
 
-# Arch Build System
-export ABSROOT=~/build/abs
-
-# Android
-export ANDROID_HOME=/opt/android-sdk
-
-export GTAGSLIBPATH=~/.cache/gtags
-
-eg() {
+function eg() {
     MAN_KEEP_FORMATTING=1 man "$@" 2>/dev/null \
         | sed --quiet --expression='/^E\(\x08.\)X\(\x08.\)\?A\(\x08.\)\?M\(\x08.\)\?P\(\x08.\)\?L\(\x08.\)\?E/{:a;p;n;/^[^ ]/q;ba}' \
         | ${MANPAGER:-${PAGER:-pager -s}}
 }
 
+function ec2() {
+  export AWS_ACCESS_KEY="$(pass mango/aws/$1/access-key-id | head -n 1)"
+  export AWS_SECRET_KEY="$(pass mango/aws/$1/secret-access-key | head -n 1)"
+  export EC2_URL="https://ec2.ap-southeast-2.amazonaws.com"
+  # for nixops
+  export EC2_ACCESS_KEY=$AWS_ACCESS_KEY
+  export EC2_SECRET_KEY=$AWS_SECRET_KEY
+}
 
-get-images-from-pdf () {
+function get-images-from-pdf () {
   gs -dBATCH -dNOPAUSE -sDEVICE=png16m -dGraphicsAlphaBits=4 \
      -dTextAlphaBits=4 -r150 -sOutputFile=./output%d.png ${1};
 }
-source ~/.local/share/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source ~/.local/share/zsh/zsh-cdr/cdr.plugin.zsh
-source ~/.local/share/zsh/zsh-notify/notify.plugin.zsh
-source ~/.local/share/zsh/zaw/zaw.zsh
 
-stty -ixon # disable stop
-# Get rid of pause on control-S
-# stty stop '^[[5~' # Pause key
+source "${HOME}/.local/share/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+source "${HOME}/.local/share/zsh/zsh-cdr/cdr.plugin.zsh"
+source "${HOME}/.local/share/zsh/zsh-notify/notify.plugin.zsh"
+source "${HOME}/.local/share/zsh/zaw/zaw.zsh"
+
 bindkey '^S' zaw-history
 bindkey '^R' zaw-history
 bindkey -M filterselect '^S' down-line-or-history
 bindkey -M filterselect '^R' up-line-or-history
+
+eval "$(direnv hook zsh)"
