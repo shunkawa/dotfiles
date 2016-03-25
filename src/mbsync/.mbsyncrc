@@ -216,6 +216,41 @@ Channel         internode_trash
 Master          ":internode-remote:Trash"
 Slave           ":internode-local:Bin"
 
+# ruben@mangochutney.com.au
+
+IMAPAccount     mangochutney
+Host            imap.gmail.com
+User            ruben@mangochutney.com.au
+PassCmd         "pass auth-sources/ruben@mangochutney.com.au | head -n 1"
+UseIMAPS        yes
+RequireSSL      yes
+UseTLSv1        no
+UseTLSv1.2      yes
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+IMAPStore       mangochutney-remote
+Account         mangochutney
+
+MaildirStore    mangochutney-local
+Path            ~/mail/mangochutney.com.au/
+Inbox           ~/mail/mangochutney.com.au/
+
+Channel         mango_all_mail
+Master          ":mangochutney-remote:[Gmail]/All Mail"
+Slave           ":mangochutney-local:New"
+
+Channel         mango_sent
+Master          ":mangochutney-remote:[Gmail]/Sent Mail"
+Slave           ":mangochutney-local:Sent"
+
+Channel         mango_bin
+Master          ":mangochutney-remote:[Gmail]/Bin"
+Slave           ":mangochutney-local:Bin"
+
+Channel         mango_spam
+Master          ":mangochutney-remote:[Gmail]/Spam"
+Slave           ":mangochutney-local:Spam"
+
 # Local Variables:
 # mode: conf-space
 # End:
