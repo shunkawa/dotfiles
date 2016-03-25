@@ -32,7 +32,7 @@ alias curl="curl --config ~/.config/curl/curlrc"
 alias rmakepkg="PKGDEST=~/build/repo makepkg -srf --sign --key 3311FA17"
 PACKAGER="Ruben Maher <r@rkm.id.au>"
 
-alias emacs="GTK_THEME=Adwaita:dark emacs"
+# alias emacs="GTK_THEME=Adwaita:dark emacs"
 
 HISTFILE=~/.zsh_history
 HISTSIZE=1000000
