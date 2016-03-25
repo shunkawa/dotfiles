@@ -2,7 +2,7 @@
 
 # get_lectures.py ---
 
-# Copyright (C) 2015 Ruben Maher <r@rkm.id.au>
+# Copyright (C) 2015-2016 Ruben Maher <r@rkm.id.au>
 
 # Author: Ruben Maher <r@rkm.id.au>
 
@@ -22,9 +22,9 @@
 import os, sys, re, feedparser, urllib.request, time
 from datetime import datetime
 
-topics = ["comp3742"]
-year = 2015
-semester = "s2"
+topics = ["comp2781", "comp3781"]
+year = 2016
+semester = "s1"
 destdir = "/home/eqyiel/doc/flinders"  # don't use a trailing forward slash
 
 

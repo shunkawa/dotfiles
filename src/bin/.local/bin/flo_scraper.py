@@ -2,7 +2,7 @@
 
 # flo_scraper.py ---
 
-# Copyright (C) 2015 Ruben Maher <r@rkm.id.au>
+# Copyright (C) 2015-2016 Ruben Maher <r@rkm.id.au>
 
 # Author: Ruben Maher <r@rkm.id.au>
 
@@ -24,8 +24,8 @@ from bs4 import BeautifulSoup
 from datetime import datetime
 import urllib, getpass, os, re, sys, time
 
-semester = "s2"
-year = "2015"
+semester = "s1"
+year = "2016"
 filetypes = "pdf|archive|text|powerpoint"  # mime types to look for
 destdir = "/home/eqyiel/doc/flinders"  # don't use a trailing forward slash
 
