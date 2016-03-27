@@ -221,7 +221,7 @@ Slave           ":internode-local:Bin"
 IMAPAccount     mangochutney
 Host            imap.gmail.com
 User            ruben@mangochutney.com.au
-PassCmd         "pass auth-sources/ruben@mangochutney.com.au | head -n 1"
+PassCmd         "pass auth-sources/ruben@imap.gmail.com | head -n 1"
 UseIMAPS        yes
 RequireSSL      yes
 UseTLSv1        no
