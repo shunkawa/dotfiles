@@ -5,3 +5,15 @@ $ [[ -d ~/.config ]] || mkdir ~/.config && cd ~/.config
 $ git clone --recursive git@github.com:eqyiel/dotfiles.git && cd dotfiles
 $ ./go.py --stow --all
 #+end_example
+
+* OSX Gotchas
+
+  Use homebrew to get stuff that's not available in `nixpkgs` for Darwin:
+
+  - virtualbox
+  - chromium-freesmug
+
+** 1password
+
+   1password doesn't like Chromium.  Install the OSX app and go to preferences →
+   advanced → uncheck verify browser code signature.
