@@ -4,6 +4,8 @@ stty -ixon # disable stop
 # Get rid of pause on control-S
 # stty stop '^[[5~' # Pause key
 
+autoload -U select-word-style
+select-word-style bash
 
 gpg_p="$(pgrep gpg-agent)"
 
