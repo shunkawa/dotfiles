@@ -1,8 +1,18 @@
-# ~/.zshrc.local
+# ~/.zshrc.local -*- mode: shell-script; -*-
 
 stty -ixon # disable stop
 # Get rid of pause on control-S
 # stty stop '^[[5~' # Pause key
+
+autoload -U select-word-style
+select-word-style bash
+
+gpg_p="$(pgrep gpg-agent)"
+
+if [[ $? -eq 1 ]]; then
+    eval "$(gpg-agent --daemon --enable-ssh-support --sh)"
+fi
+SSH_AUTH_SOCK="/Users/rkm/.gnupg/S.gpg-agent.ssh"
 
 if islinux; then
    # Arch Build System
@@ -24,14 +34,27 @@ if islinux; then
 fi
 
 if isdarwin; then
+    # If you change NPM_PACKAGES be sure to change the prefix in ~/.npmrc too
+    # (I don't know why it doesn't respect this by default) :(
+    # See also: http://stackoverflow.com/a/13021677
+    NPM_PACKAGES="$HOME/.npm-packages"
     PATH="/usr/local/opt/coreutils/libexec/gnubin:${PATH}"
     PATH="${HOME}/.local/bin:${PATH}"
-    PATH="${HOME}/Library/Python/3.5/bin:${PATH}"
+    PATH="${NPM_PACKAGES}/bin:${PATH}"
+    PATH="${HOME}/Library/Python/2.7/bin:${PATH}"
     PATH="$(brew --prefix php54):${PATH}"
+    PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+    [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
     MANPATH="/usr/local/opt/coreutils/libexec/gnuman:${MANPATH}"
+    PATH="/usr/local/sbin:${PATH}"
+    MANPATH="${NPM_PACKAGES}/share/man:${MANPATH}"
+    NODE_PATH="$NPM_PACKAGES/lib/node_modules:$NODE_PATH"
+    NVM_DIR="${HOME}/.nvm"
     source $(brew --prefix nvm)/nvm.sh
     source "${HOME}/.nix-profile/etc/profile.d/nix.sh"
+    [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
     NIX_PATH="/nix/var/nix/profiles/per-user/rkm/channels/nixos"
+    # HOMEBREW_GITHUB_API_TOKEN=$(pass ls oauth/homebrew)
 fi
 
 NVM_DIR="${HOME}/.nvm"
@@ -50,10 +73,10 @@ alias cp="cp -ivr"
 alias mv="mv -iv"
 set -o noclobber
 
+alias curl="curl --write-out @-<\"${HOME}/.config/curl/write-out.txt\""
 alias cower="cower --color=auto"
 alias exif-rename="jhead -autorot -n%Y-%m-%d-%04i"
 alias lsoctal="stat -c \"%a %n\""
-alias curl="curl --config ${HOME}/.config/curl/curlrc"
 
 # pacman
 alias rmakepkg="PKGDEST=~/build/repo makepkg -srf --sign --key 3311FA17"

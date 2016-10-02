@@ -5,3 +5,36 @@ $ [[ -d ~/.config ]] || mkdir ~/.config && cd ~/.config
 $ git clone --recursive git@github.com:eqyiel/dotfiles.git && cd dotfiles
 $ ./go.py --stow --all
 #+end_example
+
+* OSX Gotchas
+
+  Use homebrew to get stuff that's not available in `nixpkgs` for Darwin:
+
+  - virtualbox
+  - chromium-freesmug
+
+** 1password
+
+   1password doesn't like Chromium.  Install the OSX app and go to preferences →
+   advanced → uncheck verify browser code signature.
+
+** Terminal.app                                                      :ATTACH:
+   :PROPERTIES:
+   :ID:       C20586D7-52CA-4AF4-9065-BC70C4C5BB96
+   :Attachments: osx-terminal_2016-09-26_10-03-02.png
+   :END:
+*** Rescue Meta
+
+   Make sure "Use Option as Meta key" is checked.
+   #+DOWNLOADED: file:/Users/rkm/Desktop/osx-terminal.png @ 2016-09-26 10:03:03
+   [[file:data/C2/0586D7-52CA-4AF4-9065-BC70C4C5BB96/osx-terminal_2016-09-26_10-03-02.png]]
+** iTerm2                                                            :ATTACH:
+   :PROPERTIES:
+   :ID:       69648A9D-1C24-447A-9FBF-88C649315B0F
+   :Attachments: iterm2_2016-09-26_10-04-21.png
+   :END:
+*** Rescue Meta
+    Make sure options "Left option key acts as..." are set to ~+Esc~.
+
+    #+DOWNLOADED: file:/Users/rkm/Desktop/iterm2.png @ 2016-09-26 10:04:21
+    [[file:data/69/648A9D-1C24-447A-9FBF-88C649315B0F/iterm2_2016-09-26_10-04-21.png]]

@@ -1,16 +1,17 @@
 # ~/.gitignore_global
+
+node_modules/
+.tern-port
 *.class
 *.elc
-*.pdf
 *.aux
 *.toc
 *.dvi
 *.log
 *.xmi
-*.tern_port
 
 # OSX stuff
-*.DS_Store
+.DS_Store
 .AppleDouble
 .LSOverride
 
