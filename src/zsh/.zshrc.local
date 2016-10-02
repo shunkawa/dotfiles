@@ -15,23 +15,34 @@ if islinux; then
    INFOPATH="${HOME}/.local/share/info:${INFOPATH}"
    BROWSER="firefox"
    GTAGSLIBPATH="${HOME}/.cache/gtags"
+   TEXMFHOME="${HOME}/local/share/texmf"
+   kpsewhich -var-value TEXMFHOME
+   PATH="${HOME}/.gem/ruby/2.3.0/bin:${PATH}"
+   source /usr/share/nvm/nvm.sh
+   source /usr/share/nvm/bash_completion
+   source /usr/share/nvm/install-nvm-exec
 fi
 
 if isdarwin; then
-    NPM_PACKAGES="$HOME/.npm-packages"
     PATH="/usr/local/opt/coreutils/libexec/gnubin:${PATH}"
     PATH="${HOME}/.local/bin:${PATH}"
-    PATH="${NPM_PACKAGES}/bin:${PATH}"
     PATH="${HOME}/Library/Python/3.5/bin:${PATH}"
     PATH="$(brew --prefix php54):${PATH}"
     MANPATH="/usr/local/opt/coreutils/libexec/gnuman:${MANPATH}"
-    MANPATH="${NPM_PACKAGES}/share/man:${MANPATH}"
-    NODE_PATH="$NPM_PACKAGES/lib/node_modules:$NODE_PATH"
-    NVM_DIR="${HOME}/.nvm"
     source $(brew --prefix nvm)/nvm.sh
     source "${HOME}/.nix-profile/etc/profile.d/nix.sh"
     NIX_PATH="/nix/var/nix/profiles/per-user/rkm/channels/nixos"
 fi
+
+NVM_DIR="${HOME}/.nvm"
+# NPM_CONFIG_PREFIX="${HOME}/.local"
+# NPM_PACKAGES="${NPM_CONFIG_PREFIX}"
+MANPATH="${NPM_PACKAGES}/share/man:${MANPATH}"
+NODE_PATH="${NPM_PACKAGES}/lib/node_modules:${NODE_PATH}"
+PATH="${NPM_PACKAGES}/bin:${PATH}"
+
+# Don't use x11-ssh-askpass
+unset SSH_ASKPASS
 
 # Prevent accidentally clobbering files
 alias rm="rm -iv"

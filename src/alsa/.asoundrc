@@ -1,25 +1,25 @@
-pcm.pulse {
-    type pulse
-}
+# pcm.pulse {
+#     type pulse
+# }
 
-ctl.pulse {
-    type pulse
-}
+# ctl.pulse {
+#     type pulse
+# }
 
-pcm.!default {
-    type pulse
-}
-ctl.!default {
-    type pulse
-}
+# pcm.!default {
+#     type pulse
+# }
+# ctl.!default {
+#     type pulse
+# }
 
-# trying to record loopback using jack with pa
-pcm.pulse_monitor {
-  type pulse
-  device jack_out.monitor
-}
+# # trying to record loopback using jack with pa
+# pcm.pulse_monitor {
+#   type pulse
+#   device jack_out.monitor
+# }
 
-ctl.pulse_monitor {
-  type pulse
-  device jack_out.monitor
-}
+# ctl.pulse_monitor {
+#   type pulse
+#   device jack_out.monitor
+# }
