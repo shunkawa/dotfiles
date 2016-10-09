@@ -11,10 +11,8 @@ IMAPAccount     gmail
 Host            imap.gmail.com
 User            eqyiel@gmail.com
 PassCmd         "pass auth-sources/eqyiel@imap.gmail.com | head -n 1"
-UseIMAPS        yes
-RequireSSL      yes
-UseTLSv1        no
-UseTLSv1.2      yes
+SSLType         IMAPS
+SSLVersions     TLSv1.2
 CertificateFile /etc/ssl/certs/ca-certificates.crt
 
 IMAPStore       gmail-remote
@@ -47,10 +45,8 @@ Host            outlook.office365.com
 User            mahe0054@uni.flinders.edu.au
 PassCmd         "pass auth-sources/mahe0054@outlook.office365.com | head -n 1"
 Port            993
-UseIMAPS        yes
-RequireSSL      yes
-UseTLSv1        no
-UseTLSv1.2      yes
+SSLType         IMAPS
+SSLVersions     TLSv1.2
 CertificateFile /etc/ssl/certs/ca-certificates.crt
 
 IMAPStore       flinders-remote
@@ -86,11 +82,8 @@ IMAPAccount     rkm
 Host            rkm.id.au
 User            r@rkm.id.au
 PassCmd         "pass auth-sources/r@rkm.id.au | head -n 1"
-port            993
-UseIMAPS        yes
-RequireSSL      yes
-UseTLSv1        no
-UseTLSv1.2      yes
+SSLType         IMAPS
+SSLVersions     TLSv1.2
 CertificateFile /etc/ssl/certs/ca-certificates.crt
 
 IMAPStore       rkm-remote
@@ -146,11 +139,8 @@ IMAPAccount     hrp
 Host            rkm.id.au
 User            info@huttriverprovince.com.au
 PassCmd         "pass auth-sources/info@huttriverprovince.com.au | head -n 1"
-Port            993
-UseIMAPS        yes
-RequireSSL      yes
-UseTLSv1        no
-UseTLSv1.2      yes
+SSLType         IMAPS
+# SSLVersions     TLSv1.2
 CertificateFile /etc/ssl/certs/ca-certificates.crt
 
 IMAPStore       hrp-remote
@@ -182,8 +172,8 @@ IMAPAccount     internode
 Host            mail.internode.on.net
 User            eqyiel
 PassCmd         "pass auth-sources/eqyiel@mail.internode.on.net | head -n 1"
-UseIMAPS        yes
-RequireSSL      yes
+SSLType         IMAPS
+SSLVersions     TLSv1.2
 # Internode doesn't support these.
 # UseTLSv1        no
 # UseTLSv1.2      yes
@@ -222,10 +212,8 @@ IMAPAccount     mangochutney
 Host            imap.gmail.com
 User            ruben@mangochutney.com.au
 PassCmd         "pass auth-sources/ruben@imap.gmail.com | head -n 1"
-UseIMAPS        yes
-RequireSSL      yes
-UseTLSv1        no
-UseTLSv1.2      yes
+SSLType         IMAPS
+SSLVersions     TLSv1.2
 CertificateFile /etc/ssl/certs/ca-certificates.crt
 
 IMAPStore       mangochutney-remote
