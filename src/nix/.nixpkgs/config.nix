@@ -32,6 +32,15 @@ in
         owncloudclient
         # seafile-client
 
+        # audio
+        jack2Full
+        qjackctl
+        ardour
+        a2jmidid
+        qsampler
+        seq24
+        yoshimi
+
         # fonts
         dejavu_fonts
         font-droid
