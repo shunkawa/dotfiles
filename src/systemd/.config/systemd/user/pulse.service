@@ -1,0 +1,12 @@
+[Unit]
+Description=Sound Service
+
+[Service]
+# Environment=DISPLAY=:0
+# User=eqyiel
+ExecStart=/usr/bin/pulseaudio --daemonize=no
+Restart=on-failure
+
+[Install]
+# Also=pulseaudio.socket
+WantedBy=default.target

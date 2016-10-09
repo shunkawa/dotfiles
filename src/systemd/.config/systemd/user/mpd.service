@@ -1,0 +1,11 @@
+[Unit]
+Description=Flexible, powerful, server-side application for playing music.
+
+[Service]
+ExecStart=/usr/bin/mpd --no-daemon
+ExecStop=/usr/bin/mpd --kill
+Environment=DISPLAY=:0
+Restart=always
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,13 @@
+[Unit]
+Description=Start Jack Audio Server.
+Requires=pulseaudio.service
+Before=pulseaudio.service
+Conflicts=jackd-focusrite.service
+
+[Service]
+# Environment=DISPLAY=:0
+# User=eqyiel
+ExecStart=/usr/bin/jackd -r -d alsa -d hw:PCH,0 -r 44100 -p 1024 -n 2
+
+[Install]
+WantedBy=default.target

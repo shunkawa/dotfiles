@@ -1,0 +1,9 @@
+[Unit]
+Description=Carefully crafted graffiti in a github commit history calendar
+
+[Service]
+Type=oneshot
+ExecStart=/home/eqyiel/.local/bin/gitfiti.py
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,14 @@
+[Unit]
+Description=Redshift: Adjusts the color temperature of your screen to your surroundings.
+After=xorg.target
+# Requires=xmonad.service
+
+[Service]
+ExecStart=/usr/bin/redshift -l -35.04349:138.75992 -t 6500:3700 -b 1 -m randr
+Environment=DISPLAY=:0
+Restart=always
+
+[Install]
+WantedBy=default.target
+#WantedBy=xmonad.target
+#WantedBy=xorg.target
