@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=Run xkbcomp at startup
+Exec=xkbcomp -I~/.xkb ~/.xkb/xkbmap $DISPLAY
+Terminal=false
+Type=Application
+X-GNOME-Autostart-enabled=true
