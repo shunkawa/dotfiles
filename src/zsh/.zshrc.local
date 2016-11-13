@@ -12,7 +12,7 @@ gpg_p="$(pgrep gpg-agent)"
 if [[ $? -eq 1 ]]; then
     eval "$(gpg-agent --daemon --enable-ssh-support --sh)"
 fi
-SSH_AUTH_SOCK="/Users/rkm/.gnupg/S.gpg-agent.ssh"
+# SSH_AUTH_SOCK="/Users/rkm/.gnupg/S.gpg-agent.ssh"
 
 if islinux; then
    # Arch Build System
@@ -134,10 +134,21 @@ WINEPREFIX="${HOME}/.wine32"
 # LV2_PATH=~/media/music/plugins/lv2:/usr/lib/lv2
 # LXVST_PATH=~/media/music/plugins/lxvst
 
+# Mirror a website or some subdirectory
+function mirror() {
+  wget \
+    --mirror \
+    --page-requisites \
+    --adjust-extension \
+    --no-parent \
+    --convert-links \
+    $1
+}
+
 function eg() {
-    MAN_KEEP_FORMATTING=1 man "$@" 2>/dev/null \
-        | sed --quiet --expression='/^E\(\x08.\)X\(\x08.\)\?A\(\x08.\)\?M\(\x08.\)\?P\(\x08.\)\?L\(\x08.\)\?E/{:a;p;n;/^[^ ]/q;ba}' \
-        | ${MANPAGER:-${PAGER:-pager -s}}
+  MAN_KEEP_FORMATTING=1 man "$@" 2>/dev/null \
+      | sed --quiet --expression='/^E\(\x08.\)X\(\x08.\)\?A\(\x08.\)\?M\(\x08.\)\?P\(\x08.\)\?L\(\x08.\)\?E/{:a;p;n;/^[^ ]/q;ba}' \
+      | ${MANPAGER:-${PAGER:-pager -s}}
 }
 
 function ec2() {
