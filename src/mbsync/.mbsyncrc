@@ -173,10 +173,7 @@ Host            mail.internode.on.net
 User            eqyiel
 PassCmd         "pass auth-sources/eqyiel@mail.internode.on.net | head -n 1"
 SSLType         IMAPS
-SSLVersions     TLSv1.2
-# Internode doesn't support these.
-# UseTLSv1        no
-# UseTLSv1.2      yes
+SSLVersions     TLSv1 # internode doesn't support TLSv1.1 or TLSv1.2.
 CertificateFile /etc/ssl/certs/ca-certificates.crt
 
 IMAPStore       internode-remote
