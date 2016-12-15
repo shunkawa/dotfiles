@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=xkbcomp
+Comment=Run xkbcomp at startup
+Exec=/home/eqyiel/.local/bin/run-xkbcomp
+Terminal=false
+Type=Application
+NoDisplay=true
+X-GNOME-Autostart-enabled=true
