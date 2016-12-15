@@ -17,86 +17,89 @@ in
       enableGTK3 = true;
       enableOfficialBranding = true;
     };
-    chromium = pkgs.chromium.override {
-      # At the moment only versions 56.0.0.0 and greater build with GTK3.
-      # Channel 'dev' is on 56.0.2906.0, so use that.
-      channel = "dev";
-      pulseSupport = true;
-      gnomeSupport = true;
-    };
+    # chromium = pkgs.chromium.override {
+    #   # At the moment only versions 56.0.0.0 and greater build with GTK3.
+    #   # Channel 'dev' is on 56.0.2906.0, so use that.
+    #   channel = "dev";
+    #   pulseSupport = true;
+    #   gnomeSupport = true;
+    # };
 
     rkm = lib.lowPrio (buildEnv {
       name = "rkm";
       ignoreCollisions = true;
       paths = with pkgs; [        
-        wine
-        emacs
-        firefox
-        chromium
-        mpd
-        mpdris2
-        ncmpcpp
-        mpv
-
-        nodejs-6_x
-        python35
-        zsh
-        nix-zsh-completions
-        openssh
-        owncloudclient
-        # seafile-client
-
-        # audio
-        jack2Full
-        qjackctl
-        ardour
         a2jmidid
-        qsampler
-        seq24
-        yoshimi
-
-        # fonts
-        dejavu_fonts
-        font-droid
-        liberation_ttf
-        opensans-ttf
-        noto-fonts-cjk
-        noto-fonts-emoji
-        noto-fonts
-
-        # command line utilities
-        file
-        direnv
+        ardour
         bind
-        stow
-        tmux
-        notmuch
-        pwgen
-        silver-searcher
-        haskellPackages.ShellCheck
-        tree
-        xsel
-        rsync
-        which
+        chromium
         coreutils
+        dejavu_fonts
+        direnv
+        emacs
+        ffmpeg
+        file
         findutils
+        firefox
+        font-droid
+        gitAndTools.git-crypt
+        gitAndTools.gitFull
         gnugrep
         gnupg21
-        pinentry
-        ncdu
-        pass
-        gitAndTools.gitFull
-        gitAndTools.git-crypt
-        whois
-        inetutils
+        haskellPackages.ShellCheck
         imagemagick
+        inetutils
         isync
+        jack2Full
+        jhead
+        libreoffice
+        liberation_ttf
+        mpd
+        mpdris2
+        mpv
+        ncdu
+        ncmpcpp
+        nix-repl
+        nix-zsh-completions
         nmap
-        xorg.xkbcomp
-        xorg.xev
-        xorg.xmodmap
+        nodejs-7_x
+        notmuch
+        noto-fonts
+        noto-fonts-cjk
+        noto-fonts-emoji
+        opensans-ttf
+        openssh
+        owncloudclient
+        pass
+        pinentry
+        pwgen
+        python35
+        qjackctl
+        qsampler
+        rsync
+        seq24
+        silver-searcher
+        steam
+        stow
+        tmux
+        tree
+        which
+        whois
+        wine
         xorg.xdpyinfo
+        xorg.xev
+        xorg.xkbcomp
+        xorg.xmodmap
+        xsel
+        yoshimi
+        zsh
       ];
     });
   };
 }
+
+# nixops bug
+# system is on stable 16.09
+# user's nix-channel is nixos-unstable
+# nix-env -i nixos
+# nix-env (whatever) fails
