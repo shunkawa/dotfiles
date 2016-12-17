@@ -30,9 +30,6 @@ if islinux; then
 fi
 
 if isdarwin; then
-    # If you change NPM_PACKAGES be sure to change the prefix in ~/.npmrc too
-    # (I don't know why it doesn't respect this by default) :(
-    # See also: http://stackoverflow.com/a/13021677
     PATH="/usr/local/opt/coreutils/libexec/gnubin:${PATH}"
     PATH="${HOME}/.local/bin:${PATH}"
     PATH="${HOME}/Library/Python/2.7/bin:${PATH}"
@@ -41,18 +38,17 @@ if isdarwin; then
     [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
     MANPATH="/usr/local/opt/coreutils/libexec/gnuman:${MANPATH}"
     PATH="/usr/local/sbin:${PATH}"
-    # MANPATH="${NPM_PACKAGES}/share/man:${MANPATH}"
-    # NODE_PATH="$NPM_PACKAGES/lib/node_modules:$NODE_PATH"
     source "${HOME}/.nix-profile/etc/profile.d/nix.sh"
     [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
     NIX_PATH="/nix/var/nix/profiles/per-user/rkm/channels/nixos"
     # HOMEBREW_GITHUB_API_TOKEN=$(pass ls oauth/homebrew)
 fi
 
-# NVM is the Node Version Manager.
-NVM_DIR="${HOME}/.local/share/nvm"
-[ -s "${NVM_DIR}/nvm.sh" ] && . "${NVM_DIR}/nvm.sh"
-[ -s "${NVM_DIR}/bash_completion" ] && . "${NVM_DIR}/bash_completion"
+# Don't set a prefix in ~/.npmrc, it doesn't do variable expansion very well.
+# It will read from $PREFIX if no prefix is defined in this file and it will be
+# observed by yarn as well.
+# https://github.com/yarnpkg/yarn/issues/2017#issuecomment-262692935
+export PREFIX="${HOME}/.local"
 
 # Don't use x11-ssh-askpass
 unset SSH_ASKPASS
