@@ -12,7 +12,6 @@ gpg_p="$(pgrep gpg-agent)"
 if [[ $? -eq 1 ]]; then
     eval "$(gpg-agent --daemon --enable-ssh-support --sh)"
 fi
-# SSH_AUTH_SOCK="/Users/rkm/.gnupg/S.gpg-agent.ssh"
 
 if islinux; then
    # Arch Build System
@@ -28,41 +27,32 @@ if islinux; then
    TEXMFHOME="${HOME}/local/share/texmf"
    kpsewhich -var-value TEXMFHOME
    PATH="${HOME}/.gem/ruby/2.3.0/bin:${PATH}"
-   source /usr/share/nvm/nvm.sh
-   source /usr/share/nvm/bash_completion
-   source /usr/share/nvm/install-nvm-exec
 fi
 
 if isdarwin; then
     # If you change NPM_PACKAGES be sure to change the prefix in ~/.npmrc too
     # (I don't know why it doesn't respect this by default) :(
     # See also: http://stackoverflow.com/a/13021677
-    NPM_PACKAGES="$HOME/.npm-packages"
     PATH="/usr/local/opt/coreutils/libexec/gnubin:${PATH}"
     PATH="${HOME}/.local/bin:${PATH}"
-    PATH="${NPM_PACKAGES}/bin:${PATH}"
     PATH="${HOME}/Library/Python/2.7/bin:${PATH}"
     PATH="$(brew --prefix php54):${PATH}"
     PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
     [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
     MANPATH="/usr/local/opt/coreutils/libexec/gnuman:${MANPATH}"
     PATH="/usr/local/sbin:${PATH}"
-    MANPATH="${NPM_PACKAGES}/share/man:${MANPATH}"
-    NODE_PATH="$NPM_PACKAGES/lib/node_modules:$NODE_PATH"
-    NVM_DIR="${HOME}/.nvm"
-    source $(brew --prefix nvm)/nvm.sh
+    # MANPATH="${NPM_PACKAGES}/share/man:${MANPATH}"
+    # NODE_PATH="$NPM_PACKAGES/lib/node_modules:$NODE_PATH"
     source "${HOME}/.nix-profile/etc/profile.d/nix.sh"
     [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
     NIX_PATH="/nix/var/nix/profiles/per-user/rkm/channels/nixos"
     # HOMEBREW_GITHUB_API_TOKEN=$(pass ls oauth/homebrew)
 fi
 
-NVM_DIR="${HOME}/.nvm"
-# NPM_CONFIG_PREFIX="${HOME}/.local"
-# NPM_PACKAGES="${NPM_CONFIG_PREFIX}"
-MANPATH="${NPM_PACKAGES}/share/man:${MANPATH}"
-NODE_PATH="${NPM_PACKAGES}/lib/node_modules:${NODE_PATH}"
-PATH="${NPM_PACKAGES}/bin:${PATH}"
+# NVM is the Node Version Manager.
+NVM_DIR="${HOME}/.local/share/nvm"
+[ -s "${NVM_DIR}/nvm.sh" ] && . "${NVM_DIR}/nvm.sh"
+[ -s "${NVM_DIR}/bash_completion" ] && . "${NVM_DIR}/bash_completion"
 
 # Don't use x11-ssh-askpass
 unset SSH_ASKPASS
@@ -103,7 +93,6 @@ LC_COLLATE="C"
 PAGER=less
 EDITOR="emacsclient -t -a vi"
 VISUAL="emacsclient -t -a vi"
-TEXMFHOME="${HOME}/.local/share/texmf"
 
 # Tramp doesn't work if the prompt doesn't match its regexp
 if [[ "$TERM" == "dumb" ]]
