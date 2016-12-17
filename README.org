@@ -49,15 +49,25 @@ $ ./go.py --stow --all
    [[https://github.com/NixOS/nixpkgs/commit/b217c0a99ba22371b2a73821a8e127892f2e24d4][just
    landed]] in =nixpkgs=.
 
-   At that time the symlinks =${HOME}/.local/bin/{yarn,yarnpkg}= should be removed.
+   At that time the symlinks =${HOME}/.local/bin/{yarn,yarnpkg}= should be
+   removed.  The same goes for other global packages that could be managed by
+   =nix=.
 
-** eslint-cli
+** =eslint-cli=
 
    Use this instead of global installation of =eslint=.  It will find a
    project's local version of =eslint= and run that.
 
    #+begin_example
    $ yarn global add eslint-cli
+   #+end_example
+
+** =tern=
+
+   Don't forget to add =.tern-port= to your =.gitignore=.
+
+   #+begin_example
+   $ yarn global add tern
    #+end_example
 
 ** =nvm=
