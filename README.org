@@ -21,7 +21,7 @@ $ ./go.py --stow --all
    1password doesn't like Chromium.  Install the OSX app and go to preferences →
    advanced → uncheck verify browser code signature.
 
-** Terminal.app                                                      :ATTACH:
+** =Terminal.app=                                                    :ATTACH:
    :PROPERTIES:
    :ID:       C20586D7-52CA-4AF4-9065-BC70C4C5BB96
    :Attachments: osx-terminal_2016-09-26_10-03-02.png
