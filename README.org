@@ -42,7 +42,7 @@ $ ./go.py --stow --all
     #+DOWNLOADED: file:/Users/rkm/Desktop/iterm2.png @ 2016-09-26 10:04:21
     [[file:data/69/648A9D-1C24-447A-9FBF-88C649315B0F/iterm2_2016-09-26_10-04-21.png]]
 * JS
-** yarn
+** =yarn=
    =yarn= is the only package that should be installed globally with =npm=.
 
    This might change in the future because it
