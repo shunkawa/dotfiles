@@ -8,7 +8,10 @@ $ ./go.py --stow --all
 
 * OSX Gotchas
 
-  Use homebrew to get stuff that's not available in `nixpkgs` for Darwin:
+  Use virtual machine to get actual work done.  There's some stuff you can do to
+  make life more comfortable on the host though:
+
+  Install homebrew and install these:
 
   - virtualbox
   - chromium-freesmug
@@ -38,3 +41,31 @@ $ ./go.py --stow --all
 
     #+DOWNLOADED: file:/Users/rkm/Desktop/iterm2.png @ 2016-09-26 10:04:21
     [[file:data/69/648A9D-1C24-447A-9FBF-88C649315B0F/iterm2_2016-09-26_10-04-21.png]]
+* JS
+** yarn
+   ~yarn~ is the only package that should be installed globally with ~npm~.
+
+   This might change in the future because it
+   [[https://github.com/NixOS/nixpkgs/commit/b217c0a99ba22371b2a73821a8e127892f2e24d4][just
+   landed]] in ~nixpkgs~.
+
+   At that time the symlinks ~~/.local/bin/{yarn,yarnpkg}~ should be removed.
+
+** eslint-cli
+
+   Use this instead of global installation of ~eslint~.  It will find a
+   project's local version of ~eslint~ and run that.
+
+   #+begin_example
+   $ yarn global add eslint-cli
+   #+end_example
+
+** ~nvm~
+   I used to use ~nvm~ at work to manage the transient global ~node~ version.
+   It turns out that
+   [[http://anderspapitto.com/posts/2016-10-04-transient-global-environments-the-third-path.html][Nix
+   does this much better]].
+
+   So just use ~nix-env --query~ to see what versions of ~node~ are available in
+   the current profile, ~nix-env --query --available nodejs~ to see what
+   versions are available and so on.
