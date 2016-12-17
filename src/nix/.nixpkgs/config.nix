@@ -13,7 +13,8 @@ in
     };
     firefox-unwrapped = pkgs.firefox-unwrapped.override {
       # Default is to not use GTK3, which means that we won't get
-      # gtk-key-theme.  Which means no Emacs keys.
+      # gtk-key-theme.  Which means no Emacs keys.  That would be unacceptable,
+      # so submit to the long compile time.
       enableGTK3 = true;
       enableOfficialBranding = true;
     };
@@ -59,6 +60,7 @@ in
         mpv
         ncdu
         ncmpcpp
+        nix-prefetch-git
         nix-repl
         nix-zsh-completions
         nmap
@@ -97,9 +99,3 @@ in
     });
   };
 }
-
-# nixops bug
-# system is on stable 16.09
-# user's nix-channel is nixos-unstable
-# nix-env -i nixos
-# nix-env (whatever) fails
