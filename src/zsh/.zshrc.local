@@ -31,7 +31,7 @@ if isdarwin; then
     # If you change NPM_PACKAGES be sure to change the prefix in ~/.npmrc too
     # (I don't know why it doesn't respect this by default) :(
     # See also: http://stackoverflow.com/a/13021677
-    NPM_PACKAGES="$HOME/.npm-packages"
+    NPM_PACKAGES="${HOME}/.npm-packages"
     PATH="/usr/local/opt/coreutils/libexec/gnubin:${PATH}"
     PATH="${HOME}/.local/bin:${PATH}"
     PATH="${NPM_PACKAGES}/bin:${PATH}"
@@ -50,6 +50,8 @@ if isdarwin; then
     NIX_PATH="/nix/var/nix/profiles/per-user/rkm/channels/nixos"
     # HOMEBREW_GITHUB_API_TOKEN=$(pass ls oauth/homebrew)
 fi
+
+PATH="${PATH}:${HOME}/.yarn/bin"
 
 # Prevent accidentally clobbering files
 alias rm="rm -iv"
