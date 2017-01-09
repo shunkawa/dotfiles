@@ -67,6 +67,13 @@ $ ./go.py --stow --all
   $ ssh -p 2222 username@localhost # username is the user's name in the virtual machine
   #+end_example
 
+** Karabiner-Elements
+
+   [[https://www.nadeau.tv/configure-hyper-key-osx/][I used to do something like this]] to fake a hyper key, but Karabiner
+   and Seil don't work properly in Sierra.
+  
+   [[https://github.com/tekezo/Karabiner-Elements/pull/170][Keep an eye on the shitstorm here]].
+
 ** 1password
 
    1password doesn't like Chromium.  Install the OSX app and go to preferences →
