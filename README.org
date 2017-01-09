@@ -56,8 +56,15 @@ $ ./go.py --stow --all
   #+begin_example
   $ brew tap homebrew/versions
   $ brew install homebrew/versions/gnupg21
-  $ brew install pass
-  $ brew cask install virtualbox chromium slack 1password
+  $ brew install pass stow
+  $ brew cask install virtualbox chromium slack 1password transmit harvest sketch iterm2 karabiner
+  #+end_example
+
+  For the virtual machine:
+
+  #+begin_example
+  $ VBoxManage modifyvm "VM Name" --natpf1 "ssh,tcp,,2222,,22"
+  $ ssh -p 2222 username@localhost # username is the user's name in the virtual machine
   #+end_example
 
 ** 1password
@@ -77,6 +84,7 @@ $ ./go.py --stow --all
    [[file:data/C2/0586D7-52CA-4AF4-9065-BC70C4C5BB96/osx-terminal_2016-09-26_10-03-02.png]]
 ** iTerm2
 *** Rescue Meta                                                      :ATTACH:
+
     :PROPERTIES:
     :ID:       69648A9D-1C24-447A-9FBF-88C649315B0F
     :Attachments: iterm2_2016-09-26_10-04-21.png
