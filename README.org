@@ -57,7 +57,14 @@ $ ./go.py --stow --all
   $ brew tap homebrew/versions
   $ brew install homebrew/versions/gnupg21
   $ brew install pass
-  $ brew cask install virtualbox chromium slack 1password
+  $ brew cask install virtualbox chromium slack 1password transmit harvest sketch
+  #+end_example
+
+  For the virtual machine:
+
+  #+begin_example
+  $ VBoxManage modifyvm "VM Name" --natpf1 "ssh,tcp,,2222,,22"
+  $ ssh -p 2222 username@localhost # username is the user's name in the virtual machine
   #+end_example
 
 ** 1password
