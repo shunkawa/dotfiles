@@ -57,15 +57,19 @@ $ ./go.py --stow --all
   $ brew tap homebrew/versions
   $ brew install homebrew/versions/gnupg21
   $ brew install pass stow
-  $ brew cask install virtualbox chromium slack 1password transmit harvest sketch iterm2 karabiner
+  $ brew cask install virtualbox chromium slack 1password transmit harvest sketch iterm2
   #+end_example
 
-  For the virtual machine:
+  For the virtual machine, set interface 1 to NAT, second to bridged adapter.
+  You can SSH to the ip address of the bridged adapter's interface.
 
-  #+begin_example
-  $ VBoxManage modifyvm "VM Name" --natpf1 "ssh,tcp,,2222,,22"
-  $ ssh -p 2222 username@localhost # username is the user's name in the virtual machine
-  #+end_example
+** Karabiner-Elements
+
+   [[https://www.nadeau.tv/configure-hyper-key-osx/][I used to do something like this]] to fake a hyper key, but Karabiner
+   and Seil don't work properly in Sierra.
+  
+   [[https://github.com/tekezo/Karabiner-Elements/pull/170][Keep an eye on the shitstorm here]].  If that gets resolved we can probably use
+   karabiner-elements from ~brew cask~.
 
 ** 1password
 
