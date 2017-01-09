@@ -30,6 +30,10 @@ if islinux; then
 fi
 
 if isdarwin; then
+    # If you change NPM_PACKAGES be sure to change the prefix in ~/.npmrc too
+    # (I don't know why it doesn't respect this by default) :(
+    # See also: http://stackoverflow.com/a/13021677
+    NPM_PACKAGES="${HOME}/.npm-packages"
     PATH="/usr/local/opt/coreutils/libexec/gnubin:${PATH}"
     PATH="${HOME}/.local/bin:${PATH}"
     PATH="${HOME}/Library/Python/2.7/bin:${PATH}"
