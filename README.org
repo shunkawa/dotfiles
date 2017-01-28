@@ -3,18 +3,68 @@
 #+begin_example
 $ [[ -d ~/.config ]] || mkdir ~/.config && cd ~/.config
 $ git clone --recursive git@github.com:eqyiel/dotfiles.git && cd dotfiles
+$ ./bin/git/create-hook-symlinks
 $ ./go.py --stow --all
 #+end_example
+* JS
+** =eslint-cli=
+
+   Use this instead of global installation of =eslint=.  It will find a
+   project's local version of =eslint= and run that.
+
+** =tern=
+
+   Don't forget to add =.tern-port= to your =.gitignore=.
+
+** =nvm=
+
+   I used to use =nvm= at work to manage the transient global =node= version.
+   It turns out that
+   [[http://anderspapitto.com/posts/2016-10-04-transient-global-environments-the-third-path.html][Nix
+   does this much better]].
+
+   So just use =nix-env --query= to see what versions of =node= are available in
+   the current profile, =nix-env --query --available nodejs= to see what
+   versions are available and so on.
+
+* GNOME 3
+
+  Gnome uses its own registry thing (~dconf~) for a bunch of configuration and
+  stateful data, so there's a hook in this repo that saves the output of ~dconf
+  dump~ when commiting.
+
+  On a new machine you probably have to import it, see the script
+  ~bin/dconf-restore~.
+
+* NixOS
+
+** =nix-env=
+
+   By default, =nix-env= ignores =$NIX_PATH=.  So if you want to use a local
+   checkout of =nixpkgs= instead of the configured channel, you have to tell it
+   to use =nixpkgs= like so:
+
+   #+begin_example
+   nix-env -f '<nixpkgs>' -i rkm
+   #+end_example
 
 * OSX Gotchas
 
   Use virtual machine to get actual work done.  There's some stuff you can do to
   make life more comfortable on the host though:
 
-  Install homebrew and install these:
+  Install homebrew and:
 
-  - virtualbox
-  - chromium-freesmug
+  #+begin_example
+  brew cask install virtualbox chromium 1password
+  #+end_example
+
+** Virtualbox
+
+  For the guest, enable a second host-only adapter under "Networks".  This will
+  provide the interface for using SSH locally.  Leave the first NAT interface
+  the way it it already configured because that provides the actual connection
+  to the internet.
 
 ** 1password
 
@@ -41,41 +91,3 @@ $ ./go.py --stow --all
 
     #+DOWNLOADED: file:/Users/rkm/Desktop/iterm2.png @ 2016-09-26 10:04:21
     [[file:data/69/648A9D-1C24-447A-9FBF-88C649315B0F/iterm2_2016-09-26_10-04-21.png]]
-* JS
-** =yarn=
-   =yarn= is the only package that should be installed globally with =npm=.
-
-   This might change in the future because it
-   [[https://github.com/NixOS/nixpkgs/commit/b217c0a99ba22371b2a73821a8e127892f2e24d4][just
-   landed]] in =nixpkgs=.
-
-   At that time the symlinks =${HOME}/.local/bin/{yarn,yarnpkg}= should be
-   removed.  The same goes for other global packages that could be managed by
-   =nix=.
-
-** =eslint-cli=
-
-   Use this instead of global installation of =eslint=.  It will find a
-   project's local version of =eslint= and run that.
-
-   #+begin_example
-   $ yarn global add eslint-cli
-   #+end_example
-
-** =tern=
-
-   Don't forget to add =.tern-port= to your =.gitignore=.
-
-   #+begin_example
-   $ yarn global add tern
-   #+end_example
-
-** =nvm=
-   I used to use =nvm= at work to manage the transient global =node= version.
-   It turns out that
-   [[http://anderspapitto.com/posts/2016-10-04-transient-global-environments-the-third-path.html][Nix
-   does this much better]].
-
-   So just use =nix-env --query= to see what versions of =node= are available in
-   the current profile, =nix-env --query --available nodejs= to see what
-   versions are available and so on.

@@ -1,0 +1,2 @@
+secrets/** filter=git-crypt diff=git-crypt
+dconf.dump filter=git-crypt diff=git-crypt
