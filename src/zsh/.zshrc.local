@@ -7,45 +7,35 @@ stty -ixon # disable stop
 autoload -U select-word-style
 select-word-style bash
 
-gpg_p="$(pgrep gpg-agent)"
-
-if [[ $? -eq 1 ]]; then
-    eval "$(gpg-agent --daemon --enable-ssh-support --sh)"
-fi
-
 if islinux; then
-   # Arch Build System
-   ABSROOT="${HOME}/build/abs"
-   # Android
-   ANDROID_HOME="/opt/android-sdk"
-   alias emacs="GTK_THEME=Adwaita:dark emacs"
-   PATH="${HOME}/.local/bin:${PATH}"
-   MANPATH="${HOME}/.local/share/man:${MANPATH}"
-   INFOPATH="${HOME}/.local/share/info:${INFOPATH}"
-   BROWSER="firefox"
-   GTAGSLIBPATH="${HOME}/.cache/gtags"
-   TEXMFHOME="${HOME}/local/share/texmf"
-   kpsewhich -var-value TEXMFHOME
-   PATH="${HOME}/.gem/ruby/2.3.0/bin:${PATH}"
+  # Arch Build System
+  ABSROOT="${HOME}/build/abs"
+  # Android
+  ANDROID_HOME="/opt/android-sdk"
+  alias emacs="GTK_THEME=Adwaita:dark emacs"
+  PATH="${HOME}/.local/bin:${PATH}"
+  MANPATH="${HOME}/.local/share/man:${MANPATH}"
+  INFOPATH="${HOME}/.local/share/info:${INFOPATH}"
+  BROWSER="firefox"
+  GTAGSLIBPATH="${HOME}/.cache/gtags"
+  TEXMFHOME="${HOME}/local/share/texmf"
+  kpsewhich -var-value TEXMFHOME
+  PATH="${HOME}/.gem/ruby/2.3.0/bin:${PATH}"
 fi
 
 if isdarwin; then
-    # If you change NPM_PACKAGES be sure to change the prefix in ~/.npmrc too
-    # (I don't know why it doesn't respect this by default) :(
-    # See also: http://stackoverflow.com/a/13021677
-    NPM_PACKAGES="${HOME}/.npm-packages"
-    PATH="/usr/local/opt/coreutils/libexec/gnubin:${PATH}"
-    PATH="${HOME}/.local/bin:${PATH}"
-    PATH="${HOME}/Library/Python/2.7/bin:${PATH}"
-    PATH="$(brew --prefix php54):${PATH}"
-    PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
-    [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
-    MANPATH="/usr/local/opt/coreutils/libexec/gnuman:${MANPATH}"
-    PATH="/usr/local/sbin:${PATH}"
-    source "${HOME}/.nix-profile/etc/profile.d/nix.sh"
-    [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
-    NIX_PATH="/nix/var/nix/profiles/per-user/rkm/channels/nixos"
-    # HOMEBREW_GITHUB_API_TOKEN=$(pass ls oauth/homebrew)
+  PATH="/usr/local/opt/coreutils/libexec/gnubin:${PATH}"
+  PATH="${HOME}/.local/bin:${PATH}"
+  PATH="${HOME}/Library/Python/2.7/bin:${PATH}"
+  PATH="$(brew --prefix php54):${PATH}"
+  PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+  [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+  MANPATH="/usr/local/opt/coreutils/libexec/gnuman:${MANPATH}"
+  PATH="/usr/local/sbin:${PATH}"
+  source "${HOME}/.nix-profile/etc/profile.d/nix.sh"
+  [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+  NIX_PATH="/nix/var/nix/profiles/per-user/rkm/channels/nixos"
+  # HOMEBREW_GITHUB_API_TOKEN=$(pass ls oauth/homebrew)
 fi
 
 # Don't set a prefix in ~/.npmrc, it doesn't do variable expansion very well.
@@ -53,6 +43,13 @@ fi
 # observed by yarn as well.
 # https://github.com/yarnpkg/yarn/issues/2017#issuecomment-262692935
 export PREFIX="${HOME}/.local"
+
+# if [[ -d "${HOME}/.nixpkgs/nixpkgs" ]]; then
+#   export NIX_PATH="${HOME}/.nixpkgs/nixpkgs/nixos:nixpkgs=${HOME}/.nixpkgs/nixpkgs"
+# fi
+
+# NIX_CHANNEL="${HOME}/.nix-defexpr/channels/nixos"
+# export NIX_PATH="${NIX_CHANNEL}:nixpkgs=${NIX_CHANNEL}/pkgs"
 
 # Don't use x11-ssh-askpass
 unset SSH_ASKPASS
