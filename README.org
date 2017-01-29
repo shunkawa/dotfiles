@@ -20,9 +20,7 @@ $ ./go.py --stow --all
 ** =nvm=
 
    I used to use =nvm= at work to manage the transient global =node= version.
-   It turns out that
-   [[http://anderspapitto.com/posts/2016-10-04-transient-global-environments-the-third-path.html][Nix
-   does this much better]].
+   It turns out that [[http://anderspapitto.com/posts/2016-10-04-transient-global-environments-the-third-path.html][Nix does this much better]].
 
    So just use =nix-env --query= to see what versions of =node= are available in
    the current profile, =nix-env --query --available nodejs= to see what
@@ -60,16 +58,20 @@ $ ./go.py --stow --all
   #+begin_example
   $ brew tap homebrew/versions
   $ brew install homebrew/versions/gnupg21
-  $ brew install pass
-  $ brew cask install virtualbox chromium slack 1password
+  $ brew install pass stow
+  $ brew cask install virtualbox chromium slack 1password transmit harvest sketch iterm2
   #+end_example
 
-** Virtualbox
+  For the virtual machine, set interface 1 to NAT, second to Host-only Adapter.
+  You can SSH to the IP address of host-only adapter's interface.
 
-  For the guest, enable a second host-only adapter under "Networks".  This will
-  provide the interface for using SSH locally.  Leave the first NAT interface
-  the way it it already configured because that provides the actual connection
-  to the internet.
+** Karabiner-Elements
+
+   [[https://www.nadeau.tv/configure-hyper-key-osx/][I used to do something like this]] to fake a hyper key, but Karabiner
+   and Seil don't work properly in Sierra.
+  
+   [[https://github.com/tekezo/Karabiner-Elements/pull/170][Keep an eye on the shitstorm here]].  If that gets resolved we can probably use
+   karabiner-elements from ~brew cask~.
 
 ** 1password
 
@@ -89,6 +91,7 @@ $ ./go.py --stow --all
 
 ** iTerm2
 *** Rescue Meta                                                      :ATTACH:
+
     :PROPERTIES:
     :ID:       69648A9D-1C24-447A-9FBF-88C649315B0F
     :Attachments: iterm2_2016-09-26_10-04-21.png
@@ -109,3 +112,28 @@ $ ./go.py --stow --all
 
     #+DOWNLOADED: file:/Users/rkm/Desktop/iterm2-clipboard.png @ 2016-10-12 09:28:47
     [[file:data/1B/1C9326-036A-438B-837D-38C365CEE7F6/iterm2-clipboard_2016-10-12_09-28-47.png]]
+** On the guest
+
+   Chances are we'll need to work with some BSCMS, so make a `mysql` user:
+
+   #+begin_example
+   eqyiel@localghost ~ % mysql -u root
+   Welcome to the MariaDB monitor.  Commands end with ; or \g.
+   Your MariaDB connection id is 2
+   Server version: 10.1.19-MariaDB MariaDB Server
+
+   Copyright (c) 2000, 2016, Oracle, MariaDB Corporation Ab and others.
+
+   Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+   MariaDB [(none)]> create user 'pleb'@'localhost' identified by 'password';
+   Query OK, 0 rows affected (0.01 sec)
+
+   MariaDB [(none)]> grant all privileges on *.* to 'pleb'@'localhost';
+   Query OK, 0 rows affected (0.00 sec)
+
+   MariaDB [(none)]> flush privileges;
+   Query OK, 0 rows affected (0.00 sec)
+
+   MariaDB [(none)]>
+   #+end_example

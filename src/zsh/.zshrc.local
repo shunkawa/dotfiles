@@ -78,6 +78,8 @@ SAVEHIST=1000000
 if [[ -z $(pgrep gpg-agent) ]]; then
   eval $(gpg-agent --daemon --enable-ssh-support --sh)
 fi
+export SSH_AUTH_SOCK="/run/user/$(id -u)/gnupg/S.gpg-agent.ssh"
+export GPG_TTY=$(tty)
 
 # Set dircolors for ls
 d="${HOME}/.local/lib/dircolors-solarized/dircolors.ansi-dark"
