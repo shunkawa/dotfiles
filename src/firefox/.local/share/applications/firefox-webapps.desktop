@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Exec=bash -c "$(which firefox) --no-remote -P r+webapps@rkm.id.au" %u
+Icon=firefox
+Comment=
+Terminal=false
+Name=Firefox (webapps)
+GenericName=Web Browser
+MimeType=text/html;text/xml;application/xhtml+xml;application/vnd.mozilla.xul+xml;x-scheme-handler/http;x-scheme-handler/https;x-scheme-handler/ftp
+Categories=Application;Network;WebBrowser;
