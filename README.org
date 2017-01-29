@@ -137,3 +137,25 @@ $ ./go.py --stow --all
 
    MariaDB [(none)]>
    #+end_example
+
+** ~pinentry-curses~ is on the wrong TTY / spewing all over the screen
+
+   I don't think this problem is exclusive to macOS but I rarely need to use
+   pinentry remotely otherwise.
+
+   From [[http://unix.stackexchange.com/a/280974][Stack Exchange]]:
+
+   #+begin_quote
+     The gpg-agent man page explains under the option --enable-ssh-support that
+     the ssh agent protocol is not able to provide the name of the tty to the
+     agent, so it defaults to using the original terminal it was started
+     in. Before running the ssh command that requires a passphrase in a new
+     terminal you need to type
+
+     #+begin_example
+       gpg-connect-agent updatestartuptty /bye
+     #+end_example
+
+     in the new terminal to update the agent's view of which tty or display to
+     use.
+   #+end_quote
