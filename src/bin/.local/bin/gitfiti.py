@@ -105,7 +105,7 @@ def commit(content, commitdate):
 def fake_it(image, start_date, username, repo, token, offset=0, multiplier=1,
             git_url='git@github.com'):
     template = (
-        '#!/bin/bash\n'
+        '#!/run/current-system/sw/bin/bash\n'
         'DIR=$(mktemp -d)\n'
         'cd $DIR\n'
         'REPO={0}\n'
