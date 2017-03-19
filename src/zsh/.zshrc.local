@@ -51,6 +51,8 @@ export PREFIX="${HOME}/.local"
 # NIX_CHANNEL="${HOME}/.nix-defexpr/channels/nixos"
 # export NIX_PATH="${NIX_CHANNEL}:nixpkgs=${NIX_CHANNEL}/pkgs"
 
+# alias nix-shell="nix-shell --command zsh"
+
 # Don't use x11-ssh-askpass
 unset SSH_ASKPASS
 
@@ -81,7 +83,19 @@ fi
 export SSH_AUTH_SOCK="/run/user/$(id -u)/gnupg/S.gpg-agent.ssh"
 export GPG_TTY=$(tty)
 
-# Set dircolors for ls
+export MSMTP_QUEUE="${HOME}/.cache/msmtp/queue"
+test -d "$MSMTP_QUEUE" || mkdir -p "$MSMTP_QUEUE"
+
+export MSMTP_LOG="${MSMTP_QUEUE}/log"
+test -f "$MSMTP_LOG" || touch "$MSMTP_LOG"
+# Use faster ping test when msmtpq tests for a connection
+export EMAIL_CONN_TEST="P"
+# Gnus pipes the output of `sendmail-program' to a buffer and expects it to be
+# empty if there was no error.  Suppress the chattiness of msmtpq to avoid erros
+# like
+export EMAIL_QUEUE_QUIET="t"
+
+Set dircolors for ls
 d="${HOME}/.local/lib/dircolors-solarized/dircolors.ansi-dark"
 test -r $d && eval "$(dircolors $d)"
 

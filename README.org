@@ -65,7 +65,39 @@ $ ./go.py --stow --all
   For the virtual machine, set interface 1 to NAT, second to Host-only Adapter.
   You can SSH to the IP address of host-only adapter's interface.
 
+** Remote ~pbcopy~
+
+   [[https://seancoates.com/blogs/remote-pbcopy][See this guide]].
+
+   On the host:
+
+   #+begin_example
+   $ mkdir -p ~/Library/LaunchAgents
+   $ cp dotfiles/src/macos/Library/LaunchAgents/pbcopy.plist ~/Library/LaunchAgents
+   $ sudo chown eqyiel:staff ~/Library/LaunchAgents/pbcopy.plist
+   $ sudo chmod o-w !$
+   $ launchctl load !$
+   #+end_example
+
+   You also need something like this in the host's SSH config file:
+
+   #+begin_example
+   Host localghost
+     HostName 192.168.56.10 # this is the IP address of the host-only adapter.
+     User eqyiel
+     RemoteForward 2224 127.0.0.1:2224 # remote `pbcopy'
+   #+end_example
+
+   Then on the guest you can pipe to ~127.0.0.1:2224~ and it will be in the
+   host's clipboard.
+
+   #+begin_example
+   cat | netcat -c localhost 2224
+   #+end_example
+
 ** Karabiner-Elements
+
+   <<hyper>>I like the Hyper key, I want a hyper key in macOS.
 
    [[https://www.nadeau.tv/configure-hyper-key-osx/][I used to do something like this]] to fake a hyper key, but Karabiner
    and Seil don't work properly in Sierra.
@@ -112,6 +144,27 @@ $ ./go.py --stow --all
 
     #+DOWNLOADED: file:/Users/rkm/Desktop/iterm2-clipboard.png @ 2016-10-12 09:28:47
     [[file:data/1B/1C9326-036A-438B-837D-38C365CEE7F6/iterm2-clipboard_2016-10-12_09-28-47.png]]
+*** Hyper and other special keys
+
+    By default, you can't use keybindings like ~H-l~ (see [[karabiner-Elements][hyper]]) or ~C-*~
+    (because the terminal doesn't recognise it), [[http://superuser.com/a/895568][see this superuser answer]] for
+    an unsatisfactory workaround.
+
+    #+begin_quote
+      The sequence ~C-x @ s-…~ is equivalent to ~s-…~, e.g. ~C-x @ s-t~ is
+      equivalent to ~s-t~. Combined with iTerm2 shortcuts:
+
+      1. Create a global or profile shortcut for ~⌘…~ set to Send hex code, e.g. ~⌘t
+         => Send hex code~
+      2. Specify hex code of the form: ~0x18 0x40 MOD KEY~ where ~MOD~ is either ~0x68~ or
+         ~0x73~ for ~h~ and ~s~ respectively and KEY is the key you want
+         modified with ~hyper~ or ~super~. E.g. mapping ~⌘t~ to ~s-t~: ~⌘t =>
+         0x18 0x40 0x73 0x74~.
+      3. Repeat for every shortcut you want…meh…
+    #+end_quote
+
+    # Control key modifiers are ~0x5C~ (left control) and ~0x60~ (right control).
+
 ** On the guest
 
    Chances are we'll need to work with some BSCMS, so make a `mysql` user:
@@ -159,3 +212,51 @@ $ ./go.py --stow --all
      in the new terminal to update the agent's view of which tty or display to
      use.
    #+end_quote
+
+** USB drivers keep dying in the Virtualbox guest
+
+AFAICT there's nothing to do except try that `reset-ohci-drivers` script.
+Attaching and detaching from the virtual machine (in the devices menu) sometimes
+works too.
+
+#+begin_example
+Jan 30 10:45:11 localghost kernel: ohci-pci 0000:00:06.0: frame counter not updating; disabled
+Jan 30 10:45:11 localghost kernel: ohci-pci 0000:00:06.0: HC died; cleaning up
+Jan 30 10:45:11 localghost kernel: usb 1-1: USB disconnect, device number 2
+Jan 30 10:45:11 localghost kernel: usb 1-2: USB disconnect, device number 3
+Jan 30 10:45:11 localghost pcscd[1882]: 99999999 ccid_usb.c:783:WriteUSB() write failed (1/3): -4 LIBUSB_ERROR_NO_DEVICE
+Jan 30 10:45:12 localghost kernel: irq 22: nobody cared (try booting with the "irqpoll" option)
+Jan 30 10:45:12 localghost kernel: CPU: 0 PID: 0 Comm: swapper/0 Tainted: G           O    4.8.15 #1-NixOS
+Jan 30 10:45:12 localghost kernel: Hardware name: innotek GmbH VirtualBox/VirtualBox, BIOS VirtualBox 12/01/2006
+Jan 30 10:45:12 localghost kernel:  0000000000000000 ffffa0fadfc03d40 ffffffffb4eeef43 ffffa0fac9502400
+Jan 30 10:45:12 localghost kernel:  ffffa0fac95024c4 ffffa0fadfc03d68 ffffffffb4cc0aa3 ffffa0fac9502400
+Jan 30 10:45:12 localghost kernel:  0000000000000000 0000000000000016 ffffa0fadfc03da0 ffffffffb4cc0e37
+Jan 30 10:45:12 localghost kernel: Call Trace:
+Jan 30 10:45:12 localghost kernel:  <IRQ>  [<ffffffffb4eeef43>] dump_stack+0x63/0x90
+Jan 30 10:45:12 localghost kernel:  [<ffffffffb4cc0aa3>] __report_bad_irq+0x33/0xc0
+Jan 30 10:45:12 localghost kernel:  [<ffffffffb4cc0e37>] note/)_interrupt+0x247/0x290
+Jan 30 10:45:12 localghost kernel:  [<ffffffffb4cbe0d5>] handle_irq_event_percpu+0x45/0x60
+Jan 30 10:45:12 localghost kernel:  [<ffffffffb4cbe12e>] handle_irq_event+0x3e/0x60
+Jan 30 10:45:12 localghost kernel:  [<ffffffffb4cc1462>] handle_fasteoi_irq+0xa2/0x160
+Jan 30 10:45:12 localghost kernel:  [<ffffffffb4c27ced>] handle_irq+0x1d/0x30
+Jan 30 10:45:12 localghost kernel:  [<ffffffffb51472db>] do_IRQ+0x4b/0xd0
+Jan 30 10:45:12 localghost kernel:  [<ffffffffb51453c2>] common_interrupt+0x82/0x82
+Jan 30 10:45:12 localghost kernel:  [<ffffffffb5147506>] ? __do_softirq+0x76/0x280
+Jan 30 10:45:12 localghost kernel:  [<ffffffffb4c73163>] irq_exit+0xa3/0xb0
+Jan 30 10:45:12 localghost kernel:  [<ffffffffb4c963e3>] scheduler_ipi+0x93/0x150
+Jan 30 10:45:12 localghost kernel:  [<ffffffffb4c45f39>] smp_reschedule_interrupt+0x29/0x30
+Jan 30 10:45:12 localghost kernel:  [<ffffffffb5146e92>] reschedule_interrupt+0x82/0x90
+Jan 30 10:45:12 localghost kernel:  <EOI>  [<ffffffffb4c56e16>] ? native_safe_halt+0x6/0x10
+Jan 30 10:45:12 localghost kernel:  [<ffffffffb4c2f47e>] default_idle+0x1e/0xd0
+Jan 30 10:45:12 localghost kernel:  [<ffffffffb4c2fbff>] arch_cpu_idle+0xf/0x20
+Jan 30 10:45:12 localghost kernel:  [<ffffffffb4cab49a>] default_idle_call+0x2a/0x40
+Jan 30 10:45:12 localghost kernel:  [<ffffffffb4cab78b>] cpu_startup_entry+0x2db/0x340
+Jan 30 10:45:12 localghost kernel:  [<ffffffffb513d867>] rest_init+0x77/0x80
+Jan 30 10:45:12 localghost kernel:  [<ffffffffb54f9f6c>] start_kernel+0x44a/0x457
+Jan 30 10:45:12 localghost kernel:  [<ffffffffb54f9120>] ? early_idt_handler_array+0x120/0x120
+Jan 30 10:45:12 localghost kernel:  [<ffffffffb54f92d5>] x86_64_start_reservations+0x24/0x26
+Jan 30 10:45:12 localghost kernel:  [<ffffffffb54f940b>] x86_64_start_kernel+0x134/0x141
+Jan 30 10:45:12 localghost kernel: handlers:
+Jan 30 10:45:12 localghost kernel: [<ffffffffc04391c0>] usb_hcd_irq [usbcore]
+Jan 30 10:45:12 localghost kernel: Disabling IRQ #22
+#+end_example

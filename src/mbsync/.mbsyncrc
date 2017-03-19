@@ -10,7 +10,7 @@ SyncState       *
 IMAPAccount     gmail
 Host            imap.gmail.com
 User            eqyiel@gmail.com
-PassCmd         "pass auth-sources/eqyiel@imap.gmail.com | head -n 1"
+PassCmd         "pass auth-sources/eqyiel@gmail.com | head -n 1"
 SSLType         IMAPS
 SSLVersions     TLSv1.2
 CertificateFile /etc/ssl/certs/ca-certificates.crt
@@ -24,7 +24,7 @@ Inbox           ~/mail/gmail.com/
 
 Channel         g_all_mail
 Master          ":gmail-remote:[Gmail]/All Mail"
-Slave           ":gmail-local:New"
+Slave           ":gmail-local:Inbox"
 
 Channel         g_sent
 Master          ":gmail-remote:[Gmail]/Sent Mail"
@@ -43,7 +43,7 @@ Slave           ":gmail-local:Spam"
 IMAPAccount     flinders
 Host            outlook.office365.com
 User            mahe0054@uni.flinders.edu.au
-PassCmd         "pass auth-sources/mahe0054@outlook.office365.com | head -n 1"
+PassCmd         "pass auth-sources/mahe0054@flinders.edu.au | head -n 1"
 Port            993
 SSLType         IMAPS
 SSLVersions     TLSv1.2
@@ -58,7 +58,7 @@ Inbox           ~/mail/flinders.edu.au/
 
 Channel         f_inbox
 Master          ":flinders-remote:Inbox"
-Slave           ":flinders-local:New"
+Slave           ":flinders-local:Inbox"
 
 Channel         f_keep
 Master          ":flinders-remote:Keep"
@@ -95,7 +95,15 @@ Inbox           ~/mail/rkm.id.au/
 
 Channel         rkm_inbox
 Master          ":rkm-remote:Inbox"
-Slave           ":rkm-local:New"
+Slave           ":rkm-local:Inbox"
+
+Channel         rkm_archive
+Master          ":rkm-remote:Archive"
+Slave           ":rkm-local:Archive"
+
+Channel         rkm_marketing_spam
+Master          ":rkm-remote:Marketing Spam"
+Slave           ":rkm-local:Marketing Spam"
 
 Channel         rkm_sent
 Master          ":rkm-remote:Sent"
@@ -104,6 +112,10 @@ Slave           ":rkm-local:Sent"
 Channel         rkm_keep
 Master          ":rkm-remote:Keep"
 Slave           ":rkm-local:Keep"
+
+Channel         rkm_test
+Master          ":rkm-remote:Test"
+Slave           ":rkm-local:Test"
 
 Channel         rkm_rss
 Master          ":rkm-remote:RSS"
@@ -152,7 +164,7 @@ Inbox           ~/mail/huttriverprovince.com.au/
 
 Channel         hrp_inbox
 Master          ":hrp-remote:Inbox"
-Slave           ":hrp-local:New"
+Slave           ":hrp-local:Inbox"
 
 Channel         hrp_sent
 Master          ":hrp-remote:Sent"
@@ -171,7 +183,7 @@ Slave           ":hrp-local:Spam"
 IMAPAccount     internode
 Host            mail.internode.on.net
 User            eqyiel
-PassCmd         "pass auth-sources/eqyiel@mail.internode.on.net | head -n 1"
+PassCmd         "pass auth-sources/eqyiel@internode.on.net | head -n 1"
 SSLType         IMAPS
 SSLVersions     TLSv1 # internode doesn't support TLSv1.1 or TLSv1.2.
 CertificateFile /etc/ssl/certs/ca-certificates.crt
@@ -185,7 +197,7 @@ Inbox           ~/mail/internode.on.net/
 
 Channel         internode_inbox
 Master          ":internode-remote:Inbox"
-Slave           ":internode-local:New"
+Slave           ":internode-local:Inbox"
 
 Channel         internode_drafts
 Master          ":internode-remote:Drafts"
@@ -208,7 +220,7 @@ Slave           ":internode-local:Bin"
 IMAPAccount     mangochutney
 Host            imap.gmail.com
 User            ruben@mangochutney.com.au
-PassCmd         "pass auth-sources/ruben@imap.gmail.com | head -n 1"
+PassCmd         "pass auth-sources/ruben@mangochutney.com.au | head -n 1"
 SSLType         IMAPS
 SSLVersions     TLSv1.2
 CertificateFile /etc/ssl/certs/ca-certificates.crt
@@ -222,7 +234,7 @@ Inbox           ~/mail/mangochutney.com.au/
 
 Channel         mango_all_mail
 Master          ":mangochutney-remote:[Gmail]/All Mail"
-Slave           ":mangochutney-local:New"
+Slave           ":mangochutney-local:Inbox"
 
 Channel         mango_sent
 Master          ":mangochutney-remote:[Gmail]/Sent Mail"

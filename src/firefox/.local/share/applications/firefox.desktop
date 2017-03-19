@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
-Exec=bash -c "$(which firefox) --no-remote -P r@rkm.id.au" %u
+Exec=bash -c "$(which firefox) -P r@rkm.id.au" %u
 Icon=firefox
 Comment=
 Terminal=false
