@@ -7,36 +7,36 @@ stty -ixon # disable stop
 autoload -U select-word-style
 select-word-style bash
 
-if islinux; then
-  # Arch Build System
-  ABSROOT="${HOME}/build/abs"
-  # Android
-  ANDROID_HOME="/opt/android-sdk"
-  alias emacs="GTK_THEME=Adwaita:dark emacs"
-  PATH="${HOME}/.local/bin:${PATH}"
-  MANPATH="${HOME}/.local/share/man:${MANPATH}"
-  INFOPATH="${HOME}/.local/share/info:${INFOPATH}"
-  BROWSER="firefox"
-  GTAGSLIBPATH="${HOME}/.cache/gtags"
-  TEXMFHOME="${HOME}/local/share/texmf"
-  kpsewhich -var-value TEXMFHOME
-  PATH="${HOME}/.gem/ruby/2.3.0/bin:${PATH}"
-fi
+# if islinux; then
+#   # Arch Build System
+#   ABSROOT="${HOME}/build/abs"
+#   # Android
+#   ANDROID_HOME="/opt/android-sdk"
+#   alias emacs="GTK_THEME=Adwaita:dark emacs"
+#   PATH="${HOME}/.local/bin:${PATH}"
+#   MANPATH="${HOME}/.local/share/man:${MANPATH}"
+#   INFOPATH="${HOME}/.local/share/info:${INFOPATH}"
+#   BROWSER="firefox"
+#   GTAGSLIBPATH="${HOME}/.cache/gtags"
+#   TEXMFHOME="${HOME}/local/share/texmf"
+#   kpsewhich -var-value TEXMFHOME
+#   PATH="${HOME}/.gem/ruby/2.3.0/bin:${PATH}"
+# fi
 
-if isdarwin; then
-  PATH="/usr/local/opt/coreutils/libexec/gnubin:${PATH}"
-  PATH="${HOME}/.local/bin:${PATH}"
-  PATH="${HOME}/Library/Python/2.7/bin:${PATH}"
-  PATH="$(brew --prefix php54):${PATH}"
-  PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
-  [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
-  MANPATH="/usr/local/opt/coreutils/libexec/gnuman:${MANPATH}"
-  PATH="/usr/local/sbin:${PATH}"
-  source "${HOME}/.nix-profile/etc/profile.d/nix.sh"
-  [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
-  NIX_PATH="/nix/var/nix/profiles/per-user/rkm/channels/nixos"
-  # HOMEBREW_GITHUB_API_TOKEN=$(pass ls oauth/homebrew)
-fi
+# if isdarwin; then
+#   PATH="/usr/local/opt/coreutils/libexec/gnubin:${PATH}"
+#   PATH="${HOME}/.local/bin:${PATH}"
+#   PATH="${HOME}/Library/Python/2.7/bin:${PATH}"
+#   PATH="$(brew --prefix php54):${PATH}"
+#   PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+#   [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+#   MANPATH="/usr/local/opt/coreutils/libexec/gnuman:${MANPATH}"
+#   PATH="/usr/local/sbin:${PATH}"
+#   source "${HOME}/.nix-profile/etc/profile.d/nix.sh"
+#   [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+#   NIX_PATH="/nix/var/nix/profiles/per-user/rkm/channels/nixos"
+#   # HOMEBREW_GITHUB_API_TOKEN=$(pass ls oauth/homebrew)
+# fi
 
 # Don't set a prefix in ~/.npmrc, it doesn't do variable expansion very well.
 # It will read from $PREFIX if no prefix is defined in this file and it will be
@@ -80,8 +80,16 @@ SAVEHIST=1000000
 if [[ -z $(pgrep gpg-agent) ]]; then
   eval $(gpg-agent --daemon --enable-ssh-support --sh)
 fi
-export SSH_AUTH_SOCK="/run/user/$(id -u)/gnupg/S.gpg-agent.ssh"
-export GPG_TTY=$(tty)
+
+if islinux; then
+  export SSH_AUTH_SOCK="/run/user/$(id -u)/gnupg/S.gpg-agent.ssh"
+fi
+
+if isdarwin; then
+  export SSH_AUTH_SOCK="${HOME}/.gnupg/S.gpg-agent.ssh"
+fi
+
+# export GPG_TTY=$(tty)
 
 export MSMTP_QUEUE="${HOME}/.cache/msmtp/queue"
 test -d "$MSMTP_QUEUE" || mkdir -p "$MSMTP_QUEUE"
@@ -95,15 +103,15 @@ export EMAIL_CONN_TEST="P"
 # like
 export EMAIL_QUEUE_QUIET="t"
 
-Set dircolors for ls
-d="${HOME}/.local/lib/dircolors-solarized/dircolors.ansi-dark"
-test -r $d && eval "$(dircolors $d)"
+# # Set dircolors for ls
+# d="${HOME}/.local/lib/dircolors-solarized/dircolors.ansi-dark"
+# test -r $d && eval "$(dircolors $d)"
 
 TERM=xterm-256color
 [ -n "$TMUX" ] && export TERM=screen-256color
 LESSHISTFILE=/dev/null # don't want ~/.lesshst
 LC_COLLATE="C"
-PAGER=less
+PAGER="less -R"
 EDITOR="emacsclient -t -a vi"
 VISUAL="emacsclient -t -a vi"
 
@@ -117,14 +125,6 @@ then
   unfunction preexec # may not exist on Debian Jessie
   PS1='$ '
 fi
-
-gpg_p="$(pgrep gpg-agent)"
-
-if [[ $? -eq 1 ]]; then
-    eval "$(gpg-agent --daemon --enable-ssh-support --sh)"
-fi
-
-# SSH_AUTH_SOCK="/Users/rkm/.gnupg/S.gpg-agent.ssh"
 
 # for certain calibre plugins, Windows VSTs
 WINEARCH=win32
@@ -167,14 +167,45 @@ function get-images-from-pdf () {
      -dTextAlphaBits=4 -r150 -sOutputFile=./output%d.png ${1};
 }
 
+function upgrade-casks() {
+  for package in $(brew cask outdated); do
+    brew cask reinstall "$(echo $package | cut -d ' ' -f 1)"
+  done
+}
+
 source "${HOME}/.local/share/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-source "${HOME}/.local/share/zsh/zsh-cdr/cdr.plugin.zsh"
-source "${HOME}/.local/share/zsh/zsh-notify/notify.plugin.zsh"
-source "${HOME}/.local/share/zsh/zaw/zaw.zsh"
+source "${HOME}/.local/share/zsh/zsh-autosuggestions/zsh-autosuggestions.zsh"
 
-bindkey '^S' zaw-history
-bindkey '^R' zaw-history
-bindkey -M filterselect '^S' down-line-or-history
-bindkey -M filterselect '^R' up-line-or-history
+__fzf_use_tmux__() {
+  [ -n "$TMUX_PANE" ] && [ "${FZF_TMUX:-0}" != 0 ] && [ ${LINES:-40} -gt 15 ]
+}
 
-eval "$(direnv hook zsh)"
+__fzfcmd() {
+  __fzf_use_tmux__ &&
+    echo "fzf-tmux -d${FZF_TMUX_HEIGHT:-40%}" || echo "fzf"
+}
+
+# CTRL-R - Paste the selected command from history into the command line
+fzf-history-widget() {
+  local selected num
+  setopt localoptions noglobsubst pipefail 2> /dev/null
+  selected=( $(fc -l 1 |
+    FZF_DEFAULT_OPTS="--height ${FZF_TMUX_HEIGHT:-40%} --reverse $FZF_DEFAULT_OPTS +s --tac -n2..,.. --tiebreak=index --bind=ctrl-r:toggle-sort $FZF_CTRL_R_OPTS --query=${(q)LBUFFER} +m" $(__fzfcmd) -q '^') )
+  local ret=$?
+  if [ -n "$selected" ]; then
+    num=$selected[1]
+    if [ -n "$num" ]; then
+      zle vi-fetch-history -n $num
+    fi
+  fi
+  zle redisplay
+  typeset -f zle-line-init >/dev/null && zle zle-line-init
+  return $ret
+}
+
+zle     -N   fzf-history-widget
+bindkey '^S' fzf-history-widget
+bindkey '^R' fzf-history-widget
+bindkey '^ ' autosuggest-accept # C-SPACE
+
+eval "$(/run/current-system/sw/bin/direnv hook zsh)"
