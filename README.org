@@ -35,6 +35,30 @@ $ ./go.py --stow --all
   On a new machine you probably have to import it, see the script
   ~bin/dconf-restore~.
 
+
+* ~mbsync~
+
+If ~mbsync~ has screwed you by creating duplicates you can remove them by
+stripping out the ~X-TUID~ header.
+
+Think carefully before running this ~fdupes~ command.
+
+#+begin_example
+$ find . -type f -exec sed -i '/X-TUID.*/d' "{}" \; && fdupes -R . -dNp
+#+end_example
+
+You'll then need to use the [[http://dovecot.org/tools/maildir-size-fix.pl][~maildir_size_fix.pl~]] script, otherwise you'll see
+messages like this👍
+
+#+begin_example
+Mar 22 13:16:01 ayanami dovecot[26344]: imap(eqyiel): Error: Corrupted index cache file /home/eqyiel/.cache/dovecot2/index/internode.on.net/Inbox/dovecot.index.cache: Broken physical size for mail UID 1751 in mailbox internode.on.net/Inbox: read(/home/eqyiel/mail/internode.on.net/Inbox/cur/1489985638.14390_29432.ayanami,U=1120:2,FS) failed: Cached message size larger than expected (364222 > 364201, box=internode.on.net/Inbox, UID=1751, cached Message-Id=<14016.8940.169398.1468414394.10.example.com>)
+Mar 22 13:16:01 ayanami dovecot[26344]: imap(eqyiel): Error: read(/home/eqyiel/mail/internode.on.net/Inbox/cur/1489985638.14390_29432.ayanami,U=1120:2,FS) failed: Cached message size larger than expected (364222 > 364201, box=internode.on.net/Inbox, UID=1751, cached Message-Id=<14016.8940.169398.1468414394.10.0@originenergy.com.au>) (FETCH BODY[] for mailbox internode.on.net/Inbox UID 1751)
+#+end_example
+
+#+begin_example
+./maildir-size-fix.pl -p -a -f -c -r -v /path/to/mail
+#+end_example
+
 * NixOS
 
 ** =nix-env=

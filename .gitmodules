@@ -28,15 +28,12 @@
 [submodule "src/zsh/.local/share/zsh/zaw"]
 	path = src/zsh/.local/share/zsh/zaw
 	url = https://github.com/zsh-users/zaw
-[submodule "src/zsh/.local/share/zsh/zsh-cdr"]
-	path = src/zsh/.local/share/zsh/zsh-cdr
-	url = https://github.com/willghatch/zsh-cdr
-[submodule "src/zsh/.local/share/zsh/zsh-notify"]
-	path = src/zsh/.local/share/zsh/zsh-notify
-	url = https://github.com/marzocchi/zsh-notify
 [submodule "lib/grml-etc-core"]
 	path = lib/grml-etc-core
 	url = https://github.com/grml/grml-etc-core
 [submodule "lib/nixpkgs"]
 	path = lib/nixpkgs
 	url = git@github.com:eqyiel/nixpkgs.git
+[submodule "src/zsh/.local/share/zsh/zsh-autosuggestions"]
+	path = src/zsh/.local/share/zsh/zsh-autosuggestions
+	url = git@github.com:zsh-users/zsh-autosuggestions.git
