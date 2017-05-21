@@ -73,10 +73,6 @@ PACKAGER="Ruben Maher <r@rkm.id.au>"
 
 # alias emacs="GTK_THEME=Adwaita:dark emacs"
 
-HISTFILE="${HOME}/.zsh_history"
-HISTSIZE=1000000
-SAVEHIST=1000000
-
 if [[ -z $(pgrep gpg-agent) ]]; then
   eval $(gpg-agent --daemon --enable-ssh-support --sh)
 fi
@@ -185,18 +181,65 @@ __fzfcmd() {
     echo "fzf-tmux -d${FZF_TMUX_HEIGHT:-40%}" || echo "fzf"
 }
 
-# CTRL-R - Paste the selected command from history into the command line
+# History stuff inspired by a comment by howeyc on Hacker News:
+#
+# "I do something very similar, but without the prompt settings. I have settings
+# in .bashrc[0] to have the history file based on date. I then use fzf[1]
+# (fzf-tmux is great) and a grep-like tool(sift[2]) to use for ctrl-r that
+# fuzzy-searches history and orders by usage frequency[3]. This way I can easily
+# search for the command I'm thinking of fairly quickly. Particularly useful for
+# those times I want to run a command again that was quite long or had more than
+# a couple options/flags."
+# ---
+# [0] HISTFILE="${HOME}/Sync/Dotfiles/history/$(date -u +%Y-%m-%d.%H.%M.%S)_${HOSTNAME_SHORT}_$$"; export HISTFILE
+# [1] https://github.com/junegunn/fzf
+# [2] https://sift-tool.org/
+# [3] __fzf_history__() {
+# sift --no-color -e "^[^#]" --files "_${HOSTNAME_SHORT}_" -N --no-filename $HOME/Sync/Dotfiles/history | sort | uniq -c | sort | $(__fzfcmd) +s --tac +m -n1..,.. --tiebreak=index --toggle-sort=ctrl-r | sed "s/ [0-9] *//"
+# }
+#
+# See the thread at https://news.ycombinator.com/item?id=11806748
+#
+# Resources:
+# http://sgeb.io/posts/2014/04/zsh-zle-custom-widgets/
+# https://github.com/junegunn/fzf/blob/master/shell/key-bindings.zsh
+
+export RKM_HIST_DIR="${HOME}/.config/dotfiles/history"
+test -d "$RKM_HIST_DIR" || mkdir -p "$RKM_HIST_DIR"
+export HISTFILE="${RKM_HIST_DIR}/$(date -u +%Y-%m-%d.%H.%M.%S)_$(hostname)_$$"
+HISTSIZE=1000000
+SAVEHIST=$HISTSIZE
+
+setopt BANG_HIST                 # Treat the '!' character specially during expansion.
+setopt EXTENDED_HISTORY          # Write the history file in the ":start:elapsed;command" format.
+setopt INC_APPEND_HISTORY        # Write to the history file immediately, not when the shell exits.
+setopt SHARE_HISTORY             # Share history between all sessions.
+setopt HIST_EXPIRE_DUPS_FIRST    # Expire duplicate entries first when trimming history.
+setopt HIST_IGNORE_DUPS          # Don't record an entry that was just recorded again.
+setopt HIST_IGNORE_ALL_DUPS      # Delete old recorded entry if new entry is a duplicate.
+setopt HIST_FIND_NO_DUPS         # Do not display a line previously found.
+setopt HIST_IGNORE_SPACE         # Don't record an entry starting with a space.
+setopt HIST_SAVE_NO_DUPS         # Don't write duplicate entries in the history file.
+setopt HIST_REDUCE_BLANKS        # Remove superfluous blanks before recording entry.
+setopt HIST_VERIFY               # Don't execute immediately upon history expansion.
+setopt HIST_BEEP                 # Beep when accessing nonexistent history.
+
 fzf-history-widget() {
   local selected num
   setopt localoptions noglobsubst pipefail 2> /dev/null
-  selected=( $(fc -l 1 |
-    FZF_DEFAULT_OPTS="--height ${FZF_TMUX_HEIGHT:-40%} --reverse $FZF_DEFAULT_OPTS +s --tac -n2..,.. --tiebreak=index --bind=ctrl-r:toggle-sort $FZF_CTRL_R_OPTS --query=${(q)LBUFFER} +m" $(__fzfcmd) -q '^') )
+  selected=(
+    $(sift --no-color -e "^[^#]" --files "*_$(hostname)_*" -N --no-filename ${RKM_HIST_DIR} |
+        sed "s/^[^;]*;//" | # assuming EXTENDED_HISTORY is set (":start:elapsed;command" format)
+        sort |
+        uniq -c |
+        sort |
+        sed "s/^[[:space:]]*[0-9]*[[:space:]]*//" |
+        FZF_DEFAULT_OPTS="--height ${FZF_TMUX_HEIGHT:-40%} --reverse $FZF_DEFAULT_OPTS +s --tac -n2..,.. --tiebreak=index --bind=ctrl-r:toggle-sort $FZF_CTRL_R_OPTS --query=${(q)LBUFFER} +m" $(__fzfcmd) -q '^'
+    )
+  )
   local ret=$?
   if [ -n "$selected" ]; then
-    num=$selected[1]
-    if [ -n "$num" ]; then
-      zle vi-fetch-history -n $num
-    fi
+    zle -U "$selected"
   fi
   zle redisplay
   typeset -f zle-line-init >/dev/null && zle zle-line-init
