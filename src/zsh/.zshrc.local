@@ -176,7 +176,7 @@ __fzfcmd() {
 # http://sgeb.io/posts/2014/04/zsh-zle-custom-widgets/
 # https://github.com/junegunn/fzf/blob/master/shell/key-bindings.zsh
 
-export RKM_HIST_DIR="${HOME}/.config/dotfiles/history"
+export RKM_HIST_DIR="${HOME}/history/zsh"
 test -d "$RKM_HIST_DIR" || mkdir -p "$RKM_HIST_DIR"
 export HISTFILE="${RKM_HIST_DIR}/$(date -u +%Y-%m-%d.%H.%M.%S)_$(hostname)_$$"
 HISTSIZE=1000000
