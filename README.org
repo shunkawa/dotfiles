@@ -83,7 +83,7 @@ Mar 22 13:16:01 ayanami dovecot[26344]: imap(eqyiel): Error: read(/home/eqyiel/m
   $ brew tap homebrew/versions
   $ brew install homebrew/versions/gnupg21
   $ brew install pass stow
-  $ brew cask install virtualbox chromium slack 1password transmit harvest sketch iterm2
+  $ brew cask install virtualbox chromium slack 1password transmit harvest sketch iterm2 genymotion
   #+end_example
 
   For the virtual machine, set interface 1 to NAT, second to Host-only Adapter.
