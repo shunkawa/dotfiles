@@ -89,12 +89,14 @@ in {
 
   # https://github.com/benhutchins/.dotfiles/blob/master/Mac.md#fix-mac-issues
 
-  # environment.variables = {
-  #   # this is the key to getting aspell to shut up?
-  #   # nix-repl> "${pkgs.aspellDicts.en}/lib/aspell"
-  #   # "/nix/store/6523yd8172rghf51vcknhrrvpd24sg45-aspell-dict-en-2016.06.26-0/lib/aspell"
-  #   ASPELL_CONF = "data-dir ${pkgs.aspellDicts.en}/lib/aspell";
-  # };
+  environment.variables = {
+    # If you don't do this, Emacs will throw errors like this because it can't
+    # find the dictionary files:
+    # Starting new Ispell process /run/current-system/sw/bin/aspell with english dictionary...
+    # Error enabling Flyspell mode:
+    # (Error: The file "/nix/store/ ... /lib/aspell/english" can not be opened for reading.)
+    ASPELL_CONF = "data-dir /run/current-system/sw/lib/aspell";
+  };
 
   environment.shellAliases = {
     emacs = "$(dirname $(dirname $(readlink -f $(which Emacs))))/Applications/Emacs.app/Contents/MacOS/Emacs";
