@@ -1,0 +1,4 @@
+src/ssh/.ssh/known_hosts
+src/nextcloud/.local/share/data/Nextcloud/nextcloud.cfg.*
+src/gnome3/.config/gtk-3.0/bookmarks
+src/gnome3/.config/gtk-3.0/servers
