@@ -111,9 +111,9 @@ function mirror() {
     --convert-links \
     $1
 }
-# $ fplop 00aae6
+# $ fplop 00AAE6
 # $cerulean: #00aae6;
-function fplop() { echo "\$$(plop -k $1): #$1;" }
+function fplop() { echo "\$$(plop -k $1): #$1;" | tr "[:upper:]" "[:lower:]" }
 
 function eg() {
   MAN_KEEP_FORMATTING=1 man "$@" 2>/dev/null \
