@@ -65,6 +65,7 @@ in {
     flow
     jekyll
     lftp
+    localPackages.fontcustom
     localPackages.nodePackages."@jasondibenedetto/plop"
     localPackages.nodePackages.eslint-cli
     localPackages.nodePackages.flow-typed
