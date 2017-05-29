@@ -14,7 +14,6 @@ SyncState       *
 # Port            993
 # # SSLVersions     TLSv1.2
 # PassCmd            "pass auth-sources/postmaster-sucks@hotmail.com | head -n 1"
-# CertificateFile /etc/ssl/certs/ca-certificates.crt
 
 # IMAPStore       postmaster-remote
 # Account         postmaster
@@ -36,7 +35,6 @@ User            eqyiel@gmail.com
 PassCmd         "pass auth-sources/eqyiel@gmail.com | head -n 1"
 SSLType         IMAPS
 SSLVersions     TLSv1.2
-CertificateFile /etc/ssl/certs/ca-certificates.crt
 
 IMAPStore       gmail-remote
 Account         gmail
@@ -70,7 +68,6 @@ PassCmd         "pass auth-sources/mahe0054@flinders.edu.au | head -n 1"
 Port            993
 SSLType         IMAPS
 SSLVersions     TLSv1.2
-CertificateFile /etc/ssl/certs/ca-certificates.crt
 
 IMAPStore       flinders-remote
 Account         flinders
@@ -112,7 +109,6 @@ User            r@rkm.id.au
 PassCmd         "pass auth-sources/r@rkm.id.au | head -n 1"
 SSLType         IMAPS
 SSLVersions     TLSv1.2
-CertificateFile /etc/ssl/certs/ca-certificates.crt
 
 IMAPStore       rkm-remote
 Account         rkm
@@ -134,7 +130,6 @@ User            info@huttriverprovince.com.au
 PassCmd         "pass auth-sources/info@huttriverprovince.com.au | head -n 1"
 SSLType         IMAPS
 SSLVersions     TLSv1.2
-CertificateFile /etc/ssl/certs/ca-certificates.crt
 
 IMAPStore       hrp-remote
 Account         hrp
@@ -156,7 +151,6 @@ User            eqyiel
 PassCmd         "pass auth-sources/eqyiel@internode.on.net | head -n 1"
 SSLType         IMAPS
 SSLVersions     TLSv1 # internode doesn't support TLSv1.1 or TLSv1.2.
-CertificateFile /etc/ssl/certs/ca-certificates.crt
 
 IMAPStore       internode-remote
 Account         internode
@@ -198,7 +192,6 @@ User            ruben@mangochutney.com.au
 PassCmd         "pass auth-sources/ruben@mangochutney.com.au | head -n 1"
 SSLType         IMAPS
 SSLVersions     TLSv1.2
-CertificateFile /etc/ssl/certs/ca-certificates.crt
 
 IMAPStore       mangochutney-remote
 Account         mangochutney
