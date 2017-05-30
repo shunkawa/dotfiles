@@ -113,6 +113,9 @@ in {
     enableFzfHistory = true;
   };
 
+  environment.etc."ssl/certs/ca-certificates.crt".source =
+    "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
+
   nixpkgs.config.allowUnfree = true;
 
   # github.com/facebook/react-native/issues/9309#issuecomment-238966924
