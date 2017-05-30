@@ -197,24 +197,24 @@ IMAPStore       mangochutney-remote
 Account         mangochutney
 
 MaildirStore    mangochutney-local
-Path            ~/mail/mangochutney.com.au/
-Inbox           ~/mail/mangochutney.com.au/
+Path            ~/mail/
+Inbox           ~/mail/
 
 Channel         mango_all_mail
 Master          ":mangochutney-remote:[Gmail]/All Mail"
-Slave           ":mangochutney-local:Inbox"
+Slave           ":mangochutney-local:[ruben@mangochutney.com.au] All Mail"
 
 Channel         mango_sent
 Master          ":mangochutney-remote:[Gmail]/Sent Mail"
-Slave           ":mangochutney-local:Sent"
+Slave           ":mangochutney-local:[ruben@mangochutney.com.au] Sent Mail"
 
 Channel         mango_bin
 Master          ":mangochutney-remote:[Gmail]/Bin"
-Slave           ":mangochutney-local:Bin"
+Slave           ":mangochutney-local:[ruben@mangochutney.com.au] Bin"
 
 Channel         mango_spam
 Master          ":mangochutney-remote:[Gmail]/Spam"
-Slave           ":mangochutney-local:Spam"
+Slave           ":mangochutney-local:[ruben@mangochutney.com.au] Spam"
 
 Group mangochutney.com.au mango_all_mail mango_sent mango_bin mango_spam
 
