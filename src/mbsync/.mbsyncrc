@@ -21,6 +21,7 @@ SyncState       *
 # MaildirStore    postmaster-local
 # Path            ~/mail/hotmail.com/
 # Inbox           ~/mail/hotmail.com/
+# Flatten         .
 
 # Channel         postmaster-sucks
 # Master          ":postmaster-remote:"
@@ -40,24 +41,27 @@ IMAPStore       gmail-remote
 Account         gmail
 
 MaildirStore    gmail-local
-Path            ~/mail/gmail.com/
-Inbox           ~/mail/gmail.com/
+Path            ~/mail/eqyiel@gmail.com/
+Inbox           ~/mail/eqyiel@gmail.com/
+Flatten         .
 
-Channel         g_all_mail
+Channel         gmail_all_mail
 Master          ":gmail-remote:[Gmail]/All Mail"
-Slave           ":gmail-local:Inbox"
+Slave           ":gmail-local:All Mail"
 
-Channel         g_sent
+Channel         gmail_sent
 Master          ":gmail-remote:[Gmail]/Sent Mail"
-Slave           ":gmail-local:Sent"
+Slave           ":gmail-local:Sent Mail"
 
-Channel         g_bin
+Channel         gmail_bin
 Master          ":gmail-remote:[Gmail]/Bin"
 Slave           ":gmail-local:Bin"
 
-Channel         g_spam
+Channel         gmail_spam
 Master          ":gmail-remote:[Gmail]/Spam"
 Slave           ":gmail-local:Spam"
+
+Group eqyiel@gmail.com gmail_all_mail gmail_sent gmail_bin gmail_spam
 
 # mahe0054@flinders.edu.au
 
@@ -73,33 +77,14 @@ IMAPStore       flinders-remote
 Account         flinders
 
 MaildirStore    flinders-local
-Path            ~/mail/flinders.edu.au/
-Inbox           ~/mail/flinders.edu.au/Inbox
+Path            ~/mail/mahe0054@flinders.edu.au/
+Inbox           ~/mail/mahe0054@flinders.edu.au/Inbox
+Flatten         .
 
 Channel         mahe0054@flinders.edu.au
 Master          ":flinders-remote:"
 Slave           ":flinders-local:"
 Patterns        *
-
-# Channel         f_inbox
-# Master          ":flinders-remote:Inbox"
-# Slave           ":flinders-local:Inbox"
-
-# Channel         f_keep
-# Master          ":flinders-remote:Keep"
-# Slave           ":flinders-local:Keep"
-
-# Channel         f_sent
-# Master          ":flinders-remote:Sent Items"
-# Slave           ":flinders-local:Sent"
-
-# Channel         f_deleted
-# Master          ":flinders-remote:Deleted Items"
-# Slave           ":flinders-local:Bin"
-
-# Channel         f_junk
-# Master          ":flinders-remote:Junk E-Mail"
-# Slave           ":flinders-local:Spam"
 
 # r@rkm.id.au
 
@@ -114,12 +99,13 @@ IMAPStore       rkm-remote
 Account         rkm
 
 MaildirStore    rkm-local
-Path            ~/mail/rkm.id.au/
-Inbox           ~/mail/rkm.id.au/Inbox
+Path            ~/mail/r@rkm.id.au/
+Inbox           ~/mail/r@rkm.id.au/Inbox
+Flatten         .
 
 Channel         r@rkm.id.au
-Master          :rkm-remote:
-Slave           :rkm-local:
+Master          ":rkm-remote:"
+Slave           ":rkm-local:"
 Patterns        *
 
 # info@huttriverprovince.com.au
@@ -135,8 +121,9 @@ IMAPStore       hrp-remote
 Account         hrp
 
 MaildirStore    hrp-local
-Path            ~/mail/huttriverprovince.com.au/
-Inbox           ~/mail/huttriverprovince.com.au/Inbox
+Path            ~/mail/info@huttriverprovince.com.au/
+Inbox           ~/mail/info@huttriverprovince.com.au/Inbox
+Flatten         .
 
 Channel         info@huttriverprovince.com.au
 Master          :hrp-remote:
@@ -156,33 +143,14 @@ IMAPStore       internode-remote
 Account         internode
 
 MaildirStore    internode-local
-Path            ~/mail/internode.on.net/
-Inbox           ~/mail/internode.on.net/Inbox
+Path            ~/mail/eqyiel@internode.on.net/
+Inbox           ~/mail/eqyiel@internode.on.net/Inbox
+Flatten         .
 
 Channel         eqyiel@internode.on.net
 Master          :internode-remote:
 Slave           :internode-local:
 Patterns        *
-
-# Channel         internode_inbox
-# Master          ":internode-remote:Inbox"
-# Slave           ":internode-local:Inbox"
-
-# Channel         internode_drafts
-# Master          ":internode-remote:Drafts"
-# Slave           ":internode-local:Drafts"
-
-# Channel         internode_sent
-# Master          ":internode-remote:Sent"
-# Slave           ":internode-local:Sent"
-
-# Channel         internode_spam
-# Master          ":internode-remote:Spam"
-# Slave           ":internode-local:Spam"
-
-# Channel         internode_trash
-# Master          ":internode-remote:Trash"
-# Slave           ":internode-local:Bin"
 
 # ruben@mangochutney.com.au
 
@@ -197,26 +165,31 @@ IMAPStore       mangochutney-remote
 Account         mangochutney
 
 MaildirStore    mangochutney-local
-Path            ~/mail/
-Inbox           ~/mail/
+Path            ~/mail/ruben@mangochutney.com.au/
+Inbox           ~/mail/ruben@mangochutney.com.au/
+Flatten         .
 
 Channel         mango_all_mail
 Master          ":mangochutney-remote:[Gmail]/All Mail"
-Slave           ":mangochutney-local:[ruben@mangochutney.com.au] All Mail"
+Slave           ":mangochutney-local:All Mail"
 
 Channel         mango_sent
 Master          ":mangochutney-remote:[Gmail]/Sent Mail"
-Slave           ":mangochutney-local:[ruben@mangochutney.com.au] Sent Mail"
+Slave           ":mangochutney-local:Sent Mail"
+
+Channel         mango_drafts
+Master          ":mangochutney-remote:[Gmail]/Drafts"
+Slave           ":mangochutney-local:Drafts"
 
 Channel         mango_bin
 Master          ":mangochutney-remote:[Gmail]/Bin"
-Slave           ":mangochutney-local:[ruben@mangochutney.com.au] Bin"
+Slave           ":mangochutney-local:Bin"
 
 Channel         mango_spam
 Master          ":mangochutney-remote:[Gmail]/Spam"
-Slave           ":mangochutney-local:[ruben@mangochutney.com.au] Spam"
+Slave           ":mangochutney-local:Spam"
 
-Group mangochutney.com.au mango_all_mail mango_sent mango_bin mango_spam
+Group ruben@mangochutney.com.au mango_all_mail mango_sent mango_drafts mango_bin mango_spam
 
 # Local Variables:
 # mode: conf-space
