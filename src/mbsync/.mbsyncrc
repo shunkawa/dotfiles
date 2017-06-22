@@ -54,7 +54,7 @@ Master          ":gmail-remote:[Gmail]/Sent Mail"
 Slave           ":gmail-local:Sent Mail"
 
 Channel         gmail_bin
-Master          ":gmail-remote:[Gmail]/Bin"
+Master          ":gmail-remote:[Gmail]/Trash"
 Slave           ":gmail-local:Bin"
 
 Channel         gmail_spam
@@ -182,7 +182,7 @@ Master          ":mangochutney-remote:[Gmail]/Drafts"
 Slave           ":mangochutney-local:Drafts"
 
 Channel         mango_bin
-Master          ":mangochutney-remote:[Gmail]/Bin"
+Master          ":mangochutney-remote:[Gmail]/Trash"
 Slave           ":mangochutney-local:Bin"
 
 Channel         mango_spam
