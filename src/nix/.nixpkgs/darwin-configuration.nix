@@ -22,6 +22,7 @@ in {
     curl
     direnv
     emacs
+    ffmpeg
     file
     findutils
     fzf
@@ -34,10 +35,12 @@ in {
     haskellPackages.ShellCheck
     htop
     isync
+    localPackages.nodePackages.reddit-oauth-helper
     msmtp
+    mu
+    nix-prefetch-scripts
     nix-repl
     nixops
-    notmuch
     openssh
     pass
     pwgen
@@ -45,6 +48,7 @@ in {
     rsync
     sift
     silver-searcher
+    socat
     stow
     syncthing
     tmux
@@ -54,11 +58,6 @@ in {
     wget
     which
 
-    # not supported on darwin?
-    # mopidy
-    # mopidy-spotify
-    # mopidy-youtube
-    # mopidy-soundcloud
     mpv
 
     apacheHttpd
@@ -112,6 +111,9 @@ in {
     enableFzfGit = true;
     enableFzfHistory = true;
   };
+
+  # Necessary for emacs support files (mu4e)
+  environment.pathsToLink = [ "/share" ];
 
   environment.etc."ssl/certs/ca-certificates.crt".source =
     "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
