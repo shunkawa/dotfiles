@@ -70,6 +70,8 @@ in {
     localPackages.nodePackages.flow-typed
     localPackages.nodePackages.grunt-cli
     localPackages.nodePackages.imapnotify
+    localPackages.nodePackages.prettier
+    localPackages.nodePackages.prettier-eslint-cli
     localPackages.nodePackages.react-native-cli
     localPackages.nodePackages.tern
     localPackages.nodePackages.webpack
