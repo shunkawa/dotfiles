@@ -54,7 +54,7 @@ Master          ":gmail-remote:[Gmail]/Sent Mail"
 Slave           ":gmail-local:Sent Mail"
 
 Channel         gmail_bin
-Master          ":gmail-remote:[Gmail]/Trash"
+Master          ":gmail-remote:[Gmail]/Bin"
 Slave           ":gmail-local:Bin"
 
 Channel         gmail_spam
@@ -67,7 +67,7 @@ Group eqyiel@gmail.com gmail_all_mail gmail_sent gmail_bin gmail_spam
 
 IMAPAccount     flinders
 Host            outlook.office365.com
-User            mahe0054@uni.flinders.edu.au
+User            mahe0054@flinders.edu.au
 PassCmd         "pass auth-sources/mahe0054@flinders.edu.au | head -n 1"
 Port            993
 SSLType         IMAPS
@@ -182,7 +182,7 @@ Master          ":mangochutney-remote:[Gmail]/Drafts"
 Slave           ":mangochutney-local:Drafts"
 
 Channel         mango_bin
-Master          ":mangochutney-remote:[Gmail]/Trash"
+Master          ":mangochutney-remote:[Gmail]/Bin"
 Slave           ":mangochutney-local:Bin"
 
 Channel         mango_spam
