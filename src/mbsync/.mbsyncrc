@@ -130,28 +130,6 @@ Master          :hrp-remote:
 Slave           :hrp-local:
 Patterns        *
 
-# eqyiel@internode.on.net
-
-IMAPAccount     internode
-Host            mail.internode.on.net
-User            eqyiel
-PassCmd         "pass auth-sources/eqyiel@internode.on.net | head -n 1"
-SSLType         IMAPS
-SSLVersions     TLSv1 # internode doesn't support TLSv1.1 or TLSv1.2.
-
-IMAPStore       internode-remote
-Account         internode
-
-MaildirStore    internode-local
-Path            ~/mail/eqyiel@internode.on.net/
-Inbox           ~/mail/eqyiel@internode.on.net/Inbox
-Flatten         .
-
-Channel         eqyiel@internode.on.net
-Master          :internode-remote:
-Slave           :internode-local:
-Patterns        *
-
 # ruben@mangochutney.com.au
 
 IMAPAccount     mangochutney
