@@ -182,6 +182,17 @@ in {
         rm -rf "$out/tmp"
       '';
     };
+
+    emacs = lib.overrideDerivation
+      (pkgs.emacs.override { srcRepo = true; }) (attrs: {
+        name = "emacs-git";
+        src = pkgs.fetchgit {
+          url = "git://git.sv.gnu.org/emacs.git";
+          sha256 = "1424jc12qq2fhcf10rh0m0ssznr5v3p284xi9aw6fpnni969cr8f";
+          rev = "273f4bde39af5d87f10fd58f35b666dfa8a996a3";
+        };
+        patches = [];
+      });
   };
 
   launchd.user.agents.syncthing = {
