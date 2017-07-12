@@ -141,11 +141,11 @@ in {
     # with ocaml on Darwin.
     flow = with pkgs; stdenv.mkDerivation rec {
       name = "flow";
-      version = "0.47.0";
+      version = "0.49.1";
 
       src = fetchurl {
         url = "https://github.com/facebook/flow/releases/download/v${version}/${name}-osx-v${version}.zip";
-        sha256 = "08wr9dl9rr6qaf6x4wpwiq0pvll5spyxg0i5nmj1np8p7xjl1wzv";
+        sha256 = "0hhd4gpcl7vxy8j07if106102a9pzm3fwghhc6kv44cyxnj18bk0";
       };
 
       buildInputs = [ unzip ];
