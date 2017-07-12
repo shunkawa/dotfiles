@@ -163,11 +163,11 @@ in {
 
     syncthing = with pkgs; stdenv.mkDerivation rec {
       name = "syncthing";
-      version = "0.14.27";
+      version = "0.14.32";
 
       src = fetchurl {
         url = "https://github.com/syncthing/syncthing/releases/download/v${version}/syncthing-macosx-amd64-v${version}.tar.gz";
-        sha256 = "1ami5d1p6cws2m0va7fjqpzbg7rbkxiiv7y7is1h5pgwp302ky1a";
+        sha256 = "0588xc7s3q68znxdvgysyvprdr13pmmwnj1sy5qms50hqizyima9";
       };
 
       buildInputs = [ gnutar ];
