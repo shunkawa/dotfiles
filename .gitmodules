@@ -37,3 +37,6 @@
 [submodule "src/zsh/.local/share/zsh/zsh-autosuggestions"]
 	path = src/zsh/.local/share/zsh/zsh-autosuggestions
 	url = git@github.com:zsh-users/zsh-autosuggestions.git
+[submodule "src/nix/.nixpkgs/darwin/nixpkgs"]
+	path = src/nix/.nixpkgs/darwin/nixpkgs
+	url = git@github.com:eqyiel/nixpkgs.git

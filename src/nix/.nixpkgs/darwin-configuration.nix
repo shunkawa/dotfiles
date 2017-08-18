@@ -58,7 +58,7 @@ in {
     wget
     which
 
-    mpv
+    # mpv
 
     apacheHttpd
     flow
@@ -70,7 +70,6 @@ in {
     localPackages.nodePackages.flow-typed
     localPackages.nodePackages.grunt-cli
     localPackages.nodePackages.imapnotify
-    localPackages.nodePackages.prettier
     localPackages.nodePackages.prettier-eslint-cli
     localPackages.nodePackages.react-native-cli
     localPackages.nodePackages.tern
@@ -79,7 +78,7 @@ in {
     localPackages.nodePackages.yarn
     localPackages.scss-lint
     nodePackages_6_x.node2nix
-    nodejs-7_x
+    nodejs-8_x
     php
     php70Packages.composer
     php70Packages.phpcbf
@@ -104,9 +103,6 @@ in {
     emacs = "$(dirname $(dirname $(readlink -f $(which Emacs))))/Applications/Emacs.app/Contents/MacOS/Emacs";
   };
 
-  # Create /etc/bashrc that loads the nix-darwin environment.
-  # programs.bash.enable = true;
-
   programs.zsh = {
     enable = true;
     enableFzfCompletion = true;
@@ -114,8 +110,9 @@ in {
     enableFzfHistory = true;
   };
 
-  # Necessary for emacs support files (mu4e)
-  environment.pathsToLink = [ "/share" ];
+  environment.pathsToLink = [
+   "/share/emacs"   # Necessary for emacs support files (mu4e)
+  ];
 
   environment.etc."ssl/certs/ca-certificates.crt".source =
     "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
