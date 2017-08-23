@@ -111,6 +111,18 @@ function mirror() {
     --convert-links \
     $1
 }
+
+function get-page() {
+  wget \
+    --adjust-extension \
+    --span-hosts \
+    --convert-links \
+    --page-requisites \
+    --no-clobber \
+    -e robots=off \
+    $1
+}
+
 # $ fplop 00AAE6
 # $cerulean: #00aae6;
 function fplop() { echo "\$$(plop -k $1): #$1;" | tr "[:upper:]" "[:lower:]" }
@@ -139,6 +151,11 @@ function upgrade-casks() {
   for package in $(brew cask outdated); do
     brew cask reinstall "$(echo $package | cut -d ' ' -f 1)"
   done
+}
+
+function install-package-and-peerdependencies () {
+  npm info "$1@latest" peerDependencies --json |
+    command sed 's/[\{\},]//g ; s/: /@/g' | xargs yarn add --dev "$1@latest"
 }
 
 source "${HOME}/.local/share/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"

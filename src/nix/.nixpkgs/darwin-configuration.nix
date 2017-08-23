@@ -2,9 +2,18 @@
 
 let
 
-localPackages = (import ./pkgs/all-packages.nix) {
-    inherit config lib pkgs;
+  localPackages = (import ./pkgs/all-packages.nix) {
+  inherit config lib pkgs;
 };
+
+# TODO: pin to a specific version of nixpkgs like this:
+# nixpkgsMaster = import ((import <nixpkgs> { }).fetchFromGitHub {
+#   owner = "NixOS";
+#   repo = "nixpkgs";
+#   rev = "fd22d671ecad983fbbbd92c4626204f09c9af8ff";
+#   sha256 = "0pn8w5v2b7c82nr0zbb91bfzylr97hq3knwhlc8xhzibhp0d723a";
+# }) { config = { }; };
+# then, for example: nixpkgsMaster.pkgs.nodejs-8_x
 
 in {
   imports = [
@@ -61,6 +70,7 @@ in {
     # mpv
 
     apacheHttpd
+    awsebcli
     flow
     jekyll
     lftp
@@ -73,7 +83,6 @@ in {
     localPackages.nodePackages.prettier-eslint-cli
     localPackages.nodePackages.react-native-cli
     localPackages.nodePackages.tern
-    localPackages.nodePackages.webpack
     localPackages.nodePackages.wscat
     localPackages.nodePackages.yarn
     localPackages.scss-lint
@@ -111,7 +120,7 @@ in {
   };
 
   environment.pathsToLink = [
-   "/share/emacs"   # Necessary for emacs support files (mu4e)
+    "/share/emacs"   # Necessary for emacs support files (mu4e)
   ];
 
   environment.etc."ssl/certs/ca-certificates.crt".source =
@@ -138,11 +147,11 @@ in {
     # with ocaml on Darwin.
     flow = with pkgs; stdenv.mkDerivation rec {
       name = "flow";
-      version = "0.49.1";
+      version = "0.53.1";
 
       src = fetchurl {
         url = "https://github.com/facebook/flow/releases/download/v${version}/${name}-osx-v${version}.zip";
-        sha256 = "0hhd4gpcl7vxy8j07if106102a9pzm3fwghhc6kv44cyxnj18bk0";
+        sha256 = "0y2qkq2ba904pd5rri7b9943z8nw1886h61ny9a467g1d2w6q26x";
       };
 
       buildInputs = [ unzip ];
@@ -182,14 +191,23 @@ in {
 
     emacs = lib.overrideDerivation
       (pkgs.emacs.override { srcRepo = true; }) (attrs: {
-        name = "emacs-git";
-        src = pkgs.fetchgit {
-          url = "git://git.sv.gnu.org/emacs.git";
-          sha256 = "1424jc12qq2fhcf10rh0m0ssznr5v3p284xi9aw6fpnni969cr8f";
-          rev = "273f4bde39af5d87f10fd58f35b666dfa8a996a3";
-        };
-        patches = [];
-      });
+      name = "emacs-git";
+      src = pkgs.fetchgit {
+        url = "git://git.sv.gnu.org/emacs.git";
+        sha256 = "1424jc12qq2fhcf10rh0m0ssznr5v3p284xi9aw6fpnni969cr8f";
+        rev = "273f4bde39af5d87f10fd58f35b666dfa8a996a3";
+      };
+      patches = [];
+    });
+
+    nodejs-8_x = pkgs.nodejs-8_x.overrideAttrs (attrs: rec {
+      name = "nodejs-${version}";
+      version = "8.3.0";
+      src = pkgs.fetchurl {
+        url = "https://nodejs.org/download/release/v${version}/node-v${version}.tar.xz";
+        sha256 = "0lbfp7j73ig0xa3gh8wnl4g3lji7lm34l0ybfys4swl187c3da63";
+      };
+    });
   };
 
   launchd.user.agents.syncthing = {
