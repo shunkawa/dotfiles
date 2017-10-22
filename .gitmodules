@@ -37,6 +37,9 @@
 [submodule "src/nix/.nixpkgs/darwin"]
 	path = src/nix/.nixpkgs/darwin
 	url = git@github.com:eqyiel/nixpkgs.git
-[submodule "src/nix/.nixpkgs/nixpkgs-mozilla"]
-	path = src/nix/.nixpkgs/nixpkgs-mozilla
+[submodule "nix/.config/nixpkgs/lib/home-manager"]
+	path = nix/.config/nixpkgs/lib/home-manager
+	url = git@github.com:rycee/home-manager.git
+[submodule "nix/.config/nixpkgs/lib/nixpkgs-mozilla"]
+	path = nix/.config/nixpkgs/lib/nixpkgs-mozilla
 	url = git@github.com:mozilla/nixpkgs-mozilla.git
