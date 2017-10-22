@@ -31,12 +31,12 @@
 [submodule "lib/grml-etc-core"]
 	path = lib/grml-etc-core
 	url = https://github.com/grml/grml-etc-core
-[submodule "lib/nixpkgs"]
-	path = lib/nixpkgs
-	url = git@github.com:eqyiel/nixpkgs.git
 [submodule "src/zsh/.local/share/zsh/zsh-autosuggestions"]
 	path = src/zsh/.local/share/zsh/zsh-autosuggestions
 	url = git@github.com:zsh-users/zsh-autosuggestions.git
 [submodule "src/nix/.nixpkgs/darwin"]
 	path = src/nix/.nixpkgs/darwin
 	url = git@github.com:eqyiel/nixpkgs.git
+[submodule "src/nix/.nixpkgs/nixpkgs-mozilla"]
+	path = src/nix/.nixpkgs/nixpkgs-mozilla
+	url = git@github.com:mozilla/nixpkgs-mozilla.git

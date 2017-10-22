@@ -18,98 +18,114 @@ let
 in {
   imports = [
     ./pkgs/overrides.nix
-    ./httpd.nix
   ];
 
-  # List packages installed in system profile. To search by name, run:
-  # $ nix-env -qaP | grep wget
-  environment.systemPackages = with pkgs; [
-    aspell
-    aspellDicts.en
-    bind
-    coreutils
-    curl
-    direnv
-    emacs
-    ffmpeg
-    file
-    findutils
-    fzf
-    gitAndTools.git-crypt
-    gitAndTools.gitFull
-    gnumake
-    gnupg
-    gnused
-    gnutar
-    haskellPackages.ShellCheck
-    htop
-    isync
-    localPackages.nodePackages.reddit-oauth-helper
-    msmtp
-    mu
-    nix-prefetch-scripts
-    nix-repl
-    nixops
-    openssh
-    pass
-    pwgen
-    reattach-to-user-namespace
-    rsync
-    sift
-    silver-searcher
-    socat
-    stow
-    syncthing
-    tmux
-    tree
-    unrar
-    unzip
-    wget
-    which
+  environment = {
+    systemPackages = with pkgs; [
+      aspell
+      aspellDicts.en
+      bind
+      coreutils
+      curl
+      direnv
+      (lib.hiPrio localPackages.emacs-git)
+      fd
+      ffmpeg
+      file
+      findutils
+      fzf
+      gitAndTools.git-crypt
+      gitAndTools.gitFull
+      gnumake
+      gnupg
+      gnused
+      gnutar
+      haskellPackages.ShellCheck
+      htop
+      isync
+      localPackages.nodePackages.reddit-oauth-helper
+      mpv
+      msmtp
+      mu
+      nix-prefetch-scripts
+      nix-repl
+      nixops
+      openssh
+      pass
+      pwgen
+      reattach-to-user-namespace
+      ripgrep
+      rsync
+      sift
+      silver-searcher
+      socat
+      stow
+      syncthing
+      tmux
+      tree
+      unrar
+      unzip
+      wget
+      which
 
-    # mpv
+      purs
 
-    apacheHttpd
-    awsebcli
-    flow
-    jekyll
-    lftp
-    localPackages.fontcustom
-    localPackages.nodePackages."@jasondibenedetto/plop"
-    localPackages.nodePackages.eslint-cli
-    localPackages.nodePackages.flow-typed
-    localPackages.nodePackages.grunt-cli
-    localPackages.nodePackages.imapnotify
-    localPackages.nodePackages.prettier-eslint-cli
-    localPackages.nodePackages.react-native-cli
-    localPackages.nodePackages.tern
-    localPackages.nodePackages.wscat
-    localPackages.nodePackages.yarn
-    localPackages.scss-lint
-    nodePackages_6_x.node2nix
-    nodejs-8_x
-    php
-    php70Packages.composer
-    php70Packages.phpcbf
-    php70Packages.phpcs
-    watchman
-  ];
+      postgresql96
+      apacheHttpd
+      awsebcli
+      flow
+      jekyll
+      lftp
+      localPackages.fontcustom
+      localPackages.nodePackages."@jasondibenedetto/plop"
+      localPackages.nodePackages.eslint-cli
+      localPackages.nodePackages.flow-typed
+      localPackages.nodePackages.grunt-cli
+      localPackages.nodePackages.imapnotify
+      localPackages.nodePackages.react-native-cli
+      localPackages.nodePackages.commitizen
+      localPackages.nodePackages.cz-conventional-changelog
+      localPackages.nodePackages.tern
+      localPackages.nodePackages.wscat
+      localPackages.nodePackages.yarn
+      localPackages.scss-lint
+      nodePackages_6_x.node2nix
+      nodejs-8_x
+      # php
+      # php70Packages.composer
+      # php70Packages.phpcbf
+      # php70Packages.phpcs
+      watchman
+    ];
 
-  nixpkgs.config.allowBroken = true;
+    variables = {
+      # If you don't do this, Emacs will throw errors like this because it can't
+      # find the dictionary files:
+      # Starting new Ispell process /run/current-system/sw/bin/aspell with english dictionary...
+      # Error enabling Flyspell mode:
+      # (Error: The file "/nix/store/ ... /lib/aspell/english" can not be opened for reading.)
+      ASPELL_CONF = "data-dir /run/current-system/sw/lib/aspell";
+    };
 
-  # https://github.com/benhutchins/.dotfiles/blob/master/Mac.md#fix-mac-issues
+    shellAliases = {
+      emacs = "${localPackages.emacs-git}/Applications/Emacs.app/Contents/MacOS/Emacs";
+    };
 
-  environment.variables = {
-    # If you don't do this, Emacs will throw errors like this because it can't
-    # find the dictionary files:
-    # Starting new Ispell process /run/current-system/sw/bin/aspell with english dictionary...
-    # Error enabling Flyspell mode:
-    # (Error: The file "/nix/store/ ... /lib/aspell/english" can not be opened for reading.)
-    ASPELL_CONF = "data-dir /run/current-system/sw/lib/aspell";
-  };
+    pathsToLink = [
+      "/lib"         # Necessary for apsell thing
+      "/share/emacs" # Necessary for emacs support files (mu4e)
+    ];
+ 
+    etc."ssl/certs/ca-certificates.crt".source =
+      "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
 
-  environment.shellAliases = {
-    emacs = "$(dirname $(dirname $(readlink -f $(which Emacs))))/Applications/Emacs.app/Contents/MacOS/Emacs";
+    # github.com/facebook/react-native/issues/9309#issuecomment-238966924
+    etc."sysctl.conf" = {
+      text = ''
+        kern.maxfiles=10485760
+        kern.maxfilesperproc=1048576
+      '';
+    };
   };
 
   programs.zsh = {
@@ -119,95 +135,44 @@ in {
     enableFzfHistory = true;
   };
 
-  environment.pathsToLink = [
-    "/share/emacs"   # Necessary for emacs support files (mu4e)
+  programs.nix-index.enable = true;
+
+  nix.nixPath = [
+    "darwin=/Users/rkm/.nix-defexpr/darwin"
+    "darwin-config=/Users/rkm/.nixpkgs/darwin-configuration.nix"
+    "nixpkgs=/Users/rkm/.nix-defexpr/nixpkgs"
   ];
 
-  environment.etc."ssl/certs/ca-certificates.crt".source =
-    "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
+  nixpkgs = {
+    config = {
+      allowBroken = true;
+      allowUnfree = true;
+      packageOverrides = pkgs: {
+        mpv = pkgs.mpv.override ({ drmSupport = false; vaapiSupport = false; });
 
-  nixpkgs.config.allowUnfree = true;
+        syncthing = with pkgs; stdenv.mkDerivation rec {
+          name = "syncthing";
+          version = "0.14.38";
 
-  # github.com/facebook/react-native/issues/9309#issuecomment-238966924
-  environment.etc."sysctl.conf" = {
-    text = ''
-      kern.maxfiles=10485760
-      kern.maxfilesperproc=1048576
-    '';
-  };
+          src = fetchurl {
+            url = "https://github.com/syncthing/syncthing/releases/download/v${version}/syncthing-macosx-amd64-v${version}.tar.gz";
+            sha256 = "0k7g4cxkl6x5ic6psxc4fjgcq50w8l11iy5hzv1zq3rs8wg80hnb";
+          };
 
-  nixpkgs.config.packageOverrides = pkgs: {
-    sift = lib.overrideDerivation pkgs.sift (attrs: {
-      postInstall = ''
-        install_name_tool -delete_rpath $out/lib -add_rpath $bin $bin/bin/sift
-      '';
-    });
+          buildInputs = [ gnutar ];
 
-    # Flow is in nixpkgs but compilation fails at the moment due to a problem
-    # with ocaml on Darwin.
-    flow = with pkgs; stdenv.mkDerivation rec {
-      name = "flow";
-      version = "0.53.1";
+          dontBuild = true;
 
-      src = fetchurl {
-        url = "https://github.com/facebook/flow/releases/download/v${version}/${name}-osx-v${version}.zip";
-        sha256 = "0y2qkq2ba904pd5rri7b9943z8nw1886h61ny9a467g1d2w6q26x";
+          installPhase = ''
+            mkdir -p "$out/tmp";
+            tar xf ${src} -C "$out/tmp" --strip-components 1
+            mkdir -p "$out/bin";
+            mv "$out/tmp/syncthing" "$out/bin"
+            rm -rf "$out/tmp"
+          '';
+        };
       };
-
-      buildInputs = [ unzip ];
-
-      dontBuild = true;
-
-      installPhase = ''
-        mkdir -p "$out/tmp";
-        unzip -d $out/tmp ${src}
-        mkdir -p "$out/bin";
-        mv $out/tmp/flow/flow $out/bin
-        rm -rf "$out/tmp"
-      '';
     };
-
-    syncthing = with pkgs; stdenv.mkDerivation rec {
-      name = "syncthing";
-      version = "0.14.32";
-
-      src = fetchurl {
-        url = "https://github.com/syncthing/syncthing/releases/download/v${version}/syncthing-macosx-amd64-v${version}.tar.gz";
-        sha256 = "0588xc7s3q68znxdvgysyvprdr13pmmwnj1sy5qms50hqizyima9";
-      };
-
-      buildInputs = [ gnutar ];
-
-      dontBuild = true;
-
-      installPhase = ''
-        mkdir -p "$out/tmp";
-        tar xf ${src} -C "$out/tmp" --strip-components 1
-        mkdir -p "$out/bin";
-        mv "$out/tmp/syncthing" "$out/bin"
-        rm -rf "$out/tmp"
-      '';
-    };
-
-    emacs = lib.overrideDerivation
-      (pkgs.emacs.override { srcRepo = true; }) (attrs: {
-      name = "emacs-git";
-      src = pkgs.fetchgit {
-        url = "git://git.sv.gnu.org/emacs.git";
-        sha256 = "1424jc12qq2fhcf10rh0m0ssznr5v3p284xi9aw6fpnni969cr8f";
-        rev = "273f4bde39af5d87f10fd58f35b666dfa8a996a3";
-      };
-      patches = [];
-    });
-
-    nodejs-8_x = pkgs.nodejs-8_x.overrideAttrs (attrs: rec {
-      name = "nodejs-${version}";
-      version = "8.3.0";
-      src = pkgs.fetchurl {
-        url = "https://nodejs.org/download/release/v${version}/node-v${version}.tar.xz";
-        sha256 = "0lbfp7j73ig0xa3gh8wnl4g3lji7lm34l0ybfys4swl187c3da63";
-      };
-    });
   };
 
   launchd.user.agents.syncthing = {
@@ -223,8 +188,10 @@ in {
     serviceConfig.LowPriorityIO = true;
   };
 
-  services.httpd.enable = true;
+  # services.httpd.enable = true;
 
   # Recreate /run/current-system symlink after boot.
   services.activate-system.enable = true;
+
+  system.stateVersion = 2;
 }
