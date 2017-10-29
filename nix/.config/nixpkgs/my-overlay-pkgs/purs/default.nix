@@ -14,18 +14,31 @@ let
       (import (builtins.toPath "${rustOverlay}/rust-overlay.nix"))
       (self: super: let
         rustChannel = (super.rustChannelOf {
-          date = "2017-10-21"; channel = "nightly";
+          date = "2017-10-29"; channel = "nightly";
         });
-      in {
+      in{
         rustPlatform = super.makeRustPlatform {
-          rustc = rustChannel.rust;
-          inherit (rustChannel) cargo;
+          # rustc = rustChannel.rust;
+          inherit (rustChannel) rustc cargo;
         };
 
         rust = {
-          inherit (rustChannel) cargo;
-          rustc = rustChannel.rust;
+          inherit (rustChannel) rustc cargo;
+          # rustc = rustChannel.rust;
         };
+
+        rustRegistry = (import <nixpkgs> {}).rustRegistry.overrideAttrs (attrs: {
+          name = "rustRegistry-2017-10-29";
+
+          preferLocalBuild = true;
+
+          src = fetchFromGitHub {
+            owner = "rust-lang";
+            repo = "crates.io-index";
+            rev = "e8b77329e16edf2634b130eb8e82f7ecd1952c57";
+            sha256 = "0ibjr8yqqldrhmaccgd8g9q3na0mkfflqvf02pbwk3d3kkafkckn";
+          };
+        });
       })
     ];
   })) rustPlatform;
@@ -34,16 +47,7 @@ in with rustPlatform; buildRustPackage rec {
   name = "purs-${version}";
   version = "git";
 
-  rustRegistry = (import <nixpkgs> {}).rustRegistry.overrideAttrs (attrs: {
-    name = "rustRegistry-2017-10-22";
-
-    src = fetchFromGitHub {
-      owner = "rust-lang";
-      repo = "crates.io-index";
-      rev = "a1291863947253db65f19054f8a579dde287b7a9";
-      sha256 = "095n803aqhpigaqyicrhi83rgl2k4n4cpddhrdymi7qlfy4h50i8";
-    };
-  });
+  preferLocalBuild = true;
 
   src = fetchFromGitHub {
     owner = "xcambar";
@@ -54,5 +58,5 @@ in with rustPlatform; buildRustPackage rec {
 
   buildInputs = [ openssl ];
 
-  depsSha256 = "0mn87w2jzwla94lsvvs6yjfsd99942nrj96cvxxx42zyx4xn96i1";
+  cargoSha256 = "1sz39cf15kaiazgxv3ggl4agy01j6ql5fz98arq42a2yfag2jyai";
 }

@@ -34,12 +34,15 @@
 [submodule "src/zsh/.local/share/zsh/zsh-autosuggestions"]
 	path = src/zsh/.local/share/zsh/zsh-autosuggestions
 	url = git@github.com:zsh-users/zsh-autosuggestions.git
-[submodule "src/nix/.nixpkgs/darwin"]
-	path = src/nix/.nixpkgs/darwin
-	url = git@github.com:eqyiel/nixpkgs.git
 [submodule "nix/.config/nixpkgs/lib/home-manager"]
 	path = nix/.config/nixpkgs/lib/home-manager
 	url = git@github.com:rycee/home-manager.git
 [submodule "nix/.config/nixpkgs/lib/nixpkgs-mozilla"]
 	path = nix/.config/nixpkgs/lib/nixpkgs-mozilla
 	url = git@github.com:mozilla/nixpkgs-mozilla.git
+[submodule "nix/.nix-defexpr/darwin"]
+	path = nix/.nix-defexpr/darwin
+	url = git@github.com:LnL7/nix-darwin.git
+[submodule "nix/.nix-defexpr/nixpkgs-darwin"]
+	path = nix/.nix-defexpr/nixpkgs-darwin
+	url = git@github.com:NixOS/nixpkgs.git
