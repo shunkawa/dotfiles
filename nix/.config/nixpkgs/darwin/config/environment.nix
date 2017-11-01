@@ -2,7 +2,7 @@
 
 let
 
-  localPackages = (import ../pkgs/all-packages.nix) {
+  localPackages = (import ../../pkgs/all-packages.nix) {
     inherit config lib pkgs;
   };
 
@@ -109,6 +109,11 @@ in {
       "/lib"           # necessary for ... something
       "/share/emacs"   # Necessary for emacs support files (mu4e)
     ];
+
+    # Necessary since multiuser nix on darwin
+    extraInit = ''
+      NIX_REMOTE="daemon"
+    '';
 
     etc = {
       "ssl/certs/ca-certificates.crt".source =
