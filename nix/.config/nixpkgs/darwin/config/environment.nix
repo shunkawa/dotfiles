@@ -47,14 +47,12 @@ in {
       openssh
       pass
       pwgen
-      reattach-to-user-namespace
       rsync
       sift
       silver-searcher
       socat
       stow
       syncthing
-      tmux
       tree
       unrar
       unzip
