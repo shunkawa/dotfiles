@@ -24,7 +24,7 @@ in {
       coreutils
       curl
       direnv
-      ffmpeg
+      # ffmpeg # broken due to issue with LAME
       file
       findutils
       fzf
@@ -62,6 +62,8 @@ in {
       which
       ripgrep
       fd
+
+      localPackages.react-devtools
 
       (mpv.override ({
         # x11Support = false;
@@ -109,11 +111,6 @@ in {
       "/lib"           # necessary for ... something
       "/share/emacs"   # Necessary for emacs support files (mu4e)
     ];
-
-    # Necessary since multiuser nix on darwin
-    extraInit = ''
-      NIX_REMOTE="daemon"
-    '';
 
     etc = {
       "ssl/certs/ca-certificates.crt".source =

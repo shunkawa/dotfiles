@@ -7,6 +7,9 @@
     ./nix-docker.nix
   ];
 
+  # Necessary since multiuser nix on darwin
+  services.nix-daemon.enable = true;
+
   nix = {
     nixPath = [
       "darwin=/Users/rkm/.nix-defexpr/darwin"

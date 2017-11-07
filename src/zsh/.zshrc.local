@@ -248,4 +248,24 @@ bindkey '^S' fzf-history-widget
 bindkey '^R' fzf-history-widget
 bindkey '^ ' autosuggest-accept # C-SPACE
 
+### purs thing
+
+function zle-line-init zle-keymap-select {
+  PROMPT="$(${HOME}/.nix-profile/bin/purs prompt -k ${KEYMAP} -r ${?})"
+  zle reset-prompt
+}
+function _prompt_purs_precmd() {
+  eval "${HOME}/.nix-profile/bin/purs precmd"
+}
+
+if isdarwin; then
+  zle -N zle-line-init
+  zle -N zle-keymap-select
+
+  autoload -Uz add-zsh-hook
+
+  add-zsh-hook precmd _prompt_purs_precmd
+fi
+###
+
 eval "$(/run/current-system/sw/bin/direnv hook zsh)"
