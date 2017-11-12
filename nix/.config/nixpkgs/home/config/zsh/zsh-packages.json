@@ -34,6 +34,13 @@
     "sha256": "05svc5cdvvdbzs1zvh68qbxx0pq4d61ymmk99byiq0v54v77pfq4",
     "fetchSubmodules": true
   },
+  "nix-zsh-completions": {
+    "url": "https://github.com/spwhitt/nix-zsh-completions.git",
+    "rev": "a7e16c8c0c89413724409f90e761091d3dfdc460",
+    "date": "2017-11-06T18:29:19+01:00",
+    "sha256": "0i306k50g07n9smy68npma1k90sv173zy12jdi8wm7h1sj53m5rv",
+    "fetchSubmodules": true
+  },
   "zsh-autosuggestions": {
     "url": "https://github.com/zsh-users/zsh-autosuggestions.git",
     "rev": "d6d9a469819c2bddb4d4f1d0d353070af96226e2",
@@ -46,13 +53,6 @@
     "rev": "749b30221d04842539aeda79ae890e90d464a4da",
     "date": "2017-11-06T07:11:55-06:00",
     "sha256": "0hmarmkkahsh5axxslb0g7l1g6kjrl4wq06399lm785il66lb1y3",
-    "fetchSubmodules": true
-  },
-  "zsh-histdb": {
-    "url": "https://github.com/larkery/zsh-histdb.git",
-    "rev": "1951fbd8c84216561ab2acbfe0cb33be96c6aa1c",
-    "date": "2017-10-18T15:56:41+01:00",
-    "sha256": "0kyzdz314c0z76p7fs65p843ilcrf5fq8bi7hv835lk3dwfx2aw8",
     "fetchSubmodules": true
   }
 }

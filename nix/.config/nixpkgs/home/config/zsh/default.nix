@@ -18,6 +18,10 @@ let
     inherit (bleedingEdgePackages.oh-my-zsh) url rev sha256;
   };
 
+  nix-zsh-completions = pkgs.fetchgit {
+    inherit (bleedingEdgePackages.nix-zsh-completions) url rev sha256;
+  };
+
   plop = pkgs.local-packages.nodePackages."@jasondibenedetto/plop";
 
   pure = pkgs.fetchgit {
@@ -233,7 +237,11 @@ in {
   '';
 
   home.file.".zshenv".source = pkgs.writeText "zshenv" ''
-    fpath=("''${HOME}/.config/zsh/functions" "''${fpath[@]}")
+    fpath=(
+      "''${HOME}/.config/zsh/functions"
+      ${nix-zsh-completions}"
+      ''${fpath[@]}"
+    )
 
     # Don't use x11-ssh-askpass
     unset SSH_ASKPASS
@@ -334,6 +342,8 @@ in {
     source "${zsh-autosuggestions}/zsh-autosuggestions.zsh"
 
     bindkey '^ ' autosuggest-accept # C-SPACE
+
+    source "${nix-zsh-completions}/nix.plugin.zsh"
 
     source "${pkgs.fzf}/share/fzf/completion.zsh"
     source "${pkgs.fzf}/share/fzf/key-bindings.zsh"
