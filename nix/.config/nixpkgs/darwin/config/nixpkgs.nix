@@ -22,6 +22,23 @@
       allowBroken = true;
       allowUnfree = true;
       packageOverrides = pkgs: {
+        iterm2 = with pkgs; stdenv.mkDerivation rec {
+          name = "iterm2";
+          version = "3.1.5";
+
+          src = fetchzip {
+            url = "https://iterm2.com/downloads/stable/iTerm2-${lib.replaceStrings ["."] ["_"] version}.zip";
+            sha256 = "1f4kz967m539iaia6z9gxqh3wmm9wfgnhn02i517ss45yfv769v4";
+          };
+
+          dontBuild = true;
+
+          installPhase = ''
+            mkdir -p $out/Applications/iTerm2.app
+            cp -r Contents $out/Applications/iTerm2.app
+          '';
+        };
+
         syncthing = with pkgs; stdenv.mkDerivation rec {
           name = "syncthing";
           version = "0.14.39";

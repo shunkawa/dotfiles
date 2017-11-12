@@ -40,5 +40,12 @@
     "date": "2017-11-01T11:07:20+01:00",
     "sha256": "13q3zd5jv7akkjjwhgimmfylrvalxdn54fnpfb14g6xam6h8808m",
     "fetchSubmodules": true
+  },
+  "tmux-colors-solarized": {
+    "url": "https://github.com/seebi/tmux-colors-solarized.git",
+    "rev": "b74be1f5076240d278e78b6fd132d531d5c41cda",
+    "date": "2016-12-31T16:12:21+01:00",
+    "sha256": "1qjm6w00rk5pi1a9l50h1i3x1jys4n8zmmigh2gigcr4r7rgr2jv",
+    "fetchSubmodules": true
   }
 }

@@ -52,7 +52,6 @@ in {
       silver-searcher
       socat
       stow
-      syncthing
       tree
       unrar
       unzip
@@ -60,8 +59,10 @@ in {
       which
       ripgrep
       fd
-
       localPackages.react-devtools
+
+      syncthing
+      iterm2
 
       (mpv.override ({
         # x11Support = false;
@@ -101,9 +102,7 @@ in {
       ASPELL_CONF = "data-dir /run/current-system/sw/lib/aspell";
     };
 
-    shellAliases = {
-      emacs = "${localPackages.emacs-git}/Applications/Emacs.app/Contents/MacOS/Emacs";
-    };
+    emacs = "${localPackages.emacs-git}/Applications/Emacs.app/Contents/MacOS/Emacs";
 
     pathsToLink = [
       "/lib"           # necessary for ... something

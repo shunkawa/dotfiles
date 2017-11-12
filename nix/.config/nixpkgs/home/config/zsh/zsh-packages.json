@@ -1,0 +1,58 @@
+{
+  "enchancd": {
+    "url": "https://github.com/b4b4r07/enhancd.git",
+    "rev": "5e1541ad3a4819978e4572bbe5d6b961a799f4e3",
+    "date": "2017-05-17T09:17:03+09:00",
+    "sha256": "0pg34d6ff2vd45a41nkw5vcqhbxhll512m44ql7cdrrvi3lpai1r",
+    "fetchSubmodules": true
+  },
+  "grml-etc-core": {
+    "url": "https://github.com/grml/grml-etc-core",
+    "rev": "2f64ae016b211b59ddd38b1ad2026b2ff9336328",
+    "date": "2017-09-23T13:59:48+02:00",
+    "sha256": "05r2xnhy171rfa89psxbq5206kl92rxp96y6vpm35gh253xramjq",
+    "fetchSubmodules": true
+  },
+  "oh-my-zsh": {
+    "url": "https://github.com/robbyrussell/oh-my-zsh.git",
+    "rev": "41eedd37005f6b3668fcebe2a5f5a26324753519",
+    "date": "2017-11-11T09:40:03-08:00",
+    "sha256": "1dnwd69x0ic0409d4p9nay10x92pzprqqa1h7dsf0qp7zhhsb79x",
+    "fetchSubmodules": true
+  },
+  "dircolors-solarized": {
+    "url": "https://github.com/seebi/dircolors-solarized.git",
+    "rev": "2720cb1ff508bc358f9414f63370f0c6cd767b98",
+    "date": "2017-09-17T11:24:28+02:00",
+    "sha256": "1mk7d7l6v4vfgkp3005533yd4gldm07cjqmqs6fxzwjjwj7l5qbf",
+    "fetchSubmodules": true
+  },
+  "pure": {
+    "url": "https://github.com/sindresorhus/pure.git",
+    "rev": "f23e72640f02db0817cdb6d5d982b2c8f2f34656",
+    "date": "2017-11-01T18:47:45+02:00",
+    "sha256": "05svc5cdvvdbzs1zvh68qbxx0pq4d61ymmk99byiq0v54v77pfq4",
+    "fetchSubmodules": true
+  },
+  "zsh-autosuggestions": {
+    "url": "https://github.com/zsh-users/zsh-autosuggestions.git",
+    "rev": "d6d9a469819c2bddb4d4f1d0d353070af96226e2",
+    "date": "2017-07-30T09:30:48+02:00",
+    "sha256": "08px7r5v0byb8bmbpnczw63khmk7nygy5h21lrj2n07z0z3dafd5",
+    "fetchSubmodules": true
+  },
+  "zsh-syntax-highlighting": {
+    "url": "https://github.com/zsh-users/zsh-syntax-highlighting.git",
+    "rev": "749b30221d04842539aeda79ae890e90d464a4da",
+    "date": "2017-11-06T07:11:55-06:00",
+    "sha256": "0hmarmkkahsh5axxslb0g7l1g6kjrl4wq06399lm785il66lb1y3",
+    "fetchSubmodules": true
+  },
+  "zsh-histdb": {
+    "url": "https://github.com/larkery/zsh-histdb.git",
+    "rev": "1951fbd8c84216561ab2acbfe0cb33be96c6aa1c",
+    "date": "2017-10-18T15:56:41+01:00",
+    "sha256": "0kyzdz314c0z76p7fs65p843ilcrf5fq8bi7hv835lk3dwfx2aw8",
+    "fetchSubmodules": true
+  }
+}
