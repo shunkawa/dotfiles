@@ -18,9 +18,14 @@ let
     inherit (bleedingEdgePackages.oh-my-zsh) url rev sha256;
   };
 
-  nix-zsh-completions = pkgs.fetchgit {
-    inherit (bleedingEdgePackages.nix-zsh-completions) url rev sha256;
-  };
+  nix-zsh-completions = let
+    src = pkgs.fetchgit {
+      inherit (bleedingEdgePackages.nix-zsh-completions) url rev sha256;
+    };
+  in (pkgs.runCommand "nix-zsh-completions" {} ''
+    mkdir -p $out/completions
+    cp ${src}/* $out/completions
+  '');
 
   plop = pkgs.local-packages.nodePackages."@jasondibenedetto/plop";
 
@@ -61,6 +66,10 @@ let
 
   zsh-autosuggestions = pkgs.fetchgit {
     inherit (bleedingEdgePackages.zsh-autosuggestions) url rev sha256;
+  };
+
+  zsh-completions = pkgs.fetchgit {
+   inherit (bleedingEdgePackages.zsh-completions) url rev sha256;
   };
 
   zsh-syntax-highlighting = pkgs.fetchgit {
@@ -238,9 +247,10 @@ in {
 
   home.file.".zshenv".source = pkgs.writeText "zshenv" ''
     fpath=(
-      "''${HOME}/.config/zsh/functions"
-      ${nix-zsh-completions}"
-      ''${fpath[@]}"
+      ''${HOME}/.config/zsh/functions
+      ${zsh-completions}/src
+      ${nix-zsh-completions}/completions
+      ''${fpath[@]}
     )
 
     # Don't use x11-ssh-askpass
@@ -267,8 +277,8 @@ in {
     export VISUAL="emacsclient -c -a vi"
 
     export FZF_TMUX="1"
-    export FZF_ALT_C_COMMAND="${pkgs.fd}/bin/fd --type d --hidden"
-    export FZF_CTRL_T_COMMAND="${pkgs.fd}/bin/fd --type f --hidden"
+    export FZF_ALT_C_COMMAND="${pkgs.fd}/bin/fd --type d --hidden --follow"
+    export FZF_CTRL_T_COMMAND="${pkgs.fd}/bin/fd --type f --hidden --follow"
 
     export RKM_HIST_DIR="''${HOME}/history/zsh"
     test -d "$RKM_HIST_DIR" || mkdir -p "$RKM_HIST_DIR"
@@ -343,7 +353,7 @@ in {
 
     bindkey '^ ' autosuggest-accept # C-SPACE
 
-    source "${nix-zsh-completions}/nix.plugin.zsh"
+    source "${nix-zsh-completions}/completions/nix.plugin.zsh"
 
     source "${pkgs.fzf}/share/fzf/completion.zsh"
     source "${pkgs.fzf}/share/fzf/key-bindings.zsh"
@@ -398,6 +408,19 @@ in {
     zle     -N   fzf-history-widget
     bindkey '^S' fzf-history-widget
     bindkey '^R' fzf-history-widget
+
+    # Use fd (https://github.com/sharkdp/fd) instead of the default find
+    # command for listing path candidates.
+    # - The first argument to the function ($1) is the base path to start traversal
+    # - See the source code (completion.{bash,zsh}) for the details.
+    _fzf_compgen_path() {
+      ${pkgs.fd}/bin/fd --hidden --follow --exclude ".git" . "''${1}"
+    }
+
+    # Use fd to generate the list for directory completion
+    _fzf_compgen_dir() {
+      ${pkgs.fd}/bin/fd --type d --hidden --follow --exclude ".git" . "''${1}"
+    }
 
     source "${zsh-syntax-highlighting}/zsh-syntax-highlighting.zsh"
 

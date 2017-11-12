@@ -48,6 +48,13 @@
     "sha256": "08px7r5v0byb8bmbpnczw63khmk7nygy5h21lrj2n07z0z3dafd5",
     "fetchSubmodules": true
   },
+  "zsh-completions": {
+    "url": "https://github.com/zsh-users/zsh-completions.git",
+    "rev": "372f9b47e9c528e0516652155308d239abc5b727",
+    "date": "2017-11-03T19:27:00+01:00",
+    "sha256": "14a5794rhnzr2jh8dgp86j4y3yvc2mm83klbz8w3d38qnddwq3n9",
+    "fetchSubmodules": true
+  },
   "zsh-syntax-highlighting": {
     "url": "https://github.com/zsh-users/zsh-syntax-highlighting.git",
     "rev": "749b30221d04842539aeda79ae890e90d464a4da",
