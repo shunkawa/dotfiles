@@ -376,7 +376,7 @@ in {
       local selected num
       setopt localoptions noglobsubst pipefail 2> /dev/null
       selected=(
-        $(${pkgs.sift}/bin/sift --no-color -e "^[^#]" --files "*" -N --no-filename ''${RKM_HIST_DIR} |
+        $(cat "''${RKM_HIST_DIR}/"** |
             ${pkgs.gnused}/bin/sed "s/^[^;]*;//" | # assuming EXTENDED_HISTORY is set (":start:elapsed;command" format)
             sort |
             uniq -c |
