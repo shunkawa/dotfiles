@@ -250,6 +250,9 @@ in {
       ''${HOME}/.config/zsh/functions
       ${zsh-completions}/src
       ${nix-zsh-completions}/completions
+      ${oh-my-zsh}/plugins/docker
+      ${oh-my-zsh}/plugins/docker-compose
+      ${oh-my-zsh}/plugins/docker-machine
       ''${fpath[@]}
     )
 
