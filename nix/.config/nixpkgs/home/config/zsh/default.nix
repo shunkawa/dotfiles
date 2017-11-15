@@ -313,6 +313,11 @@ in {
       eval "$(${pkgs.gnupg}/bin/gpg-agent --daemon --enable-ssh-support --sh)"
     fi
 
+    # clear out residual grml prompt stuff
+    zstyle ':prompt:grml:left:setup' items
+    zstyle ':prompt:grml:right:setup' items
+    RPS1="" #
+
     autoload -U promptinit; promptinit
     prompt pure
 
