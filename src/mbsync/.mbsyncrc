@@ -86,6 +86,28 @@ Master          ":flinders-remote:"
 Slave           ":flinders-local:"
 Patterns        *
 
+# ruben@maher.fyi
+
+IMAPAccount     maher
+Host            maher.fyi
+User            ruben@maher.fyi
+PassCmd         "pass auth-sources/ruben@maher.fyi | head -n 1"
+SSLType         IMAPS
+SSLVersions     TLSv1.2
+
+IMAPStore       maher-remote
+Account         maher
+
+MaildirStore    maher-local
+Path            ~/mail/ruben@maher.fyi/
+Inbox           ~/mail/ruben@maher.fyi/Inbox
+Flatten         .
+
+Channel         ruben@maher.fyi
+Master          ":maher-remote:"
+Slave           ":maher-local:"
+Patterns        *
+
 # r@rkm.id.au
 
 IMAPAccount     rkm
