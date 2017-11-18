@@ -293,6 +293,13 @@ in {
       eval "$(${pkgs.gnupg}/bin/gpg-agent --daemon --enable-ssh-support --sh)"
     fi
 
+    # Don't let gnome's ssh agent clobber this variable
+    if isdarwin; then
+      export SSH_AUTH_SOCK="$HOME/.gnupg/S.gpg-agent.ssh"
+    else
+      export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/gnupg/S.gpg-agent.ssh"
+    fi
+
     # clear out residual grml prompt stuff
     zstyle ':prompt:grml:left:setup' items
     zstyle ':prompt:grml:right:setup' items
