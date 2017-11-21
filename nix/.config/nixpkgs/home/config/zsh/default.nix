@@ -167,7 +167,7 @@ in {
     #!/usr/bin/env zsh
 
     function upgrade-casks() {
-      if $(command -v brew); then
+      if $(command -v brew  &>/dev/null); then
         for package in $(brew cask outdated); do
           brew cask reinstall "$(echo $package | cut -d ' ' -f 1)"
         done
