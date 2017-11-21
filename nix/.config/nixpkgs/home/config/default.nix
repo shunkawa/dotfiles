@@ -9,6 +9,10 @@
   programs.home-manager.enable = true;
   programs.home-manager.path = "<home-manager>";
 
+  home.file.".psqlrc".source = pkgs.writeText "psqlrc" ''
+    \x auto
+  '';
+
   home.packages = with pkgs; [
     fd
     fortune
