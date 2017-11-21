@@ -76,6 +76,9 @@ in {
     run-shell "${tmux-sensible}/sensible.tmux"
     run-shell "${tmux-pain-control}/pain_control.tmux"
     run-shell "${tmux-yank}/yank.tmux"
+    # tmux-copycat is handy sometimes, but right now it wrecks tmux-yank and I'd
+    # much rather have that working.
+    # https://github.com/tmux-plugins/tmux-copycat/issues/121#issuecomment-346043013
     run-shell "${tmux-copycat}/copycat.tmux"
     run-shell "${tmux-fpp}/fpp.tmux"
     run-shell "${tmux-open}/open.tmux"
