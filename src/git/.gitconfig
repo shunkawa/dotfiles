@@ -1,5 +1,5 @@
 [user]
-  email = r@rkm.id.au
+  email = ruben@maher.fyi
   name = Ruben Maher
   signingkey = r@rkm.id.au
 [core]
@@ -13,7 +13,7 @@
 [push]
   default = current
 [sendemail]
-  smtpuser = r@rkm.id.au
+  smtpuser = ruben@maher.fyi
   smtpserver = /usr/bin/msmtp
   smtpencryption = ssl
 [sendpack]

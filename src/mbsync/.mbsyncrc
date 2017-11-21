@@ -30,61 +30,61 @@ SyncState       *
 
 # eqyiel@gmail.com
 
-IMAPAccount     gmail
-Host            imap.gmail.com
-User            eqyiel@gmail.com
-PassCmd         "pass auth-sources/eqyiel@gmail.com | head -n 1"
-SSLType         IMAPS
-SSLVersions     TLSv1.2
+# IMAPAccount     gmail
+# Host            imap.gmail.com
+# User            eqyiel@gmail.com
+# PassCmd         "pass auth-sources/eqyiel@gmail.com | head -n 1"
+# SSLType         IMAPS
+# SSLVersions     TLSv1.2
 
-IMAPStore       gmail-remote
-Account         gmail
+# IMAPStore       gmail-remote
+# Account         gmail
 
-MaildirStore    gmail-local
-Path            ~/mail/eqyiel@gmail.com/
-Inbox           ~/mail/eqyiel@gmail.com/
-Flatten         .
+# MaildirStore    gmail-local
+# Path            ~/mail/eqyiel@gmail.com/
+# Inbox           ~/mail/eqyiel@gmail.com/
+# Flatten         .
 
-Channel         gmail_all_mail
-Master          ":gmail-remote:[Gmail]/All Mail"
-Slave           ":gmail-local:All Mail"
+# Channel         gmail_all_mail
+# Master          ":gmail-remote:[Gmail]/All Mail"
+# Slave           ":gmail-local:All Mail"
 
-Channel         gmail_sent
-Master          ":gmail-remote:[Gmail]/Sent Mail"
-Slave           ":gmail-local:Sent Mail"
+# Channel         gmail_sent
+# Master          ":gmail-remote:[Gmail]/Sent Mail"
+# Slave           ":gmail-local:Sent Mail"
 
-Channel         gmail_bin
-Master          ":gmail-remote:[Gmail]/Bin"
-Slave           ":gmail-local:Bin"
+# Channel         gmail_bin
+# Master          ":gmail-remote:[Gmail]/Bin"
+# Slave           ":gmail-local:Bin"
 
-Channel         gmail_spam
-Master          ":gmail-remote:[Gmail]/Spam"
-Slave           ":gmail-local:Spam"
+# Channel         gmail_spam
+# Master          ":gmail-remote:[Gmail]/Spam"
+# Slave           ":gmail-local:Spam"
 
-Group eqyiel@gmail.com gmail_all_mail gmail_sent gmail_bin gmail_spam
+# Group eqyiel@gmail.com gmail_all_mail gmail_sent gmail_bin gmail_spam
 
-# mahe0054@flinders.edu.au
+# # mahe0054@flinders.edu.au
 
-IMAPAccount     flinders
-Host            outlook.office365.com
-User            mahe0054@flinders.edu.au
-PassCmd         "pass auth-sources/mahe0054@flinders.edu.au | head -n 1"
-Port            993
-SSLType         IMAPS
-SSLVersions     TLSv1.2
+# IMAPAccount     flinders
+# Host            outlook.office365.com
+# User            mahe0054@flinders.edu.au
+# PassCmd         "pass auth-sources/mahe0054@flinders.edu.au | head -n 1"
+# Port            993
+# SSLType         IMAPS
+# SSLVersions     TLSv1.2
 
-IMAPStore       flinders-remote
-Account         flinders
+# IMAPStore       flinders-remote
+# Account         flinders
 
-MaildirStore    flinders-local
-Path            ~/mail/mahe0054@flinders.edu.au/
-Inbox           ~/mail/mahe0054@flinders.edu.au/Inbox
-Flatten         .
+# MaildirStore    flinders-local
+# Path            ~/mail/mahe0054@flinders.edu.au/
+# Inbox           ~/mail/mahe0054@flinders.edu.au/Inbox
+# Flatten         .
 
-Channel         mahe0054@flinders.edu.au
-Master          ":flinders-remote:"
-Slave           ":flinders-local:"
-Patterns        *
+# Channel         mahe0054@flinders.edu.au
+# Master          ":flinders-remote:"
+# Slave           ":flinders-local:"
+# Patterns        *
 
 # ruben@maher.fyi
 
@@ -108,49 +108,49 @@ Master          ":maher-remote:"
 Slave           ":maher-local:"
 Patterns        *
 
-# r@rkm.id.au
+# # r@rkm.id.au
 
-IMAPAccount     rkm
-Host            mail.rkm.id.au
-User            r@rkm.id.au
-PassCmd         "pass auth-sources/r@rkm.id.au | head -n 1"
-SSLType         IMAPS
-SSLVersions     TLSv1.2
+# IMAPAccount     rkm
+# Host            mail.rkm.id.au
+# User            r@rkm.id.au
+# PassCmd         "pass auth-sources/r@rkm.id.au | head -n 1"
+# SSLType         IMAPS
+# SSLVersions     TLSv1.2
 
-IMAPStore       rkm-remote
-Account         rkm
+# IMAPStore       rkm-remote
+# Account         rkm
 
-MaildirStore    rkm-local
-Path            ~/mail/r@rkm.id.au/
-Inbox           ~/mail/r@rkm.id.au/Inbox
-Flatten         .
+# MaildirStore    rkm-local
+# Path            ~/mail/r@rkm.id.au/
+# Inbox           ~/mail/r@rkm.id.au/Inbox
+# Flatten         .
 
-Channel         r@rkm.id.au
-Master          ":rkm-remote:"
-Slave           ":rkm-local:"
-Patterns        *
+# Channel         r@rkm.id.au
+# Master          ":rkm-remote:"
+# Slave           ":rkm-local:"
+# Patterns        *
 
 # info@huttriverprovince.com.au
 
-IMAPAccount     hrp
-Host            mail.rkm.id.au
-User            info@huttriverprovince.com.au
-PassCmd         "pass auth-sources/info@huttriverprovince.com.au | head -n 1"
-SSLType         IMAPS
-SSLVersions     TLSv1.2
+# IMAPAccount     hrp
+# Host            mail.rkm.id.au
+# User            info@huttriverprovince.com.au
+# PassCmd         "pass auth-sources/info@huttriverprovince.com.au | head -n 1"
+# SSLType         IMAPS
+# SSLVersions     TLSv1.2
 
-IMAPStore       hrp-remote
-Account         hrp
+# IMAPStore       hrp-remote
+# Account         hrp
 
-MaildirStore    hrp-local
-Path            ~/mail/info@huttriverprovince.com.au/
-Inbox           ~/mail/info@huttriverprovince.com.au/Inbox
-Flatten         .
+# MaildirStore    hrp-local
+# Path            ~/mail/info@huttriverprovince.com.au/
+# Inbox           ~/mail/info@huttriverprovince.com.au/Inbox
+# Flatten         .
 
-Channel         info@huttriverprovince.com.au
-Master          :hrp-remote:
-Slave           :hrp-local:
-Patterns        *
+# Channel         info@huttriverprovince.com.au
+# Master          :hrp-remote:
+# Slave           :hrp-local:
+# Patterns        *
 
 # ruben@mangochutney.com.au
 
