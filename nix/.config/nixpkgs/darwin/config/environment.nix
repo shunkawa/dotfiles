@@ -102,7 +102,9 @@ in {
       ASPELL_CONF = "data-dir /run/current-system/sw/lib/aspell";
     };
 
-    emacs = "${localPackages.emacs-git}/Applications/Emacs.app/Contents/MacOS/Emacs";
+    shellAliases = {
+      emacs = "${localPackages.emacs-git}/Applications/Emacs.app/Contents/MacOS/Emacs";
+    };
 
     pathsToLink = [
       "/lib"           # necessary for ... something
