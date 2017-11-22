@@ -43,6 +43,7 @@
     sshKey = "/etc/nix/docker_rsa";
     sshUser = "root";
     system = "x86_64-linux";
+    supportedFeatures = [ "kvm" ];
   }];
 
   nix.distributedBuilds = true;
