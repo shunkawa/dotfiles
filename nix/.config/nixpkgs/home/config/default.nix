@@ -38,7 +38,6 @@
     wine
   ] ++ (with local-packages; [
     emacs-git
-    purs
     nixfmt
     riot
   ]);
