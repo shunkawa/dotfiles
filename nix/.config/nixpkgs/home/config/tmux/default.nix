@@ -84,4 +84,29 @@ in {
     run-shell "${tmux-open}/open.tmux"
     run-shell "${tmux-colors-solarized}/tmuxcolors.tmux"
   '';
+
+  home.file.".config/powerline/config.json".source = pkgs.writeText "config.json" ''
+    {
+      "common": {
+        "term_truecolor": false
+      },
+      "ext": {
+        "tmux": {
+           "colorscheme": "solarized"
+        }
+      }
+    }
+  '';
+
+  home.file.".config/powerline/themes/tmux/default.json".source = pkgs.writeText "config.json" ''
+    {
+      "segments": {
+        "right": [
+          {
+            "function": "powerline.segments.common.net.hostname"
+          }
+        ]
+      }
+    }
+  '';
 }
