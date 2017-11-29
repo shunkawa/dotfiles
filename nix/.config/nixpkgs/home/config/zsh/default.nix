@@ -184,7 +184,7 @@ in {
     #!/usr/bin/env zsh
 
     function install-package-and-peerdependencies () {
-      if $(command -v npm && command -v yarn); then
+      if $(command -v npm &>/dev/null && command -v yarn &>/dev/null); then
         npm info "$1@latest" peerDependencies --json \
           | command ${pkgs.gnused}/bin/sed 's/[\{\},]//g ; s/: /@/g' \
           | ${pkgs.findutils}/bin/xargs yarn add --dev "$1@latest"
