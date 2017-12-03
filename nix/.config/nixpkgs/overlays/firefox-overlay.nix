@@ -1,0 +1,1 @@
+../lib/nixpkgs-mozilla/firefox-overlay.nix

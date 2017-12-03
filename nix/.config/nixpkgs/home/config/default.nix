@@ -27,7 +27,7 @@
     pinentry
     speedtest-cli
   ] ++ lib.optionals stdenv.isLinux [ 
-    firefox
+    firefox-nightly-bin
     chromium
     gimp
     mpv
