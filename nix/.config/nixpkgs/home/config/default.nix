@@ -30,7 +30,7 @@
     pinentry
     speedtest-cli
   ] ++ lib.optionals stdenv.isLinux [ 
-    firefox-nightly-bin
+    firefox-bin
     wine
     winetricks
     chromium
