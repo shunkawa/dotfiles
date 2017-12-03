@@ -4,6 +4,7 @@
   imports = [
     ./tmux
     ./zsh
+    ./xkb
   ];
 
   programs.home-manager.enable = true;
