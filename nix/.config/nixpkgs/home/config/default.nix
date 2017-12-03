@@ -28,6 +28,8 @@
     speedtest-cli
   ] ++ lib.optionals stdenv.isLinux [ 
     firefox-nightly-bin
+    wine
+    winetricks
     chromium
     gimp
     mpv
