@@ -13,6 +13,8 @@
     \x auto
   '';
 
+  xdg.enable = true;
+
   home.packages = with pkgs; [
     fd
     fortune
