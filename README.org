@@ -280,3 +280,24 @@ Jan 30 10:45:12 localghost kernel: handlers:
 Jan 30 10:45:12 localghost kernel: [<ffffffffc04391c0>] usb_hcd_irq [usbcore]
 Jan 30 10:45:12 localghost kernel: Disabling IRQ #22
 #+end_example
+* Android
+** Syncthing
+I want to sync the entire =/sdcard= folder with Syncthing.  This leads to
+problems with other individual folders that I want to sync, for example =org=.
+My workaround is to create a new folder under =/storage/emulated= called =sync=
+and put those individual folders there while syncing everything else in
+=/storage/emulated/0=.
+
+#+BEGIN_EXAMPLE
+bullhead:/storage/emulated # mkdir sync
+bullhead:/storage/emulated # ls -lha
+total 8.0K
+drwx--x--x  5 root sdcard_rw 4.0K 2017-12-28 10:13 .
+drwxr-xr-x  4 root root        80 2016-09-27 12:35 ..
+drwxrwx--x 39 root sdcard_rw 4.0K 2017-12-26 19:10 0
+drwxrwx--x  4 root sdcard_rw 4.0K 2017-12-25 20:13 obb
+drwxrwx--x  2 root sdcard_rw 4.0K 2017-12-28 10:13 sync
+#+END_EXAMPLE
+
+Use the web GUI to configure the folder if you can't select
+=/storage/emulated/sync= in the native one.

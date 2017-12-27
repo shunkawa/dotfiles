@@ -5,6 +5,7 @@
     ./tmux
     ./zsh
     ./xkb
+    ./syncthing
   ];
 
   programs.home-manager.enable = true;
@@ -37,12 +38,14 @@
     gimp
     mpv
     icedtea8_web # iDRAC administration
-    python27Packages.syncthing-gtk
+    nextcloud-client
+    # python27Packages.syncthing-gtk
     libreoffice 
     steam
     wine
+    emacs
   ] ++ (with local-packages; [
-    emacs-git
+    # emacs-git # broken :(
     nixfmt
     riot
   ]);
