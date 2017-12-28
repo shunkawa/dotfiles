@@ -1,0 +1,14 @@
+The source files are not checked in (or synced by ~syncthing~) because they
+contain secrets.
+
+Run these commands to generate the files:
+
+#+BEGIN_EXAMPLE
+$  PIA_USERNAME="nobody" PASSWORD="hackme" ./generate.sh
+$ nix-build --expr 'with import <nixpkgs> {}; callPackage ./default.nix {}' --keep-failed
+#+END_EXAMPLE
+
+Check the output in ~./result~.
+
+Also see the
+[[file:../../modules/pia-nm/default.nix][module]].

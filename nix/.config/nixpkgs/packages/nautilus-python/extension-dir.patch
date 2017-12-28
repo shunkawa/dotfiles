@@ -1,0 +1,46 @@
+From aae303510c25db8959e18eb116bc22a477be373c Mon Sep 17 00:00:00 2001
+From: Ruben Maher <r@rkm.id.au>
+Date: Tue, 31 Jan 2017 21:39:46 +1030
+Subject: [PATCH] kek
+
+---
+ src/nautilus-python.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
+
+diff --git a/src/nautilus-python.c b/src/nautilus-python.c
+index ae26660..4616ee0 100644
+--- a/src/nautilus-python.c
++++ b/src/nautilus-python.c
+@@ -239,6 +239,7 @@ nautilus_module_initialize(GTypeModule *module)
+ {
+  gchar *user_extensions_dir;
+  const gchar *env_string;
++ const gchar *global_extensions_dir;
+
+  env_string = g_getenv("NAUTILUS_PYTHON_DEBUG");
+  if (env_string != NULL)
+@@ -248,13 +249,19 @@ nautilus_module_initialize(GTypeModule *module)
+                           nautilus_python_ndebug_keys);
+    env_string = NULL;
+     }
+-
++
++ global_extensions_dir = g_getenv("NAUTILUS_PYTHON_EXTENSION_DIR");
++ if (global_extensions_dir == NULL)
++ {
++   global_extensions_dir = DATADIR "/nautilus-python/extensions";
++ }
++
+  debug_enter();
+
+  all_types = g_array_new(FALSE, FALSE, sizeof(GType));
+
+  // Look in the new global path, $DATADIR/nautilus-python/extensions
+- nautilus_python_load_dir(module, DATADIR "/nautilus-python/extensions");
++ nautilus_python_load_dir(module, global_extensions_dir);
+
+  // Look in XDG_DATA_DIR, ~/.local/share/nautilus-python/extensions
+  user_extensions_dir = g_build_filename(g_get_user_data_dir(),
+--
+2.10.0
+

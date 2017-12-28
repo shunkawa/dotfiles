@@ -1,0 +1,12 @@
+[
+  "@jasondibenedetto/plop",
+  "eslint-cli",
+  "grunt-cli",
+  "imapnotify",
+  "react-native-cli",
+  "reddit-oauth-helper",
+  "tern",
+  "webpack",
+  "wscat",
+  "yarn"
+]
