@@ -37,8 +37,6 @@ in {
       haskellPackages.ShellCheck
       htop
       isync
-      localPackages.emacs-git
-      localPackages.nodePackages.reddit-oauth-helper
       msmtp
       mu
       nix-prefetch-scripts
@@ -59,7 +57,6 @@ in {
       which
       ripgrep
       fd
-      localPackages.react-devtools
 
       syncthing
       iterm2
@@ -71,6 +68,7 @@ in {
         # sdl2Support = false;
         xvSupport = false;
       }))
+      localPackages.react-devtools
 
       postgresql
       # apacheHttpd
