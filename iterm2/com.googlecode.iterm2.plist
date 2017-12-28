@@ -177,7 +177,7 @@
 	<key>NSWindow Frame SharedPreferences</key>
 	<string>596 717 918 512 0 0 2560 1417 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 4 850 1413 0 0 2560 1417 </string>
+	<string>0 28 850 1389 0 0 2560 1417 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>1709 959 650 451 0 0 2560 1417 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
@@ -965,6 +965,8 @@
 	<string>/-+\~_.</string>
 	<key>findIgnoreCase_iTerm</key>
 	<true/>
+	<key>findMode_iTerm</key>
+	<integer>0</integer>
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
