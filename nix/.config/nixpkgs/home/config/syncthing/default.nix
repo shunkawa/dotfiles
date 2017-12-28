@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+args@{ lib, pkgs, ... }:
 
 with lib;
 
@@ -11,12 +11,30 @@ let
     else value;
 
   deviceNames = {
-    tomoyo = "tomoyo.maher.fyi";
+    tomoyo = "maher.fyi";
     hoshijiro = "hoshijiro.maher.fyi";
     ayanami = "ayanami.maher.fyi";
     hanekawa = "hanekawa.local";
     nexus = "nexus-5x";
   };
+
+  # .stignore isn't synced, but necessary for ignoring files.
+  #
+  # A workaround is to have a file like this that does get synced, and
+  # include it from .stignore.
+  stignore = pkgs.writeText "stignore" ''
+    // Place this file in the root of your synced folder include it like this:
+    // $ cat <<<EOF > .stignore
+    // #include .stignore_synced
+    // EOF
+
+    (?d)*nix/store/**
+    (?d)*result/*
+    (?d).DS_Store
+    (?d)node_modules/**
+    // A NixOS artifact that is owned by root
+    (?d).version-suffix
+  '';
 
   devices = mapAttrs (name: value: recursiveUpdate {
     device = {
@@ -158,7 +176,7 @@ let
       versioning = null;
 
       participants = with deviceNames; [
-        nexus hoshijiro hanekawa ayanami tomoyo
+        nexus hoshijiro tomoyo
       ];
     };
   };
@@ -269,7 +287,21 @@ let
 in mkIf pkgs.stdenv.isLinux {
   services.syncthing.enable = true;
 
-  home.file.".config/syncthing/config.xml".source =
-    pkgs.writeText "syncthing-config"
-    (mkConfig (import pkgs.local-packages.get-hostname));
+  home.file = {
+    ".config/syncthing/config.xml".source =
+        pkgs.writeText "syncthing-config"
+        (mkConfig (if (attrByPath ["actualHostname"] args)== null
+          then (import pkgs.local-packages.get-hostname)
+          else (attrByPath ["actualHostname"] args)));
+  };
+
+  # This is a hack to create .stignore files, which syncthing doesn't allow to
+  # be symlinks to /nix/store.
+  home.activation.createStIgnoreFiles =
+    (import <home-manager/modules/lib/dag.nix> { inherit lib; }).dagEntryAfter
+      ["writeBoundary"]
+        (concatStringsSep "\n" (mapAttrsToList
+          (_: value: ''
+            install -Dm644 ${stignore} ${(removeSuffix "/" value.folder.path)}/.stignore
+          '') folders));
 }
