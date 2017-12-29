@@ -238,7 +238,7 @@ in {
     #!/usr/bin/env zsh
 
     function emacs-client () {
-      ${pkgs.local-packages.emacs-git}/bin/emacsclient -c \
+      emacsclient -c \
         --eval '(x-focus-frame (selected-frame))' "''${@}" &
     }
 
