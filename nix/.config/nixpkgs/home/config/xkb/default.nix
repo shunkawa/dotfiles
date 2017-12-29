@@ -2,7 +2,7 @@
 
 with lib;
 
-{
+mkIf pkgs.stdenv.isLinux {
   # I like to use the Hyper key in Emacs, but by default Gnome treats it the
   # same as Super so Hyper + L will lock the screen instead of navigating to the
   # pane to the right.
