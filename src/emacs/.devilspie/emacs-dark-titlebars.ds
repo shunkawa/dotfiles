@@ -1,3 +1,0 @@
-;; Set dark titlebars just for Emacs.
-(if (is (window_class) "Emacs")
-    (spawn_async "xprop" "-id" (str (window_xid)) "-format" "_GTK_THEME_VARIANT" "8u" "-set" "_GTK_THEME_VARIANT" "dark"))
