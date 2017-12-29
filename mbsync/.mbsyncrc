@@ -1,0 +1,196 @@
+# ~/.mbsyncrc
+
+Expunge         Both
+Create          Both
+Remove          Both
+Sync            All
+SyncState       *
+
+# postmaster-sucks@hotmail.com
+# IMAPAccount     postmaster
+# Host            imap-mail.outlook.com
+# User            postmaster-sucks@hotmail.com
+# SSLType         IMAPS
+# Port            993
+# # SSLVersions     TLSv1.2
+# PassCmd            "pass auth-sources/postmaster-sucks@hotmail.com | head -n 1"
+
+# IMAPStore       postmaster-remote
+# Account         postmaster
+
+# MaildirStore    postmaster-local
+# Path            ~/mail/hotmail.com/
+# Inbox           ~/mail/hotmail.com/
+# Flatten         .
+
+# Channel         postmaster-sucks
+# Master          ":postmaster-remote:"
+# Slave           ":postmaster-local:"
+# Patterns        *
+
+# eqyiel@gmail.com
+
+# IMAPAccount     gmail
+# Host            imap.gmail.com
+# User            eqyiel@gmail.com
+# PassCmd         "pass auth-sources/eqyiel@gmail.com | head -n 1"
+# SSLType         IMAPS
+# SSLVersions     TLSv1.2
+
+# IMAPStore       gmail-remote
+# Account         gmail
+
+# MaildirStore    gmail-local
+# Path            ~/mail/eqyiel@gmail.com/
+# Inbox           ~/mail/eqyiel@gmail.com/
+# Flatten         .
+
+# Channel         gmail_all_mail
+# Master          ":gmail-remote:[Gmail]/All Mail"
+# Slave           ":gmail-local:All Mail"
+
+# Channel         gmail_sent
+# Master          ":gmail-remote:[Gmail]/Sent Mail"
+# Slave           ":gmail-local:Sent Mail"
+
+# Channel         gmail_bin
+# Master          ":gmail-remote:[Gmail]/Bin"
+# Slave           ":gmail-local:Bin"
+
+# Channel         gmail_spam
+# Master          ":gmail-remote:[Gmail]/Spam"
+# Slave           ":gmail-local:Spam"
+
+# Group eqyiel@gmail.com gmail_all_mail gmail_sent gmail_bin gmail_spam
+
+# # mahe0054@flinders.edu.au
+
+# IMAPAccount     flinders
+# Host            outlook.office365.com
+# User            mahe0054@flinders.edu.au
+# PassCmd         "pass auth-sources/mahe0054@flinders.edu.au | head -n 1"
+# Port            993
+# SSLType         IMAPS
+# SSLVersions     TLSv1.2
+
+# IMAPStore       flinders-remote
+# Account         flinders
+
+# MaildirStore    flinders-local
+# Path            ~/mail/mahe0054@flinders.edu.au/
+# Inbox           ~/mail/mahe0054@flinders.edu.au/Inbox
+# Flatten         .
+
+# Channel         mahe0054@flinders.edu.au
+# Master          ":flinders-remote:"
+# Slave           ":flinders-local:"
+# Patterns        *
+
+# ruben@maher.fyi
+
+IMAPAccount     maher
+Host            maher.fyi
+User            ruben@maher.fyi
+PassCmd         "pass auth-sources/ruben@maher.fyi | head -n 1"
+SSLType         IMAPS
+SSLVersions     TLSv1.2
+
+IMAPStore       maher-remote
+Account         maher
+
+MaildirStore    maher-local
+Path            ~/mail/ruben@maher.fyi/
+Inbox           ~/mail/ruben@maher.fyi/Inbox
+Flatten         .
+
+Channel         ruben@maher.fyi
+Master          ":maher-remote:"
+Slave           ":maher-local:"
+Patterns        *
+
+# # r@rkm.id.au
+
+# IMAPAccount     rkm
+# Host            mail.rkm.id.au
+# User            r@rkm.id.au
+# PassCmd         "pass auth-sources/r@rkm.id.au | head -n 1"
+# SSLType         IMAPS
+# SSLVersions     TLSv1.2
+
+# IMAPStore       rkm-remote
+# Account         rkm
+
+# MaildirStore    rkm-local
+# Path            ~/mail/r@rkm.id.au/
+# Inbox           ~/mail/r@rkm.id.au/Inbox
+# Flatten         .
+
+# Channel         r@rkm.id.au
+# Master          ":rkm-remote:"
+# Slave           ":rkm-local:"
+# Patterns        *
+
+# info@huttriverprovince.com.au
+
+# IMAPAccount     hrp
+# Host            mail.rkm.id.au
+# User            info@huttriverprovince.com.au
+# PassCmd         "pass auth-sources/info@huttriverprovince.com.au | head -n 1"
+# SSLType         IMAPS
+# SSLVersions     TLSv1.2
+
+# IMAPStore       hrp-remote
+# Account         hrp
+
+# MaildirStore    hrp-local
+# Path            ~/mail/info@huttriverprovince.com.au/
+# Inbox           ~/mail/info@huttriverprovince.com.au/Inbox
+# Flatten         .
+
+# Channel         info@huttriverprovince.com.au
+# Master          :hrp-remote:
+# Slave           :hrp-local:
+# Patterns        *
+
+# ruben@mangochutney.com.au
+
+IMAPAccount     mangochutney
+Host            imap.gmail.com
+User            ruben@mangochutney.com.au
+PassCmd         "pass auth-sources/ruben@mangochutney.com.au | head -n 1"
+SSLType         IMAPS
+SSLVersions     TLSv1.2
+
+IMAPStore       mangochutney-remote
+Account         mangochutney
+
+MaildirStore    mangochutney-local
+Path            ~/mail/ruben@mangochutney.com.au/
+Inbox           ~/mail/ruben@mangochutney.com.au/
+Flatten         .
+
+Channel         mango_all_mail
+Master          ":mangochutney-remote:[Gmail]/All Mail"
+Slave           ":mangochutney-local:All Mail"
+
+Channel         mango_sent
+Master          ":mangochutney-remote:[Gmail]/Sent Mail"
+Slave           ":mangochutney-local:Sent Mail"
+
+Channel         mango_drafts
+Master          ":mangochutney-remote:[Gmail]/Drafts"
+Slave           ":mangochutney-local:Drafts"
+
+Channel         mango_bin
+Master          ":mangochutney-remote:[Gmail]/Bin"
+Slave           ":mangochutney-local:Bin"
+
+Channel         mango_spam
+Master          ":mangochutney-remote:[Gmail]/Spam"
+Slave           ":mangochutney-local:Spam"
+
+Group ruben@mangochutney.com.au mango_all_mail mango_sent mango_drafts mango_bin mango_spam
+
+# Local Variables:
+# mode: conf-space
+# End:
