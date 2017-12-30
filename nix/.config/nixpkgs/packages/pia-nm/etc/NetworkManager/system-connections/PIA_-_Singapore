@@ -1,0 +1,24 @@
+[connection]
+id=PIA - Singapore
+uuid=ac52e2e6-2ecb-4020-ba90-31e1ae65657e
+type=vpn
+autoconnect=false
+
+[vpn]
+service-type=org.freedesktop.NetworkManager.openvpn
+username=p2086939
+comp-lzo=yes
+remote=sg.privateinternetaccess.com
+cipher=AES-256-CBC
+auth=SHA256
+connection-type=password
+password-flags=0
+port=501
+proto-tcp=yes
+ca=/etc/openvpn/pia-ca.rsa.4096.crt
+
+[ipv4]
+method=auto
+dns-priority=-42
+dns-search=
+

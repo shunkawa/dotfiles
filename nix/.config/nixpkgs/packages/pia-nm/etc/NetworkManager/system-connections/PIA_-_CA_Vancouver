@@ -1,0 +1,24 @@
+[connection]
+id=PIA - CA Vancouver
+uuid=f1b0b4bf-3d88-4064-bed8-1df0bfb99afe
+type=vpn
+autoconnect=false
+
+[vpn]
+service-type=org.freedesktop.NetworkManager.openvpn
+username=p2086939
+comp-lzo=yes
+remote=ca-vancouver.privateinternetaccess.com
+cipher=AES-256-CBC
+auth=SHA256
+connection-type=password
+password-flags=0
+port=501
+proto-tcp=yes
+ca=/etc/openvpn/pia-ca.rsa.4096.crt
+
+[ipv4]
+method=auto
+dns-priority=-42
+dns-search=
+

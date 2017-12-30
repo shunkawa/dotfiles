@@ -1,0 +1,24 @@
+[connection]
+id=PIA - Japan
+uuid=32047747-b966-4021-ab4f-8ab56f922221
+type=vpn
+autoconnect=false
+
+[vpn]
+service-type=org.freedesktop.NetworkManager.openvpn
+username=p2086939
+comp-lzo=yes
+remote=japan.privateinternetaccess.com
+cipher=AES-256-CBC
+auth=SHA256
+connection-type=password
+password-flags=0
+port=501
+proto-tcp=yes
+ca=/etc/openvpn/pia-ca.rsa.4096.crt
+
+[ipv4]
+method=auto
+dns-priority=-42
+dns-search=
+

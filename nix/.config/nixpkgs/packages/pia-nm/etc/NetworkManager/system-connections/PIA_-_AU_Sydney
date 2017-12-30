@@ -1,0 +1,24 @@
+[connection]
+id=PIA - AU Sydney
+uuid=e8ef7d58-a1fa-469c-9eb4-4c5b45bdfb16
+type=vpn
+autoconnect=false
+
+[vpn]
+service-type=org.freedesktop.NetworkManager.openvpn
+username=p2086939
+comp-lzo=yes
+remote=aus.privateinternetaccess.com
+cipher=AES-256-CBC
+auth=SHA256
+connection-type=password
+password-flags=0
+port=501
+proto-tcp=yes
+ca=/etc/openvpn/pia-ca.rsa.4096.crt
+
+[ipv4]
+method=auto
+dns-priority=-42
+dns-search=
+

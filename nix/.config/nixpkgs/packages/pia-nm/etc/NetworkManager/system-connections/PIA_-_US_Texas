@@ -1,0 +1,24 @@
+[connection]
+id=PIA - US Texas
+uuid=7b6081ba-145e-4213-863f-39b65aa3846a
+type=vpn
+autoconnect=false
+
+[vpn]
+service-type=org.freedesktop.NetworkManager.openvpn
+username=p2086939
+comp-lzo=yes
+remote=us-texas.privateinternetaccess.com
+cipher=AES-256-CBC
+auth=SHA256
+connection-type=password
+password-flags=0
+port=501
+proto-tcp=yes
+ca=/etc/openvpn/pia-ca.rsa.4096.crt
+
+[ipv4]
+method=auto
+dns-priority=-42
+dns-search=
+

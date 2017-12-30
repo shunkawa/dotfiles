@@ -23,7 +23,7 @@ cleanup() {
   sudo chmod 777 -R ./etc
   rm -rfv ./jail
   cd ./etc/NetworkManager/system-connections
-  for f in PIA*; do
+  for f in *; do
     # magic snippet to get rid of dns leaks with NM
     # https://bugzilla.gnome.org/show_bug.cgi?id=783569#c23
     echo -e "dns-priority=-42\ndns-search=\n" >> "$f"
@@ -38,9 +38,6 @@ mkdir -p jail/{proc,sys,dev,bin,usr,run,nix}
 curl https://www.privateinternetaccess.com/installer/pia-nm.sh > jail/pia-nm.sh
 sed -i '0,/\/bin\/bash/s/\/bin\/bash/\/usr\/bin\/env bash\nset -e\nfunction whoami() { echo 'root'; }/' jail/pia-nm.sh
 sed -i 's/password-flags=1/password-flags=0/' jail/pia-nm.sh
-sed -i "/\[ipv4\]/i \
-\[vpn-secrets\]\n\
-password=$PASSWORD\n" jail/pia-nm.sh
 chmod +x jail/pia-nm.sh
 mkdir -p jail/etc/{openvpn,ssl/certs,NetworkManager/system-connections}
 cp /etc/resolv.conf jail/etc/resolv.conf
