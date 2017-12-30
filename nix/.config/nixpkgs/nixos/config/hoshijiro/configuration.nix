@@ -2,19 +2,14 @@
 
 let
 
-  sshKeys = import ./../../common/ssh-keys.nix;
+  sshKeys = import ./../../../common/ssh-keys.nix;
 
   secrets = import ./secrets.nix;
-
-  localPackages = (import ./../../pkgs/all-packages.nix) {
-    inherit config lib pkgs;
-  };
 
 in rec {
   imports = [
     ./lib
     ./config
-    ./../../pkgs/overrides.nix
   ] ++ (import ./../../modules/module-list.nix);
 
   fileSystems."/" = {
@@ -77,8 +72,6 @@ in rec {
   hardware.pulseaudio.enable = true;
 
   swapDevices = [{ device = "/dev/mapper/vgroup-swap"; }];
-
-  nix.maxJobs = lib.mkDefault 8;
 
   powerManagement.cpuFreqGovernor = "powersave";
 
@@ -313,17 +306,15 @@ in rec {
     systemPackages = with pkgs; [
       zfs
       zfstools
-
       firefox
-      localPackages.riot
       nextcloud-client
       chromium
       mpv
       libreoffice
       python27Packages.syncthing-gtk
       kdeconnect
-    ] ++ (import ./../../common/package-lists/essentials.nix) {
-      inherit pkgs localPackages;
+    ] ++ (import ./../../../common/package-lists/essentials.nix) {
+      inherit pkgs;
     };
     etc = {
       "xdg/gtk-3.0/settings.ini" = {
@@ -507,7 +498,36 @@ in rec {
 
   programs.zsh.enable = true;
 
-  nixpkgs.config.allowUnfree = true;
+
+  nixpkgs = {
+    config.allowUnfree = true;
+    overlays = [
+      (import ../../../packages/overlay.nix)
+    ];
+  };
+
+  nix = {
+    # Use this if you want to force remote building
+    # maxJobs = 0;
+    trustedUsers = [ "root" ];
+    nixPath = [
+      # symlink from ~/git/personal/dotfiles/nix/.config/nixpkgs/nixos/config/ayanami/lib/nixpkgs
+      "nixpkgs=/etc/nixos/lib/nixpkgs"
+      # symlink from ~/git/personal/dotfiles/nix/.config/nixpkgs/nixos/config/ayanami/configuration.nix
+      "nixos-config=/etc/nixos/configuration.nix"
+    ];
+    distributedBuilds = false;
+    trustedBinaryCaches = [ "http://nixos-arm.dezgeg.me/channel" ];
+    buildMachines = [
+      {
+        hostName = "tomoyo.maher.fyi";
+        sshUser = "nix-builder";
+        sshKey = "/root/.ssh/id_nix-builder";
+        system = "x86_64-linux";
+        maxJobs = 4;
+      }
+    ];
+  };
 
   security.sudo.wheelNeedsPassword = false;
 
