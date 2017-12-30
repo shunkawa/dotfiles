@@ -333,6 +333,10 @@ in rec {
     ];
   };
 
+  fonts.fonts = (import ./../../../common/package-lists/fonts.nix) {
+    inherit pkgs;
+  };
+
   services.nginx = {
     enable = true;
     virtualHosts = {
@@ -527,6 +531,11 @@ in rec {
         maxJobs = 4;
       }
     ];
+  };
+
+  i18n.inputMethod = {
+    enabled = "ibus";
+    ibus.engines = with pkgs.ibus-engines; [ mozc ];
   };
 
   security.sudo.wheelNeedsPassword = false;

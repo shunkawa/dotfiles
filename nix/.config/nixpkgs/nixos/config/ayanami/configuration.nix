@@ -158,6 +158,11 @@ in
     inherit pkgs;
   };
 
+  i18n.inputMethod = {
+    enabled = "ibus";
+    ibus.engines = with pkgs.ibus-engines; [ mozc ];
+  };
+
   services.xserver = {
     enable = true;
     layout = "us";
