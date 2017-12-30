@@ -419,7 +419,7 @@ in {
       ${pkgs.fd}/bin/fd --type d --hidden --follow --exclude ".git" . "''${1}"
     }
 
-    export RKM_HIST_DIR="''${HOME}/history/zsh"
+    export RKM_HIST_DIR="''${HOME}/sync/history/zsh"
     test -d "$RKM_HIST_DIR" || mkdir -p "$RKM_HIST_DIR"
     export HISTFILE="''${RKM_HIST_DIR}/$(date -u +%Y-%m-%d.%H.%M.%S)_$(hostname)_$$"
     HISTSIZE=1000000
