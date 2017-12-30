@@ -37,6 +37,12 @@ $ ./go.py --stow --all
 
 
 * ~mbsync~
+** Initial sync
+#+BEGIN_EXAMPLE
+$ mbsync -a; mu index --maildir ~/mail --rebuild
+#+END_EXAMPLE
+
+** Dealing with duplicates
 
 If ~mbsync~ has screwed you by creating duplicates you can remove them by
 stripping out the ~X-TUID~ header.

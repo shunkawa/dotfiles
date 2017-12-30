@@ -6,6 +6,7 @@
     ./zsh
     ./xkb
     ./syncthing
+    ./mbsync
   ];
 
   programs.home-manager.enable = true;
