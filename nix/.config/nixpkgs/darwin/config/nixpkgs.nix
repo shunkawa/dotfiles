@@ -30,7 +30,7 @@
 
           src = fetchurl {
             url = "https://github.com/syncthing/syncthing/releases/download/v${version}/syncthing-macosx-amd64-v${version}.tar.gz";
-            sha256 = "03b1w95f8rh8yk4dafcsic8kh48h4v5xsys4qvm30cj9apzyrirl";
+            sha256 = "0sbrvq9lp2krhfjjjcv70bd5k10ivj7ssfzfq5bnm20awilkv3kr";
           };
 
           buildInputs = [ gnutar ];
