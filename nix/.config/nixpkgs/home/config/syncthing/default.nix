@@ -179,6 +179,19 @@ let
         nexus hoshijiro tomoyo
       ];
     };
+
+    memes = {
+      folder = {
+        id = "zdmxs-7yk3u";
+        path = "~/sync/memes";
+      };
+
+      versioning = null;
+
+      participants = with deviceNames; [
+        hanekawa hoshijiro tomoyo
+      ];
+    };
   };
 
   mkConfig = (hostname: ''
