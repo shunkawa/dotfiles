@@ -32,6 +32,7 @@
       pass
       pinentry
       speedtest-cli
+      emacs
     ] ++ lib.optionals stdenv.isLinux [
       firefox-bin
       wine
@@ -45,7 +46,6 @@
       libreoffice
       steam
       wine
-      emacs
     ] ++ (with local-packages; [
       # emacs-git # broken :(
       nixfmt
