@@ -1,21 +1,6 @@
 { config, lib, pkgs, ... }:
 
-let
-
-  localPackages = (import ../../pkgs/all-packages.nix) {
-    inherit config lib pkgs;
-  };
-
-  # Pin to a specific version of nixpkgs like this:
-  # nixpkgsMaster = import ((import <nixpkgs> { }).fetchFromGitHub {
-  #   owner = "NixOS";
-  #   repo = "nixpkgs";
-  #   rev = "fd22d671ecad983fbbbd92c4626204f09c9af8ff";
-  #   sha256 = "0pn8w5v2b7c82nr0zbb91bfzylr97hq3knwhlc8xhzibhp0d723a";
-  # }) { config = { }; };
-  # then, for example: nixpkgsMaster.pkgs.nodejs-8_x
-
-in {
+{
   environment = {
     systemPackages = with pkgs; [
       aspell
@@ -68,7 +53,7 @@ in {
         # sdl2Support = false;
         xvSupport = false;
       }))
-      localPackages.react-devtools
+      local-packages.react-devtools
 
       postgresql
       # apacheHttpd
@@ -76,14 +61,14 @@ in {
       flow
       jekyll
       lftp
-      # localPackages.fontcustom
-      localPackages.nodePackages."@jasondibenedetto/plop"
-      localPackages.nodePackages.imapnotify
-      localPackages.nodePackages.react-native-cli
-      localPackages.nodePackages.tern
-      localPackages.nodePackages.wscat
-      localPackages.nodePackages.yarn
-      localPackages.scss-lint
+      # local-packages.fontcustom
+      local-packages.nodePackages."@jasondibenedetto/plop"
+      local-packages.nodePackages.imapnotify
+      local-packages.nodePackages.react-native-cli
+      local-packages.nodePackages.tern
+      local-packages.nodePackages.wscat
+      local-packages.nodePackages.yarn
+      local-packages.scss-lint
       nodePackages_6_x.node2nix
       nodejs-8_x
       # php
@@ -98,10 +83,6 @@ in {
       # Error enabling Flyspell mode:
       # (Error: The file "/nix/store/ ... /lib/aspell/english" can not be opened for reading.)
       ASPELL_CONF = "data-dir /run/current-system/sw/lib/aspell";
-    };
-
-    shellAliases = {
-      emacs = "${localPackages.emacs-git}/Applications/Emacs.app/Contents/MacOS/Emacs";
     };
 
     pathsToLink = [

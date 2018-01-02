@@ -2,25 +2,10 @@
 
 {
   nixpkgs = {
-
-  #   overlays = let
-  #     mozillaPkgsDir = (import <nixpkgs>{config={};}).fetchFromGitHub {
-  #     owner = "mozilla";
-  #     repo = "nixpkgs-mozilla";
-  #     rev = "HEAD";
-  #     sha256 = "1shz56l19kgk05p2xvhb7jg1whhfjix6njx1q4rvrc5p1lvyvizd";
-  #     fetchSubmodules = true;
-  #   };
-
-  # in
-  #   [
-  #   (import "${mozillaPkgsDir}/rust-overlay.nix")
-  #   (import "${mozillaPkgsDir}/firefox-overlay.nix")
-  # ];
-
     config = {
       allowBroken = true;
       allowUnfree = true;
+      overlays = [ (import ../../packages/overlay.nix) ];
       packageOverrides = pkgs: {
         iterm2 = with pkgs; stdenv.mkDerivation rec {
           name = "iterm2";
@@ -41,7 +26,7 @@
 
         syncthing = with pkgs; stdenv.mkDerivation rec {
           name = "syncthing";
-          version = "0.14.39";
+          version = "0.14.42";
 
           src = fetchurl {
             url = "https://github.com/syncthing/syncthing/releases/download/v${version}/syncthing-macosx-amd64-v${version}.tar.gz";

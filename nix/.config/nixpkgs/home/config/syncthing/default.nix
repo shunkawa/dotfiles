@@ -284,16 +284,20 @@ let
     </configuration>
   '');
 
-in mkIf pkgs.stdenv.isLinux {
-  services.syncthing.enable = true;
+in {
+  services.syncthing = mkIf pkgs.stdenv.isLinux { enable = true; };
 
-  home.file = {
-    ".config/syncthing/config.xml".source =
-        pkgs.writeText "syncthing-config"
-        (mkConfig (if (attrByPath ["actualHostname"] args)== null
-          then (import pkgs.local-packages.get-hostname)
-          else (attrByPath ["actualHostname"] args)));
-  };
+  home.file =
+    let
+      configPath = if pkgs.stdenv.isLinux then ".config/syncthing/config.xml"
+        else "Library/Application\ Support/syncthing/config.xml";
+    in {
+      "${configPath}".source =
+          pkgs.writeText "syncthing-config"
+          (mkConfig (if (attrByPath ["actualHostname"] args) == null
+            then (import pkgs.local-packages.get-hostname)
+            else (attrByPath ["actualHostname"] args)));
+    };
 
   # This is a hack to create .stignore files, which syncthing doesn't allow to
   # be symlinks to /nix/store.
