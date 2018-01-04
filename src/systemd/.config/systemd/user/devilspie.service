@@ -1,9 +1,0 @@
-[Unit]
-Description=devilspie
-
-[Service]
-ExecStart=/usr/bin/devilspie -a
-
-[Install]
-WantedBy=graphical.target
-WantedBy=default.target
