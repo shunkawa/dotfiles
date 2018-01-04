@@ -23,10 +23,13 @@ cleanup() {
   sudo chmod 777 -R ./etc
   rm -rfv ./jail
   cd ./etc/NetworkManager/system-connections
+  ID="$(id -u)"
+  GID="$(id -g)"
   for f in *; do
     # magic snippet to get rid of dns leaks with NM
     # https://bugzilla.gnome.org/show_bug.cgi?id=783569#c23
     echo -e "dns-priority=-42\ndns-search=\n" >> "$f"
+    sudo chown "${ID}:${GID}" "$f"
     mv "$f" "${f// /_}";
   done
 }

@@ -1,6 +1,6 @@
 [connection]
-id=PIA - US Midwest
-uuid=4c9a59bf-ab68-4318-8fce-f6e3b4d71869
+id=PIA - Spain
+uuid=95a0b0bf-22ca-4a74-b508-70d93bc8a246
 type=vpn
 autoconnect=false
 
@@ -8,7 +8,7 @@ autoconnect=false
 service-type=org.freedesktop.NetworkManager.openvpn
 username=p2086939
 comp-lzo=yes
-remote=us-midwest.privateinternetaccess.com
+remote=spain.privateinternetaccess.com
 cipher=AES-256-CBC
 auth=SHA256
 connection-type=password
