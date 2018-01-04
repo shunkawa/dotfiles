@@ -5,7 +5,7 @@
     display = {
       error = true;
       new = true;
-      unchanged = true;
+      unchanged = false;
     };
     report = {
       email = {
