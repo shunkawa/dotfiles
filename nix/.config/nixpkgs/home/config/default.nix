@@ -32,7 +32,6 @@
       pass
       pinentry
       speedtest-cli
-      emacs
     ] ++ lib.optionals stdenv.isLinux [
       firefox-bin
       wine
@@ -48,6 +47,7 @@
       wine
     ] ++ (with local-packages; [
       # emacs-git # broken :(
+      emacs-with-packages
       nixfmt
       riot
     ]);

@@ -215,9 +215,9 @@ in {
 
     function emacs() {
       if isdarwin; then
-        ${pkgs.local-packages.emacs-git}/Applications/Emacs.app/Contents/MacOS/Emacs "''${@}";
+        ${pkgs.local-packages.emacs-with-packages}/Applications/Emacs.app/Contents/MacOS/Emacs "''${@}";
       else
-        ${pkgs.local-packages.emacs-git}/bin/emacs "''${@}"
+        ${pkgs.local-packages.emacs-with-packages}/bin/emacs "''${@}"
       fi;
     }
 
