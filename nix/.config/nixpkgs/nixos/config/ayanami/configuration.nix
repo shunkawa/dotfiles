@@ -16,7 +16,6 @@ in
 {
   imports = [
     ./hardware-configuration.nix
-    ./../../../packages/overrides.nix
   ] ++ (import ./../../modules/module-list.nix);
 
   boot = {
