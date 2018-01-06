@@ -307,7 +307,7 @@ in rec {
       zfs
       zfstools
       firefox
-      nextcloud-client
+      local-packages.nextcloud-client
       chromium
       mpv
       libreoffice
