@@ -6,10 +6,6 @@ let
     inherit (bleedingEdgePackages.dircolors-solarized) url rev sha256;
   };
 
-  enchancd = pkgs.fetchgit {
-    inherit (bleedingEdgePackages.enchancd) url rev sha256;
-  };
-
   grml-etc-core = pkgs.fetchgit {
     inherit (bleedingEdgePackages.grml-etc-core) url rev sha256;
   };
@@ -245,6 +241,51 @@ in {
     emacs-client "''${@}"
   '';
 
+  home.file.".config/zsh/functions/rkm-history-create-histfile-name".source = pkgs.writeText "rkm-history-create-histfile-name" ''
+    #!/usr/bin/env zsh
+
+    function rkm-history-create-histfile-name () {
+      echo ''${RKM_HISTORY_HIST_DIR}/$(date -u +%Y-%m-%d.%H.%M.%S)_$(hostname)_$$
+    }
+
+    rkm-history-create-histfile-name "''${@}"
+  '';
+
+  home.file.".config/zsh/functions/rkm-history".source = pkgs.writeText "rkm-history" ''
+    #!/usr/bin/env zsh
+
+    function rkm-history () {
+      cat "''${RKM_HISTORY_HIST_DIR}/"** |
+        ${pkgs.gnused}/bin/sed "s/^[^;]*;//" | # assuming EXTENDED_HISTORY is set (":start:elapsed;command" format)
+        sort |
+        uniq -c |
+        sort |
+        ${pkgs.gnused}/bin/sed "s/^[[:space:]]*[0-9]*[[:space:]]*//"
+    }
+
+    rkm-history "''${@}"
+  '';
+
+  home.file.".config/zsh/functions/rkm-history-consolidate".source = pkgs.writeText "rkm-history-consolidate" ''
+    #!/usr/bin/env zsh
+
+    # set -euo pipefail
+
+    function rkm-history-consolidate () {
+      local CURRENT_HISTORY HISTFILE
+
+      TMP_HISTORY_FILE=$(mktemp)
+      HISTFILE=$(rkm-history-create-histfile-name)
+
+      rkm-history >| "''${TMP_HISTORY_FILE}"
+
+      rm -f "''${RKM_HISTORY_HIST_DIR}"/*
+      mv "''${TMP_HISTORY_FILE}" "''${HISTFILE}"
+    }
+
+    rkm-history-consolidate "''${@}"
+  '';
+
   home.file.".zshenv".source = pkgs.writeText "zshenv" ''
     fpath=(
       ''${HOME}/.config/zsh/functions
@@ -310,10 +351,6 @@ in {
     autoload -U promptinit; promptinit
     prompt pure
 
-    source "${enchancd}/init.sh"
-
-    ENHANCD_FILTER="fzf"; export ENHANCD_FILTER
-
     source "${oh-my-zsh}/plugins/colored-man-pages/colored-man-pages.plugin.zsh"
 
     stty -ixon # disable stop
@@ -355,12 +392,18 @@ in {
     source "${pkgs.fzf}/share/fzf/completion.zsh"
     source "${pkgs.fzf}/share/fzf/key-bindings.zsh"
 
+    # See "4.5.3: Function keys and so on" for help figuring out how to type a
+    # particular key binding
+    # http://zsh.sourceforge.net/Guide/zshguide04.html#l96
+
     # Remove fzf's suggested bindings that conflict with emacs keys
     bindkey -r '^T'  # fzf-file-widget
     bindkey '\e[17~' fzf-file-widget # F6
+    bindkey '^T' transpose-chars # restore original binding
 
     bindkey -r '\ec' # fzf-cd-widget
     bindkey '\e[15~' fzf-cd-widget # F5
+    bindkey '\ec' capitalize-word # restore original binding
 
     # History stuff inspired by a comment by howeyc on Hacker News:
     #
@@ -383,12 +426,7 @@ in {
       local selected num
       setopt localoptions noglobsubst pipefail 2> /dev/null
       selected=(
-        $(cat "''${RKM_HIST_DIR}/"** |
-            ${pkgs.gnused}/bin/sed "s/^[^;]*;//" | # assuming EXTENDED_HISTORY is set (":start:elapsed;command" format)
-            sort |
-            uniq -c |
-            sort |
-            ${pkgs.gnused}/bin/sed "s/^[[:space:]]*[0-9]*[[:space:]]*//" |
+        $(rkm-history |
             FZF_DEFAULT_OPTS="--height ''${FZF_TMUX_HEIGHT:-40%} --reverse $FZF_DEFAULT_OPTS +s --tac -n2..,.. --tiebreak=index --bind=ctrl-r:toggle-sort $FZF_CTRL_R_OPTS --query=''${(q)LBUFFER} +m" $(__fzfcmd) -q '^'
         )
       )
@@ -419,9 +457,9 @@ in {
       ${pkgs.fd}/bin/fd --type d --hidden --follow --exclude ".git" . "''${1}"
     }
 
-    export RKM_HIST_DIR="''${HOME}/sync/history/zsh"
-    test -d "$RKM_HIST_DIR" || mkdir -p "$RKM_HIST_DIR"
-    export HISTFILE="''${RKM_HIST_DIR}/$(date -u +%Y-%m-%d.%H.%M.%S)_$(hostname)_$$"
+    export RKM_HISTORY_HIST_DIR="''${HOME}/sync/history/zsh"
+    test -d "$RKM_HISTORY_HIST_DIR" || mkdir -p "$RKM_HISTORY_HIST_DIR"
+    export HISTFILE="$(rkm-history-create-histfile-name)"
     HISTSIZE=1000000
     SAVEHIST=$HISTSIZE
 

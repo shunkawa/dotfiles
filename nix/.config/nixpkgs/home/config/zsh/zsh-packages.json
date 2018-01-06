@@ -1,11 +1,4 @@
 {
-  "enchancd": {
-    "url": "https://github.com/b4b4r07/enhancd.git",
-    "rev": "5e1541ad3a4819978e4572bbe5d6b961a799f4e3",
-    "date": "2017-05-17T09:17:03+09:00",
-    "sha256": "0pg34d6ff2vd45a41nkw5vcqhbxhll512m44ql7cdrrvi3lpai1r",
-    "fetchSubmodules": true
-  },
   "grml-etc-core": {
     "url": "https://github.com/grml/grml-etc-core",
     "rev": "2f64ae016b211b59ddd38b1ad2026b2ff9336328",
