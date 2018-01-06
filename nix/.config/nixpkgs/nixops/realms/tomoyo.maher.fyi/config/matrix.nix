@@ -6,10 +6,14 @@ let
   # TODO: this needs to have a separate A record
   fqdn = "maher.fyi";
 in {
+  imports = [ ../lib/matrix-appservice-irc-nixos ];
+
   networking.firewall = {
     allowedTCPPorts = [
+      1113 # matrix-appservice-irc ident
       3478 # coturn
       8448 # matrix
+      7555 # matrix-appservice-irc
     ];
     allowedUDPPorts = [
       3478 # coturn
@@ -26,7 +30,7 @@ in {
     bcrypt_rounds = "12";
     enable = true;
     web_client = false;
-    enable_registration = true;
+    enable_registration = false;
     registration_shared_secret = secrets.services.matrix-synapse.registration_shared_secret;
     server_name = fqdn;
     database_type = "psycopg2";
@@ -46,6 +50,29 @@ in {
     turn_shared_secret = secrets.services.matrix-synapse.turn_shared_secret;
     turn_user_lifetime = "24h";
     url_preview_enabled = true;
+    listeners = [
+      {
+        port = 8448;
+        bind_address = "";
+        type = "http";
+        tls = true;
+        x_forwarded = false;
+        resources = [
+          { names = ["client" "webclient"]; compress = true; }
+          { names = ["federation"]; compress = false; }
+        ];
+      }
+      {
+        port = 8008;
+        bind_address = "";
+        type = "http";
+        tls = false;
+        x_forwarded = false;
+        resources = [
+          { names = ["client" "webclient"]; compress = true; }
+          { names = ["federation"]; compress = false; }
+        ];
+      }];
   };
 
   services.coturn = {
@@ -81,6 +108,64 @@ in {
         };
       };
     };
+  };
+
+  services.matrix-appservice-irc = {
+    enable = true;
+    url = "http://localhost:7555";
+    port = 7555;
+    homeserver_url = "http://localhost:8008";
+    homeserver_domain = fqdn;
+    stateDir = "/mnt/var/lib/matrix-appservice-irc";
+    servers = {
+      "irc.freenode.net" = {
+        port = 6697;
+        ssl = true;
+        sslselfsign = false;
+        password = null;
+        sendConnectionMessages = true;
+        botConfig_enabled = false;
+        privateMessages_enabled = true;
+        dynamicChannels_enabled = true;
+        dynamicChannels_createAlias = true;
+        dynamicChannels_published = true;
+        dynamicChannels_joinRule = "invite";
+        dynamicChannels_whitelist = [ "@eqyiel:maher.fyi" ];
+        dynamicChannels_federate = false;
+        dynamicChannels_aliasTemplate = "#irc_$SERVER_$CHANNEL";
+        dynamicChannels_exclude = [];
+        membershipLists_enabled = true;
+        membershipLists_global_ircToMatrix = {
+          initial = true;
+          incremental = true;
+        };
+        membershipLists_global_matrixToIrc = {
+          initial = true;
+          incremental = true;
+        };
+        membershipLists_rooms = [];
+        membershipLists_channels = [];
+        mappings = {};
+        matrixClients_userTemplate = "@irc_$NICK";
+        matrixClients_displayName = "$NICK (IRC)";
+        ircClients_nickTemplate = "$DISPLAY";
+        ircClients_allowNickChanges = true;
+        ircClients_maxClients = 30;
+        ircClients_ipv6_prefix = null;
+        ircClients_idleTimeout = 172800;
+      };
+    };
+    ident_enabled = true;
+    ident_port = 1113;
+    logging_level = "debug";
+    logging_logfile = null;
+    logging_errfile = null;
+    logging_toConsole = true;
+    logging_maxFileSizeBytes = 134217728;
+    logging_maxFiles = 5;
+    statsd = null;
+    databaseUri = "nedb:///mnt/var/lib/matrix-appservice-irc/data";
+    passwordEncryptionKeyPath = null;
   };
 
   # This is not necessary if acme is enabled elsewhere for this fqdn.
