@@ -5,6 +5,7 @@
     ./tmux
     ./zsh
     ./xkb
+    ./spectacle
     ./syncthing
     ./mbsync
   ];
