@@ -84,7 +84,7 @@ in
   };
 
   environment.systemPackages = with pkgs; [
-    # nextcloud-client
+    local-packages.nextcloud-client
     local-packages.javaws-desktop-file
     local-packages.nautilus-python # nextcloud packages nautilus extensions
     mpdris2 # notifications in Gnome for MPD
