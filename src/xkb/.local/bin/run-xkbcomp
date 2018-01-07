@@ -1,6 +1,0 @@
-#!/bin/sh
-
-command -v xkbcomp >/dev/null 2>&1 && \
-    test -d "${HOME}/.config/xkb" && \
-    test -e "${HOME}/.config/xkb/xkbmap" && \
-    xkbcomp -I"${HOME}/.config/xkb" "${HOME}/.config/xkb/xkbmap" "${DISPLAY}"
