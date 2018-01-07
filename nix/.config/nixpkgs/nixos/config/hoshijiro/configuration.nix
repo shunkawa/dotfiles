@@ -292,7 +292,10 @@ in rec {
     '';
   };
 
-  services.local--pia-nm.enable = true;
+  services.local.pia-nm = {
+    enable = true;
+    inherit (secrets.services.local.pia-nm) password;
+  };
 
   i18n = {
     consoleFont = "Lat2-Terminus16";
