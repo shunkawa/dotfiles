@@ -11,6 +11,7 @@ let
     isExecutable = true;
   });
 
+  secrets = import ./secrets.nix;
 in
 
 {
@@ -226,7 +227,10 @@ in
 
   services.postgresql.enable = true;
 
-  services.local--pia-nm.enable = true;
+  services.local.pia-nm = {
+    enable = true;
+    inherit (secrets.services.local.pia-nm) password;
+  };
 
   virtualisation.virtualbox.host.enable = true;
 
