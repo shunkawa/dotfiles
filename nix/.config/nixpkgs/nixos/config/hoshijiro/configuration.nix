@@ -10,6 +10,8 @@ in rec {
   imports = [
     ./lib
     ./config
+    ../../common/gnome.nix
+    ../../common/fonts.nix
   ] ++ (import ./../../modules/module-list.nix);
 
   fileSystems."/" = {
@@ -242,50 +244,6 @@ in rec {
           2>/dev/null || true
       '';
     };
-    networkmanager = {
-      enable = true;
-      packages = [ pkgs.gnome3.networkmanager_openvpn ];
-      # dispatcherScripts = [
-      #   # Each script receives two arguments, the first being the interface name
-      #   # of the device an operation just happened on, and second the action.
-      #   #
-      #   # See: man 8 networkmanager
-      #   { # Update transmission's port forwarding assignment
-      #     type = "basic";
-      #     source = pkgs.writeScript "update-transmission-port-forwarding-assignment" ''
-      #       #!${pkgs.bash}/bin/bash
-
-      #       set -euo pipefail
-
-      #       INTERFACE="''${1}"
-      #       ACTION="''${2}"
-
-      #       TEMP_FILE="$(${pkgs.coreutils}/bin/mktemp)"
-
-      #       cleanup() {
-      #         ${pkgs.coreutils}/bin/rm "''${TEMP_FILE}"
-      #       }
-
-      #       trap 'cleanup' EXIT
-
-      #       if [[ "''${ACTION}" == "vpn-up" ]]; then
-      #         CONFIG_FILE="${config.users.users.transmission.home}/.config/transmission-daemon/settings.json"
-      #         PORT="$(${localPackages.get-pia-port-forwarding-assignment}/bin/get-pia-port-forwarding-assignment | ${pkgs.jq}/bin/jq '.port')"
-      #         echo "Rewritten config: $(${pkgs.jq}/bin/jq --arg PORT "''${PORT}" '.["peer-port"] = $PORT')"
-      #         ${pkgs.jq}/bin/jq --arg PORT "''${PORT}" '.["peer-port"] = $PORT' < "''${CONFIG_FILE}" > "''${TEMP_FILE}"
-
-      #         echo "Received port assignment of ''${PORT} for ''${INTERFACE}, reloading transmission daemon."
-
-      #         ${pkgs.coreutils}/bin/mv "''${TEMP_FILE}" "''${CONFIG_FILE}"
-      #         ${pkgs.coreutils}/bin/chmod 600 "''${CONFIG_FILE}"
-      #         ${pkgs.coreutils}/bin/chown transmission:transmission "''${CONFIG_FILE}"
-
-      #         ${pkgs.systemd}/bin/systemctl reload transmission.service
-      #       fi
-      #     '';
-      #   }
-      # ];
-    };
     extraHosts = ''
       192.168.1.174 ayanami.maher.fyi
       127.0.0.1     hoshijiro.maher.fyi
@@ -319,36 +277,8 @@ in rec {
     ] ++ (import ./../../../common/package-lists/essentials.nix) {
       inherit pkgs;
     };
-    etc = {
-      "xdg/gtk-3.0/settings.ini" = {
-        text = ''
-          [Settings]
-          gtk-key-theme-name = Emacs
-        '';
-      };
-    };
-    gnome3.excludePackages = [
-      # gnome-software doesn't build and it wouldn't with nixos anyway, at
-      # least before something like this is done:
-      # RFC: Generating AppStream Metadata #15932:
-      # https://github.com/NixOS/nixpkgs/issues/15932
-      pkgs.gnome3.gnome-software
-    ];
   };
 
-  fonts = {
-    fonts = (import ./../../../common/package-lists/fonts.nix) {
-      inherit pkgs;
-    };
-
-    # Even though the default is false, there are several other modules that set
-    # this to "mkDefault true".  What I'm trying to avoid is not having sensible
-    # set of default fonts, but situations like this:
-    #
-    # ❯ fc-match "Noto Sans CJK"
-    # FreeMono.ttf: "FreeMono" "Regular"
-    enableDefaultFonts = false;
-  };
 
   services.nginx = {
     enable = true;
@@ -473,22 +403,6 @@ in rec {
       admin_server = SYSLOG:NOTICE
       default      = SYSLOG:NOTICE
     '';
-  };
-
-  services.xserver = {
-    enable = true;
-    layout = "us";
-    libinput = {
-      enable = true;
-      tapping = true;
-    };
-    xkbOptions = "caps:hyper";
-    displayManager.gdm = {
-      enable = true;
-    };
-    desktopManager.gnome3 = {
-      enable = true;
-    };
   };
 
   # TODO: move its actual home to here

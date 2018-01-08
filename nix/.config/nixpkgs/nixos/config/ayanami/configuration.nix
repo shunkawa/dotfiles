@@ -17,6 +17,8 @@ in
 {
   imports = [
     ./hardware-configuration.nix
+    ../../common/gnome.nix
+    ../../common/fonts.nix
   ] ++ (import ./../../modules/module-list.nix);
 
   boot = {
@@ -49,12 +51,6 @@ in
       ];
       allowedUDPPorts = [
         21027 # syncthing
-      ];
-    };
-    networkmanager = {
-      enable = true;
-      packages = [
-        pkgs.gnome3.networkmanager_openvpn
       ];
     };
     extraHosts = ''
@@ -100,29 +96,6 @@ in
     inherit pkgs;
   };
 
-  environment.pathsToLink = [
-    "/share/emacs"   # Necessary for emacs support files (mu4e)
-  ];
-
-  environment.etc."xdg/gtk-3.0/settings.ini" = {
-    text = ''
-      [Settings]
-      gtk-key-theme-name = Emacs
-    '';
-  };
-
-  environment.gnome3.excludePackages = [
-    # gnome-software is fixed in
-    # https://github.com/NixOS/nixpkgs/commit/6a17c5a46c933deb6c856be8602ea9f5d6560e98
-    # but probably doesn't do anything useful with nixos anyway, at least before
-    # something like this is done:
-    # RFC: Generating AppStream Metadata #15932:
-    # https://github.com/NixOS/nixpkgs/issues/15932
-    pkgs.gnome3.gnome-software
-    pkgs.gnome3.evolution
-    pkgs.gnome3.epiphany
-  ];
-
   krb5 = {
     enable = true;
     libdefaults = {
@@ -153,77 +126,6 @@ in
   services.udev.packages = [ pkgs.android-udev-rules ];
 
   services.pcscd.enable = true;
-
-  fonts.fonts = (import ./../../../common/package-lists/fonts.nix) {
-    inherit pkgs;
-  };
-
-  i18n.inputMethod = {
-    enabled = "ibus";
-    ibus.engines = with pkgs.ibus-engines; [ mozc ];
-  };
-
-  services.xserver = {
-    enable = true;
-    layout = "us";
-    libinput = {
-      enable = true;
-      tapping = true;
-    };
-    xkbOptions = "caps:hyper";
-    exportConfiguration = true; # for xkbcomp
-    # doesn't work
-    # inputClassSections = [
-    #   ''
-    #     Identifier     "Enable libinput for TrackPoint"
-    #     MatchIsPointer "on"
-    #     Driver         "libinput"
-    #     Option         "ScrollMethod" "button"
-    #     Option         "ScrollButton" "8"
-    #   ''
-    # ];
-    displayManager.gdm = {
-      enable = true;
-      autoLogin = {
-        enable = true;
-        user = "eqyiel";
-      };
-    };
-    desktopManager.gnome3 = {
-      enable = true;
-      # TODO: check out this https://github.com/NixOS/nixpkgs/pull/29392#issuecomment-343368926
-      # extraGSettingsOverrides = ''
-      #   [org.gnome.desktop.input-sources]
-      #   sources=[('xkb', 'cz+qwerty')]
-      #   xkb-options=['compose:caps']
-
-      #   [org.gnome.desktop.background]
-      #   primary-color='#000000'
-      #   secondary-color='#000000'
-      #   picture-uri='${backgrounds.reflection_by_yuumei}'
-
-      #   [org.gnome.desktop.screensaver]
-      #   lock-delay=3600
-      #   lock-enabled=true
-      #   picture-uri='${backgrounds.undersea_city_by_mrainbowwj}'
-      #   primary-color='#000000'
-      #   secondary-color='#000000'
-      # '';
-
-      extraGSettingsOverrides = ''
-        [org/gnome/desktop/input-sources]
-        show-all-sources=true
-        sources=[('xkb', 'us')]
-        xkb-options=['caps:hyper']
-
-        [org/gnome/desktop/interface]
-        gtk-key-theme='Emacs'
-
-        [org/gnome/gnome-screenshot]
-        last-save-directory='file:///home/eqyiel'
-      '';
-    };
-  };
 
   services.postgresql.enable = true;
 
