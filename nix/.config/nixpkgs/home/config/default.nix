@@ -41,11 +41,21 @@
       gimp
       mpv
       icedtea8_web # iDRAC administration
-      nextcloud-client
-      # python27Packages.syncthing-gtk
       libreoffice
       steam
       wine
+      gimp
+      anki
+      youtube-dl
+    ] ++ lib.optionals stdenv.isDarwin [
+      (youtube-dl.override({ phantomjsSupport = false; }))
+      (mpv.override ({
+        vaapiSupport = false;
+        xvSupport = false;
+        youtube-dl = youtube-dl.override ({
+          phantomjsSupport = false;
+        });
+      }))
     ] ++ (with local-packages; [
       # emacs-git # broken :(
       emacs-with-packages

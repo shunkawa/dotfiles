@@ -460,11 +460,6 @@ in rec {
     ];
   };
 
-  i18n.inputMethod = {
-    enabled = "ibus";
-    ibus.engines = with pkgs.ibus-engines; [ mozc ];
-  };
-
   security.sudo.wheelNeedsPassword = false;
 
   # TODO, enable automatic login for users in nopasswdlogin group

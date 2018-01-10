@@ -46,13 +46,6 @@
       syncthing
       iterm2
 
-      (mpv.override ({
-        # x11Support = false;
-        # xineramaSupport = false;
-        vaapiSupport = false;
-        # sdl2Support = false;
-        xvSupport = false;
-      }))
       local-packages.react-devtools
 
       postgresql
