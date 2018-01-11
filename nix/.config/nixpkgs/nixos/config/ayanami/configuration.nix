@@ -131,7 +131,7 @@ in
 
   services.local.pia-nm = {
     enable = true;
-    inherit (secrets.services.local.pia-nm) password;
+    inherit (secrets.services.local.pia-nm) username password;
   };
 
   virtualisation.virtualbox.host.enable = true;

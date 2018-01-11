@@ -252,7 +252,7 @@ in rec {
 
   services.local.pia-nm = {
     enable = true;
-    inherit (secrets.services.local.pia-nm) password;
+    inherit (secrets.services.local.pia-nm) username password;
   };
 
   i18n = {

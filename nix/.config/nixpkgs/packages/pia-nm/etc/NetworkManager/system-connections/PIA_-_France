@@ -6,7 +6,6 @@ autoconnect=false
 
 [vpn]
 service-type=org.freedesktop.NetworkManager.openvpn
-username=p2086939
 comp-lzo=yes
 remote=france.privateinternetaccess.com
 cipher=AES-256-CBC
