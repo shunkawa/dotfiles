@@ -47,6 +47,7 @@
       gimp
       anki
       youtube-dl
+      desmume
     ] ++ lib.optionals stdenv.isDarwin [
       (youtube-dl.override({ phantomjsSupport = false; }))
       (mpv.override ({
