@@ -31,6 +31,7 @@ in {
              stop;
            }
          '';
+        catchAll = [ "maher.fyi" "rkm.id.au" ];
       };
 
       "r@rkm.id.au" = (secrets.mailserver.loginAccounts."r@rkm.id.au") // {
@@ -46,6 +47,7 @@ in {
     mailDirectory = "/mnt/var/lib/${config.users.users.vmail.name}";
     enableImap = true;
     enableImapSsl = true;
+    enableManageSieve = true;
     debug = true;
   };
 
