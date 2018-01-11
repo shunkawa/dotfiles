@@ -5,12 +5,6 @@
 { config, lib, pkgs, ... }:
 
 let
-  # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/installer/tools/tools.nix#L10
-  makeProg = args: pkgs.substituteAll (args // {
-    dir = "bin";
-    isExecutable = true;
-  });
-
   secrets = import ./secrets.nix;
 in
 
