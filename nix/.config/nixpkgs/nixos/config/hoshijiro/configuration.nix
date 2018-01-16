@@ -295,19 +295,19 @@ in rec {
               proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
               proxy_set_header        X-Forwarded-Proto $scheme;
             '';
-            proxyPass = "http:/host:${transmissionPort}";
+            proxyPass = "http://localhost:${transmissionPort}";
           };
 
           "/transmission/rpc" = {
-            proxyPass = "http:/host:${transmissionPort}";
+            proxyPass = "http://localhost:${transmissionPort}";
           };
 
           "/transmission/web/" = {
-            proxyPass = "http:/host:${transmissionPort}";
+            proxyPass = "http://localhost:${transmissionPort}";
           };
 
           "/transmission/upload" = {
-            proxyPass = "http:/host:${transmissionPort}";
+            proxyPass = "http://localhost:${transmissionPort}";
           };
 
           "/transmission/web/style/" = {
