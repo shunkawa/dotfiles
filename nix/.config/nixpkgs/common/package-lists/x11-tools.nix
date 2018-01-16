@@ -6,4 +6,5 @@ with pkgs; [
   xorg.xhost
   xorg.xkbcomp
   xsel
+  xclip
 ]
