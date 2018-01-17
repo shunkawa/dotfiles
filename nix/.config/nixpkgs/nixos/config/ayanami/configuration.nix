@@ -130,11 +130,6 @@ in
 
   virtualisation.virtualbox.host.enable = true;
 
-  hardware.pulseaudio = {
-    enable = true;
-    package = pkgs.pulseaudioFull;
-  };
-
   # Needed for Steam
   # https://github.com/NixOS/nixpkgs/issues/19518#issuecomment-253626165
   hardware.opengl = {

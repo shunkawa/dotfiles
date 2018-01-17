@@ -71,8 +71,6 @@ in rec {
     options = [ "bind" ];
   };
 
-  hardware.pulseaudio.enable = true;
-
   swapDevices = [{ device = "/dev/mapper/vgroup-swap"; }];
 
   powerManagement.cpuFreqGovernor = "powersave";

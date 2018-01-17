@@ -1,6 +1,8 @@
 { config, lib, pkgs, ... }:
 
 {
+  imports = [ ./pulseaudio.nix ];
+
   security.pam.services.gdm.enableGnomeKeyring = true;
 
   networking.networkmanager = {
