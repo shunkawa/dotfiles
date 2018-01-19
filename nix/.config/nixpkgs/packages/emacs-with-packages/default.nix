@@ -48,6 +48,7 @@
   epkgs.melpaPackages.magit
   epkgs.melpaPackages.markdown-mode
   epkgs.melpaPackages.multiple-cursors
+  epkgs.melpaPackages.nix-buffer
   epkgs.melpaPackages.no-littering
   epkgs.melpaPackages.nodejs-repl
   epkgs.melpaPackages.org-caldav
