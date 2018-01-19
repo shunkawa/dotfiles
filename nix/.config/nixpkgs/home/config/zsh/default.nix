@@ -326,8 +326,6 @@ in {
   '';
 
   home.file.".zshrc".source = pkgs.writeText "zshrc" ''
-    if [[ -n $IN_NIX_SHELL ]]; then return; fi
-
     source "${grml-etc-core}/etc/zsh/zshrc"
 
     for i in ''${HOME}/.config/zsh/functions/*; do autoload -Uz "$(basename $i)"; done
