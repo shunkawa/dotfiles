@@ -58,8 +58,8 @@
         });
       }))
     ] ++ (with local-packages; [
-      # emacs-git # broken :(
       emacs-with-packages
+      tern
       nixfmt
       riot
     ]);

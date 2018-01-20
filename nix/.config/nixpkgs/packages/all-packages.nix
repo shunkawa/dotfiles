@@ -9,7 +9,7 @@ rec {
 
   nautilus-python = callPackage ./nautilus-python {};
 
-  nodePackages = callPackage ./node-packages { nodejs = nodejs-8_x; };
+  nodePackages = callPackage ./node-packages { nodejs = nodejs-9_x; };
 
   scss-lint = callPackage ./scss-lint {};
 
@@ -31,7 +31,7 @@ rec {
 
   browserpass = callPackage ./browserpass { gnupg = pkgs.gnupg22; };
 
-  riot = callPackage ./riot {};
+  riot = callPackage ./riot { nodejs = nodejs-9_x; };
 
   libopenraw = callPackage ./libopenraw {};
 
@@ -47,7 +47,9 @@ rec {
 
   get-pia-port-forwarding-assignment = callPackage ./get-pia-port-forwarding-assignment {};
 
-  react-devtools = callPackage ./react-devtools {};
+  react-devtools = (callPackage ./react-devtools { nodejs = nodejs-9_x; }).react-devtools;
+
+  tern = (callPackage ./tern { nodejs = nodejs-9_x; }).tern;
 
   imapnotify = callPackage ./impanotify {};
 
