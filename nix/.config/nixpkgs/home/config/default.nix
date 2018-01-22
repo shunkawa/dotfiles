@@ -33,7 +33,11 @@
       pass
       pinentry
       speedtest-cli
-    ] ++ lib.optionals stdenv.isLinux [
+    ] ++ (with local-packages; [
+      emacs-with-packages
+      tern
+      nixfmt
+    ]) ++ lib.optionals stdenv.isLinux ([
       firefox
       wine
       winetricks
@@ -48,7 +52,7 @@
       anki
       youtube-dl
       desmume
-    ] ++ lib.optionals stdenv.isDarwin [
+    ] ++ (with local-packages; [riot])) ++ lib.optionals stdenv.isDarwin ([
       (youtube-dl.override({ phantomjsSupport = false; }))
       (mpv.override ({
         vaapiSupport = false;
@@ -57,11 +61,6 @@
           phantomjsSupport = false;
         });
       }))
-    ] ++ (with local-packages; [
-      emacs-with-packages
-      tern
-      nixfmt
-      riot
     ]);
   };
 }

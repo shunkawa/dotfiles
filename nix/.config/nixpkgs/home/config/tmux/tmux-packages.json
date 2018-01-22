@@ -1,23 +1,16 @@
 {
-  "tmux-yank": {
-    "url": "https://github.com/tmux-plugins/tmux-yank.git",
-    "rev": "feb9611b7d1c323ca54cd8a5111a53e3e8265b59",
-    "date": "2017-06-07T00:48:32-04:00",
-    "sha256": "1ywbm09jfh6cm2m6gracmdc3pp5p2dwraalbhfaafqaydjr22qc3",
+  "tmux-colors-solarized": {
+    "url": "https://github.com/seebi/tmux-colors-solarized.git",
+    "rev": "b74be1f5076240d278e78b6fd132d531d5c41cda",
+    "date": "2016-12-31T16:12:21+01:00",
+    "sha256": "1qjm6w00rk5pi1a9l50h1i3x1jys4n8zmmigh2gigcr4r7rgr2jv",
     "fetchSubmodules": true
   },
   "tmux-copycat": {
     "url": "https://github.com/tmux-plugins/tmux-copycat.git",
-    "rev": "7abb5ff40e38772143a6ddf3d7bb19fc75e7c956",
-    "date": "2017-11-01T10:57:54+01:00",
-    "sha256": "0kpra52gxjndarmg1sl79bh9i5da9n8vas0mwnx3izg1p6czl2h1",
-    "fetchSubmodules": true
-  },
-  "tmux-sensible": {
-    "url": "https://github.com/tmux-plugins/tmux-sensible.git",
-    "rev": "e91b178ff832b7bcbbf4d99d9f467f63fd1b76b5",
-    "date": "2017-09-05T17:17:20+02:00",
-    "sha256": "1z8dfbwblrbmb8sgb0k8h1q0dvfdz7gw57las8nwd5gj6ss1jyvx",
+    "rev": "bcb40aca696a8f80d67e1c97455afe3e2eb76dee",
+    "date": "2018-01-21T22:17:11+01:00",
+    "sha256": "0gfylmv6r562nr93mz2cjy06gdmrdliycah8z3jhhi1q639nrjcq",
     "fetchSubmodules": true
   },
   "tmux-fpp": {
@@ -27,13 +20,6 @@
     "sha256": "1b89s6mfzifi7s5iwf22w7niddpq28w48nmqqy00dv38z4yga5ws",
     "fetchSubmodules": true
   },
-  "tmux-pain-control": {
-    "url": "https://github.com/tmux-plugins/tmux-pain-control.git",
-    "rev": "3cb90deb16d1a8f35ef210059683fd401a2d6558",
-    "date": "2017-06-04T01:48:07+02:00",
-    "sha256": "108v3lfw6lacap78zcvr5abkasn48f49zyscx69qcapw2ldwx580",
-    "fetchSubmodules": true
-  },
   "tmux-open": {
     "url": "https://github.com/tmux-plugins/tmux-open.git",
     "rev": "f99d3189c445188eae5fa9bfeabc95df16deca92",
@@ -41,11 +27,25 @@
     "sha256": "13q3zd5jv7akkjjwhgimmfylrvalxdn54fnpfb14g6xam6h8808m",
     "fetchSubmodules": true
   },
-  "tmux-colors-solarized": {
-    "url": "https://github.com/seebi/tmux-colors-solarized.git",
-    "rev": "b74be1f5076240d278e78b6fd132d531d5c41cda",
-    "date": "2016-12-31T16:12:21+01:00",
-    "sha256": "1qjm6w00rk5pi1a9l50h1i3x1jys4n8zmmigh2gigcr4r7rgr2jv",
+  "tmux-pain-control": {
+    "url": "https://github.com/tmux-plugins/tmux-pain-control.git",
+    "rev": "731667692da46d51a6a9dffb4c43384a5d68ff28",
+    "date": "2017-11-17T13:02:26+01:00",
+    "sha256": "1ihpl5wgjmhfgcrasgnydd7vpsar865sx2whra19gpfm4bglmdzl",
+    "fetchSubmodules": true
+  },
+  "tmux-sensible": {
+    "url": "https://github.com/tmux-plugins/tmux-sensible.git",
+    "rev": "e91b178ff832b7bcbbf4d99d9f467f63fd1b76b5",
+    "date": "2017-09-05T17:17:20+02:00",
+    "sha256": "1z8dfbwblrbmb8sgb0k8h1q0dvfdz7gw57las8nwd5gj6ss1jyvx",
+    "fetchSubmodules": true
+  },
+  "tmux-yank": {
+    "url": "https://github.com/tmux-plugins/tmux-yank.git",
+    "rev": "feb9611b7d1c323ca54cd8a5111a53e3e8265b59",
+    "date": "2017-06-07T00:48:32-04:00",
+    "sha256": "1ywbm09jfh6cm2m6gracmdc3pp5p2dwraalbhfaafqaydjr22qc3",
     "fetchSubmodules": true
   }
 }
