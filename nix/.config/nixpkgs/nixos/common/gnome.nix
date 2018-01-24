@@ -105,6 +105,8 @@
     };
   };
 
+  nixpkgs.config.firefox.enableGnomeExtensions = true;
+
   i18n.inputMethod = {
     enabled = "ibus";
     ibus.engines = with pkgs.ibus-engines; [ anthy ];
