@@ -21,18 +21,50 @@
     '';
 
     packages = with pkgs; [
+      aspell
+      aspellDicts.en
+      bind
+      coreutils
+      curl
+      direnv
       fd
+      file
+      findutils
       fortune
+      fzf
       gitAndTools.git-crypt
       gitAndTools.gitFull
+      gnumake
+      gnupg
+      gnused
+      gnutar
       haskellPackages.ShellCheck
+      htop
       isync
       jhead
       jq
+      msmtp
+      mu
       ncmpcpp
+      nix-prefetch-scripts
+      nix-repl
+      nixops
+      openssh
       pass
       pinentry
+      pwgen
+      ripgrep
+      rsync
+      sift
+      silver-searcher
+      socat
       speedtest-cli
+      stow
+      tree
+      unrar
+      unzip
+      wget
+      which
     ] ++ (with local-packages; [
       emacs-with-packages
       tern
