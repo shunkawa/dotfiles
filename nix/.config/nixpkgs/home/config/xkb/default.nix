@@ -44,4 +44,18 @@ mkIf pkgs.stdenv.isLinux {
       WantedBy = [ "graphical-session.target" ];
     };
   };
+
+  systemd.user.timers.xkb-separate-super-and-hyper = {
+    Unit = {
+      Description = "Put super and hyper on different modifiers";
+    };
+
+    Timer = {
+      OnUnitActiveSec = "5min";
+    };
+
+    Install = {
+      WantedBy = [ "timers.target" ];
+    };
+  };
 }
