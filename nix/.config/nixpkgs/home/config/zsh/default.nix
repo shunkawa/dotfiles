@@ -72,7 +72,7 @@ let
     inherit (bleedingEdgePackages.zsh-syntax-highlighting) url rev sha256;
   };
 
-in {
+in (lib.recursiveUpdate ({
   home.packages = with pkgs; [
     coreutils
     direnv
@@ -504,4 +504,9 @@ in {
   home.file.".zlogout".source = pkgs.writeText "zlogout" ''
     clear
   '';
-}
+}) (lib.foldr (a: b: lib.recursiveUpdate a b) {}
+  (lib.mapAttrsToList
+    (name: value: {
+      home.file.".config/zsh/functions/${name}".source =
+        (./functions + "/${name}");
+    }) (builtins.readDir ./functions))))

@@ -1,0 +1,24 @@
+#!/usr/bin/env zsh
+
+function youtube-dl-crunchyroll () {
+  if $(command -v youtube-dl >/dev/null 2>&1); then
+    for i in "${@}"; do
+      youtube-dl \
+        "${i}" \
+        -f "best" \
+        --sub-lang "enUS" \
+        --write-sub \
+        --sub-format "srt" \
+        --embed-subs
+    done
+  else
+    echo '** ERROR:' "youtube-dl not found in \$PATH" >&2
+    exit 1
+  fi
+}
+
+youtube-dl-crunchyroll "${@}"
+
+# Local Variables:
+# mode: shell-script
+# End:
