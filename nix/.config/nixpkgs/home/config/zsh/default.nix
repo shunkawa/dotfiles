@@ -180,12 +180,12 @@ in {
     #!/usr/bin/env zsh
 
     function install-package-and-peerdependencies () {
-      if $(command -v npm &>/dev/null && command -v yarn &>/dev/null); then
+      if $(command -v npm >/dev/null 2>&1 && command -v yarn >/dev/null 2>&1); then
         npm info "$1@latest" peerDependencies --json \
           | command ${pkgs.gnused}/bin/sed 's/[\{\},]//g ; s/: /@/g' \
           | ${pkgs.findutils}/bin/xargs yarn add --dev "$1@latest"
       else
-        echo '** ERROR:' "npm or yarn not found in path" >&2
+        echo '** ERROR:' "npm or yarn not found in \$PATH" >&2
         exit 1
       fi
     }
