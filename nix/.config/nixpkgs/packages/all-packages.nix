@@ -31,7 +31,7 @@ rec {
 
   browserpass = callPackage ./browserpass { gnupg = pkgs.gnupg22; };
 
-  riot = callPackage ./riot { nodejs = nodejs-9_x; };
+  riot = callPackage ./riot {};
 
   libopenraw = callPackage ./libopenraw {};
 
