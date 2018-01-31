@@ -61,4 +61,6 @@ rec {
     withGnomeKeyring = true;
     libgnome_keyring = pkgs.gnome3.libgnome_keyring;
   }));
+
+  hnix = callPackage ./hnix {};
 }

@@ -67,8 +67,9 @@
       which
     ] ++ (with local-packages; [
       emacs-with-packages
-      tern
+      hnix
       nixfmt
+      tern
     ]) ++ lib.optionals stdenv.isLinux ([
       firefox
       wine
