@@ -32,6 +32,10 @@
     kind: url
     url: https://pypi.python.org/pypi/awsebcli
     filter: element-by-id:changelog
+    ---
+    kind: url
+    url: http://www.oneokrock.com/jp/tour/
+    filter: element-by-id:body
   '';
 
   systemd.user = {
