@@ -409,6 +409,10 @@ in (lib.recursiveUpdate ({
 
     source "${zsh-syntax-highlighting}/zsh-syntax-highlighting.zsh"
 
+    if $(command -v kubectl >/dev/null 2>&1); then
+      source <(kubectl completion zsh)
+    fi
+
     eval "$(${pkgs.direnv}/bin/direnv hook zsh)"
   '';
 
