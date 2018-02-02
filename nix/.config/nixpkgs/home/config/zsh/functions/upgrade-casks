@@ -1,0 +1,18 @@
+#!/usr/bin/env zsh
+
+function upgrade-casks() {
+  if $(command -v brew >/dev/null 2>&1); then
+    for package in $(brew cask outdated); do
+      brew cask reinstall "$(echo $package | cut -d ' ' -f 1)"
+    done
+  else
+    echo '** ERROR:' "brew not found in path" >&2
+    exit 1
+  fi
+}
+
+upgrade-casks "''${@}"
+
+# Local Variables:
+# mode: shell-script
+# End:

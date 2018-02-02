@@ -1,0 +1,19 @@
+#!/usr/bin/env zsh
+
+function rkm-history-consolidate () {
+  local CURRENT_HISTORY HISTFILE
+
+  TMP_HISTORY_FILE=$(mktemp)
+  HISTFILE=$(rkm-history-create-histfile-name)
+
+  rkm-history >| "''${TMP_HISTORY_FILE}"
+
+  rm -f "''${RKM_HISTORY_HIST_DIR}"/*
+  mv "''${TMP_HISTORY_FILE}" "''${HISTFILE}"
+}
+
+rkm-history-consolidate "''${@}"
+
+# Local Variables:
+# mode: shell-script
+# End:

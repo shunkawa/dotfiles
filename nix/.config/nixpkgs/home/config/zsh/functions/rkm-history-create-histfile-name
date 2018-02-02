@@ -1,0 +1,11 @@
+#!/usr/bin/env zsh
+
+function rkm-history-create-histfile-name () {
+  echo ''${RKM_HISTORY_HIST_DIR}/$(date -u +%Y-%m-%d.%H.%M.%S)_$(hostname)_$$
+}
+
+rkm-history-create-histfile-name "''${@}"
+
+# Local Variables:
+# mode: shell-script
+# End:

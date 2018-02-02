@@ -1,0 +1,12 @@
+#!/usr/bin/env zsh
+
+function emacs-client () {
+  emacsclient -c \
+    --eval '(x-focus-frame (selected-frame))' "''${@}" &
+}
+
+emacs-client "''${@}"
+
+# Local Variables:
+# mode: shell-script
+# End:

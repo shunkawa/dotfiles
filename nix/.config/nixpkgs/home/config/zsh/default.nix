@@ -159,23 +159,6 @@ in (lib.recursiveUpdate ({
     get-images-from-pdf "''${@}"
   '';
 
-  home.file.".config/zsh/functions/upgrade-casks".source = pkgs.writeText "upgrade-casks" ''
-    #!/usr/bin/env zsh
-
-    function upgrade-casks() {
-      if $(command -v brew  &>/dev/null); then
-        for package in $(brew cask outdated); do
-          brew cask reinstall "$(echo $package | cut -d ' ' -f 1)"
-        done
-      else
-        echo '** ERROR:' "brew not found in path" >&2
-        exit 1
-      fi
-    }
-
-    upgrade-casks "''${@}"
-  '';
-
   home.file.".config/zsh/functions/install-package-and-peerdependencies".source = pkgs.writeText "install-package-and-peerdependencies" ''
     #!/usr/bin/env zsh
 
@@ -191,27 +174,6 @@ in (lib.recursiveUpdate ({
     }
 
     install-package-and-peerdependencies "''${@}"
-  '';
-
-  home.file.".config/zsh/functions/flow-typed-with-flow-version".source = pkgs.writeText "flow-typed-with-flow-version" ''
-    #!/usr/bin/env zsh
-
-    # flow-bin from npm doesn't work out of the box on nixos, but flow-typed
-    # insists on knowing what version it should use.  This gets the version from
-    # the current flow binary in \$PATH.
-    function flow-typed-with-flow-version () {
-      if $(command -v flow >/dev/null 2>&1 \
-           && command -v yarn >/dev/null 2>&1 \
-           && command -v jq >/dev/null 2>&1); then
-        yarn run flow-typed install \
-          --flowVersion "$(flow version --json | jq '.semver' | sed s/\"//g)" "''${@}"
-      else
-        echo '** ERROR:' "flow, yarn or jq not found in \$PATH" >&2
-        exit 1
-      fi
-    }
-
-    flow-typed-with-flow-version "''${@}"
   '';
 
   home.file.".config/zsh/functions/get-ssl-certificate-expiry-date".source = pkgs.writeText "get-ssl-certificate-expiry-date" ''
@@ -241,37 +203,6 @@ in (lib.recursiveUpdate ({
     emacs "''${@}"
   '';
 
-  home.file.".config/zsh/functions/emacs-daemon".source = pkgs.writeText "emacs-daemon" ''
-    #!/usr/bin/env zsh
-
-    function emacs-daemon() {
-      emacs --daemon "''${@}";
-    }
-
-    emacs-daemon "''${@}"
-  '';
-
-  home.file.".config/zsh/functions/emacs-client".source = pkgs.writeText "emacs-client" ''
-    #!/usr/bin/env zsh
-
-    function emacs-client () {
-      emacsclient -c \
-        --eval '(x-focus-frame (selected-frame))' "''${@}" &
-    }
-
-    emacs-client "''${@}"
-  '';
-
-  home.file.".config/zsh/functions/rkm-history-create-histfile-name".source = pkgs.writeText "rkm-history-create-histfile-name" ''
-    #!/usr/bin/env zsh
-
-    function rkm-history-create-histfile-name () {
-      echo ''${RKM_HISTORY_HIST_DIR}/$(date -u +%Y-%m-%d.%H.%M.%S)_$(hostname)_$$
-    }
-
-    rkm-history-create-histfile-name "''${@}"
-  '';
-
   home.file.".config/zsh/functions/rkm-history".source = pkgs.writeText "rkm-history" ''
     #!/usr/bin/env zsh
 
@@ -285,26 +216,6 @@ in (lib.recursiveUpdate ({
     }
 
     rkm-history "''${@}"
-  '';
-
-  home.file.".config/zsh/functions/rkm-history-consolidate".source = pkgs.writeText "rkm-history-consolidate" ''
-    #!/usr/bin/env zsh
-
-    # set -euo pipefail
-
-    function rkm-history-consolidate () {
-      local CURRENT_HISTORY HISTFILE
-
-      TMP_HISTORY_FILE=$(mktemp)
-      HISTFILE=$(rkm-history-create-histfile-name)
-
-      rkm-history >| "''${TMP_HISTORY_FILE}"
-
-      rm -f "''${RKM_HISTORY_HIST_DIR}"/*
-      mv "''${TMP_HISTORY_FILE}" "''${HISTFILE}"
-    }
-
-    rkm-history-consolidate "''${@}"
   '';
 
   home.file.".zshenv".source = pkgs.writeText "zshenv" ''

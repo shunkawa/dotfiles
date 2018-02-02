@@ -1,0 +1,22 @@
+#!/usr/bin/env zsh
+
+# flow-bin from npm doesn't work out of the box on nixos, but flow-typed
+# insists on knowing what version it should use.  This gets the version from
+# the current flow binary in \$PATH.
+function flow-typed-with-flow-version () {
+  if $(command -v flow >/dev/null 2>&1 \
+       && command -v yarn >/dev/null 2>&1 \
+       && command -v jq >/dev/null 2>&1); then
+    yarn run flow-typed install \
+      --flowVersion "$(flow version --json | jq '.semver' | sed s/\"//g)" "''${@}"
+  else
+    echo '** ERROR:' "flow, yarn or jq not found in \$PATH" >&2
+    exit 1
+  fi
+}
+
+flow-typed-with-flow-version "''${@}"
+
+# Local Variables:
+# mode: shell-script
+# End:
