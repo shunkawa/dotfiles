@@ -1,11 +1,18 @@
 #!/usr/bin/env zsh
 
 function emacs-client () {
-  emacsclient -c \
-    --eval '(x-focus-frame (selected-frame))' "''${@}" &
+  if [ -z "${@}" ]; then
+    # There are no arguments, so
+    # tell emacs to open a new window
+    emacsclient -c --eval "(dired \"$(pwd)\")" &
+  else
+    emacsclient -c --no-wait "${@}" &
+  fi
+
+  emacsclient --eval "(x-focus-frame (selected-frame))"
 }
 
-emacs-client "''${@}"
+emacs-client "${@}"
 
 # Local Variables:
 # mode: shell-script
