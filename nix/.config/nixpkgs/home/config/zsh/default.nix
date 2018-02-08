@@ -318,6 +318,7 @@ in (lib.recursiveUpdate ({
     bindkey '^ ' autosuggest-accept # C-SPACE
 
     source "${nix-zsh-completions}/completions/nix.plugin.zsh"
+    prompt_nix_shell_setup
 
     source "${pkgs.fzf}/share/fzf/completion.zsh"
     source "${pkgs.fzf}/share/fzf/key-bindings.zsh"
