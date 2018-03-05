@@ -1,0 +1,23 @@
+#!/usr/bin/env zsh
+
+function docker-print-image-contents() {
+  if [ "${#}" -lt 1 ] || [ "${#}" -gt 1 ]; then
+    echo "this function only takes one argument."
+    return 1
+  fi
+
+  if (command -v docker tar >/dev/null 2>&1); then
+    docker save "${@}" |
+      tar x --to-stdout --wildcards '*/layer.tar' |
+      tar t --exclude="*/*/*/*"
+  else
+    echo '** ERROR:' "at least one of docker or tar not found in path" >&2
+    return 1
+  fi
+}
+
+docker-print-image-contents "''${@}"
+
+# Local Variables:
+# mode: shell-script
+# End:

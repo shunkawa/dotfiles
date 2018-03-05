@@ -11,6 +11,7 @@ in rec {
     ./lib
     ./config
     ../../common/gnome.nix
+    ../../common/steam.nix
     ../../common/fonts.nix
   ] ++ (import ./../../modules/module-list.nix);
 
@@ -145,7 +146,7 @@ in rec {
     # head -c4 /dev/urandom | od -A none -t x4
     hostId = "63737ac9";
     hostName = "hoshijiro.maher.fyi";
-    interfaces."eno1".ip4 = [{
+    interfaces."eno1".ipv4.addresses = [{
       address = "192.168.1.215";
       prefixLength = 24;
     }];
@@ -167,6 +168,12 @@ in rec {
         2049 # NFS
         config.services.nfs.server.mountdPort # NFS
         config.services.nfs.server.lockdPort # NFS
+      ];
+      allowedTCPPortRanges = [
+        { from = 1714; to = 1764; } # KDE connect
+      ];
+      allowedUDPPortRanges = [
+        { from = 1714; to = 1764; } # KDE connect
       ];
       trustedInterfaces = [];
       logRefusedPackets = true;

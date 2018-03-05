@@ -7,7 +7,7 @@ function upgrade-casks() {
     done
   else
     echo '** ERROR:' "brew not found in path" >&2
-    exit 1
+    return 1
   fi
 }
 

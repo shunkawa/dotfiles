@@ -72,20 +72,17 @@
       tern
     ]) ++ lib.optionals stdenv.isLinux ([
       firefox
-      wine
-      winetricks
       chromium
       gimp
       mpv
       icedtea8_web # iDRAC administration
       libreoffice
       steam
-      wine
       gimp
       anki
       youtube-dl
       desmume
-    ] ++ (with local-packages; [riot])) ++ lib.optionals stdenv.isDarwin ([
+    ] ++ (with local-packages; [open riot])) ++ lib.optionals stdenv.isDarwin ([
       (youtube-dl.override({ phantomjsSupport = false; }))
       (mpv.override ({
         vaapiSupport = false;

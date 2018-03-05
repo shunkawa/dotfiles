@@ -47,6 +47,7 @@ in {
     pkgs.fzf
     pkgs.pythonPackages.powerline
     pkgs.powerline-fonts
+    pkgs.xclip
   ];
 
   home.file.".tmux.conf".source = pkgs.writeText "tmux.conf" ''

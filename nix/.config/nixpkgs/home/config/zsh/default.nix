@@ -414,6 +414,10 @@ in (lib.recursiveUpdate ({
       source <(kubectl completion zsh)
     fi
 
+    if $(command -v aws_bash_completer >/dev/null 2>&1); then
+      source $(command -v aws_bash_completer)
+    fi
+
     eval "$(${pkgs.direnv}/bin/direnv hook zsh)"
   '';
 

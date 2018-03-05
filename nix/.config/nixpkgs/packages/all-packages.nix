@@ -3,11 +3,15 @@
 with pkgs;
 
 rec {
+  inherit (import (callPackage ./hie-nix {})) stack2nix hies hie80 hie82;
+
   emacs-git = callPackage ./emacs-git {};
 
-  emacs-with-packages = callPackage ./emacs-with-packages {};
+  emacs-with-packages = callPackage ./emacs-with-packages { inherit hies stack2nix; };
 
   nautilus-python = callPackage ./nautilus-python {};
+
+  indicator-kdeconnect = callPackage ./indicator-kdeconnect { inherit nautilus-python; };
 
   nodePackages = callPackage ./node-packages { nodejs = nodejs-9_x; };
 
@@ -59,8 +63,10 @@ rec {
 
   nextcloud-client = (pkgs.nextcloud-client.override ({
     withGnomeKeyring = true;
-    libgnome_keyring = pkgs.gnome3.libgnome_keyring;
+    libgnome-keyring = pkgs.gnome3.libgnome-keyring;
   }));
 
   hnix = callPackage ./hnix {};
+
+  open = callPackage ./open {};
 }

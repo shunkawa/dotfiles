@@ -1,4 +1,4 @@
-{ emacs25PackagesNg, mu }:
+{ emacs25PackagesNg, mu, hies, stack2nix }:
 
 # TODO:
 # Figure out how to include packages that aren't in nixpkgs.  I think there is
@@ -42,12 +42,16 @@
       flycheck-flow
       gist
       google-c-style
+      haskell-mode
       highlight-indentation
       ivy
       js2-mode
       json-mode
       key-chord
       legalese
+      lsp-haskell
+      lsp-javascript-typescript
+      lsp-mode
       magit
       markdown-mode
       multiple-cursors
@@ -86,5 +90,7 @@
     ]) ++ (with emacsPackages.orgPackages; [
       org-plus-contrib
     ]) ++ [
+      hies
       mu
-  ]))
+      stack2nix
+    ]))

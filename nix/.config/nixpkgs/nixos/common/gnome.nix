@@ -63,10 +63,22 @@
       pkgs.gnome3.gnome-software
       pkgs.gnome3.evolution
       pkgs.gnome3.epiphany
+      pkgs.gnome3.totem
     ];
 
-    pathsToLink = [
-      "/share/emacs"   # Necessary for emacs support files (mu4e)
+    systemPackages = with pkgs; [
+      firefox
+      flac
+      grip
+      lame
+      gnome-mpv
+      gnomeExtensions.topicons-plus
+      gnomeExtensions.mediaplayer
+      gnomeExtensions.clipboard-indicator
+      gnomeExtensions.caffeine
+      vlc
+      local-packages.nautilus-python
+      local-packages.indicator-kdeconnect
     ];
 
     etc."xdg/gtk-3.0/settings.ini" = {
@@ -98,9 +110,6 @@
 
         [org/gnome/desktop/interface]
         gtk-key-theme='Emacs'
-
-        [org/gnome/gnome-screenshot]
-        last-save-directory='file:///home/eqyiel'
       '';
     };
   };
