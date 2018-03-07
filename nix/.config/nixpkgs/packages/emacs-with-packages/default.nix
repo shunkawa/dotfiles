@@ -1,4 +1,4 @@
-{ emacs25PackagesNg, mu, hies, stack2nix, procmail }:
+{ emacs25PackagesNg, mu, hies, stack2nix }:
 
 # TODO:
 # Figure out how to include packages that aren't in nixpkgs.  I think there is
@@ -93,5 +93,4 @@
       hies
       mu
       stack2nix
-      procmail # formail used for some mu hacks
     ]))

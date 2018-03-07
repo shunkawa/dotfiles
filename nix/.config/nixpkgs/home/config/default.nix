@@ -52,6 +52,7 @@
       openssh
       pass
       pinentry
+      procmail # formail used for some mu hacks
       pwgen
       ripgrep
       rsync
