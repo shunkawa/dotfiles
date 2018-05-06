@@ -22,6 +22,7 @@ with pkgs; [
   gnupg22
   gnused
   gnutls
+  gptfdisk
   htop
   imagemagick
   jq
@@ -41,6 +42,7 @@ with pkgs; [
   openssh
   openssl
   p7zip
+  parted
   pcsctools
   procmail
   psmisc # provides fuser, killall, pstree

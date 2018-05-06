@@ -13,6 +13,7 @@ in
     ./hardware-configuration.nix
     ../../common/gnome.nix
     ../../common/fonts.nix
+    ../../common/steam.nix
   ] ++ (import ./../../modules/module-list.nix);
 
   boot = {
@@ -76,19 +77,8 @@ in
 
   environment.systemPackages = with pkgs; [
     local-packages.nextcloud-client
-    local-packages.javaws-desktop-file
-    local-packages.nautilus-python # nextcloud packages nautilus extensions
-    mpdris2 # notifications in Gnome for MPD
-  ] ++
-  (import ./../../../common/package-lists/essentials.nix) {
-    inherit pkgs;
-  } ++
-  (import ./../../../common/package-lists/x11-tools.nix) {
-    inherit pkgs;
-  } ++
-  (import ./../../../common/package-lists/audio-tools.nix) {
-    inherit pkgs;
-  };
+    psmisc
+  ];
 
   krb5 = {
     enable = true;
@@ -129,13 +119,6 @@ in
   };
 
   virtualisation.virtualbox.host.enable = true;
-
-  # Needed for Steam
-  # https://github.com/NixOS/nixpkgs/issues/19518#issuecomment-253626165
-  hardware.opengl = {
-    driSupport = true;
-    driSupport32Bit = true;
-  };
 
   nixpkgs = {
     config.allowUnfree = true;

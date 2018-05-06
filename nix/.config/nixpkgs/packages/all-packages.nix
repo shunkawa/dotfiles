@@ -7,7 +7,7 @@ rec {
 
   emacs-git = callPackage ./emacs-git {};
 
-  emacs-with-packages = callPackage ./emacs-with-packages { inherit hies stack2nix; };
+  emacs-with-packages = callPackage ./emacs-with-packages {};
 
   nautilus-python = callPackage ./nautilus-python {};
 

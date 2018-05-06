@@ -15,6 +15,8 @@
 
   xdg.enable = true;
 
+  manual.manpages.enable = false;
+
   home = {
     file.".psqlrc".source = pkgs.writeText "psqlrc" ''
       \x auto
@@ -68,23 +70,24 @@
       which
     ] ++ (with local-packages; [
       emacs-with-packages
-      hnix
-      nixfmt
       tern
     ]) ++ lib.optionals stdenv.isLinux ([
-      firefox
-      chromium
-      gimp
-      mpv
-      icedtea8_web # iDRAC administration
-      libreoffice
-      steam
-      gimp
-      anki
-      youtube-dl
-      desmume
-    ] ++ (with local-packages; [open riot])) ++ lib.optionals stdenv.isDarwin ([
-      (youtube-dl.override({ phantomjsSupport = false; }))
+        firefox
+        chromium
+        gimp
+        mpv
+        icedtea8_web # iDRAC administration
+        libreoffice
+        steam
+        gimp
+        anki
+        youtube-dl
+        desmume
+      ]
+      ++ (with pkgs.ibus-engines; [ mozc uniemoji ])
+      ++ (with local-packages; [open riot]))
+    ++ lib.optionals stdenv.isDarwin ([
+      (youtube-dl.override ({ phantomjsSupport = false; }))
       (mpv.override ({
         vaapiSupport = false;
         xvSupport = false;

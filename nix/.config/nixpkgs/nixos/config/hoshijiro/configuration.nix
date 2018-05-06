@@ -57,6 +57,26 @@ in rec {
     fsType = "zfs";
   };
 
+  # This is a small ext4 formatted zvol to work around the error described here:
+  # https://github.com/ValveSoftware/steam-for-linux/issues/4982#issuecomment-302834898
+  #
+  # TLDR:
+  # zfs create -s -V 256G tank/steam
+  # parted -s /dev/zvol/tank/steam mklabel gpt
+  # parted /dev/zvol/tank/steam "mkpart primary 1 -1"
+  # mkfs.ext4 /dev/zvol/tank/steam-part1
+  # mount /dev/zvol/tank/steam-part1 /mnt/steam
+  # mv ~/.local/share/Steam /mnt/steam
+  # ln -s /mnt/steam/Steam ~/.local/share/Steam
+  fileSystems."/mnt/steam" = {
+    options = [
+      "nofail"
+      "x-systemd.device-timeout=1"
+    ];
+    device = "/dev/zvol/tank/steam-part1";
+    fsType = "ext4";
+  };
+
   fileSystems."/export/media" = {
     device = "/mnt/media";
     options = [ "bind" ];
@@ -434,6 +454,9 @@ in rec {
 
   programs.zsh.enable = true;
 
+  # automatically adds pkgs.android-udev-rules to services.udev.packages
+  # to allow access, add users to "adbusers" group
+  programs.adb.enable = true;
 
   nixpkgs = {
     config.allowUnfree = true;
@@ -500,6 +523,7 @@ in rec {
         "wheel"
         "${config.users.groups.systemd-journal.name}"
         "${config.users.users.transmission.group}"
+        "adbusers"
       ];
       shell = pkgs.zsh;
       openssh.authorizedKeys.keys = [
@@ -519,20 +543,9 @@ in rec {
       ];
       inherit (secrets.users.users.versapunk) initialPassword;
     };
-
-    normie = {
-      home = "/mnt/home/${config.users.users.normie.name}";
-      createHome = true;
-      isNormalUser = false;
-      isSystemUser = false;
-      extraGroups = [
-        "${config.users.users.transmission.group}"
-      ];
-      shell = pkgs.zsh;
-    };
   };
 
   nix.gc.automatic = true;
 
-  system.stateVersion = "18.03";
+  system.stateVersion = "18.09";
 }

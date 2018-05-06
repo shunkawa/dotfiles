@@ -10,6 +10,10 @@
     packages = [
       pkgs.gnome3.networkmanager_openvpn
     ];
+    # TODO: Check out this thread on the mailing list which discusses a similar problem
+    # Message-Id: <8a8f40ef-cc33-4b39-ac83-1285fe22c37f@googlegroups.com>
+    # Also this one on GitHub:
+    # Subject: [NixOS/nixpkgs] Enrich PATH of networkmanager dispatcher (#39468)
     # dispatcherScripts = [
     #   # Each script receives two arguments, the first being the interface name
     #   # of the device an operation just happened on, and second the action.
@@ -77,8 +81,8 @@
       gnomeExtensions.clipboard-indicator
       gnomeExtensions.caffeine
       vlc
-      local-packages.nautilus-python
-      local-packages.indicator-kdeconnect
+      # local-packages.nautilus-python
+      # local-packages.indicator-kdeconnect
     ];
 
     etc."xdg/gtk-3.0/settings.ini" = {
@@ -116,8 +120,14 @@
 
   nixpkgs.config.firefox.enableGnomeExtensions = true;
 
+  sound = {
+    # disabled by default since 18.03
+    enable = true;
+    mediaKeys.enable = true;
+  };
+
   i18n.inputMethod = {
     enabled = "ibus";
-    ibus.engines = with pkgs.ibus-engines; [ anthy ];
+    ibus.engines = with pkgs.ibus-engines; [ mozc uniemoji ];
   };
 }

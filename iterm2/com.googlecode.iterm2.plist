@@ -171,15 +171,15 @@
 	<key>NSTableView Supports v2 KeyBingingTable</key>
 	<true/>
 	<key>NSWindow Frame NSFontPanel</key>
-	<string>872 175 1290 193 0 0 2560 1417 </string>
+	<string>872 140 1290 94 0 0 2560 1417 </string>
 	<key>NSWindow Frame SessionsPreferences</key>
 	<string>269 139 606 456 0 0 2560 1417 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>596 717 918 512 0 0 2560 1417 </string>
+	<string>596 678 796 473 0 0 2560 1417 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 28 850 1389 0 0 2560 1417 </string>
+	<string>1 4 850 1413 0 0 2560 1417 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>1709 959 650 451 0 0 2560 1417 </string>
+	<string>1 963 650 451 0 0 2560 1417 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
 	<string>1714 81 809 1200 0 0 2560 1417 </string>
 	<key>NSWindow Frame iTerm Window 3</key>
@@ -938,7 +938,7 @@
 		</dict>
 	</dict>
 	<key>PrefsCustomFolder</key>
-	<string>~/sync/git/personal/dotfiles/iterm2</string>
+	<string>/Users/rkm/sync/git/personal/dotfiles/iterm2</string>
 	<key>Print In Black And White</key>
 	<true/>
 	<key>QuickPasteBytesPerCall</key>
@@ -958,7 +958,7 @@
 	<key>ShowBookmarkName</key>
 	<true/>
 	<key>ShowFullScreenTabBar</key>
-	<true/>
+	<false/>
 	<key>TabStyle</key>
 	<integer>1</integer>
 	<key>WordCharacters</key>

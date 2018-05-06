@@ -1,4 +1,4 @@
-{ emacs25PackagesNg, mu, hies, stack2nix }:
+{ emacsPackagesNg, mu }:
 
 # TODO:
 # Figure out how to include packages that aren't in nixpkgs.  I think there is
@@ -6,7 +6,7 @@
 # contribute to) but for others that just aren't available on melpa yet I would
 # like to have them here (for example, flow-js2-mode).
 
-(emacs25PackagesNg.emacsWithPackages
+(emacsPackagesNg.emacsWithPackages
   (emacsPackages:
     (with emacsPackages.elpaPackages; [
       rainbow-mode
@@ -15,7 +15,6 @@
       aggressive-indent
       alert
       atomic-chrome
-      auth-password-store
       avy
       beacon
       bind-key
@@ -49,9 +48,9 @@
       json-mode
       key-chord
       legalese
-      lsp-haskell
-      lsp-javascript-typescript
       lsp-mode
+      lsp-javascript-typescript
+      lsp-ui
       magit
       markdown-mode
       multiple-cursors
@@ -90,7 +89,5 @@
     ]) ++ (with emacsPackages.orgPackages; [
       org-plus-contrib
     ]) ++ [
-      hies
       mu
-      stack2nix
     ]))

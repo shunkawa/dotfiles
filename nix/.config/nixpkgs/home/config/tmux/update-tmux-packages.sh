@@ -1,8 +1,9 @@
 #!/bin/sh
 
-. ../../prefetch.sh
+# shellcheck source=../../prefetch.sh
+. "$(dirname "${0}")/../../prefetch.sh"
 
-cat <<EOF | "${JQ}" -s add >| tmux-packages.json
+cat <<EOF | "${JQ}" -s add >| "$(dirname "${0}")/tmux-packages.json"
   $(prefetch_git https://github.com/seebi/tmux-colors-solarized.git tmux-colors-solarized)
   $(prefetch_git https://github.com/tmux-plugins/tmux-copycat.git tmux-copycat)
   $(prefetch_git https://github.com/tmux-plugins/tmux-fpp.git tmux-fpp)

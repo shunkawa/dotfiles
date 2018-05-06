@@ -8,9 +8,9 @@
   },
   "oh-my-zsh": {
     "url": "https://github.com/robbyrussell/oh-my-zsh.git",
-    "rev": "37c2d0ddd751e15d0c87a51e2d9f9849093571dc",
-    "date": "2018-01-22T19:35:17-08:00",
-    "sha256": "0x2r7205ps5v5bl1f9vdnry9gxflypaahz49cnhq5f5klb49bakn",
+    "rev": "7ed82b4df6d381ef26a4dbdf253bf414497adcd1",
+    "date": "2018-03-09T08:16:15-08:00",
+    "sha256": "1aa6mikk3d953nvha58hy1hlrpwcvwl3ifm9s7kvsr0c8mmyq7l1",
     "fetchSubmodules": true
   },
   "dircolors-solarized": {
@@ -29,9 +29,9 @@
   },
   "nix-zsh-completions": {
     "url": "https://github.com/spwhitt/nix-zsh-completions.git",
-    "rev": "894effc0e16ba90b0ee9f9df9871849c81719ac7",
-    "date": "2018-02-08T15:20:30+01:00",
-    "sha256": "05ynd38br2kn657g7l01jg1q8ja9xwrdyb95w02gh7j9cww2k06w",
+    "rev": "956525ac16aa5505b80a72231be3a516c66d02cd",
+    "date": "2018-03-12T18:16:53+01:00",
+    "sha256": "1wy2dg2dwmdc5x3ahjvpsiqm4jdv011lnsdgcgrk4hvwrmcjavl7",
     "fetchSubmodules": true
   },
   "zsh-autosuggestions": {
@@ -50,9 +50,9 @@
   },
   "zsh-syntax-highlighting": {
     "url": "https://github.com/zsh-users/zsh-syntax-highlighting.git",
-    "rev": "1f1e629290773bd6f9673f364303219d6da11129",
-    "date": "2018-01-22T21:42:14-06:00",
-    "sha256": "0la6y2qc5pahdwm6y1m2xin2r3qi79vjn9dgnhpp61l9lknamay8",
+    "rev": "5e9b7c4650e4386a4620011c589475baa6263eb1",
+    "date": "2018-03-10T10:25:18-06:00",
+    "sha256": "0vc21xdbk1ciky3bkng3yrnqppamvf77aqn9a5ryvl45ba8sm37c",
     "fetchSubmodules": true
   }
 }
