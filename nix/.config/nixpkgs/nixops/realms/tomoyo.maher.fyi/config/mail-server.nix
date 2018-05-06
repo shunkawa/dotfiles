@@ -47,7 +47,6 @@ in {
     mailDirectory = "/mnt/var/lib/${config.users.users.vmail.name}";
     enableImap = true;
     enableImapSsl = true;
-    enableManageSieve = true;
     debug = true;
   };
 
@@ -61,9 +60,6 @@ in {
   # don't throw errors because there's no ipv6
   services.dovecot2.extraConfig = ''
     listen = *
-
-    # k-9 mail chews through these
-    mail_max_userip_connections = 50
 
     namespace inbox {
       inbox = yes

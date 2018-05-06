@@ -26,6 +26,7 @@ in {
 
   services.matrix-synapse = {
     dataDir = "/mnt/var/lib/matrix-synapse";
+    create_local_database = false;
     allow_guest_access = false;
     bcrypt_rounds = "12";
     enable = true;

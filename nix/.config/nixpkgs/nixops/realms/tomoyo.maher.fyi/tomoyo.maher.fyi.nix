@@ -130,7 +130,7 @@ in rec {
       hostName = "maher.fyi";
       defaultGateway = "114.111.153.1";
       nameservers = [ "122.100.13.50" "111.125.175.50" ];
-      interfaces."eno1".ip4 = [
+      interfaces."eno1".ipv4.addresses = [
         { # ptr -> maher.fyi
           address = "114.111.153.166";
           prefixLength = 24;
@@ -287,21 +287,23 @@ in rec {
     };
 
     services.prometheus = {
-      nodeExporter = {
-        enable = true;
-        enabledCollectors = [
-          "systemd"
-          "diskstats"
-          "filesystem"
-          "loadavg"
-          "meminfo"
-          "netdev"
-          "netstat"
-          "stat"
-          "time"
-          "uname"
-        ];
-        openFirewall = false; # using proxyPass
+      exporters = {
+        node = {
+          enable = true;
+          enabledCollectors = [
+            "systemd"
+            "diskstats"
+            "filesystem"
+            "loadavg"
+            "meminfo"
+            "netdev"
+            "netstat"
+            "stat"
+            "time"
+            "uname"
+          ];
+          openFirewall = false; # using proxyPass
+        };
       };
     };
 
@@ -376,7 +378,7 @@ in rec {
       maxJobs = lib.mkDefault 12;
     };
 
-    system.stateVersion = "18.03";
+    system.stateVersion = "18.09";
   };
 }
 
