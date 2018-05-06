@@ -3,7 +3,7 @@
 {
   nixpkgs = {
     config = {
-      allowBroken = true;
+      allowBroken = false;
       allowUnfree = true;
       overlays = [ (import ../../packages/overlay.nix) ];
       packageOverrides = pkgs: {
@@ -48,4 +48,9 @@
       };
     };
   };
+
+  # supposedly this is the default, but it's not.
+  nix.package = pkgs.nix;
+
+  nix.trustedBinaryCaches = [ "https://cache.nixos.org" ];
 }
