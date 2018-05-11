@@ -30,5 +30,7 @@
 
   swapDevices = [{ device = "/dev/mapper/vg-swap"; }];
 
+  hardware.cpu.intel.updateMicrocode = true;
+
   nix.maxJobs = lib.mkDefault 4;
 }
