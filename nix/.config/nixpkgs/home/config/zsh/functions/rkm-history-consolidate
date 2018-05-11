@@ -6,13 +6,13 @@ function rkm-history-consolidate () {
   TMP_HISTORY_FILE=$(mktemp)
   HISTFILE=$(rkm-history-create-histfile-name)
 
-  rkm-history >| "''${TMP_HISTORY_FILE}"
+  rkm-history >| "${TMP_HISTORY_FILE}"
 
-  rm -f "''${RKM_HISTORY_HIST_DIR}"/*
-  mv "''${TMP_HISTORY_FILE}" "''${HISTFILE}"
+  rm -f "${RKM_HISTORY_HIST_DIR}"/*
+  mv "${TMP_HISTORY_FILE}" "${HISTFILE}"
 }
 
-rkm-history-consolidate "''${@}"
+rkm-history-consolidate "${@}"
 
 # Local Variables:
 # mode: shell-script
