@@ -25,8 +25,7 @@
       column-enforce-mode
       company
       company-emoji
-      company-flow
-      company-tern
+      company-lsp
       counsel
       counsel-projectile
       dash
@@ -77,7 +76,6 @@
       sql-indent
       swift-mode
       swiper
-      tern
       tiny
       unfill
       use-package
