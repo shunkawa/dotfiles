@@ -47,8 +47,9 @@
       json-mode
       key-chord
       legalese
-      lsp-mode
+      lsp-java
       lsp-javascript-typescript
+      lsp-mode
       lsp-ui
       magit
       markdown-mode
