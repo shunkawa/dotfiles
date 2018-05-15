@@ -1,10 +1,10 @@
 #!/usr/bin/env zsh
 
 function emacs-daemon() {
-  emacs --daemon "''${@}";
+  emacs --daemon "${@}";
 }
 
-emacs-daemon "''${@}"
+emacs-daemon "${@}"
 
 # Local Variables:
 # mode: shell-script
