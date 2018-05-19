@@ -72,17 +72,18 @@
       emacs-with-packages
       tern
     ]) ++ lib.optionals stdenv.isLinux ([
-        firefox
+        anki
         chromium
+        desmume
+        discord
+        firefox
         gimp
-        mpv
+        gimp
         icedtea8_web # iDRAC administration
         libreoffice
+        mpv
         steam
-        gimp
-        anki
         youtube-dl
-        desmume
       ]
       ++ (with pkgs.ibus-engines; [ mozc uniemoji ])
       ++ (with local-packages; [open riot]))
