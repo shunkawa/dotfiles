@@ -114,6 +114,20 @@
 
         [org/gnome/desktop/interface]
         gtk-key-theme='Emacs'
+
+        [org/gnome/desktop/privacy]
+        remember-app-usage=false
+        remember-recent-files=false
+        remove-old-temp-files=true
+        remove-old-trash-files=true
+        report-technical-problems=false
+        send-software-usage-stats=false
+
+        [org/gnome/desktop/wm/preferences]
+        focus-mode='sloppy'
+
+        [org/gnome/terminal/legacy]
+        theme-variant='dark'
       '';
     };
   };
