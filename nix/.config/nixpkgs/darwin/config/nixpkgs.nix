@@ -9,11 +9,11 @@
       packageOverrides = pkgs: {
         iterm2 = with pkgs; stdenv.mkDerivation rec {
           name = "iterm2";
-          version = "3.1.5";
+          version = "3.2.0beta3";
 
           src = fetchzip {
-            url = "https://iterm2.com/downloads/stable/iTerm2-${lib.replaceStrings ["."] ["_"] version}.zip";
-            sha256 = "1f4kz967m539iaia6z9gxqh3wmm9wfgnhn02i517ss45yfv769v4";
+            url = "https://iterm2.com/downloads/beta/iTerm2-${lib.replaceStrings ["."] ["_"] version}.zip";
+            sha256 = "1rczg82ppwizjvqii3vm1bmnl6r97qhchriz4xvrv7khv8gnzw1x";
           };
 
           dontBuild = true;
@@ -26,11 +26,11 @@
 
         syncthing = with pkgs; stdenv.mkDerivation rec {
           name = "syncthing";
-          version = "0.14.44";
+          version = "0.14.48";
 
           src = fetchurl {
             url = "https://github.com/syncthing/syncthing/releases/download/v${version}/syncthing-macosx-amd64-v${version}.tar.gz";
-            sha256 = "05yb0vfggh9s6irglhp5h6g9r8cz1jisjxz5rqvcfgyrzd36bi1a";
+            sha256 = "1s56i4lajf9wsyscqx0l3j7fmkhb72bdj3ydvfv4jim90p46n0fa";
           };
 
           buildInputs = [ gnutar ];
