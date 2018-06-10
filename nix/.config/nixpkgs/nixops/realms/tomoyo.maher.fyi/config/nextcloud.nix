@@ -206,7 +206,7 @@ in {
     php_flag[display_errors] = off
     php_admin_value[error_log] = /run/phpfpm/php-fpm.log
     php_admin_flag[log_errors] = on
-    php_value[date.timezone] = "UTC"
+    php_value[date.timezone] = "Australia/Adelaide"
     php_value[upload_max_filesize] = 10G
     php_value[cgi.fix_pathinfo] = 1
   '';
