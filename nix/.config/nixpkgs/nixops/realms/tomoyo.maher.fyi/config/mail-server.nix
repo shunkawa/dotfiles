@@ -24,12 +24,13 @@ in {
              stop;
            }
 
-           # This must be the last rule, it will check if list-id is set, and
-           # file the message into the Lists folder for further investigation
-           elsif header :matches "list-id" "<?*>" {
+           elsif exists "list-id" {
              fileinto :create "Lists";
              stop;
            }
+
+           # if none of the above rules matched, the message will be filed into
+           # INBOX
          '';
         catchAll = [ "maher.fyi" "rkm.id.au" ];
       };
