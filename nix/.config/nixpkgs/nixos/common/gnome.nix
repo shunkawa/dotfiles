@@ -74,6 +74,7 @@
       firefox
       flac
       gnome-mpv
+      gnome3.gnome-boxes
       gnomeExtensions.caffeine
       gnomeExtensions.clipboard-indicator
       gnomeExtensions.mediaplayer
