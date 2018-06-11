@@ -41,7 +41,7 @@
     shares = {
       qemu = {
         browseable = "yes";
-        availale = "yes";
+        available = "yes";
         writable = "yes";
         public = "yes";
         path = "${config.users.users.eqyiel.home}";
