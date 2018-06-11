@@ -14,6 +14,7 @@ in
     ../../common/gnome.nix
     ../../common/fonts.nix
     ../../common/steam.nix
+    ../../common/virtualisation.nix
   ] ++ (import ./../../modules/module-list.nix);
 
   boot = {
@@ -117,8 +118,6 @@ in
     enable = true;
     inherit (secrets.services.local.pia-nm) username password;
   };
-
-  virtualisation.virtualbox.host.enable = true;
 
   nixpkgs = {
     config.allowUnfree = true;

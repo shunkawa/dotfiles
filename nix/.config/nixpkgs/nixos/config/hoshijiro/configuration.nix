@@ -13,6 +13,7 @@ in rec {
     ../../common/gnome.nix
     ../../common/steam.nix
     ../../common/fonts.nix
+    ../../common/virtualisation.nix
   ] ++ (import ./../../modules/module-list.nix);
 
   fileSystems."/" = {
