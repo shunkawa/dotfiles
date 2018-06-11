@@ -196,7 +196,7 @@ in rec {
       allowedUDPPortRanges = [
         { from = 1714; to = 1764; } # KDE connect
       ];
-      trustedInterfaces = [];
+      trustedInterfaces = [ "lo" ];
       logRefusedPackets = true;
       extraCommands = ''
         ip46tables \
