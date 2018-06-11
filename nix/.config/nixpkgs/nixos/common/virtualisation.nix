@@ -18,7 +18,8 @@
 
       security = user
       map to guest = Bad user
-      interfaces = virbr0
+
+      interfaces = lo virbr0
       bind interfaces only = true
 
       # don't do printer stuff
@@ -40,7 +41,7 @@
     '';
     shares = {
       qemu = {
-        browseable = "yes";
+        browsable = "yes";
         available = "yes";
         writable = "yes";
         public = "yes";
