@@ -73,13 +73,13 @@
     systemPackages = with pkgs; [
       firefox
       flac
+      gnome-mpv
+      gnomeExtensions.caffeine
+      gnomeExtensions.clipboard-indicator
+      gnomeExtensions.mediaplayer
+      gnomeExtensions.topicons-plus
       grip
       lame
-      gnome-mpv
-      gnomeExtensions.topicons-plus
-      gnomeExtensions.mediaplayer
-      gnomeExtensions.clipboard-indicator
-      gnomeExtensions.caffeine
       vlc
       # local-packages.nautilus-python
       # local-packages.indicator-kdeconnect
