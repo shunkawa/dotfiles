@@ -29,22 +29,29 @@
       disable spoolss = yes
       show add printer wizard = no
 
-      # performance rice
-      server multi channel support = yes
-      socket options = SO_RCVBUF=131072 SO_SNDBUF=131072 IPTOS_LOWDELAY TCP_NODELAY IPTOS_THROUGHPUT
-      deadtime = 30
-      use sendfile = Yes
-      write cache size = 262144
-      min receivefile size = 16384
-      aio read size = 16384
-      aio write size = 16384
+      # # performance rice
+      # server multi channel support = yes
+      # socket options = SO_RCVBUF=131072 SO_SNDBUF=131072 IPTOS_LOWDELAY TCP_NODELAY IPTOS_THROUGHPUT
+      # deadtime = 30
+      # use sendfile = Yes
+      # write cache size = 262144
+      # min receivefile size = 16384
+      # aio read size = 16384
+      # aio write size = 16384
     '';
     shares = {
+      # Don't forget to set a password with
+      # /nix/store/...-samba-.../bin/smbpasswd -a user
+      # And check the result with:
+      # /nix/store/...-samba-.../bin/pdbedit -L -v
       qemu = {
-        browsable = "yes";
-        available = "yes";
-        writable = "yes";
-        public = "yes";
+        "read only" = "no";
+        "guest ok" = "no";
+        "create mask" = "0644";
+        "directory mask" = "0755";
+        "force user" = "eqyiel";
+        "force group" = "nogroup";
+        browseable = "yes";
         path = "${config.users.users.eqyiel.home}";
       };
     };

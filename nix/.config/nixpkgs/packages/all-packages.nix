@@ -73,4 +73,22 @@ rec {
   hnix = callPackage ./hnix {};
 
   open = callPackage ./open {};
+
+  hiptext = callPackage ./hiptext {
+    # TODO: for some reason this derivation can't be overridden normally
+    libav = (callPackage <nixpkgs/pkgs/development/libraries/libav/default.nix> {
+      vaapiSupport = false; # This doesn't build on Darwin.
+    }).libav_11;
+  };
+
+  # Use patched mozc that starts in Hiragana mode rather than direct input.
+  ibus-engines.mozc = pkgs.ibus-engines.mozc.overrideAttrs (attrs: {
+    # nix-prefetch-git git@github.com:eqyiel/mozc.git --rev HEAD
+    src = pkgs.fetchFromGitHub {
+      owner = "eqyiel";
+      repo = "mozc";
+      rev = "19bef07c53793c0037ca441b5feb5d54334e7c1a";
+      sha256 = "04qfbzrlgnk9f27nn0bz0xklp8mqpi00wazgl5kx4wcf4lbfirzf";
+    };
+  });
 }

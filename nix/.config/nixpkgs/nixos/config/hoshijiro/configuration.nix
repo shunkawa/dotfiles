@@ -548,5 +548,5 @@ in rec {
 
   nix.gc.automatic = true;
 
-  system.stateVersion = "18.09";
+  system.nixos.stateVersion = "18.09pre";
 }

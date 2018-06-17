@@ -108,15 +108,30 @@
     desktopManager.gnome3 = {
       enable = true;
       extraGSettingsOverrides = ''
-        [org/gnome/desktop/input-sources]
+        [org.gnome.desktop.screensaver]
+        lock-delay=3600
+        lock-enabled=true
+
+        [org.gnome.desktop.session]
+        idle-delay=900
+
+        [org.gnome.settings-daemon.plugins.power]
+        power-button-action='nothing'
+        idle-dim=true
+        sleep-inactive-battery-type='nothing'
+        sleep-inactive-ac-timeout=3600
+        sleep-inactive-ac-type='nothing'
+        sleep-inactive-battery-timeout=1800
+
+        [org.gnome.desktop.input-sources]
         show-all-sources=true
-        sources=[('xkb', 'us')]
+        sources=[('xkb', 'us'), ('ibus', 'mozc-jp'), ('ibus', 'uniemoji')]
         xkb-options=['caps:hyper']
 
-        [org/gnome/desktop/interface]
+        [org.gnome.desktop.interface]
         gtk-key-theme='Emacs'
 
-        [org/gnome/desktop/privacy]
+        [org.gnome.desktop.privacy]
         remember-app-usage=false
         remember-recent-files=false
         remove-old-temp-files=true
@@ -124,10 +139,10 @@
         report-technical-problems=false
         send-software-usage-stats=false
 
-        [org/gnome/desktop/wm/preferences]
+        [org.gnome.desktop.wm.preferences]
         focus-mode='sloppy'
 
-        [org/gnome/terminal/legacy]
+        [org.gnome.terminal.legacy]
         theme-variant='dark'
       '';
     };
@@ -143,6 +158,6 @@
 
   i18n.inputMethod = {
     enabled = "ibus";
-    ibus.engines = with pkgs.ibus-engines; [ mozc uniemoji ];
+    ibus.engines = with pkgs.ibus-engines; [ pkgs.local-packages.ibus-engines.mozc uniemoji ];
   };
 }

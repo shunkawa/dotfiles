@@ -70,7 +70,7 @@
       which
     ] ++ (with local-packages; [
       emacs-with-packages
-      tern
+      hiptext
     ]) ++ lib.optionals stdenv.isLinux ([
         anki
         chromium
@@ -80,12 +80,12 @@
         gimp
         gimp
         icedtea8_web # iDRAC administration
-        libreoffice
+        # libreoffice # broken on unstable at the moment
         mpv
         steam
         youtube-dl
       ]
-      ++ (with pkgs.ibus-engines; [ mozc uniemoji ])
+      ++ (with pkgs.ibus-engines; [ local-packages.ibus-engines.mozc uniemoji ])
       ++ (with local-packages; [open riot]))
     ++ lib.optionals stdenv.isDarwin ([
       (youtube-dl.override ({ phantomjsSupport = false; }))
