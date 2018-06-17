@@ -297,7 +297,7 @@ in rec {
       local-packages.nextcloud-client
       chromium
       mpv
-      libreoffice
+      # libreoffice # broken on unstable
       python27Packages.syncthing-gtk
       kdeconnect
     ] ++ (import ./../../../common/package-lists/essentials.nix) {

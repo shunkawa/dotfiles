@@ -19,12 +19,25 @@ in {
         sieveScript = ''
            require ["fileinto", "mailbox"];
 
+           # I don't know what these addresses are, but they get heaps of spam.
+           if anyof (
+             address :is "to" "adele@rkm.id.au",
+             address :is "to" "crazydaiz@rkm.id.au",
+             address :is "to" "dele@rkm.id.au",
+             address :is "to" "olf@rkm.id.au",
+             address :is "to" "rolf@rkm.id.au",
+             address :is "to" "tarot@rkm.id.au"
+           ) {
+             fileinto :create "Junk";
+             stop;
+           }
+
            if address :is "from" "notifications@github.com" {
              fileinto :create "GitHub";
              stop;
            }
 
-           elsif exists "list-id" {
+           if exists "list-id" {
              fileinto :create "Lists";
              stop;
            }

@@ -378,7 +378,7 @@ in rec {
       maxJobs = lib.mkDefault 12;
     };
 
-    system.stateVersion = "18.09";
+    system.nixos.stateVersion = lib.mkForce "18.09pre";
   };
 }
 
