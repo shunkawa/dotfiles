@@ -8,7 +8,6 @@ let
 
 in rec {
   imports = [
-    ./lib
     ./config
     ../../common/gnome.nix
     ../../common/steam.nix
@@ -471,9 +470,7 @@ in rec {
     # maxJobs = 0;
     trustedUsers = [ "root" ];
     nixPath = [
-      # symlink from ~/git/personal/dotfiles/nix/.config/nixpkgs/nixos/config/ayanami/lib/nixpkgs
-      "nixpkgs=/etc/nixos/lib/nixpkgs"
-      # symlink from ~/git/personal/dotfiles/nix/.config/nixpkgs/nixos/config/ayanami/configuration.nix
+      "nixpkgs=${pkgs.callPackage ./lib/nixpkgs.nix {}}"
       "nixos-config=/etc/nixos/configuration.nix"
     ];
     distributedBuilds = false;
@@ -547,6 +544,9 @@ in rec {
   };
 
   nix.gc.automatic = true;
+
+  # broken on unstable
+  services.nixosManual.enable = false;
 
   system.nixos.stateVersion = "18.09pre";
 }

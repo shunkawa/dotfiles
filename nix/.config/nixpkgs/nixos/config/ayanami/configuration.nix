@@ -131,9 +131,7 @@ in
     # maxJobs = 0;
     trustedUsers = [ "root" ];
     nixPath = [
-      # symlink from ~/git/personal/dotfiles/nix/.config/nixpkgs/nixos/config/ayanami/lib/nixpkgs
-      "nixpkgs=/etc/nixos/lib/nixpkgs"
-      # symlink from ~/git/personal/dotfiles/nix/.config/nixpkgs/nixos/config/ayanami/configuration.nix
+      "nixpkgs=${pkgs.callPackage ./lib/nixpkgs.nix {}}"
       "nixos-config=/etc/nixos/configuration.nix"
     ];
     distributedBuilds = false;

@@ -1,6 +1,8 @@
 { config, lib, pkgs, ... }:
 
 {
+  imports = [(pkgs.callPackage ../lib/home-manager.nix)];
+
   home-manager = {
     users = {
       eqyiel = lib.mkMerge [

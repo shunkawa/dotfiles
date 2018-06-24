@@ -3,7 +3,7 @@
 let
   secrets = (import ./secrets.nix);
 in {
-  imports = [ ../lib ];
+  imports = [(pkgs.callPackage ../lib/nixos-mailserver.nix)];
 
   environment.systemPackages = with pkgs; [ mkpasswd ];
 

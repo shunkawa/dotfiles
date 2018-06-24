@@ -12,7 +12,6 @@
 
 in rec {
     imports = [
-      ./lib
       ./config
     ] ++ (import ./../../../nixos/modules/module-list.nix);
 
