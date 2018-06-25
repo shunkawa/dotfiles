@@ -59,7 +59,7 @@ let
 
     "${deviceNames.ayanami}" = {
       device = {
-        id = "KJ4EPPA-TVXR7FT-3F2TJTK-J4NIU7I-X7L7XZJ-UTKISFL-KULVGER-CX6HSAU";
+        id = "64C2O5L-G37ML5Z-PNOJJZN-GBW5PVE-MKEWNHU-ACDDXUS-LENXMUM-5DYXHQM";
       };
     };
 
