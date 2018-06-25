@@ -68,30 +68,10 @@ rec {
   # Can't cook on unstable due to this:
   # https://github.com/nextcloud/desktop/issues/235
   # Override version from impala instead.
-  nextcloud-client =
-    let impala = (import (pkgs.callPackage ({ stdenv, fetchFromGitHub }:
-      stdenv.mkDerivation rec {
-        name = "nixpkgs-${version}";
-        version = "2018-06-25";
-
-        src = fetchFromGitHub {
-          owner = "NixOS";
-          repo = "nixpkgs";
-          rev = "91b286c8935b8c5df4a99302715200d3bd561977";
-          sha256 = "1c4a31s1i95cbl18309im5kmswmkg91sdv5nin6kib2j80gixgd3";
-        };
-
-        dontBuild = true;
-        preferLocalBuild = true;
-
-        installPhase = ''
-          cp -a . $out
-        '';
-      }) {}) {});
-  in impala.nextcloud-client.override ({
+  nextcloud-client = pkgs.libsForQt5.callPackage ./nextcloud-client {
     withGnomeKeyring = true;
     libgnome-keyring = pkgs.gnome3.libgnome-keyring;
-  });
+  };
 
   hnix = callPackage ./hnix {};
 
