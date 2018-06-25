@@ -107,6 +107,7 @@
     };
     desktopManager.gnome3 = {
       enable = true;
+      extraGSettingsOverridePackages = with pkgs; [ gnome3.gnome_settings_daemon ];
       extraGSettingsOverrides = ''
         [org.gnome.desktop.screensaver]
         lock-delay=3600

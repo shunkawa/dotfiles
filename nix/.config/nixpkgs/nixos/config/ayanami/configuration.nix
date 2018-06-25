@@ -13,18 +13,24 @@ in
     ./hardware-configuration.nix
     ../../common/gnome.nix
     ../../common/fonts.nix
-    ../../common/steam.nix
-    ../../common/virtualisation.nix
   ] ++ (import ./../../modules/module-list.nix);
 
   boot = {
     loader = {
-      systemd-boot.enable = true;
-      efi.canTouchEfiVariables = true;
+      grub = {
+        enable = true;
+        efiSupport = false;
+	      device = "/dev/sda";
+        extraEntries = ''
+	        menuentry "Windows" {
+	          chainloader (hd0,1)+1
+	        }
+	      '';
+      };
     };
     initrd.luks.devices = [{
       name = "root";
-      device = "/dev/sda2";
+      device = "/dev/disk/by-uuid/079a4194-9077-4ac4-9dcf-f501fe77e9cd";
       allowDiscards = true;
     }];
     kernelParams = [ "ipv6.disable=1" ];
@@ -167,6 +173,8 @@ in
      "wheel"
     ];
   };
+
+  services.nixosManual.enable = false; # broken on unstable
 
   system.nixos.stateVersion = "18.09pre";
 }
