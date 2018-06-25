@@ -14,7 +14,7 @@
     nixPath = [
       "darwin=/Users/rkm/.nix-defexpr/darwin"
       "darwin-config=/Users/rkm/.config/nixpkgs/darwin-configuration.nix"
-      "nixpkgs=/Users/rkm/.nix-defexpr/nixpkgs-darwin"
+      "nixpkgs=${pkgs.callPackage ../lib/nixpkgs.nix {}}"
     ];
   };
 

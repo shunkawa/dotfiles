@@ -16,9 +16,6 @@
 [submodule "nix/.nix-defexpr/darwin"]
 	path = nix/.nix-defexpr/darwin
 	url = git@github.com:LnL7/nix-darwin.git
-[submodule "nix/.nix-defexpr/nixpkgs-darwin"]
-	path = nix/.nix-defexpr/nixpkgs-darwin
-	url = git@github.com:eqyiel/nixpkgs.git
 [submodule "nix/.config/nixpkgs/nixos/config/hoshijiro/lib/nixpkgs"]
 	path = nix/.config/nixpkgs/nixos/config/hoshijiro/lib/nixpkgs
 	url = git@github.com:eqyiel/nixpkgs.git
