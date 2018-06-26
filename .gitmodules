@@ -55,3 +55,6 @@
 [submodule "nix/.nix-defexpr/nixpkgs"]
 	path = nix/.nix-defexpr/nixpkgs
 	url = git@github.com:eqyiel/nixpkgs.git
+[submodule "emacs/.emacs.d"]
+	path = emacs/.emacs.d
+	url = git@github.com:eqyiel/.emacs.d.git
