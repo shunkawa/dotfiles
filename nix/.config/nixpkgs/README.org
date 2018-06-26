@@ -1,3 +1,3 @@
 #+BEGIN_EXAMPLE
-"$(nix-build '<nixpkgs>' -A home.home-manager)/bin/home-manager" -v -f "$HOME/.config/nixpkgs/home.nix" -I home-manager="$(nix-build '<nixpkgs>' -A home.home-manager-src --no-out-link)" -I nixpkgs="$(nix-build '<nixpkgs>' -A home.nixpkgs --no-out-link)" switch
+"$(nix-build '<nixpkgs>' -A home.home-manager)/bin/home-manager" -v -f "$HOME/.config/nixpkgs/home.nix" -I home-manager="$(nix-build '<nixpkgs>' -A home.home-manager-src --no-out-link)" -I nixpkgs="$(nix-build --expr "with import <nixpkgs> {}; callPackage $HOME/.config/nixpkgs/nixos/config/ayanami/lib/nixpkgs.nix {}" --no-out-link)" switch
 #+END_EXAMPLE

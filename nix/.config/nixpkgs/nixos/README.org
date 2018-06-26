@@ -1,0 +1,3 @@
+#+BEGIN_EXAMPLE
+sudo nixos-rebuild switch -I nixpkgs="$(nix-build --expr "with import <nixpkgs> {}; callPackage $HOME/.config/nixpkgs/nixos/config/ayanami/lib/nixpkgs.nix {}" --no-out-link)" -I nixos-config=$HOME/.config/nixpkgs/nixos/config/ayanami/configuration.nix
+#+END_EXAMPLE

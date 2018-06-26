@@ -4,7 +4,7 @@
 
 stdenv.mkDerivation rec {
   name = "nextcloud-client-${version}";
-  version = "2.5.0git"
+  version = "2.5.0git";
 
   src = fetchFromGitHub {
     owner = "nextcloud";
@@ -30,7 +30,10 @@ stdenv.mkDerivation rec {
     "-DINOTIFY_INCLUDE_DIR=${inotify-tools}/include"
   ];
 
-  postInstall = stdenv.lib.optionalString (withGnomeKeyring) ''
+  postInstall = ''
+    sed -i 's/\(Icon.*\)=nextcloud/\1=Nextcloud/g' \
+      $out/share/applications/nextcloud.desktop
+  '' + stdenv.lib.optionalString (withGnomeKeyring) ''
       wrapProgram "$out/bin/nextcloud" \
         --prefix LD_LIBRARY_PATH : ${stdenv.lib.makeLibraryPath [ libgnome-keyring ]}
   '';

@@ -1,7 +1,5 @@
 self: super: rec {
   home = {
-    nixpkgs = (super.callPackage ../home/lib/nixpkgs.nix {});
-
     home-manager-src = (super.callPackage ({ stdenv, fetchFromGitHub }: stdenv.mkDerivation {
       name = "home-manager";
       src = fetchFromGitHub {

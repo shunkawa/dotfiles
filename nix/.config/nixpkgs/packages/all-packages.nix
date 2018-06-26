@@ -94,4 +94,12 @@ rec {
       sha256 = "04qfbzrlgnk9f27nn0bz0xklp8mqpi00wazgl5kx4wcf4lbfirzf";
     };
   });
+
+  nixpkgs = {
+    ayanami = (pkgs.callPackage ../nixos/config/ayanami/lib/nixpkgs.nix {});
+    hoshijiro = (pkgs.callPackage ../nixos/config/hoshijiro/lib/nixpkgs.nix {});
+    tomoyo = (pkgs.callPackage ../nixops/realms/tomoyo.maher.fyi/lib/nixpkgs.nix {});
+    darwin = (pkgs.callPackage ../darwin/lib/nixpkgs.nix {});
+    nixpkgs = (pkgs.callPackage ../home/lib/nixpkgs.nix {});
+  };
 }
