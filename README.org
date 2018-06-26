@@ -1,48 +1,20 @@
 #+title: ~/.config/dotfiles
 
-#+begin_example
-$ [[ -d ~/.config ]] || mkdir ~/.config && cd ~/.config
-$ git clone --recursive git@github.com:eqyiel/dotfiles.git && cd dotfiles
-$ ./bin/git/create-hook-symlinks
-$ ./go.py --stow --all
-#+end_example
+#+BEGIN_EXAMPLE
+$ # Use GNU stow
+$ "$(nix-build '<nixpkgs>' -A stow --no-out-link)" -t "$HOME" emacs -R
+$ # Or create the symlinks manually
+$ ln -s "$(pwd)/emacs/.emacs.d" "$HOME/.emacs.d"
+#+END_EXAMPLE
 
-* JS
-** =eslint-cli=
-
-   Use this instead of global installation of =eslint=.  It will find a
-   project's local version of =eslint= and run that.
-
-** =tern=
-
-   Don't forget to add =.tern-port= to your =.gitignore=.
-
-** =nvm=
-
-   I used to use =nvm= at work to manage the transient global =node= version.
-   It turns out that [[http://anderspapitto.com/posts/2016-10-04-transient-global-environments-the-third-path.html][Nix does this much better]].
-
-   So just use =nix-env --query= to see what versions of =node= are available in
-   the current profile, =nix-env --query --available nodejs= to see what
-   versions are available and so on.
-
-* GNOME 3
-
-  Gnome uses its own registry thing (~dconf~) for a bunch of configuration and
-  stateful data, so there's a hook in this repo that saves the output of ~dconf
-  dump~ when commiting.
-
-  On a new machine you probably have to import it, see the script
-  ~bin/dconf-restore~.
-
-
-* ~mbsync~
-** Initial sync
+* Notes
+** ~mbsync~
+*** Initial sync
 #+BEGIN_EXAMPLE
 $ mbsync -a; mu index --maildir ~/mail --rebuild
 #+END_EXAMPLE
 
-** Dealing with duplicates
+*** Dealing with duplicates
 
 If ~mbsync~ has screwed you by creating duplicates you can remove them by
 stripping out the ~X-TUID~ header.
@@ -54,7 +26,7 @@ $ find . -type f -exec sed -i '/X-TUID.*/d' "{}" \; && fdupes -R . -dNp
 #+end_example
 
 You'll then need to use the [[http://dovecot.org/tools/maildir-size-fix.pl][~maildir_size_fix.pl~]] script, otherwise you'll see
-messages like this👍
+messages like this:
 
 #+begin_example
 Mar 22 13:16:01 ayanami dovecot[26344]: imap(eqyiel): Error: Corrupted index cache file /home/eqyiel/.cache/dovecot2/index/internode.on.net/Inbox/dovecot.index.cache: Broken physical size for mail UID 1751 in mailbox internode.on.net/Inbox: read(/home/eqyiel/mail/internode.on.net/Inbox/cur/1489985638.14390_29432.ayanami,U=1120:2,FS) failed: Cached message size larger than expected (364222 > 364201, box=internode.on.net/Inbox, UID=1751, cached Message-Id=<14016.8940.169398.1468414394.10.example.com>)
@@ -65,9 +37,8 @@ Mar 22 13:16:01 ayanami dovecot[26344]: imap(eqyiel): Error: read(/home/eqyiel/m
 ./maildir-size-fix.pl -p -a -f -c -r -v /path/to/mail
 #+end_example
 
-* NixOS
-
-** =nix-env=
+** NixOS
+*** =nix-env=
 
    By default, =nix-env= ignores =$NIX_PATH=.  So if you want to use a local
    checkout of =nixpkgs= instead of the configured channel, you have to tell it
@@ -77,7 +48,7 @@ Mar 22 13:16:01 ayanami dovecot[26344]: imap(eqyiel): Error: read(/home/eqyiel/m
    nix-env -f '<nixpkgs>' -i rkm
    #+end_example
 
-* OSX Gotchas
+** OSX Gotchas
 
   We're locked into Apple at work.  Use virtual machine to get actual
   work done.  There's some stuff you can do to make life more
@@ -95,7 +66,7 @@ Mar 22 13:16:01 ayanami dovecot[26344]: imap(eqyiel): Error: read(/home/eqyiel/m
   For the virtual machine, set interface 1 to NAT, second to Host-only Adapter.
   You can SSH to the IP address of host-only adapter's interface.
 
-** Remote ~pbcopy~
+*** Remote ~pbcopy~
 
    [[https://seancoates.com/blogs/remote-pbcopy][See this guide]].
 
@@ -125,30 +96,30 @@ Mar 22 13:16:01 ayanami dovecot[26344]: imap(eqyiel): Error: read(/home/eqyiel/m
    cat | netcat -c localhost 2224
    #+end_example
 
-** Karabiner-Elements
+*** Karabiner-Elements
 
    <<hyper>>I like the Hyper key, I want a hyper key in macOS.
 
    You can use ~karabiner-elements~ to fake it.
 
-** 1password
+*** 1password
 
    1password doesn't like Chromium.  Install the OSX app and go to preferences →
    advanced → uncheck verify browser code signature.
 
-** =Terminal.app=                                                    :ATTACH:
+*** =Terminal.app=                                                 :ATTACH:
    :PROPERTIES:
    :ID:       C20586D7-52CA-4AF4-9065-BC70C4C5BB96
    :Attachments: osx-terminal_2016-09-26_10-03-02.png
    :END:
-*** Rescue Meta
+**** Rescue Meta
 
    Make sure "Use Option as Meta key" is checked.
    #+DOWNLOADED: file:/Users/rkm/Desktop/osx-terminal.png @ 2016-09-26 10:03:03
    [[file:data/C2/0586D7-52CA-4AF4-9065-BC70C4C5BB96/osx-terminal_2016-09-26_10-03-02.png]]
 
-** iTerm2
-*** Rescue Meta                                                      :ATTACH:
+*** iTerm2
+**** Rescue Meta                                                  :ATTACH:
 
     :PROPERTIES:
     :ID:       69648A9D-1C24-447A-9FBF-88C649315B0F
@@ -160,7 +131,7 @@ Mar 22 13:16:01 ayanami dovecot[26344]: imap(eqyiel): Error: read(/home/eqyiel/m
     #+DOWNLOADED: file:/Users/rkm/Desktop/iterm2.png @ 2016-09-26 10:04:21
     [[file:data/69/648A9D-1C24-447A-9FBF-88C649315B0F/iterm2_2016-09-26_10-04-21.png]]
 
-*** Rescue clipboard                                                 :ATTACH:
+**** Rescue clipboard                                             :ATTACH:
     :PROPERTIES:
     :ID:       1B1C9326-036A-438B-837D-38C365CEE7F6
     :Attachments: iterm2-clipboard_2016-10-12_09-28-47.png
@@ -170,7 +141,7 @@ Mar 22 13:16:01 ayanami dovecot[26344]: imap(eqyiel): Error: read(/home/eqyiel/m
 
     #+DOWNLOADED: file:/Users/rkm/Desktop/iterm2-clipboard.png @ 2016-10-12 09:28:47
     [[file:data/1B/1C9326-036A-438B-837D-38C365CEE7F6/iterm2-clipboard_2016-10-12_09-28-47.png]]
-*** Hyper and other special keys
+**** Hyper and other special keys
 
     By default, you can't use keybindings like ~H-l~ (see [[karabiner-Elements][hyper]]) or ~C-*~
     (because the terminal doesn't recognise it), [[http://superuser.com/a/895568][see this superuser answer]] for
@@ -191,7 +162,7 @@ Mar 22 13:16:01 ayanami dovecot[26344]: imap(eqyiel): Error: read(/home/eqyiel/m
 
     # Control key modifiers are ~0x5C~ (left control) and ~0x60~ (right control).
 
-** On the guest
+*** On the guest
 
    Chances are we'll need to work with some BSCMS, so make a `mysql` user:
 
@@ -217,7 +188,7 @@ Mar 22 13:16:01 ayanami dovecot[26344]: imap(eqyiel): Error: read(/home/eqyiel/m
    MariaDB [(none)]>
    #+end_example
 
-** ~pinentry-curses~ is on the wrong TTY / spewing all over the screen
+*** ~pinentry-curses~ is on the wrong TTY / spewing all over the screen
 
    I don't think this problem is exclusive to macOS but I rarely need to use
    pinentry remotely otherwise.
@@ -239,7 +210,7 @@ Mar 22 13:16:01 ayanami dovecot[26344]: imap(eqyiel): Error: read(/home/eqyiel/m
      use.
    #+end_quote
 
-** USB drivers keep dying in the Virtualbox guest
+*** USB drivers keep dying in the Virtualbox guest
 
 AFAICT there's nothing to do except try that `reset-ohci-drivers` script.
 Attaching and detaching from the virtual machine (in the devices menu) sometimes
@@ -286,8 +257,8 @@ Jan 30 10:45:12 localghost kernel: handlers:
 Jan 30 10:45:12 localghost kernel: [<ffffffffc04391c0>] usb_hcd_irq [usbcore]
 Jan 30 10:45:12 localghost kernel: Disabling IRQ #22
 #+end_example
-* Android
-** Syncthing
+** Android
+*** Syncthing
 I want to sync the entire =/sdcard= folder with Syncthing.  This leads to
 problems with other individual folders that I want to sync, for example =org=.
 My workaround is to create a new folder under =/storage/emulated= called =sync=
