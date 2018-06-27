@@ -3,7 +3,9 @@
 let
   secrets = (import ./secrets.nix);
 in {
-  imports = [(pkgs.callPackage ../lib/nixos-mailserver.nix)];
+  imports = [
+    "${((import <nixpkgs> {}).callPackage ../lib/nixos-mailserver.nix {})}"
+  ];
 
   environment.systemPackages = with pkgs; [ mkpasswd ];
 
@@ -24,6 +26,7 @@ in {
              address :is "to" "adele@rkm.id.au",
              address :is "to" "crazydaiz@rkm.id.au",
              address :is "to" "dele@rkm.id.au",
+             address :is "to" "le@rkm.id.au",
              address :is "to" "olf@rkm.id.au",
              address :is "to" "rolf@rkm.id.au",
              address :is "to" "tarot@rkm.id.au"
@@ -32,12 +35,22 @@ in {
              stop;
            }
 
+           # Spammers
+           if anyof (
+             address :is "from" "bill.mousoulis@sitepoint.com",
+             address :is "from" "hello@skillshare.com"
+           ) {
+             fileinto :create "Junk";
+             stop;
+           }
+
+
            if address :is "from" "notifications@github.com" {
              fileinto :create "GitHub";
              stop;
            }
 
-           if exists "list-id" {
+           if anyof (exists "list-id", exists "list-unsubscribe") {
              fileinto :create "Lists";
              stop;
            }

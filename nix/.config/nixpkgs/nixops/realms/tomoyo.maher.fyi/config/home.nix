@@ -1,7 +1,9 @@
 { config, lib, pkgs, ... }:
 
 {
-  imports = [(pkgs.callPackage ../lib/home-manager.nix)];
+  imports = [
+    "${((import <nixpkgs> {}).callPackage ../lib/home-manager.nix {})}/nixos"
+  ];
 
   home-manager = {
     users = {

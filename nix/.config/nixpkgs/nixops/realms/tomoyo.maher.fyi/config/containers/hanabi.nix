@@ -68,5 +68,8 @@ with lib;
     }];
   };
 
-  system.stateVersion = "18.03";
+  # Broken on unstable
+  services.nixosManual.enable = false;
+
+  system.nixos.stateVersion = "18.09pre";
 }

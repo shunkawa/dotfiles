@@ -6,7 +6,9 @@ let
   # TODO: this needs to have a separate A record
   fqdn = "maher.fyi";
 in {
-  imports = [(pkgs.callPackage ../lib/matrix-appservice-irc-nixos.nix)];
+  imports = [
+    "${((import <nixpkgs> {}).callPackage ../lib/matrix-appservice-irc-nixos.nix {})}"
+  ];
 
   networking.firewall = {
     allowedTCPPorts = [

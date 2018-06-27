@@ -35,3 +35,9 @@
   root-# OWNER synapse;
   CREATE DATABASE
   #+end_example
+
+* Current deployment spell meta
+
+#+BEGIN_EXAMPLE
+./nixops deploy -d tomoyo.maher.fyi -I nixpkgs="$(nix-build --expr 'with import <nixpkgs> {}; callPackage ./realms/tomoyo.maher.fyi/lib/nixpkgs.nix {}' --no-out-link)" -I home-manager="$(nix-build --expr 'with import <nixpkgs> {}; callPackage ./realms/tomoyo.maher.fyi/lib/home-manager.nix {}' --no-out-link)" --show-trace
+#+END_EXAMPLE

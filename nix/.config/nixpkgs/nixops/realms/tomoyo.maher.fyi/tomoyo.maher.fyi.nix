@@ -10,7 +10,7 @@
 
     secrets = import ./secrets.nix;
 
-in rec {
+in {
     imports = [
       ./config
     ] ++ (import ./../../../nixos/modules/module-list.nix);
@@ -376,6 +376,9 @@ in rec {
       sshServe.keys = [ sshKeys.rkm ];
       maxJobs = lib.mkDefault 12;
     };
+
+    # Broken on unstable
+    services.nixosManual.enable = false;
 
     system.nixos.stateVersion = lib.mkForce "18.09pre";
   };

@@ -1,12 +1,11 @@
-{ stdenv, fetchgit }:
+{ stdenv }:
 
-stdenv.mkDerivation rec {
-  name = "nixos-mailserver";
+stdenv.mkDerivation {
+  name = "nixpkgs";
 
-  src = fetchgit {
-    url = ../../../../../../.nix-defexpr/nixos-mailserver;
-    rev = "ffc67fef469c0ec81c83b7d2681a8b2ca0c58849";
-    sha256 = "1if8pshc4z5zn59zcnnjh55fk4gym0pjzlyxpc0x95l3vp916s40";
+  src = fetchGit {
+    url = ../../../../../../.nix-defexpr/nixpkgs;
+    rev = "a8c71037e041725d40fbf2f3047347b6833b1703";
   };
 
   dontBuild = true;

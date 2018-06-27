@@ -118,8 +118,6 @@ in
 
   services.pcscd.enable = true;
 
-  services.postgresql.enable = true;
-
   services.local.pia-nm = {
     enable = true;
     inherit (secrets.services.local.pia-nm) username password;

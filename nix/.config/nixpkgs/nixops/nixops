@@ -15,7 +15,7 @@ if [ "${#}" -lt 1 ]; then
 fi
 
 cmd="${1}"; shift
-state="$(dirname ${NIXOPS_STATE})/$(basename ${NIXOPS_STATE} .nixops).json"
+state="$(dirname "${NIXOPS_STATE}")/$(basename "${NIXOPS_STATE}" .nixops).json"
 
 cd "$(dirname "$0")"
 trap 'save' EXIT
