@@ -32,7 +32,7 @@ stdenv.mkDerivation rec {
     # https://github.com/jart/hiptext/blob/da18b54c614beb74b7cb8671ea501caae2f8e85f/src/font.cc#L14
     # https://github.com/jart/hiptext/issues/12
     mkdir -p $out/share/hiptext
-    cp $src/DejavuSansMono.ttf $out/share/hiptext
+    cp $src/DejaVuSansMono.ttf $out/share/hiptext
 
     wrapProgram $out/bin/hiptext \
       --add-flags "--font $out/share/hiptext/DejaVuSansMono.ttf"
