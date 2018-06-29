@@ -5,7 +5,7 @@ stdenv.mkDerivation {
 
   src = fetchGit {
     url = ../../../../../../.nix-defexpr/nixos-mailserver;
-    rev = "ffc67fef469c0ec81c83b7d2681a8b2ca0c58849";
+    rev = "bba90d3021ff4fc01e214cb3b5ab608b0f0744bc";
   };
 
   dontBuild = true;
