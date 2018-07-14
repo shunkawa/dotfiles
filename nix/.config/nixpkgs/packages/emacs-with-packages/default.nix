@@ -40,6 +40,8 @@
       flycheck-flow
       gist
       google-c-style
+      google-translate
+      groovy-mode
       haskell-mode
       highlight-indentation
       ivy
@@ -80,6 +82,7 @@
       tiny
       unfill
       use-package
+      use-package-chords
       visual-fill-column
       web-mode
       ws-butler
