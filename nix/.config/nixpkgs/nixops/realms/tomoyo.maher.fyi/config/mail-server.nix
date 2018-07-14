@@ -38,7 +38,8 @@ in {
            # Spammers
            if anyof (
              address :is "from" "bill.mousoulis@sitepoint.com",
-             address :is "from" "hello@skillshare.com"
+             address :is "from" "hello@skillshare.com",
+             address :is "from" "macca@blarneybulletin.com"
            ) {
              fileinto :create "Junk";
              stop;

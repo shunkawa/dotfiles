@@ -1,13 +1,11 @@
-{ stdenv, fetchFromGitHub }:
+{ stdenv }:
 
 stdenv.mkDerivation rec {
   name = "nixpkgs";
 
-  src = fetchFromGitHub {
-    owner = "eqyiel";
-    repo = "nixpkgs";
-    rev = "a8c71037e041725d40fbf2f3047347b6833b1703";
-    sha256 = "1z4cchcw7qgjhy0x6mnz7iqvpswc2nfjpdynxc54zpm66khfrjqw";
+  src = fetchGit {
+    url = ../../../../../../.nix-defexpr/nixpkgs;
+    rev = "dae9cf6106da19f79a39714f183ed253c62b32c5";
   };
 
   dontBuild = true;

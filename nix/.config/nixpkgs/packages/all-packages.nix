@@ -13,7 +13,7 @@ rec {
 
   indicator-kdeconnect = callPackage ./indicator-kdeconnect { inherit nautilus-python; };
 
-  nodePackages = callPackage ./node-packages { nodejs = nodejs-9_x; };
+  nodePackages = callPackage ./node-packages { nodejs = nodejs-10_x; };
 
   scss-lint = callPackage ./scss-lint {};
 
@@ -55,9 +55,9 @@ rec {
 
   get-pia-port-forwarding-assignment = callPackage ./get-pia-port-forwarding-assignment {};
 
-  react-devtools = (callPackage ./react-devtools { nodejs = nodejs-9_x; }).react-devtools;
+  react-devtools = (callPackage ./react-devtools { nodejs = nodejs-10_x; }).react-devtools;
 
-  tern = (callPackage ./tern { nodejs = nodejs-9_x; }).tern;
+  tern = (callPackage ./tern { nodejs = nodejs-10_x; }).tern;
 
   imapnotify = callPackage ./impanotify {};
 
@@ -96,10 +96,31 @@ rec {
   });
 
   nixpkgs = {
-    ayanami = (pkgs.callPackage ../nixos/config/ayanami/lib/nixpkgs.nix {});
-    hoshijiro = (pkgs.callPackage ../nixos/config/hoshijiro/lib/nixpkgs.nix {});
-    tomoyo = (pkgs.callPackage ../nixops/realms/tomoyo.maher.fyi/lib/nixpkgs.nix {});
-    darwin = (pkgs.callPackage ../darwin/lib/nixpkgs.nix {});
-    nixpkgs = (pkgs.callPackage ../home/lib/nixpkgs.nix {});
+    stable = (import (pkgs.callPackage ({ stdenv }: stdenv.mkDerivation {
+      name = "nixpkgs";
+
+      src = builtins.fetchTarball {
+        url = https://github.com/NixOS/nixpkgs-channels/archive/91b286c8935b8c5df4a99302715200d3bd561977.tar.gz;
+        sha256 = "1c4a31s1i95cbl18309im5kmswmkg91sdv5nin6kib2j80gixgd3";
+      };
+      # src = fetchGit {
+      #   url = ../../../.nix-defexpr/nixpkgs;
+      #   rev = "91b286c8935b8c5df4a99302715200d3bd561977";
+      # };
+
+      dontBuild = true;
+      preferLocalBuild = true;
+
+      installPhase = ''
+        cp -a . $out
+      '';
+    }) {}) {});
+    ayanami = (import (pkgs.callPackage ../nixos/config/ayanami/lib/nixpkgs.nix {}) {});
+    darwin = (import (pkgs.callPackage ../darwin/lib/nixpkgs.nix {}) {});
+    home = (import (pkgs.callPackage ../home/lib/nixpkgs.nix {}) {});
+    hoshijiro = (import (pkgs.callPackage ../nixos/config/hoshijiro/lib/nixpkgs.nix {}) {});
+    tomoyo = (import (pkgs.callPackage ../nixops/realms/tomoyo.maher.fyi/lib/nixpkgs.nix {}) {});
   };
+
+  subtitles-rs = callPackage ./subtitles-rs {};
 }

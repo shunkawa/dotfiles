@@ -80,7 +80,7 @@
         gimp
         gimp
         icedtea8_web # iDRAC administration
-        # libreoffice # broken on unstable at the moment
+        local-packages.nixpkgs.stable.libreoffice # broken on unstable at the moment
         mpv
         steam
         youtube-dl

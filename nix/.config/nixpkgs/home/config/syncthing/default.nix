@@ -34,6 +34,8 @@ let
     (?d)node_modules/**
     // A NixOS artifact that is owned by root
     (?d).version-suffix
+    (?d)ios/build/**
+    (?d)android/build/**
   '';
 
   devices = mapAttrs (name: value: recursiveUpdate {
