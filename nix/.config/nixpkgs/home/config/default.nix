@@ -36,6 +36,7 @@
       fzf
       gitAndTools.git-crypt
       gitAndTools.gitFull
+      gitAndTools.transcrypt
       gnumake
       gnupg
       gnused
