@@ -1,12 +1,11 @@
 self: super: rec {
   home = {
-    home-manager-src = (super.callPackage ({ stdenv, fetchFromGitHub }: stdenv.mkDerivation {
+    home-manager-src = (super.callPackage ({ stdenv }: stdenv.mkDerivation {
       name = "home-manager";
-      src = fetchFromGitHub {
-        owner = "rycee";
-        repo = "home-manager";
-        rev = "5641ee3f942e700de35b28fc879b0d8a10a7a1fe";
-        sha256 = "0bqzwczbr5c2y3ms7m7ly0as9zsnqwljq61ci2y2gbqzw3md1x2j";
+
+      src = fetchGit {
+        url = ../../.././.nix-defexpr/home-manager;
+        rev = "34db8df6d91d8c142435d0d66bad50a6b2c090f0";
       };
 
       dontBuild = true;
