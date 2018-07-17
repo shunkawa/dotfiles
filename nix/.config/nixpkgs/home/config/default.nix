@@ -41,7 +41,6 @@
       gnupg
       gnused
       gnutar
-      haskellPackages.ShellCheck
       htop
       isync
       jhead
@@ -83,6 +82,7 @@
         icedtea8_web # iDRAC administration
         local-packages.nixpkgs.stable.libreoffice # broken on unstable at the moment
         mpv
+        shellcheck # ghc isn't available from any cache on darwin
         steam
         youtube-dl
       ]
