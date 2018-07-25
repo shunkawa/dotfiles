@@ -150,4 +150,10 @@ rec {
   };
 
   subtitles-rs = callPackage ./subtitles-rs {};
+
+  aligner = callPackage ./aligner {};
+
+  google-java-format = callPackage ./google-java-format {};
+
+  dualsub = callPackage ./dualsub {};
 }

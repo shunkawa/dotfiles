@@ -13,4 +13,10 @@ rustPlatform.buildRustPackage rec {
   cargoSha256 = "1851zf4pyi2mj4kq3w16abqi9izr6q9vznf4ap4mnfhaaplbc4x0";
 
   doCheck = false;
+
+  meta = {
+    description = "Tools and libraries for manipulating subtitles";
+    homepage = https://github.com/emk/subtitles-rs;
+    license = stdenv.lib.licenses.cc0;
+  };
 }
