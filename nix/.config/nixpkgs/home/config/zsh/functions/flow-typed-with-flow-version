@@ -5,8 +5,8 @@
 # the current flow binary in \$PATH.
 function flow-typed-with-flow-version () {
   if (command -v flow yarn jq >/dev/null 2>&1); then
-    yarn run flow-typed install \
-      --flowVersion "$(flow version --json | jq '.semver' | sed s/\"//g)" "''${@}"
+    yarn run flow-typed "${@}" \
+      --flowVersion "$(flow version --json | jq '.semver' | sed s/\"//g)"
   else
     echo '** ERROR:' "flow, yarn or jq not found in \$PATH" >&2
     return 1;
