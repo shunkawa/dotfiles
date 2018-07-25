@@ -31,7 +31,34 @@ rec {
 
   sfnt2woff = callPackage ./sfnt2woff {};
 
-  fontcustom = callPackage ./fontcustom { inherit sfnt2woff; };
+  sfnt2woff-zopfli = callPackage ./sfnt2woff-zopfli {};
+
+  # Temporarily use this old bundler for generating fontcustom expressions.
+  # Usage:
+  # BUNDLER="$(nix-build '<nixpkgs>' -A local-packages.bundler)/bin/bundler" ./generate.sh
+  # https://github.com/NixOS/nixpkgs/issues/36880#issuecomment-373197943
+  bundler = pkgs.bundler.overrideAttrs (old: {
+    name = "bundler-1.14.6";
+    src = pkgs.fetchurl {
+      url = "https://rubygems.org/gems/bundler-1.14.6.gem";
+      sha256 = "0h3x2csvlz99v2ryj1w72vn6kixf7rl35lhdryvh7s49brnj0cgl";
+    };
+  });
+
+  fontcustom = callPackage ./fontcustom {
+    inherit sfnt2woff-zopfli;
+    # Fontforge in unstable segfaults when using python script.
+    fontforge = pkgs.fontforge.overrideAttrs (attrs: {
+      name = "fontforge";
+      version = null;
+      src = pkgs.fetchFromGitHub {
+        owner = "fontforge";
+        repo = "fontforge";
+        rev = "e688b8c4dc634dcc128709f84b98f2407294f3fb";
+        sha256 = "1fsq7af9gx3bdfixd29ssx0jb1wnsild1pivjdrhkig74ikzxz8r";
+      };
+    });
+  };
 
   browserpass = callPackage ./browserpass { gnupg = pkgs.gnupg22; };
 
