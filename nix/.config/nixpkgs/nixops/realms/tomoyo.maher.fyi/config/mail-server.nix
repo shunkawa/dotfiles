@@ -39,7 +39,8 @@ in {
            if anyof (
              address :is "from" "bill.mousoulis@sitepoint.com",
              address :is "from" "hello@skillshare.com",
-             address :is "from" "macca@blarneybulletin.com"
+             address :is "from" "macca@blarneybulletin.com",
+             address :is "from" "Yaren.Sahin@novatec-gmbh.de"
            ) {
              fileinto :create "Junk";
              stop;
