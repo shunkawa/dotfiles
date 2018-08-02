@@ -76,7 +76,6 @@
       smartparens
       smex
       solarized-theme
-      sql-indent
       swift-mode
       swiper
       tiny
