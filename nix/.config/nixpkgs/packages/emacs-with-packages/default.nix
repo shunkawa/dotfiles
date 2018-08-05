@@ -50,7 +50,7 @@
       key-chord
       legalese
       lsp-java
-      lsp-javascript-typescript
+      lsp-javascript-flow
       lsp-mode
       lsp-ui
       magit
