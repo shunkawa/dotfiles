@@ -207,19 +207,15 @@ in {
     services.nginx = {
       enable = true;
       virtualHosts = {
-        "rkm.id.au" =  {
-          forceSSL = true;
-          enableACME = true;
-          root = "/mnt/var/www/public_html/rkm.id.au";
-        };
-
-        "www.rkm.id.au" = {
-          forceSSL = true;
-          enableACME = true;
-          globalRedirect = "rkm.id.au";
-        };
-
+        # TODO: after moving services elsewhere, do this redirect using the
+        # cloudfront distribution dl9f18mv2rya1.cloudfront.net
         "maher.fyi" =  {
+          forceSSL = true;
+          enableACME = true;
+          globalRedirect = "ruben.maher.fyi";
+        };
+
+        "tomoyo.maher.fyi" =  {
           forceSSL = true;
           enableACME = true;
         };

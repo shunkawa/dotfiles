@@ -35,6 +35,9 @@ in {
     web_client = false;
     enable_registration = false;
     registration_shared_secret = secrets.services.matrix-synapse.registration_shared_secret;
+    # If using a SRV record to find synapse, this should be
+    # the domain that the SRV record is attached to:
+    # https://github.com/matrix-org/synapse/tree/43ecfe0b1028fea5e4dda197f5631aed67182ee6#setting-up-federation
     server_name = fqdn;
     database_type = "psycopg2";
     database_args = {
