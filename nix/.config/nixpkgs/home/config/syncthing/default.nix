@@ -82,10 +82,10 @@ let
     folder = {
       label = name;
       type = "readwrite";
-      rescanIntervalS = 60;
+      rescanIntervalS = 3600;
       ignorePerms = false;
       autoNormalize = true;
-      fsWatcherEnabled = false;
+      fsWatcherEnabled = true;
       fsWatcherDelayS = 10;
     };
 
@@ -197,7 +197,7 @@ let
   };
 
   mkConfig = (hostname: ''
-    <configuration version="26">
+    <configuration version="28">
       ${concatStringsSep "\n" (mapAttrsToList (_: value: ''
         <folder ${concatStringsSep " "
           (mapAttrsToList (name: value: ''${name}="${mkVal value}"'')
@@ -269,6 +269,7 @@ let
         <natRenewalMinutes>30</natRenewalMinutes>
         <natTimeoutSeconds>10</natTimeoutSeconds>
         <urAccepted>2</urAccepted>
+        <urSeen>3</urSeen>
         <urUniqueID>rwCw5uQ5</urUniqueID>
         <urURL>https://data.syncthing.net/newdata</urURL>
         <urPostInsecurely>false</urPostInsecurely>
@@ -280,27 +281,21 @@ let
         <cacheIgnoredFiles>false</cacheIgnoredFiles>
         <progressUpdateIntervalS>5</progressUpdateIntervalS>
         <limitBandwidthInLan>false</limitBandwidthInLan>
-        <minHomeDiskFreePct>0</minHomeDiskFreePct>
+        <minHomeDiskFree unit="%">1</minHomeDiskFree>
         <releasesURL>https://upgrades.syncthing.net/meta.json</releasesURL>
         <overwriteRemoteDeviceNamesOnConnect>false</overwriteRemoteDeviceNamesOnConnect>
         <tempIndexMinBlocks>10</tempIndexMinBlocks>
+        <unackedNotificationID>fsWatcherNotification</unackedNotificationID>
         <trafficClass>0</trafficClass>
-        <weakHashSelectionMethod>auto</weakHashSelectionMethod>
-        <stunServer>default</stunServer>
-        <stunKeepaliveSeconds>24</stunKeepaliveSeconds>
-        <defaultKCPEnabled>false</defaultKCPEnabled>
-        <kcpNoDelay>false</kcpNoDelay>
-        <kcpUpdateIntervalMs>25</kcpUpdateIntervalMs>
-        <kcpFastResend>false</kcpFastResend>
-        <kcpCongestionControl>true</kcpCongestionControl>
-        <kcpSendWindowSize>128</kcpSendWindowSize>
-        <kcpReceiveWindowSize>128</kcpReceiveWindowSize>
+        <defaultFolderPath>~</defaultFolderPath>
+        <setLowPriority>true</setLowPriority>
+        <minHomeDiskFreePct>0</minHomeDiskFreePct>
       </options>
     </configuration>
   '');
 
 in {
-  services.syncthing = mkIf pkgs.stdenv.isLinux { enable = true; };
+  services.syncthing = mkIf pkgs.stdenv.isLinux { enable = true; tray = true; };
 
   home.file =
     let
