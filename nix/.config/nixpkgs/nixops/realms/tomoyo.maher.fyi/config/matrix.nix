@@ -38,8 +38,8 @@ in {
     # If using a SRV record to find synapse, this should be
     # the domain that the SRV record is attached to:
     # https://github.com/matrix-org/synapse/tree/43ecfe0b1028fea5e4dda197f5631aed67182ee6#setting-up-federation
-    # _matrix._tcp.maher.fyi. 3600    IN      SRV     10 0 8448 tomoyo.maher.fyi.
-    server_name = fqdn;
+    # _matrix._tcp.maher.fyi. 3600    IN      SRV     10 0 8448 matrix.maher.fyi.
+    server_name = "maher.fyi";
     database_type = "psycopg2";
     database_args = {
       user = "synapse";
@@ -50,8 +50,8 @@ in {
       cp_max = "10";
     };
     turn_uris = [
-      "turn:${fqdn}:3478?transport=udp"
-      "turn:${fqdn}:3478?transport=tcp"
+      "turn:turn.maher.fyi:3478?transport=udp"
+      "turn:turn.maher.fyi:3478?transport=tcp"
     ];
     # This needs to be the same as services.coturn.static-auth-secret
     turn_shared_secret = secrets.services.matrix-synapse.turn_shared_secret;
@@ -86,9 +86,9 @@ in {
     enable = true;
     lt-cred-mech = true;
     static-auth-secret = secrets.services.coturn.static-auth-secret;
-    realm = fqdn;
-    cert = "/var/lib/acme/${fqdn}/fullchain.pem";
-    pkey = "/var/lib/acme/${fqdn}/key.pem";
+    realm = "turn.maher.fyi";
+    cert = "/var/lib/acme/turn.maher.fyi/fullchain.pem";
+    pkey = "/var/lib/acme/turn.maher.fyi/key.pem";
     min-port = 49152;
     max-port = 65535;
   };
@@ -98,7 +98,11 @@ in {
   services.nginx = {
     enable = true;
     virtualHosts = {
-      "maher.fyi" = {
+      "turn.maher.fyi" = {
+        forceSSL = true;
+        enableACME = true;
+      };
+      "matrix.maher.fyi" = {
         forceSSL = true;
         enableACME = true;
         locations = {
@@ -175,16 +179,6 @@ in {
     passwordEncryptionKeyPath = null;
   };
 
-  # This is not necessary if acme is enabled elsewhere for this fqdn.
-  # services.nginx = {
-  #   enable = true;
-  #   virtualHosts."${fqdn}" = {
-  #     serverName = fqdn;
-  #     forceSSL = true;
-  #     enableACME = true;
-  #     acmeRoot = "/var/lib/acme/acme-challenge";
-  #   };
-  # };
-
-  security.acme.certs."${fqdn}".postRun = "systemctl reload-or-restart matrix-synapse coturn";
+  security.acme.certs."matrix.maher.fyi".postRun = "systemctl reload-or-restart matrix-synapse coturn";
+  security.acme.certs."turn.maher.fyi".postRun = "systemctl reload-or-restart matrix-synapse coturn";
 }
