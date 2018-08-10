@@ -2,8 +2,8 @@
   name = "home-manager";
 
   src = fetchGit {
-    url = ../../../../../../../.nix-defexpr/home-manager;
-    rev = "5641ee3f942e700de35b28fc879b0d8a10a7a1fe";
+    url = ../../../../../../.nix-defexpr/home-manager;
+    rev = "99c900946dbbaf5ba1fd3b1c1fe83b18fb66c84e";
   };
 
   dontBuild = true;

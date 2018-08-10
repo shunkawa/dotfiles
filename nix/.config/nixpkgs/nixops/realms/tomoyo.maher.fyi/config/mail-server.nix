@@ -77,7 +77,7 @@ in {
     enableImap = true;
     enableImapSsl = true;
     debug = true;
-    virusScanning = true;
+    virusScanning = false;
   };
 
   users.users = {
