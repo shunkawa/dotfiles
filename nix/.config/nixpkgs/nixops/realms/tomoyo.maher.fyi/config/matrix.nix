@@ -2,9 +2,6 @@
 
 let
   secrets = import ./secrets.nix;
-
-  # TODO: this needs to have a separate A record
-  fqdn = "maher.fyi";
 in {
   imports = [
     "${((import <nixpkgs> {}).callPackage ../lib/matrix-appservice-irc-nixos.nix {})}"
@@ -126,7 +123,7 @@ in {
     url = "http://localhost:7555";
     port = 7555;
     homeserver_url = "http://localhost:8008";
-    homeserver_domain = fqdn;
+    homeserver_domain = "maher.fyi";
     stateDir = "/mnt/var/lib/matrix-appservice-irc";
     servers = {
       "irc.freenode.net" = {
