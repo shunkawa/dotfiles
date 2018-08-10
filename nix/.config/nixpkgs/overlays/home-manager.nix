@@ -5,7 +5,7 @@ self: super: rec {
 
       src = fetchGit {
         url = ../../.././.nix-defexpr/home-manager;
-        rev = "34db8df6d91d8c142435d0d66bad50a6b2c090f0";
+        rev = "99c900946dbbaf5ba1fd3b1c1fe83b18fb66c84e";
       };
 
       dontBuild = true;
