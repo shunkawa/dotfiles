@@ -38,6 +38,7 @@ in {
     # If using a SRV record to find synapse, this should be
     # the domain that the SRV record is attached to:
     # https://github.com/matrix-org/synapse/tree/43ecfe0b1028fea5e4dda197f5631aed67182ee6#setting-up-federation
+    # _matrix._tcp.maher.fyi. 3600    IN      SRV     10 0 8448 tomoyo.maher.fyi.
     server_name = fqdn;
     database_type = "psycopg2";
     database_args = {

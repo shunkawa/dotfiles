@@ -212,12 +212,13 @@ in {
         "maher.fyi" =  {
           forceSSL = true;
           enableACME = true;
-          globalRedirect = "ruben.maher.fyi";
-        };
-
-        "tomoyo.maher.fyi" =  {
-          forceSSL = true;
-          enableACME = true;
+          locations = {
+            "/" = {
+              extraConfig = ''
+                return 301 https://ruben.maher.fyi$request_uri;
+              '';
+            };
+          };
         };
 
         "www.maher.fyi" = {
