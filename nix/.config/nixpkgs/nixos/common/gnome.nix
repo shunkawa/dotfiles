@@ -57,17 +57,19 @@
   };
 
   environment = {
-    gnome3.excludePackages = [
+    gnome3.excludePackages = with pkgs.gnome3; [
       # gnome-software is fixed in
       # https://github.com/NixOS/nixpkgs/commit/6a17c5a46c933deb6c856be8602ea9f5d6560e98
       # but probably doesn't do anything useful with nixos anyway, at least before
       # something like this is done:
       # RFC: Generating AppStream Metadata #15932:
       # https://github.com/NixOS/nixpkgs/issues/15932
-      pkgs.gnome3.gnome-software
-      pkgs.gnome3.evolution
-      pkgs.gnome3.epiphany
-      pkgs.gnome3.totem
+      epiphany
+      evolution
+      gnome-software
+      totem
+      tracker
+      tracker-miners
     ];
 
     systemPackages = with pkgs; [
