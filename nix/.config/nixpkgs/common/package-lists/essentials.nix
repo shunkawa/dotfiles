@@ -36,7 +36,6 @@ with pkgs; [
   nethogs
   nix-prefetch-git
   nix-prefetch-scripts
-  nix-repl
   nixops
   nmap
   openssh

@@ -162,6 +162,8 @@
     };
   };
 
+  services.gnome3.tracker-miners.enable = false;
+
   nixpkgs.config.firefox.enableGnomeExtensions = true;
 
   sound = {
