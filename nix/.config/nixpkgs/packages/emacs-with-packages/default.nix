@@ -39,8 +39,10 @@
       flycheck
       flycheck-flow
       gist
+      go-mode
       google-c-style
       google-translate
+      graphql-mode
       groovy-mode
       haskell-mode
       highlight-indentation
