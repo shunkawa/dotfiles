@@ -65,7 +65,6 @@
       # RFC: Generating AppStream Metadata #15932:
       # https://github.com/NixOS/nixpkgs/issues/15932
       epiphany
-      evolution
       gnome-software
       totem
       tracker
