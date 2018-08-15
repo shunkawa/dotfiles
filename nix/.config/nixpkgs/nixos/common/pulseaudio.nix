@@ -10,7 +10,7 @@
     in ''
       # https://askubuntu.com/questions/60837/record-a-programs-output-with-pulseaudio
       load-module module-combine-sink sink_name=record-and-play slaves=${slave} sink_properties=device.description="Record-and-Play"
-      set-default-sink record-and-play
+      # set-default-sink record-and-play
     '';
   };
   environment.systemPackages = with pkgs; [
