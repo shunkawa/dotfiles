@@ -34,6 +34,7 @@
       findutils
       fortune
       fzf
+      git-lfs
       gitAndTools.git-crypt
       gitAndTools.gitFull
       gitAndTools.transcrypt
