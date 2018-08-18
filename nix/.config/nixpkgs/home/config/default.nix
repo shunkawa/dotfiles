@@ -50,7 +50,6 @@
       mu
       ncmpcpp
       nix-prefetch-scripts
-      nix-repl
       nixops
       openssh
       openssl
