@@ -174,5 +174,5 @@ in
 
   services.nixosManual.enable = false; # broken on unstable
 
-  system.nixos.stateVersion = "18.09pre";
+  system.stateVersion = "18.09pre";
 }
