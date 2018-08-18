@@ -2,7 +2,7 @@
 
 #+BEGIN_EXAMPLE
 $ # Use GNU stow
-$ "$(nix-build '<nixpkgs>' -A stow --no-out-link)" -t "$HOME" emacs -R
+$ nix-shell -p stow --command 'stow -t "$HOME" emacs -R'
 $ # Or create the symlinks manually
 $ ln -s "$(pwd)/emacs/.emacs.d" "$HOME/.emacs.d"
 #+END_EXAMPLE
@@ -98,14 +98,16 @@ Mar 22 13:16:01 ayanami dovecot[26344]: imap(eqyiel): Error: read(/home/eqyiel/m
 
 *** Karabiner-Elements
 
-   <<hyper>>I like the Hyper key, I want a hyper key in macOS.
+   I like the Hyper key, I want a hyper key in macOS.
 
    You can use ~karabiner-elements~ to fake it.
 
 *** 1password
 
-   1password doesn't like Chromium.  Install the OSX app and go to preferences →
-   advanced → uncheck verify browser code signature.
+   +1password doesn't like Chromium.  Install the OSX app and go to preferences →
+   advanced → uncheck verify browser code signature.+
+
+   This doesn't work anymore, just deal with it I guess.
 
 *** =Terminal.app=                                                 :ATTACH:
    :PROPERTIES:
@@ -143,9 +145,9 @@ Mar 22 13:16:01 ayanami dovecot[26344]: imap(eqyiel): Error: read(/home/eqyiel/m
     [[file:data/1B/1C9326-036A-438B-837D-38C365CEE7F6/iterm2-clipboard_2016-10-12_09-28-47.png]]
 **** Hyper and other special keys
 
-    By default, you can't use keybindings like ~H-l~ (see [[karabiner-Elements][hyper]]) or ~C-*~
-    (because the terminal doesn't recognise it), [[http://superuser.com/a/895568][see this superuser answer]] for
-    an unsatisfactory workaround.
+    By default, you can't use keybindings like ~H-l~ or ~C-*~ (because the
+    terminal doesn't recognise it), [[http://superuser.com/a/895568][see this
+    superuser answer]] for an unsatisfactory workaround.
 
     #+begin_quote
       The sequence ~C-x @ s-…~ is equivalent to ~s-…~, e.g. ~C-x @ s-t~ is
@@ -163,32 +165,7 @@ Mar 22 13:16:01 ayanami dovecot[26344]: imap(eqyiel): Error: read(/home/eqyiel/m
     # Control key modifiers are ~0x5C~ (left control) and ~0x60~ (right control).
 
 *** On the guest
-
-   Chances are we'll need to work with some BSCMS, so make a `mysql` user:
-
-   #+begin_example
-   eqyiel@localghost ~ % mysql -u root
-   Welcome to the MariaDB monitor.  Commands end with ; or \g.
-   Your MariaDB connection id is 2
-   Server version: 10.1.19-MariaDB MariaDB Server
-
-   Copyright (c) 2000, 2016, Oracle, MariaDB Corporation Ab and others.
-
-   Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
-
-   MariaDB [(none)]> create user 'pleb'@'localhost' identified by 'password';
-   Query OK, 0 rows affected (0.01 sec)
-
-   MariaDB [(none)]> grant all privileges on *.* to 'pleb'@'localhost';
-   Query OK, 0 rows affected (0.00 sec)
-
-   MariaDB [(none)]> flush privileges;
-   Query OK, 0 rows affected (0.00 sec)
-
-   MariaDB [(none)]>
-   #+end_example
-
-*** ~pinentry-curses~ is on the wrong TTY / spewing all over the screen
+**** ~pinentry-curses~ is on the wrong TTY / spewing all over the screen
 
    I don't think this problem is exclusive to macOS but I rarely need to use
    pinentry remotely otherwise.
@@ -210,9 +187,9 @@ Mar 22 13:16:01 ayanami dovecot[26344]: imap(eqyiel): Error: read(/home/eqyiel/m
      use.
    #+end_quote
 
-*** USB drivers keep dying in the Virtualbox guest
+**** USB drivers keep dying in the Virtualbox guest
 
-AFAICT there's nothing to do except try that `reset-ohci-drivers` script.
+AFAICT there's nothing to do except try that ~reset-ohci-drivers~ script.
 Attaching and detaching from the virtual machine (in the devices menu) sometimes
 works too.
 

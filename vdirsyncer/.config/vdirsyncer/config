@@ -19,7 +19,6 @@ status_path = ~/.cache/vdirsyncer/status/
 a = rkm_contacts_local
 b = rkm_contacts_remote
 
-
 # Synchronize all collections available on "side B" (in this case the server).
 # You need to run `vdirsyncer discover` if new calendars/addressbooks are added
 # on the server.
@@ -37,18 +36,18 @@ metadata = ["displayname"]
 #   `null` - abort when collisions occur (default)
 #   `"a wins"` - assume a's items to be more up-to-date
 #   `"b wins"` - assume b's items to be more up-to-date
-#conflict_resolution = null
+conflict_resolution = "b wins"
 
 [storage rkm_contacts_local]
 # A storage references actual data on a remote server or on the local disk.
 # Similar to repositories in OfflineIMAP.
 type = filesystem
-path = ~/contacts/
+path = ~/contacts
 fileext = .vcf
 
 [storage rkm_contacts_remote]
 type = carddav
-url = https://cloud.rkm.id.au/remote.php/carddav/addressbooks/eqyiel/contacts/
+url = https://cloud.maher.fyi/remote.php/carddav/addressbooks/eqyiel/contacts/
 username = eqyiel
 # The password can also be fetched from the system password storage, netrc or a
 # custom command. See http://vdirsyncer.readthedocs.org/en/stable/keyring.html
@@ -58,7 +57,7 @@ password.fetch = ["command", "get-password", "www/cloud.rkm.id.au"]
 [pair rkm_calendar]
 a = rkm_calendar_local
 b = rkm_calendar_remote
-# Discovered with (url-dav-directory-files "https://cloud.rkm.id.au/remote.php/caldav/calendars/eqyiel/")
+# Discovered with (url-dav-directory-files "https://cloud.maher.fyi/remote.php/caldav/calendars/eqyiel/")
 # Not sure what "outbox" is, or the effect of modifying "contact birthdays" would be.
 collections = ["defaultcalendar", "shared"]
 
@@ -67,11 +66,11 @@ metadata = ["displayname", "color"]
 
 [storage rkm_calendar_local]
 type = filesystem
-path = ~/calendars/
+path = ~/calendars
 fileext = .ics
 
 [storage rkm_calendar_remote]
 type = caldav
-url = https://cloud.rkm.id.au/remote.php/caldav/
+url = https://cloud.maher.fyi/remote.php/caldav/
 username = eqyiel
-password.fetch = ["command", "get-password", "www/cloud.rkm.id.au"]
+password.fetch = ["command", "pass", "www/cloud.maher.fyi"]

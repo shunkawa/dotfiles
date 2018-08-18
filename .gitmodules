@@ -1,12 +1,3 @@
-[submodule "src/lib/.local/lib/gnome-terminal-colors-solarized"]
-	path = src/lib/.local/lib/gnome-terminal-colors-solarized
-	url = https://github.com/Anthony25/gnome-terminal-colors-solarized
-[submodule "src/lib/.local/lib/Elementary-OS-Terminal-Colors"]
-	path = src/lib/.local/lib/Elementary-OS-Terminal-Colors
-	url = https://github.com/Mayccoll/Elementary-OS-Terminal-Colors
-[submodule "src/share/.local/share/doc/gitmagic"]
-	path = src/share/.local/share/doc/gitmagic
-	url = git://repo.or.cz/gitmagic.git
 [submodule "nix/.nix-defexpr/darwin"]
 	path = nix/.nix-defexpr/darwin
 	url = git@github.com:LnL7/nix-darwin.git

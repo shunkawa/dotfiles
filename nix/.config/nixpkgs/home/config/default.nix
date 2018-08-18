@@ -52,8 +52,8 @@
       nix-prefetch-scripts
       nix-repl
       nixops
-      openssl
       openssh
+      openssl
       pass
       pinentry
       procmail # formail used for some mu hacks
@@ -68,6 +68,7 @@
       tree
       unrar
       unzip
+      vdirsyncer
       wget
       which
     ] ++ (with local-packages; [
