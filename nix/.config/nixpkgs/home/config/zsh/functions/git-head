@@ -1,0 +1,16 @@
+#!/usr/bin/env zsh
+
+function git-head () {
+  if (command -v git >/dev/null 2>&1); then
+    git log -1 --format=format:%H
+  else
+    echo '** ERROR:' "git not found in \$PATH" >&2
+    return 1;
+  fi
+}
+
+git-head "''${@}"
+
+# Local Variables:
+# mode: shell-script
+# End:
