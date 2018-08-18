@@ -52,6 +52,7 @@
       nix-prefetch-scripts
       nix-repl
       nixops
+      openssl
       openssh
       pass
       pinentry

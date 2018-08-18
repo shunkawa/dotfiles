@@ -1,3 +1,2 @@
-nix/.config/nixpkgs/nixops/secrets/** filter=git-crypt diff=git-crypt
-dconf.dump filter=git-crypt diff=git-crypt
-*secrets.nix filter=git-crypt diff=git-crypt
+*secrets*  filter=crypt diff=crypt
+deployments.json filter=crypt diff=crypt
