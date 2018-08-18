@@ -9,8 +9,8 @@ stdenv.mkDerivation rec {
   src = fetchFromGitHub {
     owner = "nextcloud";
     repo = "desktop";
-    rev = "5d96a0e6b6e8997815c368be6e6dd6a0db53c760";
-    sha256 = "0czqyq89309n4is481dfjav4i79z3a61ll9lm4lylj4b02lny1mx";
+    rev = "17d4aeeb78c94b2fe7af49e9b8e25d3e9f0a3286";
+    sha256 = "0k264d1d77fi3yr87g36aq2hy1b2n2sm9lbby5qr1gnzi27qj0i2";
     fetchSubmodules = true;
   };
 
