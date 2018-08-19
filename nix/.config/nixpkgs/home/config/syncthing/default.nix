@@ -295,6 +295,8 @@ let
   '');
 
 in {
+  services.syncthing = mkIf pkgs.stdenv.isLinux { enable = true; };
+
   home.file =
     let
       configPath = if pkgs.stdenv.isLinux then ".config/syncthing/config.xml"
