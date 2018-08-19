@@ -4,6 +4,9 @@ let
 in rec {
   network.description = "mx.maher.fyi";
 
+  # Keep a GC root for the build
+  network.enableRollback = true;
+
   mx = { config, lib, pkgs, ... }: {
     imports = [
       ./config

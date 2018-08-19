@@ -1,2 +1,3 @@
 *secrets*  filter=crypt diff=crypt
+**/secrets/**  filter=crypt diff=crypt
 deployments.json filter=crypt diff=crypt
