@@ -104,6 +104,8 @@ rec {
 
   open = callPackage ./open {};
 
+  pass-show-first-line = callPackage ./pass-show-first-line {};
+
   hiptext = callPackage ./hiptext {
     # TODO: for some reason this derivation can't be overridden normally
     libav = (callPackage <nixpkgs/pkgs/development/libraries/libav/default.nix> {

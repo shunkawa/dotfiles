@@ -9,15 +9,15 @@
 
 [general]
 # A folder where vdirsyncer can store some metadata about each pair.
-status_path = ~/.cache/vdirsyncer/status/
+status_path = "~/.cache/vdirsyncer/status/"
 
 # CARDDAV
 [pair rkm_contacts]
 # A `[pair <name>]` block defines two storages `a` and `b` that should be
 # synchronized. The definition of these storages follows in `[storage <name>]`
 # blocks. This is similar to accounts in OfflineIMAP.
-a = rkm_contacts_local
-b = rkm_contacts_remote
+a = "rkm_contacts_local"
+b = "rkm_contacts_remote"
 
 # Synchronize all collections available on "side B" (in this case the server).
 # You need to run `vdirsyncer discover` if new calendars/addressbooks are added
@@ -41,22 +41,22 @@ conflict_resolution = "b wins"
 [storage rkm_contacts_local]
 # A storage references actual data on a remote server or on the local disk.
 # Similar to repositories in OfflineIMAP.
-type = filesystem
-path = ~/contacts
-fileext = .vcf
+type = "filesystem"
+path = "~/contacts"
+fileext = ".vcf"
 
 [storage rkm_contacts_remote]
-type = carddav
-url = https://cloud.maher.fyi/remote.php/carddav/addressbooks/eqyiel/contacts/
-username = eqyiel
+type = "carddav"
+url = "https://cloud.maher.fyi"
+username = "eqyiel"
 # The password can also be fetched from the system password storage, netrc or a
 # custom command. See http://vdirsyncer.readthedocs.org/en/stable/keyring.html
-password.fetch = ["command", "get-password", "www/cloud.rkm.id.au"]
+password.fetch = ["command", "pass-show-first-line", "www/cloud.maher.fyi"]
 
 # CALDAV
 [pair rkm_calendar]
-a = rkm_calendar_local
-b = rkm_calendar_remote
+a = "rkm_calendar_local"
+b = "rkm_calendar_remote"
 # Discovered with (url-dav-directory-files "https://cloud.maher.fyi/remote.php/caldav/calendars/eqyiel/")
 # Not sure what "outbox" is, or the effect of modifying "contact birthdays" would be.
 collections = ["defaultcalendar", "shared"]
@@ -65,12 +65,12 @@ collections = ["defaultcalendar", "shared"]
 metadata = ["displayname", "color"]
 
 [storage rkm_calendar_local]
-type = filesystem
-path = ~/calendars
-fileext = .ics
+type = "filesystem"
+path = "~/calendars"
+fileext = ".ics"
 
 [storage rkm_calendar_remote]
-type = caldav
-url = https://cloud.maher.fyi/remote.php/caldav/
-username = eqyiel
-password.fetch = ["command", "pass", "www/cloud.maher.fyi"]
+type = "caldav"
+url = "https://cloud.maher.fyi"
+username = "eqyiel"
+password.fetch = ["command", "pass-show-first-line", "www/cloud.maher.fyi"]

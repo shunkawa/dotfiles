@@ -73,6 +73,7 @@
     ] ++ (with local-packages; [
       emacs-with-packages
       hiptext
+      pass-show-first-line
     ]) ++ lib.optionals stdenv.isLinux ([
         anki
         chromium
