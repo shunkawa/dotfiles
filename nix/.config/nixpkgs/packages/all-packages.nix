@@ -96,6 +96,7 @@ rec {
   # https://github.com/nextcloud/desktop/issues/235
   # Override version from impala instead.
   nextcloud-client = pkgs.libsForQt5.callPackage ./nextcloud-client {
+    openssl = pkgs.openssl_1_1_0;
     withGnomeKeyring = true;
     libgnome-keyring = pkgs.gnome3.libgnome-keyring;
   };

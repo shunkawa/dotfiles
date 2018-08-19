@@ -1,6 +1,6 @@
 { stdenv, fetchFromGitHub, cmake, pkgconfig, qtbase, qtwebkit, qtkeychain
 , qttools, qtwebengine, sqlite, inotify-tools, withGnomeKeyring ? false
-, makeWrapper, libgnome-keyring }:
+, makeWrapper, libgnome-keyring, openssl }:
 
 stdenv.mkDerivation rec {
   name = "nextcloud-client-${version}";
@@ -16,8 +16,9 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [ pkgconfig cmake ];
 
-  buildInputs = [ qtbase qtkeychain qttools qtwebengine qtwebkit sqlite ]
-    ++ stdenv.lib.optional stdenv.isLinux inotify-tools
+  buildInputs = [
+    qtbase qtkeychain qttools qtwebengine qtwebkit sqlite openssl
+  ] ++ stdenv.lib.optional stdenv.isLinux inotify-tools
     ++ stdenv.lib.optional withGnomeKeyring makeWrapper;
 
   enableParallelBuilding = true;
@@ -25,6 +26,8 @@ stdenv.mkDerivation rec {
   cmakeFlags = [
     "-UCMAKE_INSTALL_LIBDIR"
     "-DCMAKE_BUILD_TYPE=Release"
+    "-DCMAKE_INCLUDE_PATH=${openssl.dev}/include"
+    "-DCMAKE_LIBRARY_PATH=${openssl.out}/lib"
   ] ++ stdenv.lib.optionals stdenv.isLinux [
     "-DINOTIFY_LIBRARY=${inotify-tools}/lib/libinotifytools.so"
     "-DINOTIFY_INCLUDE_DIR=${inotify-tools}/include"
