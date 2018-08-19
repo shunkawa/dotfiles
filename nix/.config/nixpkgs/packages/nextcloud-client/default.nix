@@ -10,7 +10,7 @@ stdenv.mkDerivation rec {
     owner = "nextcloud";
     repo = "desktop";
     rev = "17d4aeeb78c94b2fe7af49e9b8e25d3e9f0a3286";
-    sha256 = "0k264d1d77fi3yr87g36aq2hy1b2n2sm9lbby5qr1gnzi27qj0i2";
+    sha256 = "1pv289xib6pzxaccbpymnch2vk65iwxl85gsz4pjnxcrfvql3nhm";
     fetchSubmodules = true;
   };
 
