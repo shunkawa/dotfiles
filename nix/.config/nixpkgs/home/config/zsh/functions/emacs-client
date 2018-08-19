@@ -2,11 +2,11 @@
 
 function emacs-client () {
   if [ -z "${@}" ]; then
-    # There are no arguments, so
-    # tell emacs to open a new window
+    # There are no arguments, so tell Emacs to open a new window
     emacsclient -c --eval "(dired \"$(pwd)\")" &
   else
-    emacsclient -c --no-wait "${@}" &
+    # Try to open the file provided as an argument in an existing Emacs client.
+    emacsclient "${@}" &
   fi
 
   emacsclient --eval "(x-focus-frame (selected-frame))"
