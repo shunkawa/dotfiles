@@ -10,6 +10,7 @@
   (emacsPackages:
     (with emacsPackages.elpaPackages; [
       rainbow-mode
+      sql-indent
     ]) ++
     (with emacsPackages.melpaPackages; [
       aggressive-indent
@@ -26,6 +27,7 @@
       company
       company-emoji
       company-lsp
+      company-nixos-options
       counsel
       counsel-projectile
       dash
@@ -59,6 +61,7 @@
       markdown-mode
       multiple-cursors
       nix-buffer
+      nixos-options
       no-littering
       nodejs-repl
       org-caldav
