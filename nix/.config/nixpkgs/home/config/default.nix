@@ -67,7 +67,6 @@
       tree
       unrar
       unzip
-      vdirsyncer
       wget
       which
     ] ++ (with local-packages; [
@@ -87,6 +86,7 @@
         mpv
         shellcheck # ghc isn't available from any cache on darwin
         steam
+        vdirsyncer
         youtube-dl
       ]
       ++ (with pkgs.ibus-engines; [ local-packages.ibus-engines.mozc uniemoji ])
