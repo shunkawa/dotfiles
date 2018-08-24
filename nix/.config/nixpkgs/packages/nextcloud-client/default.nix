@@ -26,8 +26,9 @@ stdenv.mkDerivation rec {
   cmakeFlags = [
     "-UCMAKE_INSTALL_LIBDIR"
     "-DCMAKE_BUILD_TYPE=Release"
-    "-DCMAKE_INCLUDE_PATH=${openssl.dev}/include"
-    "-DCMAKE_LIBRARY_PATH=${openssl.out}/lib"
+    "-DOPENSSL_INCLUDE_DIR=${openssl.dev}/include"
+    "-DOPENSSL_CRYPTO_LIBRARY=${openssl.out}/lib/libcrypto.so"
+    "-DOPENSSL_SSL_LIBRARY=${openssl.out}/lib/libssl.so"
   ] ++ stdenv.lib.optionals stdenv.isLinux [
     "-DINOTIFY_LIBRARY=${inotify-tools}/lib/libinotifytools.so"
     "-DINOTIFY_INCLUDE_DIR=${inotify-tools}/include"
