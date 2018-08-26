@@ -84,6 +84,7 @@
       solarized-theme
       swift-mode
       swiper
+      tide
       tiny
       unfill
       use-package
