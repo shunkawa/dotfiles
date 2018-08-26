@@ -61,6 +61,7 @@
       markdown-mode
       multiple-cursors
       nix-buffer
+      nix-mode
       nixos-options
       no-littering
       nodejs-repl
