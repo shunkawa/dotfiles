@@ -151,6 +151,8 @@ in
     ];
   };
 
+  virtualisation.docker.enable = true;
+
   security.sudo.wheelNeedsPassword = false;
 
   environment.shells = [ pkgs.bashInteractive pkgs.zsh ];
@@ -166,6 +168,7 @@ in
     shell = pkgs.zsh;
     extraGroups = [
      "audio"
+     "docker"
      "networkmanager"
      "systemd-journal"
      "wheel"
