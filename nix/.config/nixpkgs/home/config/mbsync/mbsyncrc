@@ -9,7 +9,7 @@ SyncState       *
 # ruben@maher.fyi
 
 IMAPAccount     maher
-Host            maher.fyi
+Host            mx.maher.fyi
 User            ruben@maher.fyi
 PassCmd         "pass auth-sources/ruben@maher.fyi | head -n 1"
 SSLType         IMAPS
