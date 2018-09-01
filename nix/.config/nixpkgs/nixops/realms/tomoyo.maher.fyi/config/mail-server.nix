@@ -122,6 +122,10 @@ in {
     }
   '';
 
+  services.postfix.transport = ''
+    * smtp:mx.maher.fyi
+  '';
+
   services.postfix.extraConfig = ''
     inet_protocols = ipv4
   '';

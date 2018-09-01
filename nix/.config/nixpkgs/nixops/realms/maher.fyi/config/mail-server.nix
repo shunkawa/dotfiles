@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ hostName }: { config, lib, pkgs, ... }:
 
 let
   secrets = (import ./secrets.nix);
@@ -72,6 +72,8 @@ in {
 
       "nadiah@maher.fyi" = (secrets.mailserver.loginAccounts."nadiah@maher.fyi") // {};
     };
+    dkimKeyDirectory = "/data/var/dkim";
+    mailDirectory = "/data/var/lib/${config.users.users.vmail.name}";
     enableImap = true;
     enableImapSsl = true;
     debug = true;
@@ -83,5 +85,13 @@ in {
       { name = "Sent"; auto = "subscribe"; specialUse = "Sent"; }
       { name = "Trash"; auto = "subscribe"; specialUse = "Trash"; }
     ];
+  };
+
+
+  users.users = {
+    vmail = {
+      home = lib.mkForce "/data/var/lib/${config.users.users.vmail.name}";
+      createHome = true;
+    };
   };
 }
