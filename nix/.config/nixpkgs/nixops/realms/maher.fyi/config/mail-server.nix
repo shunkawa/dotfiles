@@ -87,11 +87,24 @@ in {
     ];
   };
 
-
   users.users = {
     vmail = {
       home = lib.mkForce "/data/var/lib/${config.users.users.vmail.name}";
       createHome = true;
     };
+  };
+
+  fileSystems."/data" = {
+    autoFormat = true;
+    autoResize = true;
+    device = "/dev/mapper/xvdf";
+    ec2 = {
+      cipher = "aes-cbc-essiv:sha256";
+      encrypt = true;
+      encryptionType = "luks";
+      keySize = 256;
+      size = 50; # gigabytes
+    };
+    fsType = "ext4";
   };
 }

@@ -17,25 +17,6 @@ let
     deployment.ec2.ebsInitialRootDiskSize = 10;
     deployment.storeKeysOnMachine = false;
 
-    fileSystems."/data" = {
-      autoFormat = true;
-      device = "/dev/mapper/xvdf";
-      ec2 = {
-        cipher = "aes-cbc-essiv:sha256";
-        encrypt = true;
-        encryptionType = "luks";
-        keySize = 256;
-        size = 50; # gigabytes
-      };
-      fsType = "ext4";
-    };
-
-    imports = [
-      ./../../../nixos/modules/module-list.nix
-    ];
-
-    time.timeZone = "Adelaide/Australia";
-
     networking = {
       inherit hostName;
       firewall = {
@@ -51,6 +32,8 @@ let
         127.0.0.1 ${hostName}
       '';
     };
+
+    time.timeZone = "Adelaide/Australia";
 
     services.openssh.enable = true;
 
@@ -79,17 +62,6 @@ let
       openFirewall = false;
     };
 
-    # EC2 has its own NTP server provided by the hypervisor
-    # services.openntpd = {
-    #   enable = true;
-    #   servers = [
-    #     "0.au.pool.ntp.org"
-	  #     "1.au.pool.ntp.org"
-	  #     "2.au.pool.ntp.org"
-	  #     "3.au.pool.ntp.org"
-    #   ];
-    # };
-
     security.sudo.wheelNeedsPassword = false;
 
     programs.zsh.enable = true;
@@ -111,6 +83,7 @@ let
     };
 
     nix = {
+      package = pkgs.nixUnstable;
       gc = {
         automatic = true;
         dates = "monthly";
@@ -138,6 +111,21 @@ in rec {
     imports = [ (import ./config/mail-server.nix { inherit hostName; }) ];
     deployment.ec2.elasticIPv4 = "13.211.249.75";
     deployment.ec2.instanceType = "t2.nano";
+  }));
+
+  cloud = let hostName = "cloud.${network.description}"; in (mkConfig hostName ({ ... }: {
+    imports = [
+      (import ./config/nextcloud.nix { inherit hostName; })
+      (import ./config/home.nix { inherit hostName; })
+    ];
+    deployment.ec2.elasticIPv4 = "13.238.250.196";
+    deployment.ec2.instanceType = "t2.micro";
+  }));
+
+  matrix = let hostName = "matrix.${network.description}"; in (mkConfig hostName ({ ... }: {
+    imports = [ (import ./config/matrix.nix { inherit hostName; }) ];
+    deployment.ec2.elasticIPv4 = "13.238.215.247";
+    deployment.ec2.instanceType = "t2.micro";
   }));
 
   resources.ec2KeyPairs.personal-ec2-deployments = {
