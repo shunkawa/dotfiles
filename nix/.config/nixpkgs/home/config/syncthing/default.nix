@@ -11,7 +11,7 @@ let
     else value;
 
   deviceNames = {
-    tomoyo = "maher.fyi";
+    cloud = "cloud.maher.fyi";
     hoshijiro = "hoshijiro.maher.fyi";
     ayanami = "ayanami.maher.fyi";
     hanekawa = "hanekawa.local";
@@ -47,7 +47,7 @@ let
       inherit name;
     };
   } value) ({
-    "${deviceNames.tomoyo}" = {
+    "${deviceNames.cloud}" = {
       device = {
         id = "THQKP7R-GSBJTZT-7MFM4SF-DYVA7FZ-IYODSZC-YVAPLVM-BU3FM25-6N4JLQB";
       };
@@ -122,7 +122,7 @@ let
       };
 
       participants = with deviceNames; [
-        hoshijiro hanekawa ayanami tomoyo
+        hoshijiro hanekawa ayanami cloud
       ];
     };
 
@@ -142,7 +142,7 @@ let
       };
 
       participants = with deviceNames; [
-        hoshijiro hanekawa ayanami tomoyo
+        hoshijiro hanekawa ayanami cloud
       ];
     };
 
@@ -165,7 +165,7 @@ let
       };
 
       participants = with deviceNames; [
-        nexus hoshijiro hanekawa ayanami tomoyo
+        nexus hoshijiro hanekawa ayanami cloud
       ];
     };
 
@@ -178,7 +178,7 @@ let
       versioning = null;
 
       participants = with deviceNames; [
-        nexus hoshijiro tomoyo
+        nexus hoshijiro cloud
       ];
     };
 
@@ -191,7 +191,7 @@ let
       versioning = null;
 
       participants = with deviceNames; [
-        hanekawa hoshijiro tomoyo
+        hanekawa hoshijiro cloud
       ];
     };
   };

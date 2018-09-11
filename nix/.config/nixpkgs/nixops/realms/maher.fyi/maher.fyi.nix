@@ -17,6 +17,8 @@ let
     deployment.ec2.ebsInitialRootDiskSize = 10;
     deployment.storeKeysOnMachine = false;
 
+    boot.cleanTmpDir = true;
+
     networking = {
       inherit hostName;
       firewall = {

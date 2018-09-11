@@ -50,6 +50,8 @@ in {
       Type = "notify";
       ExecStart = "${pkgs.rclone}/bin/rclone mount db-backups-crypt: /backups --config=/run/keys/rclone-config-db-backups --vfs-cache-mode full --crypt-show-mapping --log-level INFO --uid ${builtins.toString config.users.users.postgres.uid}  --default-permissions --allow-other";
       ExecStop = "/run/wrappers/bin/fusermount -uz /backups";
+      Restart = "always";
+      RestartSec = "3";
     };
     wantedBy = [ "multi-user.target" ];
   };
@@ -76,6 +78,7 @@ in {
       { from = 49152; to = 65535; } # coturn
     ];
     trustedInterfaces = [ "lo" ];
+    logRefusedPackets = true;
   };
 
   services.matrix-synapse = {
@@ -172,24 +175,29 @@ in {
   };
 
   services.matrix-appservice-irc = {
-    enable = true;
-    url = "http://localhost:7555";
+    # broken at the moment
+    # https://github.com/matrix-org/matrix-appservice-irc/issues/689
+    enable = false;
+    url = "http://${hostName}:7555";
     port = 7555;
-    homeserver_url = "http://localhost:8008";
-    homeserver_domain = "maher.fyi";
+    homeserver_url = "http://${hostName}:8008";
+    homeserver_domain = hostName;
     stateDir = "/data/var/lib/matrix-appservice-irc";
     servers = {
       "irc.freenode.net" = {
         port = 6697;
         ssl = true;
         sslselfsign = false;
-        password = null;
+        sasl = true;
+        password = secrets.services.matrix-appservice-irc.servers."chat.freenode.net".password;
         sendConnectionMessages = true;
         botConfig_enabled = false;
+        botConfig_nick = "e73a9188-d157-43";
+        botConfig_password = secrets.services.matrix-appservice-irc.servers."chat.freenode.net".botConfig_password;
         privateMessages_enabled = true;
         dynamicChannels_enabled = true;
         dynamicChannels_createAlias = true;
-        dynamicChannels_published = true;
+        dynamicChannels_published = false;
         dynamicChannels_joinRule = "invite";
         dynamicChannels_whitelist = [ "@eqyiel:maher.fyi" ];
         dynamicChannels_federate = false;
@@ -216,8 +224,7 @@ in {
         ircClients_idleTimeout = 172800;
       };
     };
-    ident_enabled = true;
-    ident_port = 1113;
+    ident_enabled = false;
     logging_level = "debug";
     logging_logfile = null;
     logging_errfile = null;

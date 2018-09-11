@@ -30,22 +30,10 @@ in {
     '';
   };
 
-  systemd.services.postgresql.after = [ "data.mount" ];
-
   services.phpfpm.pools.nextcloud.extraConfig = ''
+    pm = static;
     pm.max_children = 4
-    pm.start_servers = 2
-    pm.min_spare_servers = 2
-    pm.max_spare_servers = 4
-    php_admin_value[memory_limit] = 128M
   '';
-
-  deployment.keys.rclone-config-nextcloud = {
-    text = secrets.deployment.keys.rclone-config-nextcloud;
-    user = "root";
-    group = "root";
-    permissions = "0600";
-  };
 
   deployment.keys.rclone-config-db-backups = {
     text = secrets.deployment.keys.rclone-config-db-backups;
@@ -63,10 +51,14 @@ in {
       encrypt = true;
       encryptionType = "luks";
       keySize = 256;
-      size = 100; # gigabytes
+      size = 1024; # gigabytes
+      volumeType = "sc1";
     };
     fsType = "ext4";
+    options = ["_netdev"];
   };
+
+  swapDevices = [ { device = "/swapfile"; size = 2 * 1024; }];
 
   environment.systemPackages = with pkgs; [ nextcloud-client ];
 
@@ -80,28 +72,7 @@ in {
     };
   };
 
-  boot.kernelParams = [ "nohz=off" ];
-
   users.users.nextcloud.uid = 1001;
-
-  systemd.services."rclone-s3-nextcloud" = {
-    enable = true;
-    description = "rclone-s3-nextcloud";
-    after = [ "network-online.target" "data.mount" ];
-    wants = [ "network-online.target" ];
-    partOf = [ "network-fs.target" ];
-    path = with pkgs; [ fuse ];
-    serviceConfig =  {
-      Type = "notify";
-      ExecStart = "${pkgs.rclone}/bin/rclone mount nextcloud-s3-crypt: /nextcloud --config=/run/keys/rclone-config-nextcloud --cache-chunk-no-memory --cache-chunk-path /data/tmp/rclone --vfs-cache-mode full --crypt-show-mapping --log-level INFO --uid ${builtins.toString config.users.users.nextcloud.uid} --gid ${builtins.toString config.users.groups.nginx.gid} --default-permissions --allow-other";
-      ExecStartPre = pkgs.writeScript "rclone-setup" ''
-        #!${pkgs.stdenv.shell}
-        mkdir -p /data/tmp/rclone
-      '';
-      ExecStop = "/run/wrappers/bin/fusermount -uz /nextcloud";
-    };
-    wantedBy = [ "multi-user.target" ];
-  };
 
   systemd.services."rclone-s3-db-backups" = {
     enable = true;
@@ -118,13 +89,16 @@ in {
         mkdir -p /data/tmp/rclone
       '';
       ExecStop = "/run/wrappers/bin/fusermount -uz /backups";
+      Restart = "always";
+      RestartSec = "3";
     };
     wantedBy = [ "multi-user.target" ];
   };
 
-  fileSystems."/data/var/lib/nextcloud/data" = {
-    device = "/nextcloud";
-    options = [ "_netdev" "bind" "user" "exec" ];
+  services.postgresqlBackup = {
+    enable = true;
+    databases = ["nextcloud"];
+    location = "/backups/postgresql";
   };
 
   nixpkgs.config = {
@@ -138,11 +112,5 @@ in {
         };
       });
     };
-  };
-
-  services.postgresqlBackup = {
-    enable = true;
-    databases = ["nextcloud"];
-    location = "/backups/postgresql";
   };
 }

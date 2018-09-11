@@ -20,6 +20,8 @@
     home = "/data/home/eqyiel";
   };
 
+  systemd.services."home-manager-eqyiel".after = [ "data.mount" ];
+
   home-manager = {
     users = {
       eqyiel = lib.mkMerge [

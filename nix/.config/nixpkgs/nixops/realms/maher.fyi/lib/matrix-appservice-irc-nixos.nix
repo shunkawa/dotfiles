@@ -5,7 +5,7 @@ stdenv.mkDerivation {
 
   src = fetchGit {
     url = ../../../../../../.nix-defexpr/matrix-appservice-irc-nixos;
-    rev = "82e510a46f9523e35df340e134abef998b7bab39";
+    rev = "f0842d656ce55e1071ee3eab7d9aae9d429dca00";
   };
 
   dontBuild = true;
