@@ -93,12 +93,22 @@ rec {
 
   get-hostname = callPackage ./get-hostname {};
 
-  # Can't cook on unstable due to this:
-  # https://github.com/nextcloud/desktop/issues/235
-  # Override version from impala instead.
-  nextcloud-client = pkgs.libsForQt5.callPackage ./nextcloud-client {
+  nextcloud-client = let
+    libsForQt511WithOpenSsl1_1_x = (recurseIntoAttrs
+      (lib.makeScope (pkgs.qt511.overrideScope (super: self: {
+        qtbase = super.qtbase.override (attrs: {
+          # qtbase propagates the openssl it receives, which is 1.0.x.
+          # nextcloud-client now requires 1.1.x, make sure that qtbase is propagating
+          # the correct version.
+          openssl = openssl_1_1_0;
+          # Avoid building with -plugin-sql-mysql because it pulls in
+          # mariadb-connector-c, which uses openssl 1.0.x.
+          mysql = null;
+        });
+      })).newScope mkLibsForQt5));
+  in libsForQt511WithOpenSsl1_1_x.callPackage ./nextcloud-client {
     withGnomeKeyring = true;
-    libgnome-keyring = pkgs.gnome3.libgnome-keyring;
+    libgnome-keyring = gnome3.libgnome-keyring;
   };
 
   hnix = callPackage ./hnix {};

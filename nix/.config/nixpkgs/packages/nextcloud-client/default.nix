@@ -4,13 +4,13 @@
 
 stdenv.mkDerivation rec {
   name = "nextcloud-client-${version}";
-  version = "2.5.0git";
+  version = "2.5.0-beta2";
 
   src = fetchFromGitHub {
     owner = "nextcloud";
     repo = "desktop";
-    rev = "5d96a0e6b6e8997815c368be6e6dd6a0db53c760";
-    sha256 = "0czqyq89309n4is481dfjav4i79z3a61ll9lm4lylj4b02lny1mx";
+    rev = "82f3b4c91fe4dc6f6c8c18cda9e0fe079671601b";
+    sha256 = "18m82pk4998gdwswspq9bqnz33j4ahjs2waxwybb9wl68f638zy9";
     fetchSubmodules = true;
   };
 
