@@ -108,7 +108,7 @@ in rec {
     cleanTmpDir = true;
     extraModulePackages = [ ];
     kernelModules = [ "kvm-intel" ];
-    supportedFilesystems = [ "zfs" "nfs" ];
+    supportedFilesystems = [ "zfs" "nfs" "ntfs" ];
     initrd = {
       network = {
         enable = true;

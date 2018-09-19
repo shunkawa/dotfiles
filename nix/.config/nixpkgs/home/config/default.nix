@@ -25,6 +25,7 @@
     packages = with pkgs; [
       aspell
       aspellDicts.en
+      bat
       bind
       coreutils
       curl
@@ -82,7 +83,7 @@
         gimp
         gimp
         icedtea8_web # iDRAC administration
-        local-packages.nixpkgs.stable.libreoffice # broken on unstable at the moment
+        libreoffice
         mpv
         shellcheck # ghc isn't available from any cache on darwin
         steam

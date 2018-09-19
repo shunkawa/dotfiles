@@ -100,7 +100,7 @@ rec {
           # qtbase propagates the openssl it receives, which is 1.0.x.
           # nextcloud-client now requires 1.1.x, make sure that qtbase is propagating
           # the correct version.
-          openssl = openssl_1_1_0;
+          openssl = openssl_1_1;
           # Avoid building with -plugin-sql-mysql because it pulls in
           # mariadb-connector-c, which uses openssl 1.0.x.
           mysql = null;
@@ -169,4 +169,6 @@ rec {
   google-java-format = callPackage ./google-java-format {};
 
   dualsub = callPackage ./dualsub {};
+
+  gitlab-discord-bot = (callPackage ./gitlab-discord-bot {});
 }

@@ -125,7 +125,10 @@ in rec {
   }));
 
   matrix = let hostName = "matrix.${network.description}"; in (mkConfig hostName ({ ... }: {
-    imports = [ (import ./config/matrix.nix { inherit hostName; }) ];
+    imports = [
+      (import ./config/matrix.nix { inherit hostName; })
+      (import ./config/gitlab-discord-bot.nix { inherit hostName; })
+    ];
     deployment.ec2.elasticIPv4 = "13.238.215.247";
     deployment.ec2.instanceType = "t2.micro";
   }));
