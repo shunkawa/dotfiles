@@ -13,8 +13,9 @@ in {
       dbname = "nextcloud";
       dbuser = "nextcloud";
       dbhost = "localhost";
+      inherit (secrets.services.nextcloud.autoconfig) dbpass;
       adminlogin = "nextcloud-admin";
-      inherit (secrets.services.nextcloud.autoconfig) adminpass dbpass;
+      adminpassFile = "/run/keys/nextcloud-adminpass-file";
     };
     maxUploadSize = "512M";
     home = "/data/var/lib/nextcloud";
@@ -32,8 +33,17 @@ in {
 
   services.phpfpm.pools.nextcloud.extraConfig = ''
     pm = static;
-    pm.max_children = 4
+    pm.max_children = 8
   '';
+
+  deployment.keys.nextcloud-adminpass-file = {
+    text = secrets.deployment.keys.nextcloud-adminpass-file;
+    user = "nextcloud";
+    group = "nginx";
+    permissions = "0600";
+  };
+
+  users.users.nextcloud.extraGroups = [ "keys" ];
 
   deployment.keys.rclone-config-db-backups = {
     text = secrets.deployment.keys.rclone-config-db-backups;
@@ -87,6 +97,7 @@ in {
       ExecStartPre = pkgs.writeScript "rclone-setup" ''
         #!${pkgs.stdenv.shell}
         mkdir -p /data/tmp/rclone
+        mkdir -p /backups
       '';
       ExecStop = "/run/wrappers/bin/fusermount -uz /backups";
       Restart = "always";

@@ -49,6 +49,11 @@ in {
     serviceConfig =  {
       Type = "notify";
       ExecStart = "${pkgs.rclone}/bin/rclone mount db-backups-crypt: /backups --config=/run/keys/rclone-config-db-backups --vfs-cache-mode full --crypt-show-mapping --log-level INFO --uid ${builtins.toString config.users.users.postgres.uid}  --default-permissions --allow-other";
+      ExecStartPre = pkgs.writeScript "rclone-setup" ''
+        #!${pkgs.stdenv.shell}
+        mkdir -p /data/tmp/rclone
+        mkdir -p /backups
+      '';
       ExecStop = "/run/wrappers/bin/fusermount -uz /backups";
       Restart = "always";
       RestartSec = "3";

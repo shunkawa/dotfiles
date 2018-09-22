@@ -124,6 +124,15 @@ in rec {
     deployment.ec2.instanceType = "t2.micro";
   }));
 
+  testcloud = let hostName = "testcloud.${network.description}"; in (mkConfig hostName ({ ... }: {
+    imports = [
+      (import ./config/nextcloud.nix { inherit hostName; })
+      (import ./config/home.nix { inherit hostName; })
+    ];
+    # deployment.ec2.elasticIPv4 = "13.238.250.196";
+    deployment.ec2.instanceType = "t2.micro";
+  }));
+
   matrix = let hostName = "matrix.${network.description}"; in (mkConfig hostName ({ ... }: {
     imports = [
       (import ./config/matrix.nix { inherit hostName; })

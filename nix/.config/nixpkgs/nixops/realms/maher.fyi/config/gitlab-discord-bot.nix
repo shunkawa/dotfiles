@@ -9,7 +9,7 @@ in rec {
 
   services.nginx = {
     virtualHosts = {
-      "shitpost.digital" = {
+      "discord.shitpost.digital" = {
         forceSSL = true;
         enableACME = true;
         locations = {
@@ -21,17 +21,11 @@ in rec {
     };
   };
 
-  networking.firewall = {
-    allowedTCPPorts = [
-      8080 # temp, remove after dns provisioning
-    ];
-  };
-
   services.gitlab-discord-bot = {
     enable = true;
     port = "8080";
     host = "0.0.0.0";
-    webhookName = "test";
+    webhookName = "bmg";
     webhookURLFile = "/run/keys/gitlab-discord-bot-webhook-url";
     webhookSecretFile = "/run/keys/gitlab-discord-bot-webhook-secret";
     user = "gitlab-discord-bot";
