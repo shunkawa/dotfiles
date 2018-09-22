@@ -6,7 +6,7 @@ in {
   imports = [
     "${((import <nixpkgs> {}).callPackage ../lib/matrix-appservice-irc-nixos.nix {})}"
     ./default-virtualhost.nix
-  ];
+  ] ++ (import ./../../../../nixos/modules/module-list.nix);
 
   fileSystems."/data" = {
     autoFormat = true;
@@ -63,7 +63,7 @@ in {
 
   systemd.services.postgresql.after = [ "rclone-s3-db-backups.service" ];
 
-  services.postgresqlBackup = {
+  services.local.postgresqlBackup = {
     enable = true;
     databases = ["matrix-synapse"];
     location = "/backups/postgresql";

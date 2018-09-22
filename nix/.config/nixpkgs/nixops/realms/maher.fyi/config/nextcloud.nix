@@ -1,13 +1,20 @@
 { hostName }: { config, lib, pkgs, ... }: let
   secrets = (import ./secrets.nix);
 in {
-  imports = [ ./default-virtualhost.nix ];
+  imports = [
+    ./default-virtualhost.nix
+  ] ++ (import ./../../../../nixos/modules/module-list.nix);
 
   services.nextcloud = {
     enable = true;
     inherit hostName;
     nginx.enable = true;
     https = true;
+    caching = {
+      apcu = false;
+      redis = true;
+      memcached = false;
+    };
     autoconfig = {
       dbtype = "pgsql";
       dbname = "nextcloud";
@@ -31,8 +38,27 @@ in {
     '';
   };
 
+  services.redis = {
+    unixSocket = "/var/run/redis/redis.sock";
+    enable = true;
+    extraConfig = ''
+      unixsocketperm 770
+    '';
+  };
+
+  systemd.services.redis = {
+    preStart = ''
+      mkdir -p /var/run/redis
+      chown ${config.services.redis.user}:${config.services.nginx.group} /var/run/redis
+    '';
+    postStart = ''
+      chown ${config.services.redis.user}:${config.services.nginx.group} /var/run/redis/redis.sock
+    '';
+    serviceConfig.PermissionsStartOnly = true;
+  };
+
   services.phpfpm.pools.nextcloud.extraConfig = ''
-    pm = static;
+    pm = static
     pm.max_children = 8
   '';
 
@@ -106,7 +132,7 @@ in {
     wantedBy = [ "multi-user.target" ];
   };
 
-  services.postgresqlBackup = {
+  services.local.postgresqlBackup = {
     enable = true;
     databases = ["nextcloud"];
     location = "/backups/postgresql";
