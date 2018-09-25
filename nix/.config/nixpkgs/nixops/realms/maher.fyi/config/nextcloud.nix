@@ -15,7 +15,7 @@ in {
       redis = true;
       memcached = false;
     };
-    autoconfig = {
+    config = {
       dbtype = "pgsql";
       dbname = "nextcloud";
       dbuser = "nextcloud";
@@ -27,6 +27,11 @@ in {
     maxUploadSize = "512M";
     home = "/data/var/lib/nextcloud";
   };
+
+  systemd.services.nextcloud-setup.preStart = ''
+    mkdir -p ${config.services.nextcloud.home}
+    chown nextcloud:${config.services.nginx.group} ${config.services.nextcloud.home}
+  '';
 
   services.postgresql = {
     enable = true;
