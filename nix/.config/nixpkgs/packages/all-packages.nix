@@ -171,4 +171,7 @@ rec {
   dualsub = callPackage ./dualsub {};
 
   gitlab-discord-bot = (callPackage ./gitlab-discord-bot {});
+
+  # build mu/mu4e with msg2pdf and mug binaries
+  mu = pkgs.mu.override (attrs: { withMug = true; });
 }

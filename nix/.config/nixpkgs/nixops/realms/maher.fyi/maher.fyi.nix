@@ -17,7 +17,12 @@ let
     deployment.ec2.ebsInitialRootDiskSize = 10;
     deployment.storeKeysOnMachine = false;
 
-    boot.cleanTmpDir = true;
+    boot = {
+      cleanTmpDir = true;
+      kernel.sysctl = {
+        "fs.inotify.max_user_watches" = 204800;
+      };
+    };
 
     networking = {
       inherit hostName;

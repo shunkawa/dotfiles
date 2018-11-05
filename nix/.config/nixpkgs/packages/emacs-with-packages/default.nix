@@ -1,4 +1,4 @@
-{ emacsPackagesNg, mu }:
+{ emacsPackagesNg, local-packages }:
 
 # TODO:
 # Figure out how to include packages that aren't in nixpkgs.  I think there is
@@ -97,5 +97,5 @@
     ]) ++ (with emacsPackages.orgPackages; [
       org-plus-contrib
     ]) ++ [
-      mu
+      local-packages.mu
     ]))

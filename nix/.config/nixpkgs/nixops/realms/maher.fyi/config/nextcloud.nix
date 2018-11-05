@@ -21,17 +21,24 @@ in {
       dbuser = "nextcloud";
       dbhost = "localhost";
       inherit (secrets.services.nextcloud.autoconfig) dbpass;
-      adminlogin = "nextcloud-admin";
+      adminuser = "nextcloud-admin";
       adminpassFile = "/run/keys/nextcloud-adminpass-file";
     };
     maxUploadSize = "512M";
     home = "/data/var/lib/nextcloud";
   };
 
-  systemd.services.nextcloud-setup.preStart = ''
-    mkdir -p ${config.services.nextcloud.home}
-    chown nextcloud:${config.services.nginx.group} ${config.services.nextcloud.home}
-  '';
+  systemd.services.nextcloud-setup = {
+    requires = ["postgresql.service"];
+    after = [
+      "postgresql.service"
+      "chown-redis-socket.service"
+    ];
+    preStart = ''
+      mkdir -p ${config.services.nextcloud.home}
+      chown nextcloud:${config.services.nginx.group} ${config.services.nextcloud.home}
+    '';
+  };
 
   services.postgresql = {
     enable = true;
@@ -56,15 +63,29 @@ in {
       mkdir -p /var/run/redis
       chown ${config.services.redis.user}:${config.services.nginx.group} /var/run/redis
     '';
-    postStart = ''
+    serviceConfig.PermissionsStartOnly = true;
+  };
+
+  systemd.services."chown-redis-socket" = {
+    enable = true;
+    script = ''
+      until ${pkgs.redis}/bin/redis-cli ping; do
+        echo "waiting for redis..."
+        sleep 1
+      done
       chown ${config.services.redis.user}:${config.services.nginx.group} /var/run/redis/redis.sock
     '';
-    serviceConfig.PermissionsStartOnly = true;
+    after = [ "redis.service" ];
+    requires = [ "redis.service" ];
+    wantedBy = [ "redis.service" ];
+    serviceConfig = {
+      Type = "oneshot";
+    };
   };
 
   services.phpfpm.pools.nextcloud.extraConfig = ''
     pm = static
-    pm.max_children = 8
+    pm.max_children = 16
   '';
 
   deployment.keys.nextcloud-adminpass-file = {
@@ -100,8 +121,6 @@ in {
   };
 
   swapDevices = [ { device = "/swapfile"; size = 2 * 1024; }];
-
-  environment.systemPackages = with pkgs; [ nextcloud-client ];
 
   services.nginx = {
     enable = true;
@@ -141,18 +160,5 @@ in {
     enable = true;
     databases = ["nextcloud"];
     location = "/backups/postgresql";
-  };
-
-  nixpkgs.config = {
-    packageOverrides = pkgs: rec {
-      nextcloud = pkgs.nextcloud.overrideAttrs (attrs: rec {
-        name = "nextcloud-${version}";
-        version = "14.0.0";
-        src = pkgs.fetchurl {
-          url = "https://download.nextcloud.com/server/releases/${name}.tar.bz2";
-          sha256 = "0iwg7g2ydrs0ah5hxl9m5hqaz5wmymmdhiy997zbpap7hr1c2rgr";
-        };
-      });
-    };
   };
 }
