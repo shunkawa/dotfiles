@@ -87,33 +87,6 @@ in
     psmisc
   ];
 
-  krb5 = {
-    enable = true;
-    libdefaults = {
-      default_realm = "HOSHIJIRO.MAHER.FYI";
-    };
-
-    realms = {
-      "HOSHIJIRO.MAHER.FYI" = {
-        admin_server = "hoshijiro.maher.fyi";
-        kdc = "hoshijiro.maher.fyi";
-        default_principal_flags = "+preauth";
-      };
-    };
-
-    domain_realm = ''
-      hoshijiro.maher.fyi = HOSHIJIRO.MAHER.FYI;
-      .hoshijiro.maher.fyi = HOSHIJIRO.MAHER.FYI;
-    '';
-
-    extraConfig = ''
-      [logging]
-        kdc          = SYSLOG:NOTICE
-        admin_server = SYSLOG:NOTICE
-        default      = SYSLOG:NOTICE
-    '';
-  };
-
   services.udev.packages = [ pkgs.android-udev-rules ];
 
   services.pcscd.enable = true;
@@ -131,8 +104,6 @@ in
   };
 
   nix = {
-    # Use this if you want to force remote building
-    # maxJobs = 0;
     trustedUsers = [ "root" ];
     nixPath = [
       "nixpkgs=${pkgs.callPackage ./lib/nixpkgs.nix {}}"
@@ -140,15 +111,6 @@ in
     ];
     distributedBuilds = false;
     trustedBinaryCaches = [ "http://nixos-arm.dezgeg.me/channel" ];
-    buildMachines = [
-      {
-        hostName = "tomoyo.maher.fyi";
-        sshUser = "nix-builder";
-        sshKey = "/root/.ssh/id_nix-builder";
-        system = "x86_64-linux";
-        maxJobs = 4;
-      }
-    ];
   };
 
   virtualisation.docker.enable = true;
@@ -175,7 +137,7 @@ in
     ];
   };
 
-  services.nixosManual.enable = false; # broken on unstable
+  documentation.nixos.enable = false;
 
-  system.stateVersion = "18.09pre";
+  system.stateVersion = "19.03pre";
 }

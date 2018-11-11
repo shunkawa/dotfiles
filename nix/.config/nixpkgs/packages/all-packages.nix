@@ -95,7 +95,7 @@ rec {
 
   nextcloud-client = let
     libsForQt511WithOpenSsl1_1_x = (recurseIntoAttrs
-      (lib.makeScope (pkgs.qt511.overrideScope (super: self: {
+      (lib.makeScope (pkgs.qt511.overrideScope' (self: super: {
         qtbase = super.qtbase.override (attrs: {
           # qtbase propagates the openssl it receives, which is 1.0.x.
           # nextcloud-client now requires 1.1.x, make sure that qtbase is propagating
