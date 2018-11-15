@@ -235,12 +235,19 @@ Jan 30 10:45:12 localghost kernel: [<ffffffffc04391c0>] usb_hcd_irq [usbcore]
 Jan 30 10:45:12 localghost kernel: Disabling IRQ #22
 #+end_example
 ** Android
+#+BEGIN_EXAMPLE
+$ nix-shell -p androidenv.androidsdk_7_0_extras --run zsh
+#+END_EXAMPLE
+
 *** Syncthing
 I want to sync the entire =/sdcard= folder with Syncthing.  This leads to
 problems with other individual folders that I want to sync, for example =org=.
-My workaround is to create a new folder under =/storage/emulated= called =sync=
-and put those individual folders there while syncing everything else in
-=/storage/emulated/0=.
+
+**** With root
+
+The most foolproof way is to create a new folder under =/storage/emulated=
+called =sync= and put those individual folders there while syncing everything
+else in =/storage/emulated/0=.
 
 #+BEGIN_EXAMPLE
 bullhead:/storage/emulated # mkdir sync
@@ -255,3 +262,14 @@ drwxrwx--x  2 root sdcard_rw 4.0K 2017-12-28 10:13 sync
 
 Use the web GUI to configure the folder if you can't select
 =/storage/emulated/sync= in the native one.
+
+**** Without root
+
+In this case there's no choice but to use ~.stignore~.
+
+#+BEGIN_EXAMPLE
+blueline:/storage/emulated/0 $ echo 'sync' > .stignore
+blueline:/storage/emulated/0 $ mkdir -p sync/org
+#+END_EXAMPLE
+
+Now the folder target for the web GUI will be ~/storage/emulated/0/sync/org~.
