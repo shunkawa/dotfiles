@@ -70,15 +70,15 @@ in
     supportedLocales = [ "en_US.UTF-8/UTF-8" ];
   };
 
-  time.timeZone = "Australia/Adelaide";
+  time.timeZone = "Asia/Tokyo";
 
   services.openntpd = {
     enable = true;
     servers = [
-      "0.au.pool.ntp.org"
-	    "1.au.pool.ntp.org"
-	    "2.au.pool.ntp.org"
-	    "3.au.pool.ntp.org"
+      "0.jp.pool.ntp.org"
+	    "1.jp.pool.ntp.org"
+	    "2.jp.pool.ntp.org"
+	    "3.jp.pool.ntp.org"
     ];
   };
 
