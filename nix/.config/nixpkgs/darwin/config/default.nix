@@ -7,13 +7,12 @@
     ./nix-docker.nix
   ];
 
-  # Necessary since multiuser nix on darwin
-  services.nix-daemon.enable = true;
+  services.nix-daemon.enable = false;
 
   nix = {
     nixPath = [
-      "darwin=/Users/rkm/.nix-defexpr/darwin"
-      "darwin-config=/Users/rkm/.config/nixpkgs/darwin-configuration.nix"
+      "darwin=/Users/${(builtins.getEnv "USER")}/.nix-defexpr/darwin"
+      "darwin-config=/Users/${(builtins.getEnv "USER")}/.config/nixpkgs/darwin-configuration.nix"
       "nixpkgs=${pkgs.callPackage ../lib/nixpkgs.nix {}}"
     ];
   };

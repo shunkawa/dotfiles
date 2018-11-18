@@ -1,11 +1,21 @@
 { config, lib, pkgs, ... }:
 
 {
+  fonts = {
+    enableFontDir = true;
+    fonts = with pkgs; [
+      dejavu_fonts
+    ];
+  };
+
   environment = {
     systemPackages = with pkgs; [
       syncthing
       iterm2
-      postgresql
+      aspell
+      aspellDicts.en
+      aspellDicts.en-computers
+      aspellDicts.en-science
     ];
 
     variables = {
@@ -18,7 +28,7 @@
     };
 
     pathsToLink = [
-      "/lib"           # necessary for ... something
+      "/lib"           # for aspell
       "/share/emacs"   # Necessary for emacs support files (mu4e)
     ];
 
