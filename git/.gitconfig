@@ -1,7 +1,7 @@
 [user]
   email = ruben@maher.fyi
   name = Ruben Maher
-  signingkey = r@rkm.id.au
+  signingkey = ruben@maher.fyi
 [core]
   editor = "emacsclient -c -a=\"\""
   excludesfile = ~/.gitignore_global
