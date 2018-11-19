@@ -2,10 +2,10 @@
 
 {
   nixpkgs = {
+    overlays = [ (import ../../packages/overlay.nix) ];
     config = {
       allowBroken = false;
       allowUnfree = true;
-      overlays = [ (import ../../packages/overlay.nix) ];
       packageOverrides = pkgs: {
         iterm2 = with pkgs; stdenv.mkDerivation rec {
           name = "iterm2";

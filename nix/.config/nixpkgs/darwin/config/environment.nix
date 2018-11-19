@@ -16,6 +16,8 @@
       aspellDicts.en
       aspellDicts.en-computers
       aspellDicts.en-science
+      local-packages.Docker
+      local-packages.Spectacle
     ];
 
     variables = {

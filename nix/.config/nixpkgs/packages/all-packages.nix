@@ -2,7 +2,38 @@
 
 with pkgs;
 
-rec {
+let
+  # This is a rip off from jwiegley's dotfiles:
+  # https://github.com/jwiegley/nix-config/blob/5b8e287dc7157e8f9a55ff71f0a2822fea485b55/overlays/30-apps.nix#L3-L23
+  installApplication = {
+    name,
+    appname ? name,
+    version,
+    src,
+    description,
+    homepage,
+    postInstall ? "",
+    sourceRoot ? ".",
+    ...
+  }: with super; stdenv.mkDerivation {
+    name = "${name}-${version}";
+    version = "${version}";
+    src = src;
+    buildInputs = [ undmg unzip ];
+    sourceRoot = sourceRoot;
+    phases = [ "unpackPhase" "installPhase" ];
+    installPhase = ''
+      mkdir -p "$out/Applications/${appname}.app"
+      cp -pR * "$out/Applications/${appname}.app"
+    '' + postInstall;
+    meta = with stdenv.lib; {
+      description = description;
+      homepage = homepage;
+      maintainers = with maintainers; [ eqyiel ];
+      platforms = platforms.darwin;
+    };
+  };
+in rec {
   inherit (import (callPackage ./hie-nix {})) stack2nix hies hie80 hie82;
 
   emacs-git = callPackage ./emacs-git {};
@@ -174,4 +205,57 @@ rec {
 
   # build mu/mu4e with msg2pdf and mug binaries
   mu = pkgs.mu.override (attrs: { withMug = true; });
+
+  Docker = installApplication rec {
+    name = "Docker";
+    version = "18.06.1-ce-mac";
+    sourceRoot = "Docker.app";
+    src = pkgs.fetchurl {
+      url = https://download.docker.com/mac/stable/Docker.dmg;
+      sha256 = "19a7n36nkw20rrklr8qlp76l5xhn037avqfnk81rilghik1yla9l";
+    };
+    description = ''
+      Docker CE for Mac is an easy-to-install desktop app for building,
+      debugging, and testing Dockerized apps on a Mac
+    '';
+    homepage = https://store.docker.com/editions/community/docker-ce-desktop-mac;
+  };
+
+  Spectacle = installApplication rec {
+    name = "Spectacle";
+    version = "1.2";
+    sourceRoot = "Spectacle.app";
+    src = pkgs.fetchurl {
+      url = https://s3.amazonaws.com/spectacle/downloads/Spectacle+1.2.zip;
+      sha256 = "037kayakprzvs27b50r260lwh2r9479f2pd221qmdv04nkrmnvbn";
+    };
+    description = "Window control with simple and customizable keyboard shortcuts";
+    homepage = https://www.spectacleapp.com;
+  };
+
+  Karabiner-Elements = (installApplication rec {
+    name = "Karabiner-Elements";
+    version = "12.1.0";
+    src = pkgs.fetchurl {
+      url = https://pqrs.org/osx/karabiner/files/Karabiner-Elements-12.1.0.dmg;
+      sha256 = "0bp69fp68bcljyq6jxkdf1mvpvzsb1davi3pddvbidy2zipdf7qf";
+    };
+    description = "A powerful and stable keyboard customizer for macOS.";
+    homepage = https://pqrs.org/osx/karabiner;
+  }).overrideAttrs (attrs: {
+      buildInputs = attrs.buildInputs ++ (with pkgs; [ xar cpio ]);
+      unpackPhase = ''
+        undmg < $src
+        xar -xf Karabiner-Elements.sparkle_guided.pkg
+        gunzip < Installer.pkg/Payload | cpio -i
+      '';
+      installPhase = ''
+        mkdir -p $out/Applications
+        mkdir -p $out/Library
+        ls -lha
+        ls -lha $out
+        cp -pR Applications/* $out/Applications
+        cp -pR Library/* $out/Library
+      '';
+    });
 }
