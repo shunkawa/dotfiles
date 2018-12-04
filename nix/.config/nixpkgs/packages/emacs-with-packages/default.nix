@@ -66,6 +66,7 @@
       nixos-options
       no-littering
       nodejs-repl
+      omnisharp
       org-caldav
       org-cliplink
       org-download
