@@ -40,6 +40,7 @@
       flow-minor-mode
       flycheck
       flycheck-flow
+      geben
       gist
       go-mode
       google-c-style
