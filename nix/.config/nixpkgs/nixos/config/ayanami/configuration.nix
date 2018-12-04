@@ -12,6 +12,7 @@ in
   imports = [
     ./hardware-configuration.nix
     ../../common/gnome.nix
+    ../../common/unity3d.nix
     ../../common/fonts.nix
   ] ++ (import ./../../modules/module-list.nix);
 
