@@ -258,4 +258,6 @@ in rec {
         cp -pR Library/* $out/Library
       '';
     });
+
+  omnisharp-roslyn = callPackage ./omnisharp-roslyn {};
 }
