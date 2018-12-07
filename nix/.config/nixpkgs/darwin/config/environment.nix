@@ -8,6 +8,8 @@
     ];
   };
 
+  system.defaults.dock.autohide = true;
+
   environment = {
     systemPackages = with pkgs; [
       syncthing
