@@ -16,6 +16,7 @@
       aspellDicts.en
       aspellDicts.en-computers
       aspellDicts.en-science
+      local-packages.Anki
       local-packages.Docker
       local-packages.Spectacle
     ];

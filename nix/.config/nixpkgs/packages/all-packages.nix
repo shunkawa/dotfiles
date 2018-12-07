@@ -206,6 +206,18 @@ in rec {
   # build mu/mu4e with msg2pdf and mug binaries
   mu = pkgs.mu.override (attrs: { withMug = true; });
 
+  Anki = installApplication rec {
+    name = "Anki";
+    version = "2.1.5";
+    sourceRoot = "Anki.app";
+    src = pkgs.fetchurl {
+      url = "https://apps.ankiweb.net/downloads/current/anki-${version}-mac.dmg";
+      sha256 = "0ca0sbfxvji6h9g6p3433c663i2kgp3nfgh8b262w1ganxygjfd2";
+    };
+    description = "Anki is a program which makes remembering things easy";
+    homepage = https://apps.ankiweb.net;
+  };
+
   Docker = installApplication rec {
     name = "Docker";
     version = "18.06.1-ce-mac";
