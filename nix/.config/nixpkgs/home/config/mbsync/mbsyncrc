@@ -28,44 +28,44 @@ Master          ":maher-remote:"
 Slave           ":maher-local:"
 Patterns        *
 
-# ruben@mangochutney.com.au
+# r-maher@mercari.com
 
-IMAPAccount     mangochutney
+IMAPAccount     mercari
 Host            imap.gmail.com
-User            ruben@mangochutney.com.au
-PassCmd         "pass auth-sources/ruben@mangochutney.com.au | head -n 1"
+User            r-maher@mercari.com
+PassCmd         "pass auth-sources/r-maher@mercari.com | head -n 1"
 SSLType         IMAPS
 SSLVersions     TLSv1.2
 
-IMAPStore       mangochutney-remote
-Account         mangochutney
+IMAPStore       mercari-remote
+Account         mercari
 
-MaildirStore    mangochutney-local
-Path            ~/mail/ruben@mangochutney.com.au/
-Inbox           ~/mail/ruben@mangochutney.com.au/
+MaildirStore    mercari-local
+Path            ~/mail/r-maher@mercari.com/
+Inbox           ~/mail/r-maher@mercari.com/
 Flatten         .
 
-Channel         mango_all_mail
-Master          ":mangochutney-remote:[Gmail]/All Mail"
-Slave           ":mangochutney-local:All Mail"
+Channel         mercari_all_mail
+Master          ":mercari-remote:[Gmail]/All Mail"
+Slave           ":mercari-local:All Mail"
 
-Channel         mango_sent
-Master          ":mangochutney-remote:[Gmail]/Sent Mail"
-Slave           ":mangochutney-local:Sent Mail"
+Channel         mercari_sent
+Master          ":mercari-remote:[Gmail]/Sent Mail"
+Slave           ":mercari-local:Sent Mail"
 
-Channel         mango_drafts
-Master          ":mangochutney-remote:[Gmail]/Drafts"
-Slave           ":mangochutney-local:Drafts"
+Channel         mercari_drafts
+Master          ":mercari-remote:[Gmail]/Drafts"
+Slave           ":mercari-local:Drafts"
 
-Channel         mango_bin
-Master          ":mangochutney-remote:[Gmail]/Bin"
-Slave           ":mangochutney-local:Bin"
+Channel         mercari_trash
+Master          ":mercari-remote:[Gmail]/Trash"
+Slave           ":mercari-local:Trash"
 
-Channel         mango_spam
-Master          ":mangochutney-remote:[Gmail]/Spam"
-Slave           ":mangochutney-local:Spam"
+Channel         mercari_spam
+Master          ":mercari-remote:[Gmail]/Spam"
+Slave           ":mercari-local:Spam"
 
-Group ruben@mangochutney.com.au mango_all_mail mango_sent mango_drafts mango_bin mango_spam
+Group r-maher@mercari.com mercari_all_mail mercari_sent mercari_drafts mercari_trash mercari_spam
 
 # Local Variables:
 # mode: conf-space
