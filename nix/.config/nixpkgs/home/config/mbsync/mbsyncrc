@@ -14,6 +14,7 @@ User            ruben@maher.fyi
 PassCmd         "pass auth-sources/ruben@maher.fyi | head -n 1"
 SSLType         IMAPS
 SSLVersions     TLSv1.2
+PipelineDepth   50
 
 IMAPStore       maher-remote
 Account         maher
@@ -36,6 +37,7 @@ User            r-maher@mercari.com
 PassCmd         "pass auth-sources/r-maher@mercari.com | head -n 1"
 SSLType         IMAPS
 SSLVersions     TLSv1.2
+PipelineDepth   50
 
 IMAPStore       mercari-remote
 Account         mercari
