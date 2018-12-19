@@ -47,9 +47,9 @@ Path            ~/mail/r-maher@mercari.com/
 Inbox           ~/mail/r-maher@mercari.com/
 Flatten         .
 
-Channel         mercari_all_mail
-Master          ":mercari-remote:[Gmail]/All Mail"
-Slave           ":mercari-local:All Mail"
+Channel         mercari_inbox
+Master          ":mercari-remote:INBOX"
+Slave           ":mercari-local:Inbox"
 
 Channel         mercari_sent
 Master          ":mercari-remote:[Gmail]/Sent Mail"
@@ -67,7 +67,7 @@ Channel         mercari_spam
 Master          ":mercari-remote:[Gmail]/Spam"
 Slave           ":mercari-local:Spam"
 
-Group r-maher@mercari.com mercari_all_mail mercari_sent mercari_drafts mercari_trash mercari_spam
+Group r-maher@mercari.com mercari_inbox mercari_sent
 
 # Local Variables:
 # mode: conf-space
