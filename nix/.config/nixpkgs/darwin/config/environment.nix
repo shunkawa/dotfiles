@@ -21,6 +21,7 @@
       local-packages.Anki
       local-packages.Docker
       local-packages.Spectacle
+      local-packages.Sketch
     ];
 
     variables = {

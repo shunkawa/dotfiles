@@ -271,5 +271,17 @@ in rec {
       '';
     });
 
+  Sketch = (installApplication rec {
+    name = "Sketch";
+    version = "52.5";
+    sourceRoot = "Sketch.app";
+    src = pkgs.fetchurl {
+      url = https://download.sketchapp.com/sketch-52.5-67469.zip;
+      sha256 = "0msggx6qghb53i04mnzcjlqqqzh9qjwxl9lkqb9bicdbb8lhh6d3";
+    };
+    description = "The website doesn't actually describe the product :(";
+    homepage = https://www.sketchapp.com;
+  });
+
   omnisharp-roslyn = callPackage ./omnisharp-roslyn {};
 }
