@@ -283,5 +283,19 @@ in rec {
     homepage = https://www.sketchapp.com;
   });
 
+  GIMP = (installApplication rec {
+    name = "GIMP";
+    major = "2.10";
+    minor = "8";
+    version = "${major}.${minor}";
+    sourceRoot = "Gimp-${major}.app";
+    src = pkgs.fetchurl {
+      url = "https://download.gimp.org/mirror/pub/gimp/v${major}/osx/gimp-${version}-x86_64-2.dmg";
+      sha256 = "04sggnbadvnd8sag4262varj2ivfvbqb1wyzcadnmb5lsnzjgrcf";
+    };
+    description = "GIMP is a cross-platform image editor";
+    homepage = https://www.gimp.org;
+  });
+
   omnisharp-roslyn = callPackage ./omnisharp-roslyn {};
 }

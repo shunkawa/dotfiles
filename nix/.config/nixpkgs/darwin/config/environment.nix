@@ -12,16 +12,17 @@
 
   environment = {
     systemPackages = with pkgs; [
-      syncthing
-      iterm2
       aspell
       aspellDicts.en
       aspellDicts.en-computers
       aspellDicts.en-science
+      iterm2
       local-packages.Anki
       local-packages.Docker
-      local-packages.Spectacle
+      local-packages.GIMP
       local-packages.Sketch
+      local-packages.Spectacle
+      syncthing
     ];
 
     variables = {
