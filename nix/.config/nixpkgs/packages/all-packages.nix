@@ -298,4 +298,6 @@ in rec {
   });
 
   omnisharp-roslyn = callPackage ./omnisharp-roslyn {};
+
+  docker-convenience-scripts = callPackage ./docker-convenience-scripts {};
 }

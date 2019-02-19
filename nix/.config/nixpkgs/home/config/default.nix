@@ -71,6 +71,7 @@
       wget
       which
     ] ++ (with local-packages; [
+      docker-convenience-scripts
       emacs-with-packages
       hiptext
       pass-show-first-line
