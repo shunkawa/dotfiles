@@ -66,6 +66,11 @@ Mar 22 13:16:01 ayanami dovecot[26344]: imap(eqyiel): Error: read(/home/eqyiel/m
   For the virtual machine, set interface 1 to NAT, second to Host-only Adapter.
   You can SSH to the IP address of host-only adapter's interface.
 
+*** ~npm-link~ using ~node~ from ~nixpkgs~ with macOS
+Make sure to set ~prefix=~/.npm~ in =~/.npmrc~=.
+
+Ref: https://github.com/NixOS/nixpkgs/pull/21077
+
 *** Remote ~pbcopy~
 
    [[https://seancoates.com/blogs/remote-pbcopy][See this guide]].
