@@ -204,7 +204,12 @@ in rec {
   gitlab-discord-bot = (callPackage ./gitlab-discord-bot {});
 
   # build mu/mu4e with msg2pdf and mug binaries
-  mu = pkgs.mu.override (attrs: { withMug = true; });
+  mu = pkgs.mu.override (attrs: {
+    withMug = true;
+    webkitgtk24x-gtk3 = pkgs.webkitgtk24x-gtk3.override (webkitAttrs: {
+      enchant = enchant2;
+    });
+  });
 
   Anki = installApplication rec {
     name = "Anki";
@@ -300,4 +305,6 @@ in rec {
   omnisharp-roslyn = callPackage ./omnisharp-roslyn {};
 
   docker-convenience-scripts = callPackage ./docker-convenience-scripts {};
+
+  pass = pkgs.pass.overrideAttrs (attrs: { doInstallCheck = false; });
 }

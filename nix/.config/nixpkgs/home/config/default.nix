@@ -51,11 +51,9 @@
       mu
       ncmpcpp
       nix-prefetch-scripts
-      nixops
       openssh
       openssl
-      pass
-      pinentry
+      (pass.overrideAttrs (attrs: { doInstallCheck = false; }))
       procmail # formail used for some mu hacks
       pwgen
       ripgrep
@@ -86,6 +84,7 @@
         icedtea8_web # iDRAC administration
         libreoffice
         mpv
+        pinentry
         shellcheck # ghc isn't available from any cache on darwin
         steam
         vdirsyncer
@@ -94,6 +93,7 @@
       ++ (with pkgs.ibus-engines; [ local-packages.ibus-engines.mozc uniemoji ])
       ++ (with local-packages; [open riot]))
     ++ lib.optionals stdenv.isDarwin ([
+      pinentry_mac
       (youtube-dl.override ({ phantomjsSupport = false; }))
       (mpv.override ({
         vaapiSupport = false;

@@ -40,9 +40,6 @@
     ];
 
     etc = {
-      "ssl/certs/ca-certificates.crt".source =
-        "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
-
       # github.com/facebook/react-native/issues/9309#issuecomment-238966924
       "sysctl.conf" = {
         text = ''

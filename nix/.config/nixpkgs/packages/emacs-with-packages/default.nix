@@ -13,6 +13,7 @@
       sql-indent
     ]) ++
     (with emacsPackages.melpaPackages; [
+      adoc-mode
       aggressive-indent
       alert
       atomic-chrome
