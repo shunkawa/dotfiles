@@ -6,7 +6,9 @@
 # contribute to) but for others that just aren't available on melpa yet I would
 # like to have them here (for example, flow-js2-mode).
 
-(emacsPackagesNg.emacsWithPackages
+((emacsPackagesNg.overrideScope' (self: super: {
+  emacs = local-packages.emacs-git;
+})).emacsWithPackages
   (emacsPackages:
     (with emacsPackages.elpaPackages; [
       rainbow-mode

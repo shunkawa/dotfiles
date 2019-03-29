@@ -1,0 +1,13 @@
+diff --git a/src/Makefile.in b/src/Makefile.in
+index 5989ab4cef..3ac74ec6f0 100644
+--- a/src/Makefile.in
++++ b/src/Makefile.in
+@@ -535,7 +535,7 @@ ifeq ($(CANNOT_DUMP),yes)
+ 	ln -f temacs$(EXEEXT) $@
+ else
+ 	unset EMACS_HEAP_EXEC; \
+-	LC_ALL=C $(RUN_TEMACS) -batch $(BUILD_DETAILS) -l loadup dump
++	env -i LC_ALL=C $(RUN_TEMACS) -batch $(BUILD_DETAILS) -l loadup dump
+   ifneq ($(PAXCTL_dumped),)
+ 	$(PAXCTL_dumped) $@
+   endif

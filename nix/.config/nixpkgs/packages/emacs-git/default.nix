@@ -1,16 +1,25 @@
 { stdenv, fetchgit, emacs }:
 
-# nix-prefetch-git git://git.sv.gnu.org/emacs.git --rev HEAD
-
-stdenv.lib.overrideDerivation
-  (emacs.override { srcRepo = true; }) (attrs: rec {
+# nix-prefetch-git git://git.sv.gnu.org/emacs.git --rev emacs-26.1.92
+#
+# Check available tags:
+# http://git.savannah.gnu.org/cgit/emacs.git/refs/tags
+#
+# Create revert patch for this commit for color emoji support on macOS:
+# git revert 9344612d3cd164317170b6189ec43175757e4231
+# git show --patch HEAD > revert-9344612d3cd164317170b6189ec43175757e4231.patch
+(stdenv.lib.overrideDerivation (emacs.override { srcRepo = true; })) (attrs: rec {
   name = "emacs-${version}${versionModifier}";
-  version = "27.0.50";
+  version = "26.1.92";
   versionModifier = "-git";
   src = fetchgit {
     url = "git://git.sv.gnu.org/emacs.git";
-    sha256 = "0xgf63l4rlrabaxy6c2qxi76p3mg460c49b23g1rswigw2sc7c9f";
-    rev = "1cdd0e8cd801aa1d6f04ab4d8e6097a46af8c951";
+    sha256 = "0v6nrmf0viw6ahf8s090hwpsrf6gjpi37r842ikjcsakfxys9dmc";
+    rev = "4c6d17afe1251ddc7f5113991d8e914571f76ecf";
   };
-  patches = [];
+  patches = [
+    ./revert-9344612d3cd164317170b6189ec43175757e4231.patch
+    ./clean-env.patch
+    ./tramp-detect-wrapped-gvfsd.patch
+  ];
 })
