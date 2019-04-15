@@ -1,58 +1,58 @@
 {
   "grml-etc-core": {
     "url": "https://github.com/grml/grml-etc-core",
-    "rev": "af65087851ed8d2f74bd025b5862f5222884da97",
-    "date": "2017-12-30T11:17:11+01:00",
-    "sha256": "1mk63yzx83c72w7lj4ynyqf4l2n180wyha88r7n1gy9v8r25xxpw",
-    "fetchSubmodules": true
+    "rev": "ffe57c8786bf71c015d948eff4253089725b9f8e",
+    "date": "2019-03-21T12:23:32+01:00",
+    "sha256": "1b794c3hfhw51aqp8dg8smxqjv4x518rs1ib4pdglc4d785rlq1k",
+    "fetchSubmodules": false
   },
   "oh-my-zsh": {
     "url": "https://github.com/robbyrussell/oh-my-zsh.git",
-    "rev": "7ed82b4df6d381ef26a4dbdf253bf414497adcd1",
-    "date": "2018-03-09T08:16:15-08:00",
-    "sha256": "1aa6mikk3d953nvha58hy1hlrpwcvwl3ifm9s7kvsr0c8mmyq7l1",
-    "fetchSubmodules": true
+    "rev": "08da19e3fd27acf5085e207ee7da411e6a5eb96a",
+    "date": "2019-04-14T12:31:52+02:00",
+    "sha256": "1j1fd1yy698ds1n1la8zwawn4gx62p1ssmk0shj4pcfzvlchs9s4",
+    "fetchSubmodules": false
   },
   "dircolors-solarized": {
     "url": "https://github.com/seebi/dircolors-solarized.git",
     "rev": "2720cb1ff508bc358f9414f63370f0c6cd767b98",
     "date": "2017-09-17T11:24:28+02:00",
     "sha256": "1mk7d7l6v4vfgkp3005533yd4gldm07cjqmqs6fxzwjjwj7l5qbf",
-    "fetchSubmodules": true
+    "fetchSubmodules": false
   },
   "pure": {
     "url": "https://github.com/sindresorhus/pure.git",
-    "rev": "a3b22b242d2e4bc8d7e989c47e49a4bf03d7e2ab",
-    "date": "2017-11-22T13:36:09+07:00",
-    "sha256": "1gxsfbh0qavbxgr8grsra6m0xpc9wjnkkd6gwjam31n6j0vxyblw",
-    "fetchSubmodules": true
+    "rev": "e7036c43487fedf608a988dde54dd1d4c0d96823",
+    "date": "2019-03-21T18:29:27+02:00",
+    "sha256": "10mdk4dn2azzrhymx0ghl8v668ydy6mz5i797nmbl2ijx9hlqb3v",
+    "fetchSubmodules": false
   },
   "nix-zsh-completions": {
     "url": "https://github.com/spwhitt/nix-zsh-completions.git",
-    "rev": "956525ac16aa5505b80a72231be3a516c66d02cd",
-    "date": "2018-03-12T18:16:53+01:00",
-    "sha256": "1wy2dg2dwmdc5x3ahjvpsiqm4jdv011lnsdgcgrk4hvwrmcjavl7",
-    "fetchSubmodules": true
+    "rev": "09eb8a35d4889d1f699998f5d41170dc23dcf7ef",
+    "date": "2019-04-14T19:42:49+02:00",
+    "sha256": "0fq1zlnsj1bb7byli7mwlz7nm2yszwmyx43ccczcv51mjjfivyp3",
+    "fetchSubmodules": false
   },
   "zsh-autosuggestions": {
     "url": "https://github.com/zsh-users/zsh-autosuggestions.git",
-    "rev": "c7d4a85031c101ef9bce0018096622087894dd09",
-    "date": "2017-12-06T08:31:52-07:00",
-    "sha256": "1yvbhfaaqzhmjmwjh75i1p4mrqp3ksw74bp8lrll81c6zf8bmvig",
-    "fetchSubmodules": true
+    "rev": "733abd4af0f23f217caa2a303fbef66382d19d6f",
+    "date": "2019-04-11T10:18:26-06:00",
+    "sha256": "1xhrdv6cgmq9qslb476rcs8ifw8i2vf43yvmmscjcmpz0jac4sbx",
+    "fetchSubmodules": false
   },
   "zsh-completions": {
     "url": "https://github.com/zsh-users/zsh-completions.git",
-    "rev": "70a7a5cdee168b6cb9400cccbe48427906b6ca28",
-    "date": "2018-01-10T21:10:18+01:00",
-    "sha256": "0mazbh99w4xigzq50n1kzpa19ql9nvdiw2xnfv9hhcw2zwvyrx3x",
-    "fetchSubmodules": true
+    "rev": "cf565254e26bb7ce03f51889e9a29953b955b1fb",
+    "date": "2018-12-13T18:23:04+01:00",
+    "sha256": "1yf4rz99acdsiy0y1v3bm65xvs2m0sl92ysz0rnnrlbd5amn283l",
+    "fetchSubmodules": false
   },
   "zsh-syntax-highlighting": {
     "url": "https://github.com/zsh-users/zsh-syntax-highlighting.git",
-    "rev": "5e9b7c4650e4386a4620011c589475baa6263eb1",
-    "date": "2018-03-10T10:25:18-06:00",
-    "sha256": "0vc21xdbk1ciky3bkng3yrnqppamvf77aqn9a5ryvl45ba8sm37c",
-    "fetchSubmodules": true
+    "rev": "972ad197c13d25f9b54a1c49405dc218a78781d6",
+    "date": "2019-04-14T08:26:03-05:00",
+    "sha256": "179kwafbmjq29dc6rh9g7cfks3ckvd898qj3akd93v11sdcz1wf2",
+    "fetchSubmodules": false
   }
 }
