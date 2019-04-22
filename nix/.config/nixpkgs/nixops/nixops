@@ -3,7 +3,7 @@
 set -euo pipefail
 
 NIXOPS=${NIXOPS:-nixops}
-NIXOPS_STATE=${NIXOPS_STATE:-./secrets/store/deployments.nixops}
+NIXOPS_STATE=${NIXOPS_STATE:-"$(dirname "${0}")/secrets/store/deployments.nixops"}
 
 fatal() {
   echo '** ERROR:' "$@" >&2
