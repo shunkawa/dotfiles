@@ -30,36 +30,17 @@
     };
   };
 
-  nixpkgs.config = {
-    packageOverrides = pkgs: rec {
-      vsftpd = pkgs.vsftpd.override { sslEnable = true; };
-    };
-  };
-
-  services.vsftpd = {
-    enable = true;
-    forceLocalLoginsSSL = true;
-    forceLocalDataSSL = true;
-    userlistDeny = false;
-    localUsers = true;
-    userlist = [ config.users.users.nadiah.name ];
-    chrootlocalUser = false;
-    rsaCertFile = "/var/lib/acme/cloud.maher.fyi/fullchain.pem";
-    rsaKeyFile = "/var/lib/acme/cloud.maher.fyi/key.pem";
-    writeEnable = true;
-  };
-
   users.users = {
     eqyiel = {
       createHome = true;
-      home = "/data/home/eqyiel";
+      home = "/data/cloud.maher.fyi/home/eqyiel";
       isSystemUser = false;
       useDefaultShell = true;
       extraGroups = [ "wheel" "nginx" "journal" ];
     };
     nadiah = (import ./secrets.nix).users.users.nadiah // {
       createHome = true;
-      home = "/data/home/nadiah";
+      home = "/data/cloud.maher.fyi/home/nadiah";
       isSystemUser = false;
       useDefaultShell = true;
       extraGroups = [ "wheel" "nginx" "journal" ];

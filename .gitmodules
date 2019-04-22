@@ -1,9 +1,6 @@
 [submodule "nix/.nix-defexpr/darwin"]
 	path = nix/.nix-defexpr/darwin
 	url = git@github.com:LnL7/nix-darwin.git
-[submodule "nix/.config/nixpkgs/packages/riot"]
-	path = nix/.config/nixpkgs/packages/riot
-	url = git@github.com:eqyiel/riot-electron-nix.git
 [submodule "nix/.config/nixpkgs/nixops/realms/tomoyo.maher.fyi/lib/matrix-appservice-irc-nixos"]
 	path = nix/.config/nixpkgs/nixops/realms/tomoyo.maher.fyi/lib/matrix-appservice-irc-nixos
 	url = git@github.com:Ralith/matrix-appservice-irc-nixos.git
@@ -13,9 +10,6 @@
 [submodule "nix/.nix-defexpr/home-manager"]
 	path = nix/.nix-defexpr/home-manager
 	url = git@github.com:rycee/home-manager.git
-[submodule "nix/.nix-defexpr/matrix-appservice-irc-nixos"]
-	path = nix/.nix-defexpr/matrix-appservice-irc-nixos
-	url = git@github.com:eqyiel/matrix-appservice-irc-nixos.git
 [submodule "nix/.nix-defexpr/nixpkgs-mozilla"]
 	path = nix/.nix-defexpr/nixpkgs-mozilla
 	url = git@github.com:mozilla/nixpkgs-mozilla.git

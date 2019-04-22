@@ -93,13 +93,6 @@ in rec {
 
   browserpass = callPackage ./browserpass { gnupg = pkgs.gnupg22; };
 
-  riot = callPackage ./riot {
-    # I have had trouble building this package with any nodejs version other
-    # than the one it was cooked for by node2nix, so make sure to use the same
-    # one.
-    nodejs = pkgs.nodejs-10_x;
-  };
-
   libopenraw = callPackage ./libopenraw {};
 
   pia-nm = callPackage ./pia-nm {};

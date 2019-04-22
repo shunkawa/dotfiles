@@ -25,7 +25,7 @@ in {
       adminpassFile = "/run/keys/nextcloud-adminpass-file";
     };
     maxUploadSize = "512M";
-    home = "/data/var/lib/nextcloud";
+    home = "/data/cloud.maher.fyi/var/lib/nextcloud";
   };
 
   systemd.services.nextcloud-setup = {
@@ -43,7 +43,7 @@ in {
   services.postgresql = {
     enable = true;
     package = pkgs.postgresql96;
-    dataDir = "/data/var/lib/postgresql/9.6";
+    dataDir = "/data/cloud.maher.fyi/var/lib/postgresql/9.6";
     initialScript = pkgs.writeText "psql-init" ''
       create role nextcloud with login password '${secrets.services.nextcloud.autoconfig.dbpass}';
       create database nextcloud with owner nextcloud;
@@ -83,11 +83,6 @@ in {
     };
   };
 
-  services.phpfpm.pools.nextcloud.extraConfig = ''
-    pm = static
-    pm.max_children = 16
-  '';
-
   deployment.keys.nextcloud-adminpass-file = {
     text = secrets.deployment.keys.nextcloud-adminpass-file;
     user = "nextcloud";
@@ -102,22 +97,6 @@ in {
     user = "root";
     group = "root";
     permissions = "0600";
-  };
-
-  fileSystems."/data" = {
-    autoFormat = true;
-    autoResize = true;
-    device = "/dev/mapper/xvdf";
-    ec2 = {
-      cipher = "aes-cbc-essiv:sha256";
-      encrypt = true;
-      encryptionType = "luks";
-      keySize = 256;
-      size = 1024; # gigabytes
-      volumeType = "sc1";
-    };
-    fsType = "ext4";
-    options = ["_netdev"];
   };
 
   swapDevices = [ { device = "/swapfile"; size = 2 * 1024; }];
@@ -143,10 +122,10 @@ in {
     path = with pkgs; [ fuse ];
     serviceConfig =  {
       Type = "notify";
-      ExecStart = "${pkgs.rclone}/bin/rclone mount db-backups-crypt: /backups --config=/run/keys/rclone-config-db-backups --cache-chunk-no-memory --cache-chunk-path /data/tmp/rclone --vfs-cache-mode full --crypt-show-mapping --log-level INFO --uid ${builtins.toString config.users.users.postgres.uid}  --default-permissions --allow-other";
+      ExecStart = "${pkgs.rclone}/bin/rclone mount db-backups-s3:cloud.maher.fyi-db-backups /backups --config=/run/keys/rclone-config-db-backups --cache-chunk-no-memory --cache-chunk-path /data/cloud.maher.fyi/tmp/rclone --vfs-cache-mode full --log-level INFO --uid ${builtins.toString config.users.users.postgres.uid}  --default-permissions --allow-other";
       ExecStartPre = pkgs.writeScript "rclone-setup" ''
         #!${pkgs.stdenv.shell}
-        mkdir -p /data/tmp/rclone
+        mkdir -p /data/cloud.maher.fyi/tmp/rclone
         mkdir -p /backups
       '';
       ExecStop = "/run/wrappers/bin/fusermount -uz /backups";
