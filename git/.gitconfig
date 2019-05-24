@@ -8,6 +8,7 @@
   autocrlf = false
 [merge]
   tool = emerge
+  conflictstyle=diff3
 [color]
   ui = true
 [push]
