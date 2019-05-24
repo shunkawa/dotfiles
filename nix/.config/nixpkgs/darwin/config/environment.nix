@@ -20,6 +20,7 @@
       local-packages.Anki
       local-packages.Docker
       local-packages.GIMP
+      local-packages.ImageOptim
       local-packages.Sketch
       local-packages.Spectacle
       syncthing

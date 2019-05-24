@@ -295,6 +295,17 @@ in rec {
     homepage = https://www.gimp.org;
   });
 
+  ImageOptim = (installApplication rec {
+    name = "ImageOptim";
+    version = "1.8.8";
+    src = pkgs.fetchurl {
+      url = "https://imageoptim.com/ImageOptim${version}.tar.bz2";
+      sha256 = "1qyc4fpx9bac3mi02gracv86c4xq1b6is3am79p1iw6bp19fd37l";
+    };
+    description = "ImageOptim makes images load faster";
+    homepage = https://imageoptim.com;
+  });
+
   omnisharp-roslyn = callPackage ./omnisharp-roslyn {};
 
   docker-convenience-scripts = callPackage ./docker-convenience-scripts {};
