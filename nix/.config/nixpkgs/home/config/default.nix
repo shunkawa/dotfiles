@@ -80,7 +80,6 @@
         discord
         firefox
         gimp
-        gimp
         libreoffice
         mpv
         pinentry
