@@ -81,7 +81,6 @@
         firefox
         gimp
         gimp
-        icedtea8_web # iDRAC administration
         libreoffice
         mpv
         pinentry
