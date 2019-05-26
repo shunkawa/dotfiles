@@ -278,3 +278,14 @@ blueline:/storage/emulated/0 $ mkdir -p sync/org
 #+END_EXAMPLE
 
 Now the folder target for the web GUI will be ~/storage/emulated/0/sync/org~.
+
+** SSH tunnel to remote Syncthing
+
+You don't have to expose Syncthing's default port to the world on the remote
+host.  You can access it in the browser locally by proxying to the remote port to a
+local one using SSH like this, where Syncthing is running on 127.0.0.1:8384
+remotely and you'd open =localhost:8080= in the local browser.
+
+#+BEGIN_EXAMPLE
+ssh -L 8080:127.0.0.1:8384 user@host
+#+END_EXAMPLE

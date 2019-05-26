@@ -12,10 +12,9 @@ let
 
   deviceNames = {
     cloud = "cloud.maher.fyi";
-    hoshijiro = "hoshijiro.maher.fyi";
     ayanami = "ayanami.maher.fyi";
-    hanekawa = "hanekawa.local";
-    nexus = "nexus-5x";
+    pc2218 = "pc2218";
+    pixel = "pixel";
   };
 
   # .stignore isn't synced, but necessary for ignoring files.
@@ -49,13 +48,7 @@ let
   } value) ({
     "${deviceNames.cloud}" = {
       device = {
-        id = "THQKP7R-GSBJTZT-7MFM4SF-DYVA7FZ-IYODSZC-YVAPLVM-BU3FM25-6N4JLQB";
-      };
-    };
-
-    "${deviceNames.hoshijiro}" = {
-      device = {
-        id = "IO2LARC-WUVNBXV-IMWNJX5-TIKFUDH-EUV3CZH-BI6VQT3-46VYPWD-XDOH7AO";
+        id = "HWRJGYH-3BZL4DZ-QDIPELO-AQAFUNR-6UPK5VM-5MK2NV6-R572BXS-KH6CHQG";
       };
     };
 
@@ -65,15 +58,15 @@ let
       };
     };
 
-    "${deviceNames.hanekawa}" = {
+    "${deviceNames.pc2218}" = {
       device = {
-        id = "IY4ARVX-QWWGGMW-OSTY7B4-ODOXIQ2-6K7W2YJ-DROMFPW-XWKKNRY-4BLW6QD";
+        id = "C5GB32Q-RH52U3Y-5UXIRNQ-US7MOWA-5UB7FWJ-XFRXPTA-LWJSXII-E6T4WQF";
       };
     };
 
-    "${deviceNames.nexus}" = {
+    "${deviceNames.pixel}" = {
       device = {
-        id = "FTZEHHM-RPVSGSF-TRD63QZ-XULA74B-XTI5HY3-ZSES35Z-VFXX4RK-J43PSAZ";
+        id = "AMMXC5J-BLXQZ6K-JN7NP4I-6DDBEWP-YUZ77LS-FHMQCWN-Y7RL4VQ-MPAHHQ7";
       };
     };
   });
@@ -122,7 +115,7 @@ let
       };
 
       participants = with deviceNames; [
-        hoshijiro hanekawa ayanami cloud
+        ayanami cloud pc2218
       ];
     };
 
@@ -134,15 +127,17 @@ let
 
       versioning = {
         type = "trashcan";
+        params = {
           command = null;
           maxAge = 0;
           versionsPath = null;
           keep = 10;
           cleanoutDays = 0;
+        };
       };
 
       participants = with deviceNames; [
-        hoshijiro hanekawa ayanami cloud
+        ayanami cloud
       ];
     };
 
@@ -154,7 +149,6 @@ let
 
       versioning = {
         type = "trashcan";
-
         params = {
           command = null;
           maxAge = 0;
@@ -165,7 +159,7 @@ let
       };
 
       participants = with deviceNames; [
-        nexus hoshijiro hanekawa ayanami cloud
+        ayanami cloud
       ];
     };
 
@@ -175,10 +169,19 @@ let
         path = "~/sync/android";
       };
 
-      versioning = null;
+      versioning = {
+        type = "trashcan";
+        params = {
+          command = null;
+          maxAge = 0;
+          versionsPath = null;
+          keep = 10;
+          cleanoutDays = 0;
+        };
+      };
 
       participants = with deviceNames; [
-        nexus hoshijiro cloud
+        ayanami cloud pixel
       ];
     };
 
@@ -188,10 +191,41 @@ let
         path = "~/sync/memes";
       };
 
-      versioning = null;
+      versioning = {
+        type = "trashcan";
+        params = {
+          command = null;
+          maxAge = 0;
+          versionsPath = null;
+          keep = 10;
+          cleanoutDays = 0;
+        };
+      };
 
       participants = with deviceNames; [
-        hanekawa hoshijiro cloud
+        cloud ayanami
+      ];
+    };
+
+    keepassxc = {
+      folder = {
+        id = "zu9uq-smuaa";
+        path = "~/sync/keepassxc";
+      };
+
+      versioning = {
+        type = "trashcan";
+        params = {
+          command = null;
+          maxAge = 0;
+          versionsPath = null;
+          keep = 10;
+          cleanoutDays = 0;
+        };
+      };
+
+      participants = with deviceNames; [
+        ayanami cloud pc2218 pixel
       ];
     };
   };
