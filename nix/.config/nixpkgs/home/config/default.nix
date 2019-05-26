@@ -47,6 +47,7 @@
       isync
       jhead
       jq
+      keepassxc
       msmtp
       mu
       ncmpcpp
