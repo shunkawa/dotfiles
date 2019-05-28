@@ -34,7 +34,13 @@ stdenv.mkDerivation rec {
     mkdir -p $out/share/hiptext
     cp $src/DejaVuSansMono.ttf $out/share/hiptext
 
+
+    # Hiptext defaults to "en_US.utf8" if LANG is not present:
+    # https://github.com/jart/hiptext/blob/da18b54c614beb74b7cb8671ea501caae2f8e85f/src/hiptext.cc#L206
+    # But this will fail on macOS because it expects uppercase for UTF-8:
+    # https://github.com/bakwc/JamSpell/issues/37#issuecomment-453094017
     wrapProgram $out/bin/hiptext \
+      --set "LANG" "en_US.UTF-8" \
       --add-flags "--font $out/share/hiptext/DejaVuSansMono.ttf"
   '';
 
