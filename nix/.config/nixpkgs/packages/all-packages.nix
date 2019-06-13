@@ -313,16 +313,32 @@ in rec {
 
   pass = pkgs.pass.overrideAttrs (attrs: { doInstallCheck = false; });
 
+  node-build = callPackage ({ stdenv, fetchFromGitHub }: stdenv.mkDerivation rec {
+    name = "node-build";
+    version = "4.6.1";
+    src = pkgs.fetchFromGitHub {
+      owner = "nodenv";
+      repo = "node-build";
+      rev = "v${version}";
+      sha256 = "0hza05g841klbji6417m5xrql83jqm9n6wpskh6qrwha8y68kr5d";
+    };
+    buildPhase = ''
+      PREFIX=$out ./install.sh
+
+      # This folder is created by the script, but is empty.
+      rm -rf $out/etc
+    '';
+  }) {};
+
   nodenv = callPackage ({ stdenv, fetchFromGitHub }: stdenv.mkDerivation rec {
     name = "nodenv";
     version = "1.3.0";
     src = pkgs.fetchFromGitHub {
       owner = "nodenv";
       repo = "nodenv";
-      rev = "83b7614d86f69df2556aec8d01a23358037b0164";
+      rev = "v${version}";
       sha256 = "01r8dycbyw3lcqpq4a79kp0zrm5a8sr2j2sazgvsgwq99c22ss0v";
     };
-
     dontBuild = true;
     installPhase = ''
       mkdir -p $out/bin
@@ -333,7 +349,7 @@ in rec {
       mkdir -p $out/share/fish/completions
       mkdir -p $out/share/zsh/site-functions
 
-      mv completions/nodenv.zsh $out/share/zsh/site-functions/_nodenv.zsh
+      mv completions/nodenv.zsh $out/share/zsh/site-functions/_nodenv
       mv completions/nodenv.fish $out/share/fish/completions
       mv completions/nodenv.bash $out/etc/bash_completion.d
     '';

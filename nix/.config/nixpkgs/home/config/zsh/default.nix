@@ -418,9 +418,15 @@ in (lib.recursiveUpdate ({
       source $(command -v aws_bash_completer)
     fi
 
-    eval "$(${pkgs.direnv}/bin/direnv hook zsh)"
+    # This needs to be sourced from an interactive shell in order to work.
+    export PATH="/Users/r-maher/.nodenv/shims:''${PATH}"
+    export NODENV_SHELL=zsh
+    source "${pkgs.local-packages.nodenv}/share/zsh/site-functions/_nodenv"
+    # I'm deliberately not doing this because it creates a shell function with
+    # the same name as the script, and has other side effects.
+    # eval "$(nodenv init -)"
 
-    eval "$(nodenv init -)"
+    eval "$(${pkgs.direnv}/bin/direnv hook zsh)"
   '';
 
   home.file.".zlogout".source = pkgs.writeText "zlogout" ''

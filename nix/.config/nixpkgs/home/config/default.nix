@@ -76,6 +76,7 @@
       emacs-with-packages
       hiptext
       nodenv
+      node-build
       pass-show-first-line
     ]) ++ lib.optionals stdenv.isLinux ([
         anki
