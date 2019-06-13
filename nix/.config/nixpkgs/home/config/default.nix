@@ -35,6 +35,7 @@
       findutils
       fortune
       fzf
+      gimp
       git-lfs
       gitAndTools.git-crypt
       gitAndTools.gitFull
@@ -44,6 +45,7 @@
       gnused
       gnutar
       htop
+      inkscape
       isync
       jhead
       jq
@@ -73,6 +75,7 @@
       docker-convenience-scripts
       emacs-with-packages
       hiptext
+      nodenv
       pass-show-first-line
     ]) ++ lib.optionals stdenv.isLinux ([
         anki

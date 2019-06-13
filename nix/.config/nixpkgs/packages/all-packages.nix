@@ -312,4 +312,30 @@ in rec {
   docker-convenience-scripts = callPackage ./docker-convenience-scripts {};
 
   pass = pkgs.pass.overrideAttrs (attrs: { doInstallCheck = false; });
+
+  nodenv = callPackage ({ stdenv, fetchFromGitHub }: stdenv.mkDerivation rec {
+    name = "nodenv";
+    version = "1.3.0";
+    src = pkgs.fetchFromGitHub {
+      owner = "nodenv";
+      repo = "nodenv";
+      rev = "83b7614d86f69df2556aec8d01a23358037b0164";
+      sha256 = "01r8dycbyw3lcqpq4a79kp0zrm5a8sr2j2sazgvsgwq99c22ss0v";
+    };
+
+    dontBuild = true;
+    installPhase = ''
+      mkdir -p $out/bin
+      mv libexec $out
+      ln -s $out/libexec/nodenv $out/bin/nodenv
+
+      mkdir -p $out/etc/bash_completion.d
+      mkdir -p $out/share/fish/completions
+      mkdir -p $out/share/zsh/site-functions
+
+      mv completions/nodenv.zsh $out/share/zsh/site-functions/_nodenv.zsh
+      mv completions/nodenv.fish $out/share/fish/completions
+      mv completions/nodenv.bash $out/etc/bash_completion.d
+    '';
+  }) {};
 }

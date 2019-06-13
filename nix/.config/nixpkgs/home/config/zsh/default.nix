@@ -419,6 +419,8 @@ in (lib.recursiveUpdate ({
     fi
 
     eval "$(${pkgs.direnv}/bin/direnv hook zsh)"
+
+    eval "$(nodenv init -)"
   '';
 
   home.file.".zlogout".source = pkgs.writeText "zlogout" ''

@@ -52,6 +52,7 @@
       groovy-mode
       haskell-mode
       highlight-indentation
+      ibuffer-projectile
       ivy
       js2-mode
       json-mode
