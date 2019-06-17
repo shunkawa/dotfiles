@@ -307,6 +307,18 @@ in rec {
     homepage = https://imageoptim.com;
   });
 
+  SequelPro = (installApplication rec {
+    name = "SequelPro";
+    version = "1.1.2";
+    sourceRoot = "Sequel Pro.app";
+    src = pkgs.fetchurl {
+      url = "https://github.com/sequelpro/sequelpro/releases/download/release-${version}/sequel-pro-${version}.dmg";
+      sha256 = "1il7yc3f0yzxkra27bslnmka5ycxzx0q4m3xz2j9r7iyq5izsd3v";
+    };
+    description = "MySQL/MariaDB database management for macOS";
+    homepage = https://sequelpro.com/;
+  });
+
   omnisharp-roslyn = callPackage ./omnisharp-roslyn {};
 
   docker-convenience-scripts = callPackage ./docker-convenience-scripts {};
