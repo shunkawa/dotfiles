@@ -206,28 +206,6 @@ let
         cloud ayanami
       ];
     };
-
-    keepassxc = {
-      folder = {
-        id = "zu9uq-smuaa";
-        path = "~/sync/keepassxc";
-      };
-
-      versioning = {
-        type = "trashcan";
-        params = {
-          command = null;
-          maxAge = 0;
-          versionsPath = null;
-          keep = 10;
-          cleanoutDays = 0;
-        };
-      };
-
-      participants = with deviceNames; [
-        ayanami cloud pc2218 pixel
-      ];
-    };
   };
 
   mkConfig = (hostname: ''
