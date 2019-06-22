@@ -1,5 +1,5 @@
 { stdenv, gnused, nettools, runCommand }:
 
 runCommand "get-hostname" {
-  buildInputs = [ gnused ] ++ stdenv.lib.optional stdenv.isLinux [ nettools ];
+  buildInputs = [ gnused nettools ];
 } ''echo "$(hostname)" | sed 's#\(.*\)#"\1"#' > $out''
