@@ -245,6 +245,10 @@ $ nix-shell -p androidenv.androidsdk_7_0_extras --run zsh
 #+END_EXAMPLE
 
 *** Syncthing
+
+Note: these days I don't try to use Org for such things, so this use case is out
+of date.  Syncing the entire =/storage/emulated/0= folder seems to be OK.
+
 I want to sync the entire =/sdcard= folder with Syncthing.  This leads to
 problems with other individual folders that I want to sync, for example =org=.
 
