@@ -80,7 +80,6 @@ lib.mkMerge ([
           mpv
           pinentry
           shellcheck # ghc isn't available from any cache on darwin
-          steam
           vdirsyncer
           youtube-dl
         ]
