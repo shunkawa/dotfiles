@@ -13,7 +13,7 @@ let
   deviceNames = {
     cloud = "cloud.maher.fyi";
     ayanami = "ayanami.maher.fyi";
-    pc2218 = "pc2218";
+    pc2218 = "PC2218";
     pixel = "pixel";
   };
 
@@ -210,7 +210,7 @@ let
 
   mkConfig = (hostname: ''
     <configuration version="28">
-      ${concatStringsSep "\n" (mapAttrsToList (_: value: ''
+      ${concatMapStringsSep "\n" (value: ''
         <folder ${concatStringsSep " "
           (mapAttrsToList (name: value: ''${name}="${mkVal value}"'')
             value.folder)}>
@@ -245,7 +245,7 @@ let
             (mapAttrsToList (name: value: "<${name}>${mkVal value}</${name}>")
               value.options)}
         </folder>
-      '') folders)}
+      '') (flatten (mapAttrsToList (_: value: if (any (x: x == hostname) value.participants) then value else []) folders))}
       ${concatStringsSep "\n" (mapAttrsToList (_: value: ''
         <device
           id="${mkVal value.device.id}"
