@@ -1,4 +1,4 @@
-args@{ lib, pkgs, ... }:
+{ lib, pkgs, actualHostname, ... }:
 
 with lib;
 
@@ -316,9 +316,7 @@ in {
     in {
       "${configPath}".source =
           pkgs.writeText "syncthing-config"
-          (mkConfig (if (attrByPath ["actualHostname"] args) == null
-            then (import pkgs.local-packages.get-hostname)
-            else (attrByPath ["actualHostname"] args)));
+          (mkConfig actualHostname);
     };
 
   # This is a hack to create .stignore files, which syncthing doesn't allow to
