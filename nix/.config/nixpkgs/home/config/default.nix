@@ -85,7 +85,7 @@ lib.mkMerge ([
           youtube-dl
         ]
         ++ (with pkgs.ibus-engines; [ local-packages.ibus-engines.mozc uniemoji ])
-        ++ (with local-packages; [open riot]))
+        ++ (with local-packages; [open]))
       ++ lib.optionals stdenv.isDarwin ([
         pinentry_mac
         (youtube-dl.override ({ phantomjsSupport = false; }))
