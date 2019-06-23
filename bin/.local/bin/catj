@@ -1,0 +1,14 @@
+#!/usr/bin/env jq -rf
+
+tostream
+| select(length > 1)
+| (
+  .[0] | map(
+    if type == "number"
+    then "[" + tostring + "]"
+    else "." + .
+    end
+  ) | join("")
+) + " = " + (.[1] | @json)
+
+# https://news.ycombinator.com/item?id=20246957
