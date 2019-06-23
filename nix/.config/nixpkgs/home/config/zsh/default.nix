@@ -426,6 +426,8 @@ in (lib.recursiveUpdate ({
     # the same name as the script, and has other side effects.
     # eval "$(nodenv init -)"
 
+    export PATH="''${HOME}/.local/bin:''${PATH}"
+
     eval "$(${pkgs.direnv}/bin/direnv hook zsh)"
   '';
 
