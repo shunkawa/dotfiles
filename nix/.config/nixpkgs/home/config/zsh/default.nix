@@ -418,8 +418,10 @@ in (lib.recursiveUpdate ({
       source $(command -v aws_bash_completer)
     fi
 
-    export PATH="''${HOME}/.nodenv/shims:''${PATH}"
-    eval "$(nodenv init - zsh)"
+    if $(command -v nodenv >/dev/null 2>&1); then
+      export PATH="''${HOME}/.nodenv/shims:''${PATH}"
+      eval "$(nodenv init - zsh)"
+    fi
 
     export PATH="''${HOME}/.local/bin:''${PATH}"
 
