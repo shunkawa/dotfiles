@@ -418,13 +418,8 @@ in (lib.recursiveUpdate ({
       source $(command -v aws_bash_completer)
     fi
 
-    # This needs to be sourced from an interactive shell in order to work.
-    export PATH="/Users/r-maher/.nodenv/shims:''${PATH}"
-    export NODENV_SHELL=zsh
-    source "${pkgs.local-packages.nodenv}/share/zsh/site-functions/_nodenv"
-    # I'm deliberately not doing this because it creates a shell function with
-    # the same name as the script, and has other side effects.
-    # eval "$(nodenv init -)"
+    export PATH="''${HOME}/.nodenv/shims:''${PATH}"
+    eval "$(nodenv init - zsh)"
 
     export PATH="''${HOME}/.local/bin:''${PATH}"
 
