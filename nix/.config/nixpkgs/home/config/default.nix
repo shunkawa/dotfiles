@@ -1,6 +1,8 @@
 { pkgs, lib, ... }:
 
-lib.mkMerge ([
+let
+  state = (builtins.fromJSON (builtins.readFile ./state.json));
+in lib.mkMerge ([
   {
     programs.home-manager.enable = true;
     programs.home-manager.path = "<home-manager>";
@@ -100,7 +102,7 @@ lib.mkMerge ([
   }
   (import ./syncthing {
     inherit lib pkgs;
-    actualHostname = (import pkgs.local-packages.get-hostname);
+    actualHostname = state.host;
   })
   (import ./tmux { inherit lib pkgs; })
   (import ./zsh { inherit lib pkgs; })
