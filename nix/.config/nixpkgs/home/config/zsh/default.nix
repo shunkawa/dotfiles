@@ -425,7 +425,9 @@ in (lib.recursiveUpdate ({
 
     export PATH="''${HOME}/.local/bin:''${PATH}"
 
-    eval "$(${pkgs.direnv}/bin/direnv hook zsh)"
+    if $(command -v direnv >/dev/null 2>&1); then
+      eval "$(direnv hook zsh)"
+    fi
   '';
 
   home.file.".zlogout".source = pkgs.writeText "zlogout" ''
