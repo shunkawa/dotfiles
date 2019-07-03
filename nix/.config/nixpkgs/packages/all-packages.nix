@@ -319,6 +319,18 @@ in rec {
     homepage = https://sequelpro.com/;
   });
 
+  Contexts = (installApplication rec {
+    name = "Contexts";
+    version = "3.7.1";
+    sourceRoot = "Contexts.app";
+    src = pkgs.fetchurl {
+      url = "https://contexts.co/releases/${name}-${version}.dmg";
+      sha256 = "11ws96nzq18mixcnjgcqlcal2s2qmv8kkd86aqapc0n31ik4lpny";
+    };
+    description = "Radically simpler & faster window switcher for macOS";
+    homepage = https://contexts.co/;
+  });
+
   omnisharp-roslyn = callPackage ./omnisharp-roslyn {};
 
   docker-convenience-scripts = callPackage ./docker-convenience-scripts {};
