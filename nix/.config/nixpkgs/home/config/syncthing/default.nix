@@ -108,16 +108,16 @@ let
       markerName = ".stfolder";
     };
   } value) {
-    git = {
-      folder = {
-        id = "kutcp-g4uze";
-        path = "~/sync/git";
-      };
+    # git = {
+    #   folder = {
+    #     id = "kutcp-g4uze";
+    #     path = "~/sync/git";
+    #   };
 
-      participants = with deviceNames; [
-        ayanami cloud pc2218
-      ];
-    };
+    #   participants = with deviceNames; [
+    #     ayanami cloud pc2218
+    #   ];
+    # };
 
     history = {
       folder = {
