@@ -9,11 +9,11 @@
       packageOverrides = pkgs: {
         iterm2 = with pkgs; stdenv.mkDerivation rec {
           name = "iterm2";
-          version = "3.2.0beta3";
+          version = "3.3.0beta13";
 
           src = fetchzip {
             url = "https://iterm2.com/downloads/beta/iTerm2-${lib.replaceStrings ["."] ["_"] version}.zip";
-            sha256 = "1rczg82ppwizjvqii3vm1bmnl6r97qhchriz4xvrv7khv8gnzw1x";
+            sha256 = "07xld67r7i7bcqwfj3hq6211rifsrxdf8b8i7lp89dh28q79i5gi";
           };
 
           dontBuild = true;
