@@ -13,7 +13,7 @@
 
           src = fetchzip {
             url = "https://iterm2.com/downloads/beta/iTerm2-${lib.replaceStrings ["."] ["_"] version}.zip";
-            sha256 = "07xld67r7i7bcqwfj3hq6211rifsrxdf8b8i7lp89dh28q79i5gi";
+            sha256 = "113b9hybz5k6k5zx4d988dm3yr31cp1xak4l2i0rywdphpaixqpg";
           };
 
           dontBuild = true;
@@ -29,7 +29,7 @@
           version = "1.1.4";
 
           src = fetchurl {
-            url = "https://github.com/syncthing/syncthing/releases/download/v${version}/syncthing-macosx-amd64-v${version}.tar.gz";
+            url = "https://github.com/syncthing/syncthing/releases/download/v${version}/syncthing-macos-amd64-v${version}.tar.gz";
             sha256 = "0gi8rcz63yvxcpa5f47a4wygsh3s1613097hwn0vj8whxlanq64x";
           };
 
