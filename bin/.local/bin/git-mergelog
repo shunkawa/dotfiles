@@ -1,0 +1,48 @@
+#!/bin/sh
+
+DRY_RUN=${DRY_RUN:-""}
+TARGET_BRANCH="${1}"
+
+set -eu
+
+fatal () {
+  echo '** ERROR:' "$@" >&2
+  exit 1
+}
+
+if [ $# -lt 1 ]; then
+  fatal "missing argument (please specify target branch)."
+fi
+
+if [ $# -gt 1 ]; then
+  fatal "unexpected arguments ${@:2}"
+fi
+
+if [ ! -n "$(git rev-parse --git-dir 2>/dev/null)" ]; then
+  fatal "this is not a git repository"
+fi
+
+if [ ! -n "$(git rev-parse --short ${TARGET_BRANCH} 2>/dev/null)" ]; then
+  fatal "target branch does not exist"
+fi
+
+CURRENT_BRANCH="$(git symbolic-ref --short HEAD)"
+
+COMMIT_MESSAGE="$(cat <<EOF
+$(printf 'Merge branch %s (%s) into %s (%s)\n\nBranch %s commits:\n\n' "${TARGET_BRANCH}" "$(git rev-parse --short "${TARGET_BRANCH}")" "${CURRENT_BRANCH}" "$(git rev-parse --short "${CURRENT_BRANCH}")")
+$(git log --format=format:'%h %s by %aN' "${CURRENT_BRANCH}".."${TARGET_BRANCH}")
+$(printf '\n\nBranch %s commits:\n\n' "${CURRENT_BRANCH}")
+$(git log --format=format:'%h %s by %aN' "${TARGET_BRANCH}".."${CURRENT_BRANCH}")
+EOF
+)"
+
+if [ ! -n "${DRY_RUN}" ]; then
+  git merge --no-ff --no-commit "${TARGET_BRANCH}"
+  echo "${COMMIT_MESSAGE}" | git commit --edit --file=-
+else
+  echo "${COMMIT_MESSAGE}" | cat
+fi
+
+# Local Variables:
+# mode: shell-script
+# End:
