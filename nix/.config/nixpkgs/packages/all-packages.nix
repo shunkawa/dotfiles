@@ -331,18 +331,6 @@ in rec {
     homepage = https://contexts.co/;
   });
 
-  Tunnelblick = (installApplication rec {
-    name = "Tunnelblick";
-    version = "3.7.9a_build_5321";
-    sourceRoot = "${name}.app";
-    src = pkgs.fetchurl {
-      url = "https://tunnelblick.net/release/${name}_${version}.dmg";
-      sha256 = "001cnd8s4fkk5zvvsg7qfwq521l830gj9m9xwirmxmdvn1hswdyx";
-    };
-    description = "Free software for OpenVPN on macOS";
-    homepage = https://tunnelblick.net;
-  });
-
   omnisharp-roslyn = callPackage ./omnisharp-roslyn {};
 
   docker-convenience-scripts = callPackage ./docker-convenience-scripts {};
