@@ -25,6 +25,7 @@
       local-packages.SequelPro
       local-packages.Sketch
       local-packages.Spectacle
+      local-packages.Tunnelblick
       syncthing
     ];
 
