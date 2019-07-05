@@ -207,7 +207,7 @@ in rec {
   Anki = installApplication rec {
     name = "Anki";
     version = "2.1.5";
-    sourceRoot = "Anki.app";
+    sourceRoot = "${name}.app";
     src = pkgs.fetchurl {
       url = "https://apps.ankiweb.net/downloads/current/anki-${version}-mac.dmg";
       sha256 = "0ca0sbfxvji6h9g6p3433c663i2kgp3nfgh8b262w1ganxygjfd2";
@@ -219,7 +219,7 @@ in rec {
   Docker = installApplication rec {
     name = "Docker";
     version = "18.06.1-ce-mac";
-    sourceRoot = "Docker.app";
+    sourceRoot = "${name}.app";
     src = pkgs.fetchurl {
       url = https://download.docker.com/mac/stable/Docker.dmg;
       sha256 = "19a7n36nkw20rrklr8qlp76l5xhn037avqfnk81rilghik1yla9l";
@@ -234,7 +234,7 @@ in rec {
   Spectacle = installApplication rec {
     name = "Spectacle";
     version = "1.2";
-    sourceRoot = "Spectacle.app";
+    sourceRoot = "${name}.app";
     src = pkgs.fetchurl {
       url = https://s3.amazonaws.com/spectacle/downloads/Spectacle+1.2.zip;
       sha256 = "037kayakprzvs27b50r260lwh2r9479f2pd221qmdv04nkrmnvbn";
@@ -272,7 +272,7 @@ in rec {
   Sketch = (installApplication rec {
     name = "Sketch";
     version = "52.5";
-    sourceRoot = "Sketch.app";
+    sourceRoot = "${name}.app";
     src = pkgs.fetchurl {
       url = https://download.sketchapp.com/sketch-52.5-67469.zip;
       sha256 = "0msggx6qghb53i04mnzcjlqqqzh9qjwxl9lkqb9bicdbb8lhh6d3";
@@ -316,13 +316,13 @@ in rec {
       sha256 = "1il7yc3f0yzxkra27bslnmka5ycxzx0q4m3xz2j9r7iyq5izsd3v";
     };
     description = "MySQL/MariaDB database management for macOS";
-    homepage = https://sequelpro.com/;
+    homepage = https://sequelpro.com;
   });
 
   Contexts = (installApplication rec {
     name = "Contexts";
     version = "3.7.1";
-    sourceRoot = "Contexts.app";
+    sourceRoot = "${name}.app";
     src = pkgs.fetchurl {
       url = "https://contexts.co/releases/${name}-${version}.dmg";
       sha256 = "11ws96nzq18mixcnjgcqlcal2s2qmv8kkd86aqapc0n31ik4lpny";
