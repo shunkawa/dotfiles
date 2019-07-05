@@ -52,6 +52,7 @@ in lib.mkMerge ([
         (pass.overrideAttrs (attrs: { doInstallCheck = false; }))
         procmail # formail used for some mu hacks
         pwgen
+        qrencode
         ripgrep
         rsync
         sift
