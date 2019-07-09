@@ -362,12 +362,11 @@ in (lib.recursiveUpdate ({
         )
       )
       local ret=$?
-      if [ -n "$selected" ]; then
+      if [ -n "''${selected}" ]; then
         zle kill-whole-line # in case something was already there
-        zle -U "$selected"  # fill with the history item
       fi
+      LBUFFER="''${selected}"
       zle redisplay
-      typeset -f zle-line-init >/dev/null && zle zle-line-init
       return $ret
     }
 
