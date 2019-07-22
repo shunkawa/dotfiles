@@ -10,16 +10,20 @@
 # git show --patch HEAD > revert-9344612d3cd164317170b6189ec43175757e4231.patch
 (stdenv.lib.overrideDerivation (emacs.override { srcRepo = true; })) (attrs: rec {
   name = "emacs-${version}${versionModifier}";
-  version = "26.1.92";
-  versionModifier = "-git";
+  version = "27.0";
+  versionModifier = ".50";
   src = fetchgit {
     url = "git://git.sv.gnu.org/emacs.git";
-    sha256 = "0v6nrmf0viw6ahf8s090hwpsrf6gjpi37r842ikjcsakfxys9dmc";
-    rev = "4c6d17afe1251ddc7f5113991d8e914571f76ecf";
+    sha256 = "1p8k58k4zwkngyrykq5hrdnz1gdy2a1fnhg07yzq1san1w1hc74k";
+    rev = "b10464c6f92f4102e1c4a055c2683c1ab1b98bc6";
   };
   patches = [
-    ./revert-9344612d3cd164317170b6189ec43175757e4231.patch
-    ./clean-env.patch
-    ./tramp-detect-wrapped-gvfsd.patch
+    # This patch reverts the infamous "don't use a color bitmap font until it is
+    # supported on free platforms" commit.  It is needed for 26x but already
+    # applied in master.
+    # https://news.ycombinator.com/item?id=13011185
+    # ./revert-9344612d3cd164317170b6189ec43175757e4231.patch
+    # ./clean-env.patch
+    # ./tramp-detect-wrapped-gvfsd.patch
   ];
 })

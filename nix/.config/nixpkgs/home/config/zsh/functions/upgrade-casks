@@ -11,7 +11,7 @@ function upgrade-casks() {
   fi
 }
 
-upgrade-casks "''${@}"
+upgrade-casks "${@}"
 
 # Local Variables:
 # mode: shell-script

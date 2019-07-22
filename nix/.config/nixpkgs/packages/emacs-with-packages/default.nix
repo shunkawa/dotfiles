@@ -1,15 +1,24 @@
-{ emacsPackagesNg, local-packages }:
+{ emacs, emacsPackagesNgGen, local-packages, fetchFromGitHub }:
 
-# TODO:
-# Figure out how to include packages that aren't in nixpkgs.  I think there is
-# still a use case for having submodules in ~/.emacs.d (for stuff that I want to
-# contribute to) but for others that just aren't available on melpa yet I would
-# like to have them here (for example, flow-js2-mode).
+let
+  emacsPackagesNg = emacsPackagesNgGen emacs;
 
-((emacsPackagesNg.overrideScope' (self: super: {
-  emacs = local-packages.emacs-git;
-})).emacsWithPackages
-  (emacsPackages:
+  emacsPackageOverrides = (self: super: {
+    inherit emacs;
+    org-jira = (self.melpaPackages.org-jira.overrideAttrs (attrs: {
+      src = fetchFromGitHub {
+        owner = "ahungry";
+        repo = "org-jira";
+        rev = "d1d2ff6155c6259a066110ed13d1850143618f7b";
+        sha256 = "044yl2k9ny0m5nyw0k8qhhmalxq3j88i3lhcc5jv1gmymcwaplff";
+      };
+    }));
+  });
+
+  mkEmacsPackages = (emacsPackages:
+    (with emacsPackages; [
+      org-jira
+    ]) ++
     (with emacsPackages.elpaPackages; [
       rainbow-mode
       sql-indent
@@ -31,6 +40,7 @@
       company-emoji
       company-lsp
       company-nixos-options
+      company-posframe
       counsel
       counsel-projectile
       dash
@@ -54,12 +64,12 @@
       highlight-indentation
       ibuffer-projectile
       ivy
+      ivy-posframe
       js2-mode
       json-mode
       key-chord
       legalese
       lsp-java
-      lsp-javascript-flow
       lsp-mode
       lsp-ui
       magit
@@ -104,4 +114,6 @@
       org-plus-contrib
     ]) ++ [
       local-packages.mu
-    ]))
+    ]);
+in ((emacsPackagesNg.overrideScope' emacsPackageOverrides).emacsWithPackages
+  mkEmacsPackages)

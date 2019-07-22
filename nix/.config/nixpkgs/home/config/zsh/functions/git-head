@@ -9,7 +9,7 @@ function git-head () {
   fi
 }
 
-git-head "''${@}"
+git-head "${@}"
 
 # Local Variables:
 # mode: shell-script

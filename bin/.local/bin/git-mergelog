@@ -37,8 +37,11 @@ EOF
 )"
 
 if [ ! -n "${DRY_RUN}" ]; then
+  # git -c core.hooksPath=/dev/null merge --squash --no-commit "${TARGET_BRANCH}"
   git merge --no-ff --no-commit "${TARGET_BRANCH}"
-  echo "${COMMIT_MESSAGE}" | git commit --edit --file=-
+  # TODO: need to be able to skip git hooks sometimes :(
+  echo "${COMMIT_MESSAGE}" | git commit --edit --file=- --no-verify
+  # echo "${COMMIT_MESSAGE}" | git commit --edit --file=-
 else
   echo "${COMMIT_MESSAGE}" | cat
 fi

@@ -16,7 +16,7 @@ function docker-print-image-contents() {
   fi
 }
 
-docker-print-image-contents "''${@}"
+docker-print-image-contents "${@}"
 
 # Local Variables:
 # mode: shell-script

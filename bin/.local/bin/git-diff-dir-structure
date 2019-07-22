@@ -1,0 +1,42 @@
+#!/bin/sh
+
+TMP1="$(mktemp)"
+TMP2="$(mktemp)"
+
+trap 'rm -f $TMP1 $TMP2' EXIT
+
+set -eu
+
+fatal () {
+  echo '** ERROR:' "$@" >&2
+  exit 1
+}
+
+if [ $# -lt 2 ]; then
+  fatal "missing arguments (please specify two refs)."
+fi
+
+if [ $# -gt 2 ]; then
+  fatal "unexpected arguments ${@:3}"
+fi
+
+REF1="${1}"
+REF2="${2}"
+
+_get_tree() {
+  git ls-tree -r --name-only "${1}" | xargs dirname | uniq
+}
+
+_get_tree "${REF1}" > "${TMP1}"
+_get_tree "${REF2}" > "${TMP2}"
+
+# Why temporary files instead of process substitution?  git diff does not work
+# with process substitution because a patch that added handling of process
+# substitution was ignored.
+# https://stackoverflow.com/a/49636553
+# https://marc.info/?l=git&m=141347274420939&w=2
+git diff --unified=0 --no-index -- "${TMP1}" "${TMP2}"
+
+# Local Variables:
+# mode: shell-script
+# End:

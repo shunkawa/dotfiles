@@ -38,7 +38,7 @@ in rec {
 
   emacs-git = callPackage ./emacs-git {};
 
-  emacs-with-packages = callPackage ./emacs-with-packages {};
+  emacs-with-packages = callPackage ./emacs-with-packages { emacs = emacs-git; };
 
   nautilus-python = callPackage ./nautilus-python {};
 
@@ -197,10 +197,21 @@ in rec {
   gitlab-discord-bot = (callPackage ./gitlab-discord-bot {});
 
   # build mu/mu4e with msg2pdf and mug binaries
-  mu = pkgs.mu.override (attrs: {
+  mu = let
+    libpsl = (pkgs.libpsl.overrideAttrs (attrs: {
+      configureFlags = builtins.filter (x: x != "--enable-valgrind-tests") attrs.configureFlags;
+    }));
+
+    libsoup = (pkgs.libsoup.override (_: {
+      inherit libpsl;
+    }));
+  in pkgs.mu.override (_: {
     withMug = true;
-    webkitgtk24x-gtk3 = pkgs.webkitgtk24x-gtk3.override (webkitAttrs: {
+    inherit libsoup;
+    emacs = emacs-git;
+    webkitgtk24x-gtk3 = pkgs.webkitgtk24x-gtk3.override (_: {
       enchant = enchant2;
+      inherit libsoup;
     });
   });
 

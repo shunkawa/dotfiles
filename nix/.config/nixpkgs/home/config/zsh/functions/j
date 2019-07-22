@@ -1,0 +1,15 @@
+#!/usr/bin/env zsh
+
+function j () {
+  if (command -v fzf >/dev/null 2>&1); then
+    cd "$(dirs -l | tr '[:space:]' '\n' | uniq | fzf)";
+  else
+    echo '** ERROR:' "fzf not found in path" >&2
+  fi
+}
+
+j "${@}"
+
+# Local Variables:
+# mode: shell-script
+# End:

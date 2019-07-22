@@ -17,19 +17,24 @@ in lib.mkMerge ([
       '';
 
       packages = with pkgs; [
+        ansible
         aspell
         aspellDicts.en
         bat
         bind
+        bundler
         coreutils
         curl
         direnv
+        docker_compose
         fd
+        feh
         file
         findutils
         fortune
         fzf
-        gimp
+        ghq
+        git-hub
         git-lfs
         gitAndTools.git-crypt
         gitAndTools.gitFull
@@ -39,12 +44,13 @@ in lib.mkMerge ([
         gnused
         gnutar
         htop
+        imagemagick
         inkscape
         isync
         jhead
         jq
+        mitmproxy
         msmtp
-        mu
         ncmpcpp
         nix-prefetch-scripts
         openssh
@@ -59,6 +65,7 @@ in lib.mkMerge ([
         silver-searcher
         socat
         speedtest-cli
+        sqlite-interactive
         stow
         tree
         unrar
@@ -69,8 +76,9 @@ in lib.mkMerge ([
         docker-convenience-scripts
         emacs-with-packages
         hiptext
-        nodenv
+        mu
         node-build
+        nodenv
         pass-show-first-line
       ]) ++ lib.optionals stdenv.isLinux ([
           anki

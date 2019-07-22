@@ -253,8 +253,8 @@ in (lib.recursiveUpdate ({
     export VISUAL="emacsclient -c -a vi"
 
     export FZF_TMUX="1"
-    export FZF_ALT_C_COMMAND="${pkgs.fd}/bin/fd --type d --hidden --follow"
-    export FZF_CTRL_T_COMMAND="${pkgs.fd}/bin/fd --type f --hidden --follow"
+    export FZF_ALT_C_COMMAND="fd --type d --hidden --follow"
+    export FZF_CTRL_T_COMMAND="fd --type f --hidden --follow"
   '';
 
   home.file.".zshrc".source = pkgs.writeText "zshrc" ''
@@ -263,7 +263,7 @@ in (lib.recursiveUpdate ({
     for i in ''${HOME}/.config/zsh/functions/*; do autoload -Uz "$(basename $i)"; done
 
     if [[ -z "$(pgrep gpg-agent)" ]]; then
-      eval "$(${pkgs.gnupg}/bin/gpg-agent --daemon --enable-ssh-support --sh)"
+      eval "$(gpg-agent --daemon --enable-ssh-support --sh)"
     fi
 
     # Don't let gnome's ssh agent clobber this variable
@@ -280,8 +280,6 @@ in (lib.recursiveUpdate ({
 
     autoload -U promptinit; promptinit
     prompt pure
-
-    source "${oh-my-zsh}/plugins/colored-man-pages/colored-man-pages.plugin.zsh"
 
     stty -ixon # disable stop
     # Get rid of pause on control-S
@@ -307,9 +305,7 @@ in (lib.recursiveUpdate ({
     alias mv="mv -iv"
     set -o noclobber
 
-    alias exif-rename="jhead -autorot -n%Y-%m-%d-%04i"
-
-    alias curl="curl --write-out @-<\"${write-out}\""
+    source "${oh-my-zsh}/plugins/colored-man-pages/colored-man-pages.plugin.zsh"
 
     eval "$(dircolors ${dircolors-solarized}/dircolors.ansi-dark)"
 
@@ -322,6 +318,8 @@ in (lib.recursiveUpdate ({
 
     source "${pkgs.fzf}/share/fzf/completion.zsh"
     source "${pkgs.fzf}/share/fzf/key-bindings.zsh"
+
+    source "${zsh-syntax-highlighting}/zsh-syntax-highlighting.zsh"
 
     # See "4.5.3: Function keys and so on" for help figuring out how to type a
     # particular key binding
@@ -352,7 +350,7 @@ in (lib.recursiveUpdate ({
     # http://sgeb.io/posts/2014/04/zsh-zle-custom-widgets/
     # https://github.com/junegunn/fzf/blob/master/shell/key-bindings.zsh
 
-    # This shadows the fzf-history-widget from "${pkgs.fzf}/share/fzf/key-bindings.zsh"
+    # This shadows the fzf-history-widget from share/fzf/key-bindings.zsh
     fzf-history-widget() {
       local selected num
       setopt localoptions noglobsubst pipefail 2> /dev/null
@@ -379,12 +377,12 @@ in (lib.recursiveUpdate ({
     # - The first argument to the function ($1) is the base path to start traversal
     # - See the source code (completion.{bash,zsh}) for the details.
     _fzf_compgen_path() {
-      ${pkgs.fd}/bin/fd --hidden --follow --exclude ".git" . "''${1}"
+      fd --hidden --follow --exclude ".git" . "''${1}"
     }
 
     # Use fd to generate the list for directory completion
     _fzf_compgen_dir() {
-      ${pkgs.fd}/bin/fd --type d --hidden --follow --exclude ".git" . "''${1}"
+      fd --type d --hidden --follow --exclude ".git" . "''${1}"
     }
 
     export RKM_HISTORY_HIST_DIR="''${HOME}/sync/history/zsh"
@@ -406,8 +404,6 @@ in (lib.recursiveUpdate ({
     setopt HIST_REDUCE_BLANKS        # Remove superfluous blanks before recording entry.
     setopt HIST_VERIFY               # Don't execute immediately upon history expansion.
     setopt HIST_BEEP                 # Beep when accessing nonexistent history.
-
-    source "${zsh-syntax-highlighting}/zsh-syntax-highlighting.zsh"
 
     if $(command -v kubectl >/dev/null 2>&1); then
       source <(kubectl completion zsh)
