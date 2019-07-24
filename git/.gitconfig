@@ -25,6 +25,7 @@
   pr = !sh -c 'git fetch $1 pull/$2/head:pr-$1-$2 && git checkout pr-$1-$2' -
   mergelog = !git-mergelog
   diff-dir-structure = !git-diff-dir-structure
+  resolve-root = !git-resolve-root
 [filter "lfs"]
   clean = git-lfs clean -- %f
   smudge = git-lfs smudge -- %f

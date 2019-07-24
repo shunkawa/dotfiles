@@ -29,7 +29,7 @@ fi
 CURRENT_BRANCH="$(git symbolic-ref --short HEAD)"
 
 COMMIT_MESSAGE="$(cat <<EOF
-$(printf 'Merge branch %s (%s) into %s (%s)\n\nBranch %s commits:\n\n' "${TARGET_BRANCH}" "$(git rev-parse --short "${TARGET_BRANCH}")" "${CURRENT_BRANCH}" "$(git rev-parse --short "${CURRENT_BRANCH}")")
+$(printf 'Merge branch %s (%s) into %s (%s)\n\nBranch %s commits:\n\n' "${TARGET_BRANCH}" "$(git rev-parse --short "${TARGET_BRANCH}")" "${CURRENT_BRANCH}" "$(git rev-parse --short "${CURRENT_BRANCH}")" "${CURRENT_BRANCH}")
 $(git log --format=format:'%h %s by %aN' "${CURRENT_BRANCH}".."${TARGET_BRANCH}")
 $(printf '\n\nBranch %s commits:\n\n' "${CURRENT_BRANCH}")
 $(git log --format=format:'%h %s by %aN' "${TARGET_BRANCH}".."${CURRENT_BRANCH}")
@@ -37,13 +37,11 @@ EOF
 )"
 
 if [ ! -n "${DRY_RUN}" ]; then
-  # git -c core.hooksPath=/dev/null merge --squash --no-commit "${TARGET_BRANCH}"
+  echo "${COMMIT_MESSAGE}" > "$(git resolve-root)/COMMIT_EDITMSG"
   git merge --no-ff --no-commit "${TARGET_BRANCH}"
-  # TODO: need to be able to skip git hooks sometimes :(
-  echo "${COMMIT_MESSAGE}" | git commit --edit --file=- --no-verify
-  # echo "${COMMIT_MESSAGE}" | git commit --edit --file=-
+  git commit --edit --file="$(git resolve-root)/COMMIT_EDITMSG" --no-verify
 else
-  echo "${COMMIT_MESSAGE}" | cat
+  echo "${COMMIT_MESSAGE}"
 fi
 
 # Local Variables:

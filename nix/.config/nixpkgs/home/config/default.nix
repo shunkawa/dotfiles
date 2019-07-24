@@ -67,6 +67,7 @@ in lib.mkMerge ([
         speedtest-cli
         sqlite-interactive
         stow
+        toilet
         tree
         unrar
         unzip

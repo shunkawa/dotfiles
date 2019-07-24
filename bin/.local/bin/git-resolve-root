@@ -1,0 +1,22 @@
+#!/bin/sh
+
+resolve () {
+  _cwd="${1}";
+
+  if [ ! -n "${_cwd}" ]; then
+    _cwd="$(pwd)"
+  fi
+
+  if [ -d ".git" ]; then
+    echo "$(pwd)/.git"
+    cd "${_cwd}"
+  else
+    cd .. && f "${_cwd}"
+  fi
+}
+
+resolve
+
+# Local Variables:
+# mode: shell-script
+# End:

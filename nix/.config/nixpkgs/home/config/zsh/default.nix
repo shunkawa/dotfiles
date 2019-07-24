@@ -255,6 +255,8 @@ in (lib.recursiveUpdate ({
     export FZF_TMUX="1"
     export FZF_ALT_C_COMMAND="fd --type d --hidden --follow"
     export FZF_CTRL_T_COMMAND="fd --type f --hidden --follow"
+
+    export LESS="$LESS -FRXK"
   '';
 
   home.file.".zshrc".source = pkgs.writeText "zshrc" ''
