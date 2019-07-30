@@ -1,6 +1,7 @@
 #!/bin/sh
 
 DRY_RUN=${DRY_RUN:-""}
+NO_VERIFY=${NO_VERIFY:-""}
 TARGET_BRANCH="${1}"
 
 set -eu
@@ -36,10 +37,22 @@ $(git log --format=format:'%h %s by %aN' "${TARGET_BRANCH}".."${CURRENT_BRANCH}"
 EOF
 )"
 
+EXTRA_GIT_ARGS=""
+
+if [ ! -n "${NO_VERIFY}" ]; then
+  # This is equivalent to --no-verify, but it works for merge too.  --no-verify
+  # is only valid for the commit subcommand.
+  EXTRA_GIT_ARGS="-c core.hooksPath=/dev/null"
+fi
+
 if [ ! -n "${DRY_RUN}" ]; then
-  echo "${COMMIT_MESSAGE}" > "$(git resolve-root)/COMMIT_EDITMSG"
-  git merge --no-ff --no-commit "${TARGET_BRANCH}"
-  git commit --edit --file="$(git resolve-root)/COMMIT_EDITMSG" --no-verify
+  if [ -f "$(git resolve-root)/MERGE_HEAD" ]; then
+    git "${EXTRA_GIT_ARGS}" merge --continue --edit --file="$(git resolve-root)/COMMIT_EDITMSG"
+  else
+    echo "${COMMIT_MESSAGE}" > "$(git resolve-root)/COMMIT_EDITMSG"
+    git "${EXTRA_GIT_ARGS}" merge --no-ff --no-commit "${TARGET_BRANCH}"
+    git "${EXTRA_GIT_ARGS}" commit --edit --file="$(git resolve-root)/COMMIT_EDITMSG"
+  fi
 else
   echo "${COMMIT_MESSAGE}"
 fi
