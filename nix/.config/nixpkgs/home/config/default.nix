@@ -27,6 +27,7 @@ in lib.mkMerge ([
         curl
         direnv
         docker_compose
+        exa
         fd
         feh
         file

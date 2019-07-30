@@ -307,9 +307,10 @@ in (lib.recursiveUpdate ({
     alias mv="mv -iv"
     set -o noclobber
 
-    source "${oh-my-zsh}/plugins/colored-man-pages/colored-man-pages.plugin.zsh"
+    alias l='exa -la'
+    alias ll='l'
 
-    eval "$(dircolors ${dircolors-solarized}/dircolors.ansi-dark)"
+    source "${oh-my-zsh}/plugins/colored-man-pages/colored-man-pages.plugin.zsh"
 
     source "${zsh-autosuggestions}/zsh-autosuggestions.zsh"
 
