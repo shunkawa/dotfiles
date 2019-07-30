@@ -29,7 +29,7 @@ fi
 CURRENT_BRANCH="$(git symbolic-ref --short HEAD)"
 
 COMMIT_MESSAGE="$(cat <<EOF
-$(printf 'Merge branch %s (%s) into %s (%s)\n\nBranch %s commits:\n\n' "${TARGET_BRANCH}" "$(git rev-parse --short "${TARGET_BRANCH}")" "${CURRENT_BRANCH}" "$(git rev-parse --short "${CURRENT_BRANCH}")" "${CURRENT_BRANCH}")
+$(printf 'Merge branch %s (%s) into %s (%s)\n\nBranch %s commits:\n\n' "${TARGET_BRANCH}" "$(git rev-parse --short "${TARGET_BRANCH}")" "${CURRENT_BRANCH}" "$(git rev-parse --short "${CURRENT_BRANCH}")" "${TARGET_BRANCH}")
 $(git log --format=format:'%h %s by %aN' "${CURRENT_BRANCH}".."${TARGET_BRANCH}")
 $(printf '\n\nBranch %s commits:\n\n' "${CURRENT_BRANCH}")
 $(git log --format=format:'%h %s by %aN' "${TARGET_BRANCH}".."${CURRENT_BRANCH}")
