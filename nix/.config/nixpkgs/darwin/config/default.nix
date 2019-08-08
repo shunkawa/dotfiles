@@ -7,7 +7,7 @@
     ./nix-docker.nix
   ];
 
-  services.nix-daemon.enable = false;
+  services.nix-daemon.enable = true;
 
   nix = {
     nixPath = [
