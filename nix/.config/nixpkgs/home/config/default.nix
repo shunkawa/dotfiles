@@ -40,6 +40,7 @@ in lib.mkMerge ([
         git-lfs
         gitAndTools.git-crypt
         gitAndTools.gitFull
+        gitAndTools.pass-git-helper
         gitAndTools.transcrypt
         gnumake
         gnupg
