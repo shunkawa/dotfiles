@@ -18,13 +18,14 @@
       aspellDicts.en-science
       iterm2
       local-packages.Anki
-      local-packages.Docker
       local-packages.Contexts
+      local-packages.Docker
       local-packages.GIMP
       local-packages.ImageOptim
       local-packages.SequelPro
       local-packages.Sketch
       local-packages.Spectacle
+      qemu
       syncthing
     ];
 

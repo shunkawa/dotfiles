@@ -29,6 +29,7 @@ in lib.mkMerge ([
         docker_compose
         entr
         exa
+        fasd
         fd
         feh
         file
@@ -36,10 +37,10 @@ in lib.mkMerge ([
         fortune
         fzf
         ghq
-        git-hub
         git-lfs
         gitAndTools.git-crypt
         gitAndTools.gitFull
+        gitAndTools.hub
         gitAndTools.pass-git-helper
         gitAndTools.transcrypt
         gnumake
@@ -56,8 +57,10 @@ in lib.mkMerge ([
         msmtp
         ncmpcpp
         nix-prefetch-scripts
+        nmap
         openssh
         openssl
+        pandoc
         (pass.overrideAttrs (attrs: { doInstallCheck = false; }))
         procmail # formail used for some mu hacks
         pwgen
