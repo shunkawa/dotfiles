@@ -428,6 +428,14 @@ in (lib.recursiveUpdate ({
     if $(command -v direnv >/dev/null 2>&1); then
       eval "$(direnv hook zsh)"
     fi
+
+    export NPM_CONFIG_INIT_AUTHOR_EMAIL="ruben@maher.fyi"
+    export NPM_CONFIG_INIT_AUTHOR_NAME="Ruben Maher"
+    export NPM_CONFIG_GIT_TAG_VERSION="false"
+    export NPM_CONFIG_CACHE="$HOME/.cache/npm"
+    # For per-directory or project configuration (private registries, etc), do
+    # something like this in .envrc:
+    # export NPM_CONFIG_USERCONFIG="$(pwd)/npmrc"
   '';
 
   home.file.".zlogout".source = pkgs.writeText "zlogout" ''
