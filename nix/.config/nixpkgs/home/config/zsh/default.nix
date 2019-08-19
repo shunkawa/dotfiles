@@ -310,6 +310,8 @@ in (lib.recursiveUpdate ({
     alias l='exa -la'
     alias ll='l'
 
+    alias e='emacs-client'
+
     source "${oh-my-zsh}/plugins/colored-man-pages/colored-man-pages.plugin.zsh"
 
     source "${zsh-autosuggestions}/zsh-autosuggestions.zsh"
