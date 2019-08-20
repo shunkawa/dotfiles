@@ -429,6 +429,10 @@ in (lib.recursiveUpdate ({
       eval "$(direnv hook zsh)"
     fi
 
+    if $(command -v direnv >/dev/null 2>&1); then
+      eval "$(fasd --init auto)"
+    fi
+
     export NPM_CONFIG_INIT_AUTHOR_EMAIL="ruben@maher.fyi"
     export NPM_CONFIG_INIT_AUTHOR_NAME="Ruben Maher"
     export NPM_CONFIG_GIT_TAG_VERSION="false"
