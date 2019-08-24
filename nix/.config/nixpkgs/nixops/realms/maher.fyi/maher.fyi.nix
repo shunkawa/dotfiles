@@ -49,7 +49,7 @@ let
       '';
     };
 
-    time.timeZone = "Tokyo/Japan";
+    time.timeZone = "Asia/Tokyo";
 
     services.openssh.enable = true;
 
