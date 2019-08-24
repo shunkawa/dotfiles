@@ -311,6 +311,7 @@ in (lib.recursiveUpdate ({
     alias ll='l'
 
     alias e='emacs-client'
+    alias e.='e'
 
     source "${oh-my-zsh}/plugins/colored-man-pages/colored-man-pages.plugin.zsh"
 
