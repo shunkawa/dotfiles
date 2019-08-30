@@ -50,18 +50,18 @@
   # };
 
   launchd.user.agents = {
-    syncthing = {
-      serviceConfig.ProgramArguments = [ "${pkgs.syncthing}/bin/syncthing" "-no-browser" "-no-restart" ];
-      serviceConfig.EnvironmentVariables = {
-        HOME = "/Users/${(builtins.getEnv "USER")}";
-        STNOUPGRADE = "1"; # disable spammy automatic upgrade check
-      };
-      serviceConfig.KeepAlive = true;
-      serviceConfig.ProcessType = "Background";
-      serviceConfig.StandardOutPath = "/Users/${(builtins.getEnv "USER")}/Library/Logs/Syncthing.log";
-      serviceConfig.StandardErrorPath = "/Users/${(builtins.getEnv "USER")}/Library/Logs/Syncthing-Errors.log";
-      serviceConfig.LowPriorityIO = true;
-    };
+    # syncthing = {
+    #   serviceConfig.ProgramArguments = [ "${pkgs.syncthing}/bin/syncthing" "-no-browser" "-no-restart" ];
+    #   serviceConfig.EnvironmentVariables = {
+    #     HOME = "/Users/${(builtins.getEnv "USER")}";
+    #     STNOUPGRADE = "1"; # disable spammy automatic upgrade check
+    #   };
+    #   serviceConfig.KeepAlive = true;
+    #   serviceConfig.ProcessType = "Background";
+    #   serviceConfig.StandardOutPath = "/Users/${(builtins.getEnv "USER")}/Library/Logs/Syncthing.log";
+    #   serviceConfig.StandardErrorPath = "/Users/${(builtins.getEnv "USER")}/Library/Logs/Syncthing-Errors.log";
+    #   serviceConfig.LowPriorityIO = true;
+    # };
   };
 
   # Recreate /run/current-system symlink after boot.
