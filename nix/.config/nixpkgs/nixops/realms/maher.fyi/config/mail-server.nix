@@ -85,6 +85,7 @@ in {
       { name = "Sent"; auto = "subscribe"; specialUse = "Sent"; }
       { name = "Trash"; auto = "subscribe"; specialUse = "Trash"; }
     ];
+    lmptSaveToDetailMailbox = "no";
   };
 
   users.users = {

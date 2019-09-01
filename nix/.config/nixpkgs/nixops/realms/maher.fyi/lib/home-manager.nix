@@ -3,7 +3,7 @@
 
   src = fetchGit {
     url = ../../../../../../.nix-defexpr/home-manager;
-    rev = "99c900946dbbaf5ba1fd3b1c1fe83b18fb66c84e";
+    rev = "a28614e65d2ff0e78fe54ca6ec31cc042f563669";
   };
 
   dontBuild = true;
