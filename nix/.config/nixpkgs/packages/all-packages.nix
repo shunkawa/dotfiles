@@ -229,17 +229,21 @@ in rec {
 
   Docker = installApplication rec {
     name = "Docker";
-    version = "18.06.1-ce-mac";
+    version = "2.1.0.1";
     sourceRoot = "${name}.app";
     src = pkgs.fetchurl {
+      # WARNING:
+      # Docker doesn't publish a permalink for the latest build.
+      # That means that if you fetch this again using nix-prefetch-url, you will
+      # have to install a different version. 😢
       url = https://download.docker.com/mac/stable/Docker.dmg;
-      sha256 = "19a7n36nkw20rrklr8qlp76l5xhn037avqfnk81rilghik1yla9l";
+      sha256 = "06nhg3hddzn3l7yky36drypjkcvbbc2qbyazkjj0i0yq09knjf5n";
     };
     description = ''
-      Docker CE for Mac is an easy-to-install desktop app for building,
-      debugging, and testing Dockerized apps on a Mac
+      Docker Desktop for Mac is an easy-to-install desktop app for building,
+      debugging, and testing Dockerized apps on a Mac.
     '';
-    homepage = https://store.docker.com/editions/community/docker-ce-desktop-mac;
+    homepage = https://download.docker.com/mac/stable/Docker.dmg;
   };
 
   Spectacle = installApplication rec {
