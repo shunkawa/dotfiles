@@ -88,6 +88,14 @@ in {
     lmptSaveToDetailMailbox = "no";
   };
 
+  # macOS mail client 9.3 requires TLSv1
+  services.postfix.extraConfig = ''
+    smtpd_tls_protocols = TLSv1.2, TLSv1.1, TLSv1, !SSLv2, !SSLv3
+    smtp_tls_protocols = TLSv1.2, TLSv1.1, TLSv1, !SSLv2, !SSLv3
+    smtpd_tls_mandatory_protocols = TLSv1.2, TLSv1.1, TLSv1, !SSLv2, !SSLv3
+    smtp_tls_mandatory_protocols = TLSv1.2, TLSv1.1, TLSv1, !SSLv2, !SSLv3
+  '';
+
   users.users = {
     vmail = {
       home = lib.mkForce "/data/mx.maher.fyi/var/lib/${config.users.users.vmail.name}";
