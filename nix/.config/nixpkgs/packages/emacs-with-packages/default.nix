@@ -50,6 +50,7 @@ let
       emojify
       eslint-fix
       expand-region
+      fasd
       flow-minor-mode
       flycheck
       flycheck-flow
