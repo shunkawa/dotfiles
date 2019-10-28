@@ -1,0 +1,7 @@
+#!/bin/sh
+
+git tag -l | xargs git tag -d && git fetch -t
+
+# Local Variables:
+# mode: shell-script
+# End:

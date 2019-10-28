@@ -26,6 +26,8 @@
   mergelog = !git-mergelog
   diff-dir-structure = !git-diff-dir-structure
   resolve-root = !git-resolve-root
+  prune-tags = !git-prune-tags
+  prune-branches = !git-prune-branches
 [filter "lfs"]
   clean = git-lfs clean -- %f
   smudge = git-lfs smudge -- %f
