@@ -43,3 +43,4 @@ Temporary Items
 *.syncthing.*.tmp
 
 webroot*
+mock-assets/
