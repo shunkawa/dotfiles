@@ -61,7 +61,7 @@ in {
   systemd.services.redis = {
     preStart = ''
       mkdir -p /var/run/redis
-      chown ${config.services.redis.user}:${config.services.nginx.group} /var/run/redis
+      chown redis:${config.services.nginx.group} /var/run/redis
     '';
     serviceConfig.PermissionsStartOnly = true;
   };
@@ -73,7 +73,7 @@ in {
         echo "waiting for redis..."
         sleep 1
       done
-      chown ${config.services.redis.user}:${config.services.nginx.group} /var/run/redis/redis.sock
+      chown redis:${config.services.nginx.group} /var/run/redis/redis.sock
     '';
     after = [ "redis.service" ];
     requires = [ "redis.service" ];
