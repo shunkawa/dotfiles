@@ -1,4 +1,4 @@
 source 'https://rubygems.org' do
   gem 'fontcustom', '2.0.0'
-  gem 'ffi', '1.9.6'
+  gem 'ffi', '1.9.24'
 end
