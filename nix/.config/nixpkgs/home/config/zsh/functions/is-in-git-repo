@@ -1,0 +1,12 @@
+#!/usr/bin/env zsh
+
+# https://gist.github.com/junegunn/8b572b8d4b5eddd8b85e5f4d40f17236
+function is-in-git-repo() {
+  git rev-parse HEAD > /dev/null 2>&1
+}
+
+is-in-git-repo
+
+# Local Variables:
+# mode: shell-script
+# End:
