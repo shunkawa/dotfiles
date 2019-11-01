@@ -53,4 +53,16 @@
       };
     };
   };
+
+  launchd.daemons."maxfiles" = {
+    serviceConfig.Label = "limit.maxfiles";
+    serviceConfig.RunAtLoad = true;
+    serviceConfig.ProgramArguments = [
+      "launchctl"
+      "limit"
+      "maxfiles"
+      "65536"
+      "524288"
+    ];
+  };
 }
