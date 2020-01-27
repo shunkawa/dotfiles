@@ -10,7 +10,7 @@
 # git show --patch HEAD > revert-9344612d3cd164317170b6189ec43175757e4231.patch
 (stdenv.lib.overrideDerivation (emacs.override { srcRepo = true; })) (attrs: rec {
   name = "emacs-${version}${versionModifier}";
-  version = "27.0";
+  version = "28.0";
   versionModifier = ".50";
   src = fetchgit {
     url = "git://git.sv.gnu.org/emacs.git";
