@@ -229,12 +229,7 @@ in rec {
 
   gitlab-discord-bot = (callPackage ./gitlab-discord-bot {});
 
-  mu = pkgs.mu.override (_: {
-    # This flag builds mu/mu4e with the msg2pdf and mug binaries, but it doesn't
-    # work right now.
-    withMug = false;
-    emacs = emacs-git;
-  });
+  mu = pkgs.mu;
 
   Anki = installApplication rec {
     name = "Anki";
