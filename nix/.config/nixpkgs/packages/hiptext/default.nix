@@ -53,7 +53,10 @@ stdenv.mkDerivation rec {
     libjpeg
     libpng
     makeWrapper
-    pkgconfig
     ragel
+  ];
+
+  nativeBuildInputs = [
+    pkgconfig
   ];
 }

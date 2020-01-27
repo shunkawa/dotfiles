@@ -61,8 +61,8 @@ in {
 
     # tmux-sensible tries to set make the prefix key without control act as
     # last-window, but it doesn't work for this prefix
-    bind-key \ last-window
-    bind-key C-\ last-window
+    bind-key '\' last-window
+    bind-key 'C-\' last-window
 
     bind-key -n M-right next-window
     bind-key -n M-left previous-window

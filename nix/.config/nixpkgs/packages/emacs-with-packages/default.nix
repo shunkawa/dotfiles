@@ -5,20 +5,9 @@ let
 
   emacsPackageOverrides = (self: super: {
     inherit emacs;
-    org-jira = (self.melpaPackages.org-jira.overrideAttrs (attrs: {
-      src = fetchFromGitHub {
-        owner = "ahungry";
-        repo = "org-jira";
-        rev = "d1d2ff6155c6259a066110ed13d1850143618f7b";
-        sha256 = "044yl2k9ny0m5nyw0k8qhhmalxq3j88i3lhcc5jv1gmymcwaplff";
-      };
-    }));
   });
 
   mkEmacsPackages = (emacsPackages:
-    (with emacsPackages; [
-      org-jira
-    ]) ++
     (with emacsPackages.elpaPackages; [
       rainbow-mode
       sql-indent

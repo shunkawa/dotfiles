@@ -17,6 +17,7 @@ in lib.mkMerge ([
       '';
 
       packages = with pkgs; [
+        (pass.overrideAttrs (attrs: { doInstallCheck = false; }))
         ansible
         aspell
         aspellDicts.en
@@ -47,12 +48,14 @@ in lib.mkMerge ([
         gnupg
         gnused
         gnutar
+        go
         htop
         imagemagick
         inkscape
         isync
         jhead
         jq
+        kubectl
         mitmproxy
         msmtp
         ncmpcpp
@@ -61,9 +64,9 @@ in lib.mkMerge ([
         openssh
         openssl
         pandoc
-        (pass.overrideAttrs (attrs: { doInstallCheck = false; }))
         procmail # formail used for some mu hacks
         pwgen
+        python3
         qrencode
         ripgrep
         rsync

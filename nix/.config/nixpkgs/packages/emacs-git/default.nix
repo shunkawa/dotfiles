@@ -14,8 +14,8 @@
   versionModifier = ".50";
   src = fetchgit {
     url = "git://git.sv.gnu.org/emacs.git";
-    sha256 = "1p8k58k4zwkngyrykq5hrdnz1gdy2a1fnhg07yzq1san1w1hc74k";
-    rev = "b10464c6f92f4102e1c4a055c2683c1ab1b98bc6";
+    sha256 = "1qxil0112sjr338igznzqxlj6860nmsy1ns7jki0kf7yrv3bx1hm";
+    rev = "5715eb94e90b33ace59dd4c4ccb6e2122bc6db72";
   };
   patches = [
     # This patch reverts the infamous "don't use a color bitmap font until it is

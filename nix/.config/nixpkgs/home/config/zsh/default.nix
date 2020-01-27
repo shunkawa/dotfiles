@@ -219,6 +219,10 @@ in (lib.recursiveUpdate ({
   '';
 
   home.file.".zshenv".source = pkgs.writeText "zshenv" ''
+    export LC_ALL=en_US.UTF-8
+    export LANG=en_US.UTF-8
+    export LANGUAGE=en_US.UTF-8
+
     fpath=(
       ''${HOME}/.config/zsh/functions
       ${zsh-completions}/src
