@@ -65,6 +65,7 @@ in lib.mkMerge ([
         openssl
         pandoc
         procmail # formail used for some mu hacks
+        protobuf
         pwgen
         python3
         qrencode
