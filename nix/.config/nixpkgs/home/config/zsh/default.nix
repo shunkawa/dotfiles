@@ -207,7 +207,7 @@ in (lib.recursiveUpdate ({
     #!/usr/bin/env zsh
 
     function rkm-history () {
-      cat "''${RKM_HISTORY_HIST_DIR}/"** |
+      LC_ALL=C; cat "''${RKM_HISTORY_HIST_DIR}/"** |
         ${pkgs.gnused}/bin/sed "s/^[^;]*;//" | # assuming EXTENDED_HISTORY is set (":start:elapsed;command" format)
         sort |
         uniq -c |
