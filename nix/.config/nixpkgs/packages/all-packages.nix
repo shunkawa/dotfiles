@@ -371,4 +371,6 @@ in rec {
   node-build = callPackage ./nodenv/node-build.nix {};
 
   nodenv = callPackage ./nodenv {};
+
+  goose = callPackage ./goose {};
 }

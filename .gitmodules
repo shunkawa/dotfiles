@@ -19,3 +19,6 @@
 [submodule "emacs/.emacs.d"]
 	path = emacs/.emacs.d
 	url = git@github.com:eqyiel/.emacs.d.git
+[submodule "nix/.config/nixpkgs/packages/goose/src/github.com/pressly/goose"]
+	path = nix/.config/nixpkgs/packages/goose/src/github.com/pressly/goose
+	url = git@github.com:pressly/goose.git

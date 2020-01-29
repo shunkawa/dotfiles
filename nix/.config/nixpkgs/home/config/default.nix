@@ -86,6 +86,7 @@ in lib.mkMerge ([
       ] ++ (with local-packages; [
         docker-convenience-scripts
         emacs-with-packages
+        goose
         hiptext
         mu
         node-build
