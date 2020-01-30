@@ -2,6 +2,8 @@
   email = ruben@maher.fyi
   name = Ruben Maher
   signingkey = ruben@maher.fyi
+[commit]
+  gpgsign = true
 [core]
   editor = "emacsclient -c -a=\"\""
   excludesfile = ~/.gitignore_global
