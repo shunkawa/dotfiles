@@ -2,7 +2,7 @@
 
 buildGoPackage rec {
   pname = "kazegusuri";
-  version = builtins.substring 0 7 rev;
+  version = "0.0.0-" + builtins.substring 0 7 rev;
 
   rev = "a582134f889f20ad95425e7bb9c667930dedc053";
 
