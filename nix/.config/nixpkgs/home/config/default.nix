@@ -87,6 +87,7 @@ in lib.mkMerge ([
         docker-convenience-scripts
         emacs-with-packages
         goose
+        grpcurl
         hiptext
         mu
         node-build
