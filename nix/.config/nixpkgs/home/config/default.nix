@@ -83,6 +83,7 @@ in lib.mkMerge ([
         unzip
         wget
         which
+        yq
       ] ++ (with local-packages; [
         docker-convenience-scripts
         emacs-with-packages
