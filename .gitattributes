@@ -1,4 +1,5 @@
 data/backup-*.tar.gz filter=crypt diff=crypt
+data/fastmail/config.sieve filter=crypt diff=crypt
 *secrets*  filter=crypt diff=crypt
 **/secrets/**  filter=crypt diff=crypt
 deployments.json filter=crypt diff=crypt
