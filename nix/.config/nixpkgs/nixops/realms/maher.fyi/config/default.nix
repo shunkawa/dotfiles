@@ -1,7 +1,0 @@
-{ ... }:
-
-{
-  imports = [
-    ./mail-server.nix
-  ];
-}

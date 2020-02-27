@@ -123,14 +123,6 @@ in {
   # Keep a GC root for the build
   network.enableRollback = true;
 
-  mx = let hostName = "mx.${host}"; in (mkConfig {
-    inherit hostName;
-  } ({ ... }: {
-    imports = [ (import ./config/mail-server.nix { inherit hostName; }) ];
-    deployment.ec2.elasticIPv4 = "13.211.249.75";
-    deployment.ec2.instanceType = "t2.nano";
-  }));
-
   cloud = let hostName = "cloud.${host}"; in (mkConfig {
     inherit hostName;
   } ({ ... }: {
