@@ -369,4 +369,6 @@ in rec {
   nodenv = callPackage ./nodenv {};
 
   goose = callPackage ./goose {};
+
+  git-archive-all = callPackage ./git-archive-all {};
 }

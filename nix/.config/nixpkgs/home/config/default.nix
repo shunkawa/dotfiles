@@ -87,6 +87,7 @@ in lib.mkMerge ([
       ] ++ (with local-packages; [
         docker-convenience-scripts
         emacs-with-packages
+        git-archive-all
         goose
         grpcurl
         hiptext
