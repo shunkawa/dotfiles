@@ -45,8 +45,8 @@ in {
     tmuxWrapper
     pkgs.fpp
     pkgs.fzf
-    pkgs.pythonPackages.powerline
-    pkgs.powerline-fonts
+    pkgs.local-packages.nixpkgs.last-known-good.pythonPackages.powerline
+    pkgs.local-packages.nixpkgs.last-known-good.powerline-fonts
     pkgs.xclip
   ];
 
@@ -72,8 +72,8 @@ in {
 
     set-option -g mouse on
 
-    run-shell "${pkgs.pythonPackages.powerline}/bin/powerline-daemon -q"
-    run-shell "${pkgs.pythonPackages.powerline}/bin/powerline-config tmux setup"
+    run-shell "${pkgs.local-packages.nixpkgs.last-known-good.pythonPackages.powerline}/bin/powerline-daemon -q"
+    run-shell "${pkgs.local-packages.nixpkgs.last-known-good.pythonPackages.powerline}/bin/powerline-config tmux setup"
     run-shell "${tmux-sensible}/sensible.tmux"
     run-shell "${tmux-pain-control}/pain_control.tmux"
     run-shell "${tmux-yank}/yank.tmux"

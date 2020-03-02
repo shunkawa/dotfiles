@@ -193,17 +193,13 @@ in rec {
   });
 
   nixpkgs = {
-    stable = (import (pkgs.callPackage ({ stdenv }: stdenv.mkDerivation {
+    last-known-good = (import (pkgs.callPackage ({ stdenv }: stdenv.mkDerivation {
       name = "nixpkgs";
 
-      src = builtins.fetchTarball {
-        url = https://github.com/NixOS/nixpkgs-channels/archive/91b286c8935b8c5df4a99302715200d3bd561977.tar.gz;
-        sha256 = "1c4a31s1i95cbl18309im5kmswmkg91sdv5nin6kib2j80gixgd3";
+      src = fetchGit {
+        url = ../../../.nix-defexpr/nixpkgs;
+        rev = "90441b4b47fc7280de6a5bd1a228017caaa0f97f";
       };
-      # src = fetchGit {
-      #   url = ../../../.nix-defexpr/nixpkgs;
-      #   rev = "91b286c8935b8c5df4a99302715200d3bd561977";
-      # };
 
       dontBuild = true;
       preferLocalBuild = true;
