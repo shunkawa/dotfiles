@@ -77,6 +77,7 @@ in lib.mkMerge ([
         speedtest-cli
         sqlite-interactive
         stow
+        texlive.combined.scheme-full
         toilet
         tree
         unrar
