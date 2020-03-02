@@ -84,6 +84,7 @@ in lib.mkMerge ([
         wget
         which
         yq
+        yubikey-manager
       ] ++ (with local-packages; [
         docker-convenience-scripts
         emacs-with-packages
