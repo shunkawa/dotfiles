@@ -282,8 +282,10 @@ in (lib.recursiveUpdate ({
     # clear out residual grml prompt stuff
     zstyle ':prompt:grml:left:setup' items
     zstyle ':prompt:grml:right:setup' items
-    RPS1="" #
+    RPS1=""
 
+    # Prevents Pure from checking whether the current Git remote has been updated.
+    export PURE_GIT_PULL=0
     autoload -U promptinit; promptinit
     prompt pure
 
