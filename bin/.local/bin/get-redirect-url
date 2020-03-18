@@ -1,0 +1,3 @@
+#!/bin/sh
+
+curl -Ls -I -w %{redirect_url} "${@}"
