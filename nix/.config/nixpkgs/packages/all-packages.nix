@@ -229,11 +229,11 @@ in rec {
 
   Anki = installApplication rec {
     name = "Anki";
-    version = "2.1.5";
+    version = "2.1.21";
     sourceRoot = "${name}.app";
     src = pkgs.fetchurl {
-      url = "https://apps.ankiweb.net/downloads/current/anki-${version}-mac.dmg";
-      sha256 = "0ca0sbfxvji6h9g6p3433c663i2kgp3nfgh8b262w1ganxygjfd2";
+      url = "https://github.com/ankitects/anki/releases/download/${version}/anki-${version}-mac.dmg";
+      sha256 = "0cm9bb104wz0pd1mxfahi4s32hgn0wsac0i61fi12ipkwz84vq0z";
     };
     description = "Anki is a program which makes remembering things easy";
     homepage = https://apps.ankiweb.net;
