@@ -360,6 +360,18 @@ in rec {
     homepage = https://contexts.co/;
   });
 
+  Alfred = (installApplication rec {
+    name = "Alfred";
+    version = "4.0.8_1135";
+    sourceRoot = "Alfred 4.app";
+    src = pkgs.fetchurl {
+      url = "https://cachefly.alfredapp.com/${name}_${version}.tar.gz";
+      sha256 = "1i5bz7vb5dqvh8mps9mnryjx6hgg1kgdljgawqf14rrxklw8h0v3";
+    };
+    description = "Alfred is an award-winning app for macOS which boosts your efficiency with hotkeys, keywords, text expansion and more. Search your Mac and the web, and be more productive with custom actions to control your Mac.";
+    homepage = https://www.alfredapp.com/;
+  });
+
   omnisharp-roslyn = callPackage ./omnisharp-roslyn {};
 
   docker-convenience-scripts = callPackage ./docker-convenience-scripts {};

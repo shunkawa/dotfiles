@@ -17,6 +17,7 @@
       aspellDicts.en-computers
       aspellDicts.en-science
       iterm2
+      local-packages.Alfred
       local-packages.Anki
       local-packages.Contexts
       local-packages.Docker
