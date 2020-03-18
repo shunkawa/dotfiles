@@ -241,21 +241,23 @@ in rec {
 
   Docker = installApplication rec {
     name = "Docker";
-    version = "2.1.0.1";
+    version = "2.2.0.3";
     sourceRoot = "${name}.app";
     src = pkgs.fetchurl {
       # WARNING:
-      # Docker doesn't publish a permalink for the latest build.
-      # That means that if you fetch this again using nix-prefetch-url, you will
-      # have to install a different version. 😢
-      url = https://download.docker.com/mac/stable/Docker.dmg;
-      sha256 = "06nhg3hddzn3l7yky36drypjkcvbbc2qbyazkjj0i0yq09knjf5n";
+      # Docker doesn't publish a permalink for the latest build.  That means
+      # that if you fetch this again using nix-prefetch-url, you will have to
+      # install a different version. 😢 Best thing you can do is look on the
+      # "release notes" page and get a "permalink" to an older version, which is
+      # hostile-ly obfuscated by the "build" number or something.
+      url = https://download.docker.com/mac/stable/42716/Docker.dmg;
+      sha256 = "06snsqcw1ggb9s7s6i546na7kb6h45fxr7g77l7jj4bqv44yg4jq";
     };
     description = ''
       Docker Desktop for Mac is an easy-to-install desktop app for building,
       debugging, and testing Dockerized apps on a Mac.
     '';
-    homepage = https://download.docker.com/mac/stable/Docker.dmg;
+    homepage = https://docs.docker.com/docker-for-mac/release-notes/;
   };
 
   Spectacle = installApplication rec {
