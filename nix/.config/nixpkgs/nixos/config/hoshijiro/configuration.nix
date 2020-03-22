@@ -12,7 +12,7 @@ in rec {
     ../../common/gnome.nix
     ../../common/steam.nix
     ../../common/fonts.nix
-    ../../common/virtualisation.nix
+    # ../../common/virtualisation.nix
   ] ++ (import ./../../modules/module-list.nix);
 
   fileSystems."/" = {
@@ -35,7 +35,7 @@ in rec {
       "nofail"
       "x-systemd.device-timeout=1"
     ];
-    device = "tank/media";
+    device = "tank-home/media";
     fsType = "zfs";
   };
 
@@ -44,7 +44,7 @@ in rec {
       "nofail"
       "x-systemd.device-timeout=1"
     ];
-    device = "tank/var";
+    device = "tank-home/var";
     fsType = "zfs";
   };
 
@@ -53,7 +53,7 @@ in rec {
       "nofail"
       "x-systemd.device-timeout=1"
     ];
-    device = "tank/home";
+    device = "tank-home/home";
     fsType = "zfs";
   };
 
@@ -73,7 +73,7 @@ in rec {
       "nofail"
       "x-systemd.device-timeout=1"
     ];
-    device = "/dev/zvol/tank/steam-part1";
+    device = "/dev/zvol/tank-home/steam-part1";
     fsType = "ext4";
   };
 
@@ -90,6 +90,33 @@ in rec {
   fileSystems."/export/transmission" = {
     device = "/mnt/var/lib/transmission";
     options = [ "bind" ];
+  };
+
+  fileSystems."/mnt/server-media" = {
+    options = [
+      "nofail"
+      "x-systemd.device-timeout=1"
+    ];
+    device = "tank/media";
+    fsType = "zfs";
+  };
+
+  fileSystems."/mnt/server-var" = {
+    options = [
+      "nofail"
+      "x-systemd.device-timeout=1"
+    ];
+    device = "tank/var";
+    fsType = "zfs";
+  };
+
+  fileSystems."/mnt/server-home" = {
+    options = [
+      "nofail"
+      "x-systemd.device-timeout=1"
+    ];
+    device = "tank/home";
+    fsType = "zfs";
   };
 
   swapDevices = [{ device = "/dev/mapper/vgroup-swap"; }];
@@ -113,25 +140,22 @@ in rec {
       network = {
         enable = true;
         ssh = {
-          hostRSAKey = '''';
-          authorizedKeys = [];
+          authorizedKeys = [ sshKeys.rkm ];
         };
       };
       availableKernelModules = [
         "xhci_pci"
         "ehci_pci"
         "ahci"
-        "firewire_ohci"
         "usbhid"
         "usb_storage"
         "sd_mod"
       ];
-      luks.devices = [
-        {
-          name = "root";
+      luks.devices = {
+        root = {
           device = "/dev/disk/by-uuid/1d6b3cc6-56db-4031-9984-e323b83bca59";
           allowDiscards = true;
-        }
+        };
         # Keyfile doesn't work here right now, see the nixpkgs issue about
         # single password unlocking.
         #
@@ -143,19 +167,26 @@ in rec {
         #
         # this means you have to enter a passphrase for each of these devices
         # during boot.  😿
-        {
-          name = "crypto_zfs_00";
+        crypto_zfs_00 = {
           device = "/dev/disk/by-uuid/1c3851fc-c1de-4860-806f-4609801f5fb9";
           preLVM = false;
           # keyFile = "/root/tank.keyfile";
-        }
-        {
-          name = "crypto_zfs_01";
+        };
+        crypto_zfs_01 = {
           device = "/dev/disk/by-uuid/7065dce3-1be4-4cae-b7c2-4dc4e1bf0f23";
           preLVM = false;
           # keyFile = "/root/tank.keyfile";
-        }
-      ];
+        };
+        # from datacenter
+        crypto_zfs_02 = {
+          device = "/dev/disk/by-uuid/2e59e4cf-cfb2-42dd-9bdb-b6da0f031c18";
+          preLVM = false;
+        };
+        crypto_zfs_03 = {
+          device = "/dev/disk/by-uuid/1c634e3c-05aa-4b86-91c4-2a309c5475a6";
+          preLVM = false;
+        };
+      };
     };
   };
 
@@ -166,10 +197,14 @@ in rec {
     # head -c4 /dev/urandom | od -A none -t x4
     hostId = "63737ac9";
     hostName = "hoshijiro.maher.fyi";
-    interfaces."eno1".ipv4.addresses = [{
+    defaultGateway = "192.168.1.1";
+    nameservers = [ "192.168.1.1" ];
+    interfaces."wlp3s0".ipv4.addresses = [{
       address = "192.168.1.215";
       prefixLength = 24;
     }];
+    wireless.enable = true;
+    networkmanager.enable = lib.mkOverride 1 false;
     firewall = {
       enable = true;
       allowedTCPPorts = [
@@ -197,77 +232,6 @@ in rec {
       ];
       trustedInterfaces = [ "lo" ];
       logRefusedPackets = true;
-      extraCommands = ''
-        ip46tables \
-          --delete OUTPUT \
-          --jump restrict-users-tun-output \
-          2>/dev/null || true
-
-        ip46tables \
-          --flush \
-          restrict-users-tun-output \
-          2>/dev/null || true
-
-        ip46tables \
-          --delete-chain restrict-users-tun-output \
-          2>/dev/null || true
-
-        ip46tables --new-chain restrict-users-tun-output
-
-        # Make an exception for transmission so that it can serve its web
-        # client on the loopback interface.
-        ip46tables \
-          --append restrict-users-tun-output \
-          --match owner \
-          --uid-owner ${config.users.users.transmission.name} \
-          --out-interface lo \
-          --protocol tcp \
-          --source-port ${toString config.services.transmission.port} \
-          --jump ACCEPT
-
-        # # Also allow these users to reach port 80 (where nginx is proxying
-        # # requests) on the loopback interface.
-        # # that get dropped below?
-        # ip46tables \
-        #   --append restrict-users-tun-output \
-        #   --out-interface lo \
-        #   --protocol tcp \
-        #   --destination-port 80 \
-        #   --jump ACCEPT
-
-        # DROP any packet which is going to be sent by this --uid-owner if
-        # it is for any --out-interface whose name does not (\!) start with
-        # "tun".
-        for user in \
-          ${config.users.users.transmission.name}; do
-          ip46tables \
-            --append restrict-users-tun-output \
-            --match owner \
-            --uid-owner "''${user}" \
-            ! --out-interface tun+ \
-            --jump DROP
-        done
-
-        # Enable the chain
-        ip46tables \
-          --append OUTPUT \
-          --jump restrict-users-tun-output
-      '';
-      extraStopCommands = ''
-        ip46tables \
-          --delete OUTPUT \
-          --jump restrict-users-tun-output \
-          2>/dev/null || true
-
-        ip46tables \
-          --flush \
-          restrict-users-tun-output \
-          2>/dev/null || true
-
-        ip46tables \
-          --delete-chain restrict-users-tun-output \
-          2>/dev/null || true
-      '';
     };
     extraHosts = ''
       192.168.1.174 ayanami.maher.fyi
@@ -276,24 +240,29 @@ in rec {
   };
 
   services.local.pia-nm = {
-    enable = true;
+    enable = false;
     inherit (secrets.services.local.pia-nm) username password;
   };
 
+  console.font = "Lat2-Terminus16";
+  console.keyMap = "us";
+
   i18n = {
-    consoleFont = "Lat2-Terminus16";
-    consoleKeyMap = "us";
     defaultLocale = "en_US.UTF-8";
   };
 
-  time.timeZone = "Australia/Adelaide";
+  time.timeZone = "Asia/Tokyo";
+
+  hardware.enableAllFirmware = true;
+  hardware.bluetooth.enable = true;
 
   environment = {
     systemPackages = with pkgs; [
+      pciutils
       zfs
       zfstools
       firefox
-      local-packages.nextcloud-client
+      # local-packages.nextcloud-client
       chromium
       mpv
       # libreoffice # broken on unstable
@@ -364,10 +333,10 @@ in rec {
   services.openntpd = {
     enable = true;
     servers = [
-      "0.au.pool.ntp.org"
-      "1.au.pool.ntp.org"
-      "2.au.pool.ntp.org"
-      "3.au.pool.ntp.org"
+      "0.jp.pool.ntp.org"
+      "1.jp.pool.ntp.org"
+      "2.jp.pool.ntp.org"
+      "3.jp.pool.ntp.org"
     ];
   };
 
@@ -432,7 +401,7 @@ in rec {
 
   # TODO: move its actual home to here
   services.transmission = {
-    enable = true;
+    enable = false;
     port = 9091;
     home = "/mnt/var/lib/${config.users.users.transmission.name}";
     settings = {
@@ -520,7 +489,6 @@ in rec {
       extraGroups = [
         "wheel"
         "${config.users.groups.systemd-journal.name}"
-        "${config.users.users.transmission.group}"
         "adbusers"
       ];
       shell = pkgs.zsh;
@@ -536,17 +504,11 @@ in rec {
       isNormalUser = false;
       isSystemUser = false;
       shell = pkgs.zsh;
-      extraGroups = [
-        "${config.users.users.transmission.group}"
-      ];
       inherit (secrets.users.users.versapunk) initialPassword;
     };
   };
 
   nix.gc.automatic = true;
 
-  # broken on unstable
-  services.nixosManual.enable = false;
-
-  system.nixos.stateVersion = "18.09pre";
+  documentation.nixos.enable = false;
 }

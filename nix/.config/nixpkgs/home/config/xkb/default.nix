@@ -31,7 +31,7 @@ mkIf pkgs.stdenv.isLinux {
     };
 
     Service = {
-      ExecStart = (pkgs.writeScript "xkb-separate-super-and-hyper" ''
+      ExecStart = builtins.toString (pkgs.writeScript "xkb-separate-super-and-hyper" ''
         #!${pkgs.stdenv.shell}
         ${pkgs.xorg.setxkbmap}/bin/setxkbmap -print \
           | ${pkgs.gnused}/bin/sed -e '/xkb_symbols/s/"[[:space:]]/+local&/' \

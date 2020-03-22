@@ -75,13 +75,11 @@
       firefox
       flac
       gnome-mpv
-      gnome3.gnome-maps
-      gnomeExtensions.caffeine
-      gnomeExtensions.clipboard-indicator
-      gnomeExtensions.mediaplayer
-      gnomeExtensions.topicons-plus
+      gnome3.gnome-tweaks
+      google-chrome
       grip
       lame
+      pinentry-gnome
       vlc
       # local-packages.nautilus-python
       # local-packages.indicator-kdeconnect
@@ -160,6 +158,8 @@
       '';
     };
   };
+
+  services.avahi.enable = false;
 
   services.gnome3.tracker-miners.enable = false;
 

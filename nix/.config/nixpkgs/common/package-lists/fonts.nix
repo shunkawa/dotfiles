@@ -3,7 +3,6 @@
 with pkgs; [
   dejavu_fonts
   emojione
-  font-droid
   liberation_ttf
   noto-fonts
   noto-fonts-cjk

@@ -208,11 +208,11 @@ in rec {
         cp -a . $out
       '';
     }) {}) {});
-    ayanami = (import (pkgs.callPackage ../nixos/config/ayanami/lib/nixpkgs.nix {}) {});
-    darwin = (import (pkgs.callPackage ../darwin/lib/nixpkgs.nix {}) {});
-    home = (import (pkgs.callPackage ../home/lib/nixpkgs.nix {}) {});
-    hoshijiro = (import (pkgs.callPackage ../nixos/config/hoshijiro/lib/nixpkgs.nix {}) {});
-    tomoyo = (import (pkgs.callPackage ../nixops/realms/tomoyo.maher.fyi/lib/nixpkgs.nix {}) {});
+    ayanami = (pkgs.callPackage ../nixos/config/ayanami/lib/nixpkgs.nix {});
+    darwin = (pkgs.callPackage ../darwin/lib/nixpkgs.nix {});
+    home = (pkgs.callPackage ../home/lib/nixpkgs.nix {});
+    hoshijiro = (pkgs.callPackage ../nixos/config/hoshijiro/lib/nixpkgs.nix {});
+    tomoyo = (pkgs.callPackage ../nixops/realms/tomoyo.maher.fyi/lib/nixpkgs.nix {});
   };
 
   subtitles-rs = callPackage ./subtitles-rs {};
