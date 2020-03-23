@@ -80,6 +80,7 @@
       grip
       lame
       pinentry-gnome
+      pinentry-curses
       vlc
       # local-packages.nautilus-python
       # local-packages.indicator-kdeconnect

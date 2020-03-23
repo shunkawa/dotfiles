@@ -136,14 +136,24 @@ in rec {
     extraModulePackages = [ ];
     kernelModules = [ "kvm-intel" ];
     supportedFilesystems = [ "zfs" "nfs" "ntfs" ];
+    # https://discourse.nixos.org/t/disk-encryption-on-nixos-servers-how-when-to-unlock/5030/11
+    kernelParams = ["ip=192.168.1.216:::::eth0:"];
     initrd = {
       network = {
         enable = true;
         ssh = {
+          enable = true;
           authorizedKeys = [ sshKeys.rkm ];
         };
       };
+      postMountCommands = ''
+        for int in /sys/class/net/*/
+          do ip link set `basename $int` down
+        done
+      '';
       availableKernelModules = [
+        "e1000e"
+        "net"
         "xhci_pci"
         "ehci_pci"
         "ahci"
@@ -199,10 +209,12 @@ in rec {
     hostName = "hoshijiro.maher.fyi";
     defaultGateway = "192.168.1.1";
     nameservers = [ "192.168.1.1" ];
-    interfaces."wlp3s0".ipv4.addresses = [{
-      address = "192.168.1.215";
-      prefixLength = 24;
-    }];
+    interfaces."wlp3s0" = {
+      ipv4.addresses = [{
+        address = "192.168.1.215";
+        prefixLength = 24;
+      }];
+    };
     wireless.enable = true;
     networkmanager.enable = lib.mkOverride 1 false;
     firewall = {
@@ -212,6 +224,7 @@ in rec {
         80 # http
         88 # Kerberos v5
         111 # NFS
+        443 # https
         2049 # NFS
         config.services.nfs.server.mountdPort # NFS
         config.services.nfs.server.lockdPort # NFS lockd
@@ -272,7 +285,6 @@ in rec {
       inherit pkgs;
     };
   };
-
 
   services.nginx = {
     enable = true;
@@ -368,36 +380,47 @@ in rec {
       # "100").  Right now it's being held back by
       # https://github.com/NixOS/nixpkgs/issues/17237 - until then, make sure
       # that anongid is the the same as users.groups.users.gid!
-      /export 192.168.1.0/24(rw,async,no_subtree_check,no_root_squash,sec=krb5p)
+      /export 192.168.1.0/24(rw,async,no_subtree_check,no_root_squash,insecure)
+      #/export 192.168.1.0/24(rw,async,no_subtree_check,no_root_squash,sec=krb5p)
     '';
   };
 
-  krb5 = {
-    enable = true;
-    libdefaults = {
-      default_realm = "HOSHIJIRO.MAHER.FYI";
-    };
+  # krb5 = {
+  #   enable = true;
+  #   libdefaults = {
+  #     default_realm = "HOSHIJIRO.MAHER.FYI";
+  #   };
 
-    realms = {
-      "HOSHIJIRO.MAHER.FYI" = {
-        admin_server = "hoshijiro.maher.fyi";
-        kdc = "hoshijiro.maher.fyi";
-        default_principal_flags = "+preauth";
-      };
-    };
+  #   realms = {
+  #     "HOSHIJIRO.MAHER.FYI" = {
+  #       admin_server = "hoshijiro.maher.fyi";
+  #       kdc = "hoshijiro.maher.fyi";
+  #       default_principal_flags = "+preauth";
+  #     };
+  #   };
 
-    domain_realm = ''
-      hoshijiro.maher.fyi = HOSHIJIRO.MAHER.FYI;
-      .hoshijiro.maher.fyi = HOSHIJIRO.MAHER.FYI;
-    '';
+  #   domain_realm = ''
+  #     hoshijiro.maher.fyi = HOSHIJIRO.MAHER.FYI;
+  #     .hoshijiro.maher.fyi = HOSHIJIRO.MAHER.FYI;
+  #   '';
 
-    extraConfig = ''
-      [logging]
-      kdc          = SYSLOG:NOTICE
-      admin_server = SYSLOG:NOTICE
-      default      = SYSLOG:NOTICE
-    '';
-  };
+  #   extraConfig = ''
+  #     [logging]
+  #     kdc          = SYSLOG:NOTICE
+  #     admin_server = SYSLOG:NOTICE
+  #     default      = SYSLOG:NOTICE
+  #   '';
+  # };
+
+  # services.kerberos_server = {
+  #   enable = true;
+  #   realms = {
+  #     "HOSHIJIRO.MAHER.FYI" = [
+  #       { principal = "*/admin"; access = "all"; }
+  #       { principal = "admin"; access = "all"; }
+  #     ];
+  #   };
+  # };
 
   # TODO: move its actual home to here
   services.transmission = {
