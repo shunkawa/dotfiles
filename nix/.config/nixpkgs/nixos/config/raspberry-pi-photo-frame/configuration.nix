@@ -1,17 +1,45 @@
-{ pkgs, lib, ... }:
+{ nixpkgsSrc }: { pkgs, lib, config, ... }:
 
 let
   picturesMountDir = "/mnt/nextcloud";
 
-  nixpkgsSrc = builtins.fetchGit {
-    name = "nixos-unstable-2019-08-12";
-    url = https://github.com/nixos/nixpkgs/;
-    rev = "62509f72cf143fcce09b02e6828ddb96503f7c18";
-  };
+  mkForce = lib.mkOverride 1; # higher priority than lib.mkForce, which is 50
+in {
+  imports = [ "${nixpkgsSrc}/nixos/modules/installer/cd-dvd/sd-image-aarch64.nix" ];
 
-  nixpkgs = import nixpkgsSrc {
+  # Remove dependency on crda from wpa_supplicant because a required python
+  # extension doesn't cross compile https://github.com/NixOS/nixpkgs/issues/53320
+  services.udev.packages = mkForce [];
+  # Override defaults from installation-device.nix (imported by sd-image-aarch64.nix)
+  documentation.enable = mkForce false;
+  documentation.nixos.enable = mkForce false;
+  services.nixosManual.showManual = mkForce false;
+  # Disable because it pulls in meson, which fails to build for aarch64-linux
+  services.udisks2.enable = mkForce false;
+  security.polkit.enable = mkForce false;
+
+  # installation-device.nix (which is imported by sd-image-aarch64.nix) disables
+  # these units.
+  systemd.services.sshd.wantedBy = mkForce [ "multi-user.target" ];
+  systemd.services.wpa_supplicant.wantedBy = mkForce [ "multi-user.target" ];
+  services.mingetty.autologinUser = mkForce null;
+
+  nixpkgs = {
+    crossSystem = lib.systems.elaborate lib.systems.examples.aarch64-multiplatform;
+    localSystem = { system = "x86_64-linux"; };
     overlays = [
       (self: super: {
+        davfs2 = super.davfs2.overrideAttrs (attrs: {
+          configureFlags = super.stdenv.lib.optionals (super.stdenv.hostPlatform != super.stdenv.buildPlatform) [
+            # AC_FUNC_MALLOC is broken on cross builds.
+            "ac_cv_func_malloc_0_nonnull=yes"
+            "ac_cv_func_realloc_0_nonnull=yes"
+          ];
+          nativeBuildInputs = super.stdenv.lib.optionals (super.stdenv.hostPlatform != super.stdenv.buildPlatform) [
+            self.neon
+          ];
+        });
+        neon = super.neon.overrideDerivation (attrs: { nativeBuildInputs = [ super.libxml2.dev ] ++ attrs.nativeBuildInputs; });
         local-packages = {
           kbd = super.callPackage ({ stdenv, kbd }: stdenv.mkDerivation {
             name = "custom-kbd";
@@ -33,32 +61,68 @@ let
               gzip $out/share/keymaps/i386/qwerty/custom.map
             '';
           }) {};
+          emacs = (super.emacs.override ({ withX = false; withGTK3 = false; }));
+          fim = (super.fim.override ({ x11Support = false; svgSupport = false; })).overrideAttrs (attrs: {
+            nativeBuildInputs = super.stdenv.lib.optionals (super.stdenv.hostPlatform != super.stdenv.buildPlatform) [
+              super.pkgsBuildTarget.flex
+              super.pkgsBuildTarget.bison
+            ];
+            NIX_CFLAGS_COMPILE = "-pthread";
+            configureFlags = [ "fim_cv_regex=no" "fim_cv_regex_broken=no" ];
+          });
         };
       })
     ];
   };
 
-  pkgs = nixpkgs.pkgs;
-
-  lib = nixpkgs.lib;
-in {
-  imports = [ "${nixpkgsSrc}/nixos/modules/installer/cd-dvd/sd-image-aarch64.nix" ];
-
-  nix.nixPath = [ "nixpkgs=${nixpkgsSrc}" "nixos-config=/etc/nixos/configuration.nix" ];
-
-  # installation-device.nix (which is imported by sd-image-aarch64.nix) disables
-  # these units.
-  systemd.services.sshd.wantedBy = lib.mkOverride 1 [ "multi-user.target" ];
-  systemd.services.wpa_supplicant.wantedBy = lib.mkOverride 1 [ "multi-user.target" ];
-  services.nixosManual.showManual = lib.mkOverride 1 false;
-  services.mingetty.autologinUser = lib.mkOverride 1 null;
-  documentation = {
-    enable = lib.mkOverride 1 false;
-    nixos.enable = lib.mkOverride 1 false;
-  };
-
-  boot = {
-    kernelPackages = pkgs.linuxPackages_rpi;
+  boot = rec {
+    kernelPackages = pkgs.linuxPackagesFor ((pkgs.linux_rpi3.override ({
+      # Use the kernel from 19.03 https://github.com/NixOS/nixpkgs/blob/34c7eb7545d155cc5b6f499b23a7cb1c96ab4d59/pkgs/os-specific/linux/kernel/linux-rpi.nix
+      argsOverride = rec {
+        modDirVersion = "4.14.70";
+        tag = "1.20180919";
+        version = "${modDirVersion}-${tag}";
+        src = pkgs.fetchFromGitHub {
+          owner = "raspberrypi";
+          repo = "linux";
+          rev = "raspberrypi-kernel_${tag}-1";
+          sha256 = "1zjvzk6rhrn3ngc012gjq3v7lxn8hy89ljb7fqwld5g7py9lkf0b";
+        };
+        kernelPatches = [];
+        defconfig = "bcmrpi3_defconfig";
+      };
+    })).overrideDerivation (attrs: {
+      # Use the same postConfigure step as from 19.03 because it doesn't build
+      # with this https://github.com/NixOS/nixpkgs/blame/master/pkgs/os-specific/linux/kernel/linux-rpi.nix#L40
+      postConfigure = ''
+        # The v7 defconfig has this set to '-v7' which screws up our modDirVersion.
+        sed -i $buildRoot/.config -e 's/^CONFIG_LOCALVERSION=.*/CONFIG_LOCALVERSION=""/'
+       '';
+      # Same deal
+      postFixup = with pkgs; ''
+        dtbDir=${if stdenv.isAarch64 then "$out/dtbs/broadcom" else "$out/dtbs"}
+        rm $dtbDir/bcm283*.dtb
+        copyDTB() {
+          cp -v "$dtbDir/$1" "$dtbDir/$2"
+        }
+      '' + lib.optionalString (lib.elem stdenv.hostPlatform.system ["armv6l-linux"]) ''
+        copyDTB bcm2708-rpi-0-w.dtb bcm2835-rpi-zero.dtb
+        copyDTB bcm2708-rpi-0-w.dtb bcm2835-rpi-zero-w.dtb
+        copyDTB bcm2708-rpi-b.dtb bcm2835-rpi-a.dtb
+        copyDTB bcm2708-rpi-b.dtb bcm2835-rpi-b.dtb
+        copyDTB bcm2708-rpi-b.dtb bcm2835-rpi-b-rev2.dtb
+        copyDTB bcm2708-rpi-b-plus.dtb bcm2835-rpi-a-plus.dtb
+        copyDTB bcm2708-rpi-b-plus.dtb bcm2835-rpi-b-plus.dtb
+        copyDTB bcm2708-rpi-b-plus.dtb bcm2835-rpi-zero.dtb
+        copyDTB bcm2708-rpi-cm.dtb bcm2835-rpi-cm.dtb
+      '' + lib.optionalString (lib.elem stdenv.hostPlatform.system ["armv7l-linux"]) ''
+        copyDTB bcm2709-rpi-2-b.dtb bcm2836-rpi-2-b.dtb
+      '' + lib.optionalString (lib.elem stdenv.hostPlatform.system ["armv7l-linux" "aarch64-linux"]) ''
+        copyDTB bcm2710-rpi-3-b.dtb bcm2837-rpi-3-b.dtb
+        copyDTB bcm2710-rpi-3-b-plus.dtb bcm2837-rpi-3-b-plus.dtb
+        copyDTB bcm2710-rpi-cm3.dtb bcm2837-rpi-cm3.dtb
+      '';
+    }));
     consoleLogLevel = 0;
     kernelParams = [
       # suppress blinking cursor from drawing over framebuffer
@@ -66,14 +130,14 @@ in {
       # print any kernel messages to tty3, not tty0 (prevent drawing over framebuffer)
       "console=tty3"
     ];
+    supportedFilesystems = mkForce [ "vfat" "ntfs" ];
   };
 
   environment.systemPackages = with pkgs; [
-    tmux
-    emacs
-    gitAndTools.gitFull
-    ripgrep
     fd
+    local-packages.emacs
+    ripgrep
+    tmux
   ];
 
   # Passphrase is managed statefully in /etc/wpa_supplicant.conf in
@@ -103,7 +167,7 @@ in {
 
   security.sudo.enable = true;
 
-  i18n.consoleKeyMap = "${pkgs.local-packages.kbd}/share/keymaps/i386/qwerty/custom.map.gz";
+  console.keyMap = "${pkgs.local-packages.kbd}/share/keymaps/i386/qwerty/custom.map.gz";
 
   services.davfs2.enable = true;
 
@@ -115,7 +179,7 @@ in {
     description = "Wait until DNS is available.";
     serviceConfig = {
       Type = "simple";
-      ExecStart = "${pkgs.stdenv.shell} -c 'until ${pkgs.bind.host}/bin/host cloud.maher.fyi; do sleep 1; done'";
+      ExecStart = "/bin/sh -c 'until ${pkgs.bind.host}/bin/host cloud.maher.fyi; do sleep 1; done'";
     };
     partOf = [ "start-slideshow.service" ];
   };
@@ -130,13 +194,13 @@ in {
       what = "https://cloud.maher.fyi/remote.php/webdav/";
       where = picturesMountDir;
       type = "davfs";
-      options = "_netdev";
+      options = "_netdev,conf=/etc/davfs2/davfs2.conf";
       partOf = ["start-slideshow.service" ];
       mountConfig.TimeoutSec = 15;
     }
   ];
 
-  environment.etc."davfs2/davfs2.conf" = {
+  environment.etc."davfs2/davfs2.conf" = mkForce {
     enable = true;
     # This file is not tracked here but it must be 0600 and owned by
     # root.  Certain special characters will cause it to fail, for
@@ -171,7 +235,7 @@ in {
       TimeoutStartSec = "5m"; # webdav is slow
     };
     script = ''
-      ${pkgs.fim}/bin/fim \
+      ${pkgs.local-packages.fim}/bin/fim \
         --autozoom \
         --random \
         --quiet \
@@ -179,4 +243,6 @@ in {
         --execute-commands 'while (1) { display; sleep 30; next; }'
     '';
   };
+
+  installer.cloneConfig = false;
 }
