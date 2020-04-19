@@ -12,7 +12,6 @@ in rec {
     ../../common/gnome.nix
     ../../common/steam.nix
     ../../common/fonts.nix
-    # ../../common/virtualisation.nix
   ] ++ (import ./../../modules/module-list.nix);
 
   fileSystems."/" = {
@@ -281,55 +280,9 @@ in rec {
       # libreoffice # broken on unstable
       python27Packages.syncthing-gtk
       kdeconnect
+      lm_sensors
     ] ++ (import ./../../../common/package-lists/essentials.nix) {
       inherit pkgs;
-    };
-  };
-
-  services.nginx = {
-    enable = true;
-    virtualHosts = {
-      "_" = {
-        default = true;
-        locations = let
-          transmissionPort = toString config.services.transmission.port;
-        in {
-          "/transmission" = {
-            extraConfig = ''
-              proxy_set_header        Host $host;
-              proxy_set_header        X-Real-IP $remote_addr;
-              proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
-              proxy_set_header        X-Forwarded-Proto $scheme;
-            '';
-            proxyPass = "http://localhost:${transmissionPort}";
-          };
-
-          "/transmission/rpc" = {
-            proxyPass = "http://localhost:${transmissionPort}";
-          };
-
-          "/transmission/web/" = {
-            proxyPass = "http://localhost:${transmissionPort}";
-          };
-
-          "/transmission/upload" = {
-            proxyPass = "http://localhost:${transmissionPort}";
-          };
-
-          "/transmission/web/style/" = {
-            alias = "${pkgs.transmission}/share/transmission/web/style/";
-          };
-
-
-          "/transmission/web/javascript/" = {
-            alias = "${pkgs.transmission}/share/transmission/web/javascript/";
-          };
-
-          "/transmission/web/images/" = {
-            alias = "${pkgs.transmission}/share/transmission/web/images/";
-          };
-        };
-      };
     };
   };
 
@@ -381,48 +334,9 @@ in rec {
       # https://github.com/NixOS/nixpkgs/issues/17237 - until then, make sure
       # that anongid is the the same as users.groups.users.gid!
       /export 192.168.1.0/24(rw,async,no_subtree_check,no_root_squash,insecure)
-      #/export 192.168.1.0/24(rw,async,no_subtree_check,no_root_squash,sec=krb5p)
     '';
   };
 
-  # krb5 = {
-  #   enable = true;
-  #   libdefaults = {
-  #     default_realm = "HOSHIJIRO.MAHER.FYI";
-  #   };
-
-  #   realms = {
-  #     "HOSHIJIRO.MAHER.FYI" = {
-  #       admin_server = "hoshijiro.maher.fyi";
-  #       kdc = "hoshijiro.maher.fyi";
-  #       default_principal_flags = "+preauth";
-  #     };
-  #   };
-
-  #   domain_realm = ''
-  #     hoshijiro.maher.fyi = HOSHIJIRO.MAHER.FYI;
-  #     .hoshijiro.maher.fyi = HOSHIJIRO.MAHER.FYI;
-  #   '';
-
-  #   extraConfig = ''
-  #     [logging]
-  #     kdc          = SYSLOG:NOTICE
-  #     admin_server = SYSLOG:NOTICE
-  #     default      = SYSLOG:NOTICE
-  #   '';
-  # };
-
-  # services.kerberos_server = {
-  #   enable = true;
-  #   realms = {
-  #     "HOSHIJIRO.MAHER.FYI" = [
-  #       { principal = "*/admin"; access = "all"; }
-  #       { principal = "admin"; access = "all"; }
-  #     ];
-  #   };
-  # };
-
-  # TODO: move its actual home to here
   services.transmission = {
     enable = false;
     port = 9091;
@@ -450,7 +364,7 @@ in rec {
   # to allow access, add users to "adbusers" group
   programs.adb.enable = true;
 
-  nixpkgs = {
+  nixpkgs =  {
     config.allowUnfree = true;
     overlays = [
       (import ../../../packages/overlay.nix)
@@ -464,17 +378,6 @@ in rec {
     nixPath = [
       "nixpkgs=${pkgs.callPackage ./lib/nixpkgs.nix {}}"
       "nixos-config=/etc/nixos/configuration.nix"
-    ];
-    distributedBuilds = false;
-    trustedBinaryCaches = [ "http://nixos-arm.dezgeg.me/channel" ];
-    buildMachines = [
-      {
-        hostName = "tomoyo.maher.fyi";
-        sshUser = "nix-builder";
-        sshKey = "/root/.ssh/id_nix-builder";
-        system = "x86_64-linux";
-        maxJobs = 4;
-      }
     ];
   };
 
@@ -531,7 +434,7 @@ in rec {
     };
   };
 
-  nix.gc.automatic = true;
+  nix.gc.automatic = false;
 
   documentation.nixos.enable = false;
 }
