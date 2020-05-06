@@ -385,4 +385,25 @@ in rec {
   goose = callPackage ./goose {};
 
   git-archive-all = callPackage ./git-archive-all {};
+
+  custom-kbd = callPackage ({ stdenv, kbd }: stdenv.mkDerivation {
+    name = "custom-kbd";
+    buildInputs = [ kbd ];
+    phases = [ "installPhase" ];
+    installPhase = ''
+      mkdir -p $out/share/keymaps/i386/qwerty
+      zcat ${kbd}/share/keymaps/i386/qwerty/us.map.gz > $out/share/keymaps/i386/qwerty/custom.map
+      cat ${kbd}/share/keymaps/i386/include/linux-with-two-alt-keys.inc >> $out/share/keymaps/i386/qwerty/custom.map
+      # No such keysym as Hyper by default, so abuse another VT102
+      # definition.  Emacs needs to be configured to decode this.
+      #
+      # Something like this.  I don't know if it works:
+      # (define-key input-decode-map "\e[35~" [(f21)])
+      # (define-key key-translation-map (kbd "<f21>") 'event-apply-hyper-modifier)
+      # https://www.emacswiki.org/emacs/LinuxConsoleKeys
+      echo 'string F21 = "\033[35~"' >> $out/share/keymaps/i386/qwerty/custom.map
+      echo 'keycode 58 = F21' >> $out/share/keymaps/i386/qwerty/custom.map
+      gzip $out/share/keymaps/i386/qwerty/custom.map
+    '';
+  }) {};
 }

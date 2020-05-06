@@ -126,10 +126,10 @@ in lib.mkMerge ([
       ]);
     };
   }
-  (import ./syncthing {
-    inherit lib pkgs;
-    actualHostname = state.host;
-  })
+  # (import ./syncthing {
+  #   inherit lib pkgs;
+  #   actualHostname = state.host;
+  # })
   (import ./tmux { inherit lib pkgs; })
   (import ./zsh { inherit lib pkgs; })
   (import ./xkb { inherit lib pkgs; })

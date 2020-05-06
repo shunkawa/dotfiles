@@ -1,5 +1,4 @@
 { config, lib, pkgs, ... }: let
-  secrets = (import ./secrets.nix);
   hostName = "cloud.maher.fyi";
 in {
   services.nextcloud = {
@@ -17,12 +16,12 @@ in {
       dbname = "nextcloud";
       dbuser = "nextcloud";
       dbhost = "localhost";
-      inherit (secrets.services.nextcloud.autoconfig) dbpass;
+      dbpassFile = "/etc/secrets/nextcloud/dbpass-file";
       adminuser = "nextcloud-admin";
-      adminpassFile = secrets.deployment.keys.nextcloud-adminpass-file;
+      adminpassFile = "/etc/secrets/nextcloud/adminpass-file";
     };
     maxUploadSize = "512M";
-    home = "/mnt/server-var/new/cloud.maher.fyi/var/lib/nextcloud";
+    home = "/var/lib/nextcloud";
   };
 
   systemd.services.nextcloud-setup = {
@@ -33,19 +32,24 @@ in {
     ];
     preStart = ''
       mkdir -p ${config.services.nextcloud.home}
-      chown nextcloud:${config.services.nginx.group} ${config.services.nextcloud.home}
+      chown -R ${config.users.users.nginx.name}:${config.services.nginx.group} ${config.services.nextcloud.home}
     '';
   };
 
   services.postgresql = {
     enable = true;
     package = pkgs.postgresql96;
-    dataDir = "/mnt/server-var/new/cloud.maher.fyi/var/lib/postgresql/9.6";
-    initialScript = pkgs.writeText "psql-init" ''
-      create role nextcloud with login password '${secrets.services.nextcloud.autoconfig.dbpass}';
-      create database nextcloud with owner nextcloud;
-    '';
+    dataDir = "/var/lib/postgresql/9.6";
+    # postgres users has to have read and execute permission to every directory
+    # leading up to this one, and read permission to the file itself.
+    # root@hoshijiro> ls -lha /mnt/persistent/etc/secrets/postgres
+    # total 22K
+    # drw-r-x--- 2 root postgres   3 May  7 09:45 .
+    # drwxr-xr-x 4 root root       4 May  7 09:44 ..
+    # -rw-r----- 1 root postgres 158 May  7 09:45 psql-init
+    initialScript = "/etc/secrets/postgres/psql-init";
   };
+  
 
   services.redis = {
     unixSocket = "/var/run/redis/redis.sock";
@@ -58,7 +62,7 @@ in {
   systemd.services.redis = {
     preStart = ''
       mkdir -p /var/run/redis
-      chown redis:${config.services.nginx.group} /var/run/redis
+      chown ${config.users.users.redis.name}:${config.services.nginx.group} /var/run/redis
     '';
     serviceConfig.PermissionsStartOnly = true;
   };
@@ -70,7 +74,7 @@ in {
         echo "waiting for redis..."
         sleep 1
       done
-      chown redis:${config.services.nginx.group} /var/run/redis/redis.sock
+      chown ${config.users.users.redis.name}:${config.services.nginx.group} /var/run/redis/redis.sock
     '';
     after = [ "redis.service" ];
     requires = [ "redis.service" ];
@@ -79,13 +83,6 @@ in {
       Type = "oneshot";
     };
   };
-
-  # deployment.keys.nextcloud-adminpass-file = {
-  #   text = secrets.deployment.keys.nextcloud-adminpass-file;
-  #   user = "nextcloud";
-  #   group = "nginx";
-  #   permissions = "0600";
-  # };
 
   security.acme = {
     email = "ruben@maher.fyi";

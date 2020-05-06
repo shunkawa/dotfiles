@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -eu
+
 sudo nixos-rebuild switch \
   -I nixpkgs="$(nix-build --expr "with import <nixpkgs> {}; callPackage ${HOME}/.config/nixpkgs/nixos/config/hoshijiro/lib/nixpkgs.nix {}" --no-out-link)" \
   -I nixos-config="${HOME}/.config/nixpkgs/nixos/config/hoshijiro/configuration.nix" \

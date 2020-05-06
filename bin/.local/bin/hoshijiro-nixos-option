@@ -1,0 +1,13 @@
+#!/bin/sh
+
+set -eu
+
+NIX_PATH="nixpkgs=$(nix-build --expr "with import <nixpkgs> {}; callPackage ${HOME}/.config/nixpkgs/nixos/config/hoshijiro/lib/nixpkgs.nix {}" --no-out-link):nixos-config=${HOME}/.config/nixpkgs/nixos/config/hoshijiro/configuration.nix"
+
+export NIX_PATH
+
+nixos-option "${@}"
+
+# Local Variables:
+# mode: shell-script
+# End:
