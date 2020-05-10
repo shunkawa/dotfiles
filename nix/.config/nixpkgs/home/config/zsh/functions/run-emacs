@@ -1,0 +1,11 @@
+#!/usr/bin/env zsh
+
+function run-emacs() {
+  if isdarwin; then
+    "$(dirname $(dirname $(readlink -f $(which emacs))))/Applications/Emacs.app/Contents/MacOS/Emacs" "${@}";
+  else
+    run-emacs "${@}"
+  fi;
+}
+
+run-emacs "${@}"

@@ -58,6 +58,7 @@ let
       js2-mode
       json-mode
       key-chord
+      kubernetes
       legalese
       lsp-java
       lsp-mode

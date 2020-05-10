@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
 function emacs-daemon() {
-  emacs --daemon "${@}";
+  run-emacs --daemon "${@}";
 }
 
 emacs-daemon "${@}"

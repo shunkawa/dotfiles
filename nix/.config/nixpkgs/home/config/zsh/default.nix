@@ -189,20 +189,6 @@ in (lib.recursiveUpdate ({
     get-ssl-certificate-expiry-date "''${@}"
   '';
 
-  home.file.".config/zsh/functions/emacs".source = pkgs.writeText "emacs" ''
-    #!/usr/bin/env zsh
-
-    function emacs() {
-      if isdarwin; then
-        ${pkgs.local-packages.emacs-with-packages}/Applications/Emacs.app/Contents/MacOS/Emacs "''${@}";
-      else
-        ${pkgs.local-packages.emacs-with-packages}/bin/emacs "''${@}"
-      fi;
-    }
-
-    emacs "''${@}"
-  '';
-
   home.file.".config/zsh/functions/rkm-history".source = pkgs.writeText "rkm-history" ''
     #!/usr/bin/env zsh
 
