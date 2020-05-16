@@ -215,6 +215,10 @@ if (command -v direnv >/dev/null 2>&1); then
   eval "$(fasd --init auto)"
 fi
 
+if (command -v kubectl >/dev/null 2>&1); then
+  source <(kubectl completion zsh)
+fi
+
 if test -f "${NIX_PROFILE}/share/zsh/plugins/syntax-highlighting/zsh-syntax-highlighting.plugin.zsh"; then
   source "${NIX_PROFILE}/share/zsh/plugins/syntax-highlighting/zsh-syntax-highlighting.plugin.zsh"
 else
