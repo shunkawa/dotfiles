@@ -406,4 +406,10 @@ in rec {
       gzip $out/share/keymaps/i386/qwerty/custom.map
     '';
   }) {};
+
+  zsh-packages = recurseIntoAttrs (callPackage ./zsh-packages {});
+
+  curl-verbose = callPackage ./curl-verbose {};
+
+  comma = callPackage ./comma {};
 }

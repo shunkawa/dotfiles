@@ -1,0 +1,28 @@
+#!/usr/bin/env zsh
+
+set -eu
+
+function get-images-from-pdf() {
+  local target="${1}"
+
+  if (command -v gs >/dev/null 2>&1); then
+    gs \
+      -dBATCH \
+      -dNOPAUSE \
+      -sDEVICE=png16m \
+      -dGraphicsAlphaBits=4 \
+      -dTextAlphaBits=4 \
+      -r150 \
+      -sOutputFile=./output%d.png \
+      "${target}"
+  else
+   echo '** ERROR:' "gs not found in \$PATH" >&2
+   exit 1
+  fi
+}
+
+get-images-from-pdf "${@}"
+
+# Local Variables:
+# mode: shell-script
+# End:

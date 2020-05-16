@@ -1,0 +1,10 @@
+#!/bin/sh
+
+set -eu
+
+export NIX_PATH="nixpkgs=${HOME}/.nix-defexpr/nixpkgs"
+
+darwin-rebuild switch \
+  -I "darwin=${HOME}/.nix-defexpr/darwin" \
+  -I "darwin-config=${HOME}/.config/nixpkgs/darwin-configuration.nix" \
+  -I "nixpkgs=$(nix-build --expr "with import <nixpkgs> {}; callPackage ${HOME}/.config/nixpkgs/darwin/lib/nixpkgs.nix {}" --no-out-link)"

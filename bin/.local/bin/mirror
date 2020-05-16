@@ -1,0 +1,24 @@
+#!/usr/bin/env zsh
+
+set -eu
+
+# Mirror a website or some subdirectory
+# TODO: this should use WARC format
+function mirror() {
+  local target=${1}
+
+  wget \
+    --mirror \
+    --page-requisites \
+    --adjust-extension \
+    --no-parent \
+    --convert-links \
+    --execute robots=off \
+    "${target}"
+}
+
+mirror "${@}"
+
+# Local Variables:
+# mode: shell-script
+# End:

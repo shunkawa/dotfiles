@@ -1,0 +1,9 @@
+{
+  "pure": {
+    "url": "https://github.com/sindresorhus/pure.git",
+    "rev": "e7036c43487fedf608a988dde54dd1d4c0d96823",
+    "date": "2019-03-21T18:29:27+02:00",
+    "sha256": "10mdk4dn2azzrhymx0ghl8v668ydy6mz5i797nmbl2ijx9hlqb3v",
+    "fetchSubmodules": false
+  }
+}

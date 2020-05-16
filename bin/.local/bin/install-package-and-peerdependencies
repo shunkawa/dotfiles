@@ -1,0 +1,62 @@
+#!/usr/bin/env zsh
+
+set -eu
+
+SHOULD_USE_YARN=0
+SHOULD_USE_SAVE_DEV=0
+
+while :; do
+  set +u
+  case "${1}" in
+    --yarn)
+      SHOULD_USE_YARN=1
+      ;;
+    --npm)
+      SHOULD_USE_YARN=0
+      ;;
+    --save)
+      SHOULD_USE_SAVE_DEV=0
+      ;;
+    --save-dev)
+      SHOULD_USE_SAVE_DEV=1
+      ;;
+    --)
+      shift
+      break
+      ;;
+    *)
+      break
+  esac
+  set -u
+  shift
+done
+
+function install-package-and-peerdependencies () {
+  target="${1}"
+
+  if (test "${SHOULD_USE_YARN}" -eq 0); then
+    if (command -v yarn >/dev/null 2>&1); then
+      npm info "${target}" peerDependencies --json |
+        sed 's/[\{\},]//g ; s/: /@/g' |
+        xargs npm add $(test "${SHOULD_USE_SAVE_DEV}" = 0 && printf "--save" || printf "--save-dev") "${target}"
+    else
+      echo '** ERROR:' "npm not found in \$PATH" >&2
+      exit 1
+    fi
+  else
+    if (command -v yarn >/dev/null 2>&1); then
+      npm info "${target}" peerDependencies --json |
+        sed 's/[\{\},]//g ; s/: /@/g' |
+        xargs yarn add $(test "${SHOULD_USE_SAVE_DEV}" = 0 && : || printf "--dev") "${target}"
+    else
+      echo '** ERROR:' "yarn not found in \$PATH" >&2
+      exit 1
+    fi
+  fi
+}
+
+install-package-and-peerdependencies "${@}"
+
+# Local Variables:
+# mode: shell-script
+# End:

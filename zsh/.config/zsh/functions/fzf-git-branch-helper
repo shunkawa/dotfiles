@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
 # https://gist.github.com/junegunn/8b572b8d4b5eddd8b85e5f4d40f17236
-function gb() {
+function fzf-git-branch-helper() {
   is-in-git-repo || return
   git branch -a --color=always | grep -v '/HEAD\s' | sort |
   fzf-down --ansi --multi --tac --preview-window right:70% \
@@ -10,7 +10,7 @@ function gb() {
   sed 's#^remotes/##'
 }
 
-gb
+fzf-git-branch-helper
 
 # Local Variables:
 # mode: shell-script

@@ -1,0 +1,19 @@
+#!/usr/bin/env zsh
+
+set -eu
+
+function rkm-history () {
+  export LC_ALL=C
+  cat "${RKM_HISTORY_HIST_DIR}/"** |
+    sed "s/^[^;]*;//" | # assuming EXTENDED_HISTORY is set (":start:elapsed;command" format)
+    sort |
+    uniq -c |
+    sort |
+    sed "s/^[[:space:]]*[0-9]*[[:space:]]*//"
+}
+
+rkm-history "${@}"
+
+# Local Variables:
+# mode: shell-script
+# End:

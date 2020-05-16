@@ -1,0 +1,27 @@
+#!/usr/bin/env zsh
+
+set -eu
+
+# TODO: figure out how to get the output path and create a symlink to it, for
+# example so that a command like this:
+# $ get-page http://chriswarbo.net/projects/nixos/useful_hacks.html
+# produces a symlink like this:
+# $ ls -lha useful-nix-hacks.html
+# useful-nix-hacks.html-> ./.wget/chriswarbo.net/projects/nixos/useful_hacks.html
+
+function get-page () {
+  wget \
+    --adjust-extension \
+    --span-hosts \
+    --convert-links \
+    --page-requisites \
+    --no-clobber \
+    --execute robots=off \
+    "${1}"
+}
+
+get-page "${@}"
+
+# Local Variables:
+# mode: shell-script
+# End:

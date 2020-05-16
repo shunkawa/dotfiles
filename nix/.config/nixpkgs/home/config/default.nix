@@ -18,7 +18,6 @@ in lib.mkMerge ([
 
       packages = with pkgs; [
         (pass.overrideAttrs (attrs: { doInstallCheck = false; }))
-        ansible
         aspell
         aspellDicts.en
         bat
@@ -71,8 +70,7 @@ in lib.mkMerge ([
         qrencode
         ripgrep
         rsync
-        sift
-        silver-searcher
+        shellcheck
         socat
         speedtest-cli
         sqlite-interactive
@@ -86,7 +84,10 @@ in lib.mkMerge ([
         which
         yq
         yubikey-manager
+        zsh
       ] ++ (with local-packages; [
+        comma
+        curl-verbose
         docker-convenience-scripts
         emacs-with-packages
         git-archive-all
@@ -95,8 +96,16 @@ in lib.mkMerge ([
         hiptext
         mu
         node-build
+        nodePackages."@jasondibenedetto/plop"
         nodenv
         pass-show-first-line
+        zsh-packages.grml-zsh-config
+        zsh-packages.nix-zsh-completions
+        zsh-packages.oh-my-zsh
+        zsh-packages.pure
+        zsh-packages.zsh-autosuggestions
+        zsh-packages.zsh-completions
+        zsh-packages.zsh-syntax-highlighting
       ]) ++ lib.optionals stdenv.isLinux ([
           anki
           chromium
@@ -131,7 +140,6 @@ in lib.mkMerge ([
   #   actualHostname = state.host;
   # })
   (import ./tmux { inherit lib pkgs; })
-  (import ./zsh { inherit lib pkgs; })
   (import ./xkb { inherit lib pkgs; })
   (import ./spectacle { inherit lib pkgs; })
   (import ./mbsync { inherit lib pkgs; })

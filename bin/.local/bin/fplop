@@ -1,0 +1,11 @@
+#!/usr/bin/env zsh
+
+function fplop() {
+  printf "\$$(plop -k "${1}"): #${1};" | tr "[:upper:]" "[:lower:]"
+}
+
+fplop "${@}"
+
+# Local Variables:
+# mode: shell-script
+# End:

@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
 # https://gist.github.com/junegunn/8b572b8d4b5eddd8b85e5f4d40f17236
-function gf() {
+function fzf-git-file-helper() {
   is-in-git-repo || return
   git -c color.status=always status --short |
   fzf-down -m --ansi --nth 2..,.. \
@@ -9,7 +9,7 @@ function gf() {
   cut -c4- | sed 's/.* -> //'
 }
 
-gf
+fzf-git-file-helper
 
 # Local Variables:
 # mode: shell-script

@@ -1,6 +1,11 @@
 { config, lib, pkgs, ... }:
 
-{
+let
+  pinentry = pkgs.writeScriptBin "pinentry" ''
+    #!${pkgs.stdenv.shell}
+    ${pkgs.pinentry_mac}/Applications/pinentry-mac.app/Contents/MacOS/pinentry-mac
+  '';
+in {
   fonts = {
     enableFontDir = true;
     fonts = with pkgs; [
@@ -11,7 +16,7 @@
   system.defaults.dock.autohide = true;
 
   environment = {
-    systemPackages = with pkgs; [
+    systemPackages =  with pkgs; [
       aspell
       aspellDicts.en
       aspellDicts.en-computers
@@ -26,6 +31,7 @@
       local-packages.SequelPro
       local-packages.Sketch
       local-packages.Spectacle
+      pinentry
       qemu
       syncthing
     ];

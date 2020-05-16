@@ -1,3 +1,7 @@
 #!/bin/sh
 
 curl -Ls -I -w %{redirect_url} "${@}"
+
+# Local Variables:
+# mode: shell-script
+# End:
