@@ -219,6 +219,10 @@ if (command -v kubectl >/dev/null 2>&1); then
   source <(kubectl completion zsh)
 fi
 
+if (command -v rkm-history-create-histfile-name >/dev/null 2>&1); then
+  export HISTFILE=$(rkm-history-create-histfile-name)
+fi
+
 if test -f "${NIX_PROFILE}/share/zsh/plugins/syntax-highlighting/zsh-syntax-highlighting.plugin.zsh"; then
   source "${NIX_PROFILE}/share/zsh/plugins/syntax-highlighting/zsh-syntax-highlighting.plugin.zsh"
 else
