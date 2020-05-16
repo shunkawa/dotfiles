@@ -53,6 +53,7 @@ in lib.mkMerge ([
         isync
         jhead
         jq
+        kubernetes-helm
         mitmproxy
         msmtp
         ncmpcpp
