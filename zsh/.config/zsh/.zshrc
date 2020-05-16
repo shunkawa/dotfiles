@@ -61,11 +61,28 @@ alias cp="cp -ivr"
 alias mv="mv -iv"
 set -o noclobber
 
-alias l='exa -la'
+if (command -v exa >/dev/null 2>&1); then
+  alias l='exa -la'
+  alias ls='exa'
+else
+  alias l='ls -lha'
+fi
+
 alias ll='l'
 
-alias e='emacs-client'
-alias e.='e'
+if (command -v bat >/dev/null 2>&1); then
+  alias less='bat'
+fi
+
+if (command -v emacs-client >/dev/null 2>&1); then
+  alias e='emacs-client'
+else
+  alias e='emacsclient -c'
+fi
+
+alias e.='e .'
+
+alias cd..='cd ..'
 
 if test -f "${NIX_PROFILE}/share/oh-my-zsh/plugins/colored-man-pages/colored-man-pages.plugin.zsh"; then
   source "${NIX_PROFILE}/share/oh-my-zsh/plugins/colored-man-pages/colored-man-pages.plugin.zsh"
