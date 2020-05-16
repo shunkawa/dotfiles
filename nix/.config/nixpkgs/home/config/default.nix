@@ -26,7 +26,6 @@ in lib.mkMerge ([
         coreutils
         curl
         direnv
-        docker_compose
         entr
         exa
         fasd
@@ -54,7 +53,6 @@ in lib.mkMerge ([
         isync
         jhead
         jq
-        kubectl
         mitmproxy
         msmtp
         ncmpcpp
