@@ -79,6 +79,7 @@ in lib.mkMerge ([
         unrar
         unzip
         wget
+        xe
         yq
         yubikey-manager
         zsh
