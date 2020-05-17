@@ -28,6 +28,7 @@ in lib.mkMerge ([
         coreutils
         curl
         direnv
+        du-dust
         entr
         exa
         fasd
@@ -51,6 +52,7 @@ in lib.mkMerge ([
         gnutar
         go
         htop
+        hyperfine
         imagemagick
         inkscape
         isync
@@ -66,12 +68,14 @@ in lib.mkMerge ([
         openssl
         pandoc
         procmail # formail used for some mu hacks
+        procs
         protobuf
         pwgen
         python3
         qrencode
         ripgrep
         rsync
+        sd
         shellcheck
         socat
         speedtest-cli
@@ -85,8 +89,10 @@ in lib.mkMerge ([
         wget
         xclip
         xe
+        xsv
         yq
         yubikey-manager
+        zenith
         zsh
       ] ++ (with local-packages; [
         comma
