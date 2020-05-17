@@ -1,10 +1,7 @@
 { config, lib, pkgs, ... }:
 
 let
-  pinentry = pkgs.writeScriptBin "pinentry" ''
-    #!${pkgs.stdenv.shell}
-    ${pkgs.pinentry_mac}/Applications/pinentry-mac.app/Contents/MacOS/pinentry-mac
-  '';
+
 in {
   fonts = {
     enableFontDir = true;
@@ -17,37 +14,16 @@ in {
 
   environment = {
     systemPackages =  with pkgs; [
-      aspell
-      aspellDicts.en
-      aspellDicts.en-computers
-      aspellDicts.en-science
-      iterm2
-      local-packages.Alfred
-      local-packages.Anki
-      local-packages.Contexts
-      local-packages.Docker
-      local-packages.GIMP
-      local-packages.ImageOptim
-      local-packages.SequelPro
-      local-packages.Sketch
-      local-packages.Spectacle
-      pinentry
-      qemu
-      syncthing
-    ];
-
-    variables = {
-      # If you don't do this, Emacs will throw errors like this because it can't
-      # find the dictionary files:
-      # Starting new Ispell process /run/current-system/sw/bin/aspell with english dictionary...
-      # Error enabling Flyspell mode:
-      # (Error: The file "/nix/store/ ... /lib/aspell/english" can not be opened for reading.)
-      ASPELL_CONF = "data-dir /run/current-system/sw/lib/aspell";
-    };
-
-    pathsToLink = [
-      "/lib"           # for aspell
-      "/share/emacs"   # Necessary for emacs support files (mu4e)
+      local-packages.mac-apps.Alfred
+      local-packages.mac-apps.Anki
+      local-packages.mac-apps.Contexts
+      local-packages.mac-apps.Docker
+      local-packages.mac-apps.GIMP
+      local-packages.mac-apps.ImageOptim
+      local-packages.mac-apps.SequelPro
+      local-packages.mac-apps.Sketch
+      local-packages.mac-apps.Spectacle
+      local-packages.mac-apps.iTerm2
     ];
 
     etc = {

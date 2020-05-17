@@ -20,6 +20,8 @@ in lib.mkMerge ([
         (pass.overrideAttrs (attrs: { doInstallCheck = false; }))
         aspell
         aspellDicts.en
+        aspellDicts.en-computers
+        aspellDicts.en-science
         bat
         bind
         bundler
@@ -81,11 +83,11 @@ in lib.mkMerge ([
         unrar
         unzip
         wget
+        xclip
         xe
         yq
         yubikey-manager
         zsh
-        xclip
       ] ++ (with local-packages; [
         comma
         curl-verbose
@@ -100,6 +102,7 @@ in lib.mkMerge ([
         nodePackages."@jasondibenedetto/plop"
         nodenv
         pass-show-first-line
+        pinentry-wrapper
         tmux-packages.fzf-tmux-session
         tmux-packages.fzf-tmux-url
         tmux-packages.powerline

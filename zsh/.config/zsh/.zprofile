@@ -45,6 +45,13 @@ export EMAIL_QUEUE_QUIET="t"
 export WINEARCH=win32
 export WINEPREFIX="''${HOME}/.wine32"
 
+# If you don't do this, Emacs will throw errors like this because it can't
+# find the dictionary files:
+# Starting new Ispell process /run/current-system/sw/bin/aspell with english dictionary...
+# Error enabling Flyspell mode:
+# (Error: The file "/nix/store/ ... /lib/aspell/english" can not be opened for reading).
+export ASPELL_CONF="data-dir ${NIX_PROFILE}/lib/aspell";
+
 export LESSHISTFILE="/dev/null"
 export LC_COLLATE="C"
 export PAGER="less -R"
