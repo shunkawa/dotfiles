@@ -158,6 +158,5 @@ in lib.mkMerge ([
   #   actualHostname = state.host;
   # })
   (import ./xkb { inherit lib pkgs; })
-  (import ./spectacle { inherit lib pkgs; })
   (import ./mbsync { inherit lib pkgs; })
 ])
