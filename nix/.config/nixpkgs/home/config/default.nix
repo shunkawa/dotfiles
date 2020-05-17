@@ -12,10 +12,6 @@ in lib.mkMerge ([
     manual.manpages.enable = false;
 
     home = {
-      file.".psqlrc".source = pkgs.writeText "psqlrc" ''
-        \x auto
-      '';
-
       packages = with pkgs; [
         (pass.overrideAttrs (attrs: { doInstallCheck = false; }))
         aspell
