@@ -5,7 +5,7 @@ stdenv.mkDerivation {
 
   src = fetchGit {
     url = ../../../../.nix-defexpr/nixpkgs;
-    rev = "ddc2f887f5f4b31128e8d4a56cb524c1d36d6fd4";
+    rev = "32b8ed738096bafb4cdb7f70347a0f63f9f40151";
   };
 
   dontBuild = true;

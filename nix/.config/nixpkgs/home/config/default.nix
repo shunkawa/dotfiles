@@ -34,6 +34,7 @@ in lib.mkMerge ([
         file
         findutils
         fortune
+        fpp
         fzf
         ghq
         git-lfs
@@ -84,6 +85,7 @@ in lib.mkMerge ([
         yq
         yubikey-manager
         zsh
+        xclip
       ] ++ (with local-packages; [
         comma
         curl-verbose
@@ -98,6 +100,18 @@ in lib.mkMerge ([
         nodePackages."@jasondibenedetto/plop"
         nodenv
         pass-show-first-line
+        tmux-packages.fzf-tmux-session
+        tmux-packages.fzf-tmux-url
+        tmux-packages.powerline
+        tmux-packages.powerline-fonts
+        tmux-packages.tmux-colors-solarized
+        tmux-packages.tmux-copycat
+        tmux-packages.tmux-fpp
+        tmux-packages.tmux-open
+        tmux-packages.tmux-pain-control
+        tmux-packages.tmux-sensible
+        tmux-packages.tmux-wrapper
+        tmux-packages.tmux-yank
         zsh-packages.grml-zsh-config
         zsh-packages.nix-zsh-completions
         zsh-packages.oh-my-zsh
@@ -138,7 +152,6 @@ in lib.mkMerge ([
   #   inherit lib pkgs;
   #   actualHostname = state.host;
   # })
-  (import ./tmux { inherit lib pkgs; })
   (import ./xkb { inherit lib pkgs; })
   (import ./spectacle { inherit lib pkgs; })
   (import ./mbsync { inherit lib pkgs; })

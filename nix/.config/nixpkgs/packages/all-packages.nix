@@ -409,6 +409,8 @@ in rec {
 
   zsh-packages = recurseIntoAttrs (callPackage ./zsh-packages {});
 
+  tmux-packages = recurseIntoAttrs (callPackage ./tmux-packages {});
+
   curl-verbose = callPackage ./curl-verbose {};
 
   comma = callPackage ./comma {};
