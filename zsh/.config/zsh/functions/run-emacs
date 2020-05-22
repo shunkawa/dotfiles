@@ -2,7 +2,7 @@
 
 function run-emacs() {
   if isdarwin; then
-    "$(dirname $(dirname $(readlink -f $(whence emacs))))/Applications/Emacs.app/Contents/MacOS/Emacs" "${@}";
+    "$(dirname $(dirname $(readlink $(whence emacs))))/Applications/Emacs.app/Contents/MacOS/Emacs" "${@}";
   else
     run-emacs "${@}"
   fi;
