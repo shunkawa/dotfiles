@@ -2,9 +2,11 @@
 
 set -eu
 
-export NIX_PATH="nixpkgs=${HOME}/.nix-defexpr/nixpkgs"
+NIX_PATH="nixpkgs=$(readlink -f "${HOME}/.nix-defexpr/nixpkgs")"
+
+export NIX_PATH
 
 darwin-rebuild switch \
-  -I "darwin=${HOME}/.nix-defexpr/darwin" \
-  -I "darwin-config=${HOME}/.config/nixpkgs/darwin-configuration.nix" \
-  -I "nixpkgs=$(nix-build --expr "with import <nixpkgs> {}; callPackage ${HOME}/.config/nixpkgs/darwin/lib/nixpkgs.nix {}" --no-out-link)"
+  -I "darwin=$(readlink -f "${HOME}/.nix-defexpr/darwin")" \
+  -I "darwin-config=$(readlink -f "${HOME}/.config/nixpkgs/darwin-configuration.nix")" \
+  -I "nixpkgs=$(nix-build --expr "with import <nixpkgs> {}; callPackage $(readlink -f "${HOME}/.config/nixpkgs/darwin/lib/nixpkgs.nix") {}" --no-out-link)"
