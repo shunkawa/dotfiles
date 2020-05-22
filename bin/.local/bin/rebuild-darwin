@@ -2,11 +2,21 @@
 
 set -eu
 
-NIX_PATH="nixpkgs=$(readlink -f "${HOME}/.nix-defexpr/nixpkgs")"
+fatal() {
+  echo '** ERROR:' "$@" >&2
+  exit 1
+}
+
+if ! (command -v readlinkf >/dev/null 2>&1); then
+  # shellcheck disable=SC2016
+  fatal '"readlinkf" command not found.  Probably, you want to add the directory this script is in to $PATH.  For example: PATH="~/.local/bin:$PATH" rebuild-darwin'
+fi
+
+NIX_PATH="nixpkgs=$(readlinkf "${HOME}/.nix-defexpr")/nixpkgs"
 
 export NIX_PATH
 
 darwin-rebuild switch \
-  -I "darwin=$(readlink -f "${HOME}/.nix-defexpr/darwin")" \
-  -I "darwin-config=$(readlink -f "${HOME}/.config/nixpkgs/darwin-configuration.nix")" \
-  -I "nixpkgs=$(nix-build --expr "with import <nixpkgs> {}; callPackage $(readlink -f "${HOME}/.config/nixpkgs/darwin/lib/nixpkgs.nix") {}" --no-out-link)"
+  -I "darwin=$(readlinkf "${HOME}/.nix-defexpr")/darwin" \
+  -I "darwin-config=$(readlinkf "${HOME}/.config/nixpkgs")/darwin-configuration.nix" \
+  -I "nixpkgs=$(nix-build --expr "with import <nixpkgs> {}; callPackage $(readlinkf "${HOME}/.config/nixpkgs")/darwin/lib/nixpkgs.nix {}" --no-out-link)"

@@ -12,6 +12,8 @@ in {
 
   system.defaults.dock.autohide = true;
 
+  programs.zsh.enable = true;
+
   environment = {
     systemPackages =  with pkgs; [
       local-packages.mac-apps.Alfred

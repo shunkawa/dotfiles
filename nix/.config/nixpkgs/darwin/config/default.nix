@@ -17,13 +17,6 @@
     ];
   };
 
-  programs.zsh = {
-    enable = true;
-    enableFzfCompletion = true;
-    enableFzfGit = true;
-    enableFzfHistory = true;
-  };
-
   # WIP: Karabiner is a bit complicated due to installing a kernel extension.
   # Right now I'm just using brew cask, maybe look how they do it:
   # https://github.com/Homebrew/homebrew-cask/blob/master/Casks/karabiner-elements.rb
