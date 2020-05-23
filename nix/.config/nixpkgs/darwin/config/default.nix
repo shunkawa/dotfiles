@@ -17,6 +17,24 @@
     ];
   };
 
+  services.local-modules.nix-darwin.spotlight = {
+    # For disabling indexing in home, this doesn't work, because mdutil operates
+    # on volumes, not folders.  You need to blacklist the home folder in the
+    # "Spotlight > Privacy" preferences window.  Also blacklist the "Google
+    # Drive stream" volume.
+    enable = true;
+    indexing = {
+      volumes = {
+        "/spotlight" = {
+          enable = true;
+          rebuild = true;
+        };
+      };
+    };
+  };
+
+  services.local-modules.nix-darwin.link-apps.enable = true;
+
   # WIP: Karabiner is a bit complicated due to installing a kernel extension.
   # Right now I'm just using brew cask, maybe look how they do it:
   # https://github.com/Homebrew/homebrew-cask/blob/master/Casks/karabiner-elements.rb

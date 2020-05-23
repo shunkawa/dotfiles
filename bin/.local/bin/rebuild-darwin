@@ -19,4 +19,5 @@ export NIX_PATH
 darwin-rebuild switch \
   -I "darwin=$(readlinkf "${HOME}/.nix-defexpr")/darwin" \
   -I "darwin-config=$(readlinkf "${HOME}/.config/nixpkgs")/darwin-configuration.nix" \
-  -I "nixpkgs=$(nix-build --expr "with import <nixpkgs> {}; callPackage $(readlinkf "${HOME}/.config/nixpkgs")/darwin/lib/nixpkgs.nix {}" --no-out-link)"
+  -I "nixpkgs=$(nix-build --expr "with import <nixpkgs> {}; callPackage $(readlinkf "${HOME}/.config/nixpkgs")/darwin/lib/nixpkgs.nix {}" --no-out-link)" \
+  --show-trace

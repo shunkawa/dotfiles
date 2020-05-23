@@ -1,0 +1,4 @@
+[
+  ./spotlight
+  ./link-apps
+]
