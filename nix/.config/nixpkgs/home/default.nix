@@ -59,6 +59,7 @@ in lib.mkMerge ([
         msmtp
         ncmpcpp
         nix-prefetch-scripts
+        nixpkgs-fmt
         nmap
         openssh
         openssl

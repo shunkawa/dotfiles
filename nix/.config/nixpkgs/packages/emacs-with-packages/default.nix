@@ -69,6 +69,7 @@ let
       nix-buffer
       nix-mode
       nixos-options
+      nixpkgs-fmt
       no-littering
       nodejs-repl
       omnisharp
