@@ -45,6 +45,7 @@ let
       flycheck-flow
       geben
       gist
+      git-link
       go-mode
       google-c-style
       google-translate
@@ -68,6 +69,7 @@ let
       multiple-cursors
       nix-buffer
       nix-mode
+      nix-update
       nixos-options
       nixpkgs-fmt
       no-littering
