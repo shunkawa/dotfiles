@@ -143,13 +143,63 @@ function join-lines () {
   done
 }
 
+function is-in-git-repo() {
+  git rev-parse HEAD > /dev/null 2>&1
+}
+
+function fzf-down() {
+  fzf --height 50% "$@" --border
+}
+
+function fzf-git-log-helper() {
+  is-in-git-repo || return
+  git log --date=short --format="%C(green)%C(bold)%cd %C(auto)%h%d %s (%an)" --graph --color=always |
+  fzf-down --ansi --no-sort --reverse --multi --bind 'ctrl-s:toggle-sort' \
+    --header 'Press CTRL-S to toggle sort' \
+    --preview 'grep -o "[a-f0-9]\{7,\}" <<< {} | xargs git show --color=always | head -'$LINES |
+  grep -o "[a-f0-9]\{7,\}"
+}
+
+function fzf-git-remote-helper() {
+  is-in-git-repo || return
+  git remote -v | awk '{print $1 "\t" $2}' | uniq |
+    fzf-down --tac \
+    --preview 'git log --oneline --graph --date=short --pretty="format:%C(auto)%cd %h%d %s" {1} | head -200' |
+    cut -d$'\t' -f1
+}
+
+function fzf-git-tag-helper() {
+  is-in-git-repo || return
+  git tag --sort -version:refname |
+  fzf-down --multi --preview-window right:70% \
+    --preview 'git show --color=always {} | head -'$LINES
+}
+
+function fzf-git-file-helper() {
+  is-in-git-repo || return
+  git -c color.status=always status --short |
+  fzf-down -m --ansi --nth 2..,.. \
+    --preview '(git diff --color=always -- {-1} | sed 1,4d; cat {-1}) | head -500' |
+  cut -c4- | sed 's/.* -> //'
+}
+
+function fzf-git-branch-helper() {
+  is-in-git-repo || return
+  git branch -a --color=always | grep -v '/HEAD\s' | sort |
+  fzf-down --ansi --multi --tac --preview-window right:70% \
+    --preview 'git log --oneline --graph --date=short --color=always --pretty="format:%C(auto)%cd %h%d %s" $(sed s/^..// <<< {} | cut -d" " -f1) | head -'$LINES |
+  sed 's/^..//' | cut -d' ' -f1 |
+  sed 's#^remotes/##'
+}
+
+# https://gist.github.com/junegunn/8b572b8d4b5eddd8b85e5f4d40f17236
 function bind-fzf-git-helper () {
   local key="${1}"
   local cmd="${2}"
 
-  eval "fzf-git-${key}-widget() { local result=\$(${cmd} | join-lines); zle reset-prompt; LBUFFER+=\$result }"
-  eval "zle -N fzf-git-${key}-widget"
-  eval "bindkey '^g^$c' fzf-git-${key}-widget"
+  eval "fzf-g${key}-widget() { local result=\$($cmd | join-lines); zle reset-prompt; LBUFFER+=\$result }"
+  eval "zle -N \"fzf-g${key}-widget\""
+  eval "bindkey \"^g^${key}\" \"fzf-g${key}-widget\""
 }
 
 if (command -v fzf >/dev/null 2>&1); then
@@ -188,6 +238,8 @@ if (command -v fzf >/dev/null 2>&1); then
     echo "Not found: ${NIX_PROFILE}/share/fzf/key-bindings.zsh"
   fi
 fi
+
+unset -f bind-fzf-git-helper
 
 # Use fd (https://github.com/sharkdp/fd) instead of the default find
 # command for listing path candidates.
