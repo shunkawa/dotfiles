@@ -2,35 +2,36 @@
 let
   # This is a rip off from jwiegley's dotfiles:
   # https://github.com/jwiegley/nix-config/blob/5b8e287dc7157e8f9a55ff71f0a2822fea485b55/overlays/30-apps.nix#L3-L23
-  installApplication = {
-    name,
-    appname ? name,
-    version,
-    src,
-    description,
-    homepage,
-    postInstall ? "",
-    sourceRoot ? ".",
-    ...
-  }: with pkgs.super; stdenv.mkDerivation {
-    name = "${name}-${version}";
-    version = "${version}";
-    src = src;
-    buildInputs = with pkgs; [ undmg unzip ];
-    sourceRoot = sourceRoot;
-    phases = [ "unpackPhase" "installPhase" ];
-    installPhase = ''
-      mkdir -p "$out/Applications/${appname}.app"
-      cp -pR * "$out/Applications/${appname}.app"
-    '' + postInstall;
-    meta = with stdenv.lib; {
-      description = description;
-      homepage = homepage;
-      maintainers = with maintainers; [ eqyiel ];
-      platforms = platforms.darwin;
+  installApplication =
+    { name
+    , appname ? name
+    , version
+    , src
+    , description
+    , homepage
+    , postInstall ? ""
+    , sourceRoot ? "."
+    , ...
+    }: with pkgs.super; stdenv.mkDerivation {
+      name = "${name}-${version}";
+      version = "${version}";
+      src = src;
+      buildInputs = with pkgs; [ undmg unzip ];
+      sourceRoot = sourceRoot;
+      phases = [ "unpackPhase" "installPhase" ];
+      installPhase = ''
+        mkdir -p "$out/Applications/${appname}.app"
+        cp -pR * "$out/Applications/${appname}.app"
+      '' + postInstall;
+      meta = with stdenv.lib; {
+        description = description;
+        homepage = homepage;
+        maintainers = with maintainers; [ eqyiel ];
+        platforms = platforms.darwin;
+      };
     };
-  };
-in {
+in
+{
   Alfred = (installApplication rec {
     name = "Alfred";
     version = "4.0.8_1135";
@@ -128,18 +129,18 @@ in {
   }).overrideAttrs (attrs: {
     buildInputs = attrs.buildInputs ++ (with pkgs; [ xar cpio ]);
     unpackPhase = ''
-        undmg < $src
-        xar -xf Karabiner-Elements.sparkle_guided.pkg
-        gunzip < Installer.pkg/Payload | cpio -i
-      '';
+      undmg < $src
+      xar -xf Karabiner-Elements.sparkle_guided.pkg
+      gunzip < Installer.pkg/Payload | cpio -i
+    '';
     installPhase = ''
-        mkdir -p $out/Applications
-        mkdir -p $out/Library
-        ls -lha
-        ls -lha $out
-        cp -pR Applications/* $out/Applications
-        cp -pR Library/* $out/Library
-      '';
+      mkdir -p $out/Applications
+      mkdir -p $out/Library
+      ls -lha
+      ls -lha $out
+      cp -pR Applications/* $out/Applications
+      cp -pR Library/* $out/Library
+    '';
   });
 
   SequelPro = (installApplication rec {
@@ -176,5 +177,9 @@ in {
     };
     description = "Window control with simple and customizable keyboard shortcuts";
     homepage = https://www.spectacleapp.com;
+  };
+
+  ZynAddSubFx = pkgs.callPackage ./zyn-fusion {
+    mruby-zest = pkgs.local-packages.mruby-zest;
   };
 }
