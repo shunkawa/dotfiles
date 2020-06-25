@@ -178,8 +178,4 @@ in
     description = "Window control with simple and customizable keyboard shortcuts";
     homepage = https://www.spectacleapp.com;
   };
-
-  ZynAddSubFx = pkgs.callPackage ./zyn-fusion {
-    mruby-zest = pkgs.local-packages.mruby-zest;
-  };
 }

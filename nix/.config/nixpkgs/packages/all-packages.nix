@@ -103,7 +103,8 @@ rec {
               });
             })).newScope
             mkLibsForQt5
-        ));
+        )
+      );
     in
     libsForQt511WithOpenSsl1_1_x.callPackage ./nextcloud-client {
       withGnomeKeyring = true;
@@ -261,5 +262,9 @@ rec {
 
   pinentry-wrapper = callPackage ./pinentry-wrapper { };
 
-  mruby-zest = callPackage ./mruby-zest { };
+  zynaddsubfx = (recurseIntoAttrs (callPackage ./zynaddsubfx { }));
+
+  carla = qt5.callPackage ./carla {
+    inherit (darwin.apple_sdk.frameworks) CoreAudioKit WebKit;
+  };
 }

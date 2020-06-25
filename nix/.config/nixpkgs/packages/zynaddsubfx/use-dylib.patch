@@ -1,0 +1,19 @@
+diff --git a/test-libversion.c b/test-libversion.c
+index 7cecc4f..fcf1220 100644
+--- a/test-libversion.c
++++ b/test-libversion.c
+@@ -650,6 +650,14 @@ int main(int argc, char **argv)
+ 
+ #ifdef WIN32
+     void *handle = LoadLibrary("./libzest.dll");
++#elif defined __APPLE__
++    void *handle = dlopen("./libzest.dylib", RTLD_LAZY);
++    if(!handle)
++      handle = dlopen("@loader_path//libzest.dylib", RTLD_LAZY);
++    if(!handle)
++      handle = dlopen("@loader_path/../Resources/libzest.dylib", RTLD_LAZY);
++    if(!handle)
++      handle = dlopen("libzest.dylib", RTLD_LAZY);
+ #else
+     void *handle = dlopen("./libzest.so", RTLD_LAZY);
+     if(!handle)
