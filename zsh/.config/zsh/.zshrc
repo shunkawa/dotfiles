@@ -276,6 +276,12 @@ if (command -v helm >/dev/null 2>&1); then
 fi
 
 if (command -v rkm-history-create-histfile-name >/dev/null 2>&1); then
+  # In case this file doesn't get created:
+  # It's possible to debug using `fc -W`
+  # For example, on Catalina:
+  # ~/carla master* ⇡
+  # ❯ fc -W
+  # zsh: locking failed for /Users/r-maher/sync/history/zsh/2020-06-23.05.04.01_PC2218_72834: operation not supported
   export HISTFILE=$(rkm-history-create-histfile-name)
 fi
 
