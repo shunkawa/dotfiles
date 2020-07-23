@@ -2,13 +2,13 @@
 
 stdenv.mkDerivation rec {
   name = "node-build";
-  version = "4.8.0";
+  version = "4.9.1";
 
   src = fetchFromGitHub {
     owner = "nodenv";
     repo = "node-build";
     rev = "v${version}";
-    sha256 = "01nvlpk9acwn1x2fgyvfd37yd4aa3krv3r3vsvz8n5hgrjpmmzsi";
+    sha256 = "0ni7sqg318dlg21cp7alkp4dciaxm48cnrmvn9qx2yccxqzvcv53";
   };
 
   buildPhase = ''
