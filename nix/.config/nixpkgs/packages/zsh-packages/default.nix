@@ -5,9 +5,11 @@
 , zsh-autosuggestions
 , zsh-completions
 , zsh-syntax-highlighting
-}: let
-  zshPackages = (builtins.fromJSON (builtins.readFile ./zsh-packages.json));
-in {
+}:
+let
+  zshPackages = (builtins.fromJSON (builtins.readFile ./versions.json));
+in
+{
   inherit grml-zsh-config;
 
   inherit nix-zsh-completions;
@@ -24,35 +26,36 @@ in {
     '';
   });
 
-  pure = callPackage ({ stdenv, fetchgit }: stdenv.mkDerivation {
-    pname = "pure";
+  pure = callPackage
+    ({ stdenv, fetchgit }: stdenv.mkDerivation {
+      pname = "pure";
 
-    version = zshPackages.pure.rev;
+      version = zshPackages.pure.rev;
 
-    src = fetchgit {
-      inherit (zshPackages.pure) url rev sha256;
-    };
+      src = fetchgit {
+        inherit (zshPackages.pure) url rev sha256;
+      };
 
-    installPhase = ''
-      mkdir -p $out/share/zsh/site-functions
-      cp async.zsh $out/share/zsh/site-functions/async
-      cp pure.zsh $out/share/zsh/site-functions/prompt_pure_setup
-    '';
+      installPhase = ''
+        mkdir -p $out/share/zsh/site-functions
+        cp async.zsh $out/share/zsh/site-functions/async
+        cp pure.zsh $out/share/zsh/site-functions/prompt_pure_setup
+      '';
 
-    meta = with stdenv.lib; {
-      homepage = https://github.com/sindresorhus/pure;
-      description = "Pretty, minimal and fast ZSH prompt";
-      license = licenses.mit;
-      platforms = platforms.unix;
-      maintainers = with maintainers; [ eqyiel ];
-    };
-  }) {};
+      meta = with stdenv.lib; {
+        homepage = https://github.com/sindresorhus/pure;
+        description = "Pretty, minimal and fast ZSH prompt";
+        license = licenses.mit;
+        platforms = platforms.unix;
+        maintainers = with maintainers; [ eqyiel ];
+      };
+    }) { };
 
   zsh-autosuggestions = zsh-autosuggestions.overrideAttrs (attrs: {
     installPhase = ''
       install -D zsh-autosuggestions.zsh \
         $out/share/zsh/plugins/autosuggestions/zsh-autosuggestions.plugin.zsh
-      '';
+    '';
   });
 
   inherit zsh-completions;
