@@ -49,6 +49,15 @@ let
         sha512 = "FvUupuM3rlRsRtCN+fDudtmytGO6iHJuuRKS1Ss0pG5z8oX0diNEw94UEL7hgDbpN94rgaK5R7sWm6RrSkZuAQ==";
       };
     };
+    "adverb-where-0.2.1" = {
+      name = "adverb-where";
+      packageName = "adverb-where";
+      version = "0.2.1";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/adverb-where/-/adverb-where-0.2.1.tgz";
+        sha512 = "IAveFBziMRMNPKFdWRcdIKaJvJG1cAfU9/tf9MzqQ84Dh4QjD9eqwnt4hNSt9cbrcEJD74BMIOaRVgVDEU7MwQ==";
+      };
+    };
     "ansi-regex-5.0.0" = {
       name = "ansi-regex";
       packageName = "ansi-regex";
@@ -283,6 +292,15 @@ let
         sha512 = "dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==";
       };
     };
+    "commander-2.20.3" = {
+      name = "commander";
+      packageName = "commander";
+      version = "2.20.3";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/commander/-/commander-2.20.3.tgz";
+        sha512 = "GpVkmM8vF2vQUkj2LvZmD35JxeJOLCwJ9cUkugyk2nuhbv3+mJvpLYYt+0+USMxE+oj+ey/lJEnhZw75x/OMcQ==";
+      };
+    };
     "concat-map-0.0.1" = {
       name = "concat-map";
       packageName = "concat-map";
@@ -317,6 +335,15 @@ let
       src = fetchurl {
         url = "https://registry.npmjs.org/debug/-/debug-4.2.0.tgz";
         sha512 = "IX2ncY78vDTjZMFUdmsvIRFY2Cf4FnD0wRs+nQwJU8Lu99/tPFdb0VybiiMTPe3I6rQmwsqQqRBvxU+bZ/I8sg==";
+      };
+    };
+    "e-prime-0.10.4" = {
+      name = "e-prime";
+      packageName = "e-prime";
+      version = "0.10.4";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/e-prime/-/e-prime-0.10.4.tgz";
+        sha512 = "tzBmM2mFSnAq5BuxPSyin6qXb3yMe1wufJN7L7ZPcEWS5S+jI2dhKQEoqHVEcSMMXo/j5lcWpX5jzA6wLSmX6w==";
       };
     };
     "emoji-regex-6.1.1" = {
@@ -940,6 +967,24 @@ let
         sha512 = "sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==";
       };
     };
+    "nlcst-to-string-2.0.4" = {
+      name = "nlcst-to-string";
+      packageName = "nlcst-to-string";
+      version = "2.0.4";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/nlcst-to-string/-/nlcst-to-string-2.0.4.tgz";
+        sha512 = "3x3jwTd6UPG7vi5k4GEzvxJ5rDA7hVUIRNHPblKuMVP9Z3xmlsd9cgLcpAMkc5uPOBna82EeshROFhsPkbnTZg==";
+      };
+    };
+    "no-cliches-0.2.2" = {
+      name = "no-cliches";
+      packageName = "no-cliches";
+      version = "0.2.2";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/no-cliches/-/no-cliches-0.2.2.tgz";
+        sha512 = "iEOqDAOFl6uN5jZGRj39Jdo8qALzf2HPXtpFso8+BMaDylDrUMYMwhFbfYGgxdnMlsRnxYTwv68kaXEpsHIapg==";
+      };
+    };
     "normalize-path-3.0.0" = {
       name = "normalize-path";
       packageName = "normalize-path";
@@ -1019,6 +1064,15 @@ let
       src = fetchurl {
         url = "https://registry.npmjs.org/parse-json/-/parse-json-5.0.0.tgz";
         sha512 = "OOY5b7PAEFV0E2Fir1KOkxchnZNCdowAJgQ5NuxjpBKTRP3pQhwkrkxqQjeoKJ+fO7bCpmIZaogI4eZGDMEGOw==";
+      };
+    };
+    "passive-voice-0.1.0" = {
+      name = "passive-voice";
+      packageName = "passive-voice";
+      version = "0.1.0";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/passive-voice/-/passive-voice-0.1.0.tgz";
+        sha1 = "16ff91ae40ba0e92c43e671763fdc842a70270b1";
       };
     };
     "path-exists-3.0.0" = {
@@ -1588,6 +1642,15 @@ let
         sha512 = "8KIDJNDtgbymEvl3LkrXgdxPMTOndcux3BHhNGB2lU4UnxSpYeHsxcDgirbgU6dqCAfQfvMjPvfYk19QTF9WZA==";
       };
     };
+    "remark-lint-write-good-1.2.0" = {
+      name = "remark-lint-write-good";
+      packageName = "remark-lint-write-good";
+      version = "1.2.0";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/remark-lint-write-good/-/remark-lint-write-good-1.2.0.tgz";
+        sha512 = "HYiwM16RRBm979yDb/IVwPe1eFhzA1HATe1WucRiYWS10jcPRgJe9FihH7W5uzQFDqX5aRbTtu/yPdq+hPnYkw==";
+      };
+    };
     "remark-message-control-6.0.0" = {
       name = "remark-message-control";
       packageName = "remark-message-control";
@@ -1840,6 +1903,15 @@ let
         sha512 = "BxX8EkCxOAZe+D/ToHdDsJcVI4HqQfmw0tCkp31zf3dNP/XWIAjU4CmeuSwsSoOzOTqHPOL0KUzyZqJplkD0Qw==";
       };
     };
+    "too-wordy-0.2.2" = {
+      name = "too-wordy";
+      packageName = "too-wordy";
+      version = "0.2.2";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/too-wordy/-/too-wordy-0.2.2.tgz";
+        sha512 = "ePZfjs1ajL4b8jT4MeVId+9Ci5hJCzAtNIEXIHyFYmKmQuX+eHC/RNv6tuLMUhrGrhJ+sYWW/lBF/LKILHGZEA==";
+      };
+    };
     "trim-0.0.1" = {
       name = "trim";
       packageName = "trim";
@@ -1948,6 +2020,15 @@ let
         sha512 = "fPNWewS593JSmg49HbnE86BJKuBi1/nMWhDSccBvbARfxezEuJV85EaARR9/VplveiwCoLm2kWq+DhP8TBaDpw==";
       };
     };
+    "unist-util-is-3.0.0" = {
+      name = "unist-util-is";
+      packageName = "unist-util-is";
+      version = "3.0.0";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/unist-util-is/-/unist-util-is-3.0.0.tgz";
+        sha512 = "sVZZX3+kspVNmLWBPAB6r+7D9ZgAFPNWm66f7YNb420RlQSbn+n8rG8dGZSkrER7ZIXGQYNm5pqC3v3HopH24A==";
+      };
+    };
     "unist-util-is-4.0.2" = {
       name = "unist-util-is";
       packageName = "unist-util-is";
@@ -1984,6 +2065,15 @@ let
         sha512 = "3faScn5I+hy9VleOq/qNbAd6pAx7iH5jYBMS9I1HgQVijz/4mv5Bvw5iw1sC/90CODiKo81G/ps8AJrISn687g==";
       };
     };
+    "unist-util-visit-1.4.1" = {
+      name = "unist-util-visit";
+      packageName = "unist-util-visit";
+      version = "1.4.1";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/unist-util-visit/-/unist-util-visit-1.4.1.tgz";
+        sha512 = "AvGNk7Bb//EmJZyhtRUnNMEpId/AZ5Ph/KUpTI09WHQuDZHKovQ1oEv3mfmKpWKtoMzyMC4GLBm1Zy5k12fjIw==";
+      };
+    };
     "unist-util-visit-2.0.3" = {
       name = "unist-util-visit";
       packageName = "unist-util-visit";
@@ -1991,6 +2081,15 @@ let
       src = fetchurl {
         url = "https://registry.npmjs.org/unist-util-visit/-/unist-util-visit-2.0.3.tgz";
         sha512 = "iJ4/RczbJMkD0712mGktuGpm/U4By4FfDonL7N/9tATGIF4imikjOuagyMY53tnZq3NP6BcmlrHhEKAfGWjh7Q==";
+      };
+    };
+    "unist-util-visit-parents-2.1.2" = {
+      name = "unist-util-visit-parents";
+      packageName = "unist-util-visit-parents";
+      version = "2.1.2";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/unist-util-visit-parents/-/unist-util-visit-parents-2.1.2.tgz";
+        sha512 = "DyN5vD4NE3aSeB+PXYNKxzGsfocxp6asDc2XXE3b0ekO2BaRUpBicbbUygfSvYfUz1IkmjFR1YF7dPklraMZ2g==";
       };
     };
     "unist-util-visit-parents-3.1.0" = {
@@ -2074,6 +2173,15 @@ let
         sha512 = "lXhElVO0Rq3frgPvFBwahmed3X03vjPF8OcjKMy8+F1xU/3Q3QU3tKEDp743SFtb74PdF0UWpxPvtOP0GCLheA==";
       };
     };
+    "weasel-words-0.1.1" = {
+      name = "weasel-words";
+      packageName = "weasel-words";
+      version = "0.1.1";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/weasel-words/-/weasel-words-0.1.1.tgz";
+        sha1 = "7137946585c73fe44882013853bd000c5d687a4e";
+      };
+    };
     "which-2.0.2" = {
       name = "which";
       packageName = "which";
@@ -2099,6 +2207,15 @@ let
       src = fetchurl {
         url = "https://registry.npmjs.org/wrappy/-/wrappy-1.0.2.tgz";
         sha1 = "b5243d8f3ec1aa35f1364605bc0d1036e30ab69f";
+      };
+    };
+    "write-good-1.0.2" = {
+      name = "write-good";
+      packageName = "write-good";
+      version = "1.0.2";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/write-good/-/write-good-1.0.2.tgz";
+        sha512 = "1gm9Ouz7mBROF7aC8vvSm/3JtPfTiZ+fegPGCKdxsYhf6VYeStHfVFx2Hnj2kJviHPx5zZkiQ8DytzZMP0Zqwg==";
       };
     };
     "xtend-4.0.2" = {
@@ -2142,6 +2259,7 @@ in
       })
       sources."@types/color-name-1.1.1"
       sources."@types/unist-2.0.3"
+      sources."adverb-where-0.2.1"
       sources."ansi-regex-5.0.0"
       sources."ansi-styles-4.2.1"
       sources."anymatch-3.1.1"
@@ -2164,10 +2282,12 @@ in
       sources."collapse-white-space-1.0.6"
       sources."color-convert-2.0.1"
       sources."color-name-1.1.4"
+      sources."commander-2.20.3"
       sources."concat-map-0.0.1"
       sources."concat-stream-2.0.0"
       sources."cross-spawn-7.0.3"
       sources."debug-4.2.0"
+      sources."e-prime-0.10.4"
       sources."emoji-regex-8.0.0"
       sources."end-of-stream-1.4.4"
       sources."error-ex-1.3.2"
@@ -2239,6 +2359,8 @@ in
       sources."minimatch-3.0.4"
       sources."minimist-1.2.5"
       sources."ms-2.1.2"
+      sources."nlcst-to-string-2.0.4"
+      sources."no-cliches-0.2.2"
       sources."normalize-path-3.0.0"
       sources."npm-run-path-4.0.1"
       sources."once-1.4.0"
@@ -2248,6 +2370,7 @@ in
       sources."p-try-2.2.0"
       sources."parse-entities-2.0.0"
       sources."parse-json-5.0.0"
+      sources."passive-voice-0.1.0"
       sources."path-exists-3.0.0"
       sources."path-is-absolute-1.0.1"
       sources."path-key-3.1.1"
@@ -2311,6 +2434,13 @@ in
       sources."remark-lint-table-pipe-alignment-2.0.1"
       sources."remark-lint-table-pipes-2.0.1"
       sources."remark-lint-unordered-list-marker-style-2.0.1"
+      (sources."remark-lint-write-good-1.2.0" // {
+        dependencies = [
+          sources."unist-util-is-3.0.0"
+          sources."unist-util-visit-1.4.1"
+          sources."unist-util-visit-parents-2.1.2"
+        ];
+      })
       sources."remark-message-control-6.0.0"
       sources."remark-parse-8.0.3"
       sources."remark-preset-lint-consistent-3.0.1"
@@ -2337,6 +2467,7 @@ in
       sources."text-table-0.2.0"
       sources."to-regex-range-5.0.1"
       sources."to-vfile-6.1.0"
+      sources."too-wordy-0.2.2"
       sources."trim-0.0.1"
       sources."trim-trailing-lines-1.1.3"
       sources."trough-1.0.5"
@@ -2368,9 +2499,11 @@ in
       sources."vfile-reporter-json-2.0.1"
       sources."vfile-sort-2.2.2"
       sources."vfile-statistics-1.1.4"
+      sources."weasel-words-0.1.1"
       sources."which-2.0.2"
       sources."wrapped-1.0.1"
       sources."wrappy-1.0.2"
+      sources."write-good-1.0.2"
       sources."xtend-4.0.2"
       sources."yallist-4.0.0"
     ];

@@ -13,6 +13,7 @@
         "allowEmpty": true
       }
     ],
-    "validate-links"
+    "validate-links",
+    "remark-lint-write-good"
   ]
 }
