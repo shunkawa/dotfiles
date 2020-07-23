@@ -1,8 +1,8 @@
 { pkgs, lib, ... }:
-
 let
   state = (builtins.fromJSON (builtins.readFile ./config/state.json));
-in lib.mkMerge ([
+in
+lib.mkMerge ([
   {
     programs.home-manager.enable = true;
     programs.home-manager.path = "<home-manager>";
@@ -127,21 +127,21 @@ in lib.mkMerge ([
         zsh-packages.zsh-completions
         zsh-packages.zsh-syntax-highlighting
       ]) ++ lib.optionals stdenv.isLinux ([
-          anki
-          chromium
-          desmume
-          discord
-          firefox
-          gimp
-          libreoffice
-          mpv
-          pinentry
-          shellcheck # ghc isn't available from any cache on darwin
-          vdirsyncer
-          youtube-dl
-        ]
-        ++ (with pkgs.ibus-engines; [ local-packages.ibus-engines.mozc uniemoji ])
-        ++ (with local-packages; [open]))
+        anki
+        chromium
+        desmume
+        discord
+        firefox
+        gimp
+        libreoffice
+        mpv
+        pinentry
+        shellcheck # ghc isn't available from any cache on darwin
+        vdirsyncer
+        youtube-dl
+      ]
+      ++ (with pkgs.ibus-engines; [ local-packages.ibus-engines.mozc uniemoji ])
+      ++ (with local-packages; [ open ]))
       ++ lib.optionals stdenv.isDarwin ([
         pinentry_mac
         (youtube-dl.override ({ phantomjsSupport = false; }))
