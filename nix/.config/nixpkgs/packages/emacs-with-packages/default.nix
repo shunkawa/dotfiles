@@ -1,5 +1,4 @@
 { emacs, emacsPackagesNgGen, local-packages, fetchFromGitHub }:
-
 let
   emacsPackagesNg = emacsPackagesNgGen emacs;
 
@@ -35,6 +34,7 @@ let
       dash
       diminish
       direnv
+      dockerfile-mode
       dtrt-indent
       emojify
       eslint-fix
@@ -109,5 +109,6 @@ let
     ]) ++ [
       local-packages.mu
     ]);
-in ((emacsPackagesNg.overrideScope' emacsPackageOverrides).emacsWithPackages
+in
+((emacsPackagesNg.overrideScope' emacsPackageOverrides).emacsWithPackages
   mkEmacsPackages)
