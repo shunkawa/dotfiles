@@ -18,4 +18,9 @@ rec {
     inherit mruby-zest;
     inherit (darwin.apple_sdk.frameworks) Cocoa OpenGL;
   };
+
+  zynaddsubfx-old-ui = callPackage ./zynaddsubfx-old-ui.nix {
+    # inherit mruby-zest;
+    inherit (darwin.apple_sdk.frameworks) OpenGL;
+  };
 }

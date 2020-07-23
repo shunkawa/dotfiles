@@ -71,7 +71,6 @@ stdenv.mkDerivation rec {
 
   postInstall = ''
     # not necessary if LV2_PATH is set
-    # ln -s $out/share/zynaddsubfx/banks $out/lib/lv2/ZynAddSubFX.lv2/banks
     ln -s ${mruby-zest}/opt/zyn-fusion/qml $out/lib/lv2/ZynAddSubFX.lv2/qml
     ln -s ${mruby-zest}/opt/zyn-fusion/schema $out/lib/lv2/ZynAddSubFX.lv2/schema
     ln -s ${mruby-zest}/opt/zyn-fusion/font $out/lib/lv2/ZynAddSubFX.lv2/font
@@ -79,11 +78,12 @@ stdenv.mkDerivation rec {
 
     cp -v ${mruby-zest}/opt/zyn-fusion/zyn-fusion $out/bin/zyn-fusion
     cp -v ${mruby-zest}/opt/zyn-fusion/libzest.dylib $out/bin/libzest.dylib
-    #rm -rf $out/lib/vst
+
+    rm -rf $out/lib/vst
     # ZynAddSubFX deliberately ships without a "standalone" application on
     # macOS:
     # https://sourceforge.net/p/zynaddsubfx/mailman/message/36272025/
-    #rm -rf $out/bin
+    rm -rf $out/bin
   '';
 
   hardeningDisable = [

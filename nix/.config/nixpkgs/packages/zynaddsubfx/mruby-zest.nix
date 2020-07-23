@@ -6,10 +6,11 @@
 , callPackage
 , darwin
 , fetchFromGitHub
-, libuv-static
 , libpugl-static
+, libuv-static
 , python2
 , rake
+, ruby
 , wget
 }:
 stdenv.mkDerivation rec {
@@ -25,15 +26,17 @@ stdenv.mkDerivation rec {
     libpugl-static
     libuv-static
     rake
+    ruby
   ];
 
   patches = [ ./use-dylib.patch ];
-
 
   NIX_LDFLAGS = "-headerpad_max_install_names";
   NIX_CFLAGS_COMPILE = "-fvisibility=hidden -fdata-sections -ffunction-sections";
 
   buildPhase = ''
+    ruby ./rebuild-fcache.rb
+
     $CC \
       -D STBTT_STATIC \
       -o deps/nanovg/src/nanovg.o \
