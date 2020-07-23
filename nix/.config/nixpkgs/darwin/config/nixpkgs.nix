@@ -52,5 +52,6 @@
   # supposedly this is the default, but it's not.
   nix.package = pkgs.nix;
 
-  nix.trustedBinaryCaches = [ "https://cache.nixos.org" ];
+  nix.binaryCaches = [ "https://eqyiel.cachix.org/" ];
+  nix.binaryCachePublicKeys = [ "eqyiel.cachix.org-1:aXXqq1tnHYrU0DgqT+N21rJZKLnRk6twpXW4ehRUGqg=" ];
 }
