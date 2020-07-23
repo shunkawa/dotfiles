@@ -100,6 +100,7 @@ in lib.mkMerge ([
         goose
         grpcurl
         hiptext
+        markdown-lint
         mu
         node-build
         nodePackages."@jasondibenedetto/plop"

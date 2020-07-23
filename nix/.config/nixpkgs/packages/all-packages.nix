@@ -267,4 +267,6 @@ rec {
   carla = qt5.callPackage ./carla {
     inherit (darwin.apple_sdk.frameworks) CoreAudioKit WebKit;
   };
+
+  markdown-lint = callPackage ./markdown-lint { };
 }
