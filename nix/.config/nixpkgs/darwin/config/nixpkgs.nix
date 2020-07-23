@@ -12,7 +12,7 @@
           version = "3.3.0beta13";
 
           src = fetchzip {
-            url = "https://iterm2.com/downloads/beta/iTerm2-${lib.replaceStrings ["."] ["_"] version}.zip";
+            url = "https://iterm2.com/downloads/beta/iTerm2-${lib.replaceStrings [ "." ] [ "_" ] version}.zip";
             sha256 = "113b9hybz5k6k5zx4d988dm3yr31cp1xak4l2i0rywdphpaixqpg";
           };
 
