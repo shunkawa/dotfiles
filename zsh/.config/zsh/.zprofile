@@ -13,7 +13,16 @@ fpath=(
   ${fpath[@]}
 )
 
-export PATH="${HOME}/.local/bin:${PATH}"
+PATH="${HOME}/.local/bin"
+PATH="${PATH}:${NIX_PROFILE}/bin"
+PATH="${PATH}:/run/current-system/sw/bin"
+PATH="${PATH}:/nix/var/nix/profiles/default/bin"
+PATH="${PATH}:/usr/local/bin"
+PATH="${PATH}:/usr/bin"
+PATH="${PATH}:/bin"
+PATH="${PATH}:/usr/sbin"
+PATH="${PATH}:/sbin"
+export PATH
 
 test -d "${HOME}/.cache/zsh" || mkdir -p "${HOME}/.cache/zsh"
 COMPDUMPFILE="${HOME}/.cache/zsh/compdump"
