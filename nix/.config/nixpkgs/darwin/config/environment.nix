@@ -12,6 +12,23 @@ in {
 
   system.defaults.dock.autohide = true;
 
+  services.local-modules.nix-darwin.keyboard = {
+    enable = true;
+    devices = {
+      # Device ID of the internal keyboard only (check the output of
+      # `system_profiler SPUSBDataType` or find it in Apple menu →
+      # System Report → Hardware → USB)
+      "0x027e" = {
+        "Keyboard Left Function (fn)" = "Keyboard LeftControl";
+        "Keyboard Left GUI" = "Keyboard LeftAlt";
+        "Keyboard LeftAlt" = "Keyboard Left GUI";
+        "Keyboard RightAlt" = "Keyboard RightControl";
+        "Keyboard Right GUI" = "Keyboard RightAlt";
+        "Keyboard Caps Lock" = "Keyboard F24";
+      };
+    };
+  };
+
   programs.zsh.enable = true;
 
   environment = {
