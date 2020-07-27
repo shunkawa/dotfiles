@@ -1057,13 +1057,13 @@ let
         sha512 = "kkywGpCcRYhqQIchaWqZ875wzpS/bMKhz5HnN3p7wveJTkTtyAB/AlnS0f8DFSqYW1T82t6yEAkEcB+A1I3MbQ==";
       };
     };
-    "parse-json-5.0.0" = {
+    "parse-json-5.0.1" = {
       name = "parse-json";
       packageName = "parse-json";
-      version = "5.0.0";
+      version = "5.0.1";
       src = fetchurl {
-        url = "https://registry.npmjs.org/parse-json/-/parse-json-5.0.0.tgz";
-        sha512 = "OOY5b7PAEFV0E2Fir1KOkxchnZNCdowAJgQ5NuxjpBKTRP3pQhwkrkxqQjeoKJ+fO7bCpmIZaogI4eZGDMEGOw==";
+        url = "https://registry.npmjs.org/parse-json/-/parse-json-5.0.1.tgz";
+        sha512 = "ztoZ4/DYeXQq4E21v169sC8qWINGpcosGv9XhTDvg9/hWvx/zrFkc9BiWxR58OJLHGk28j5BL0SDLeV2WmFZlQ==";
       };
     };
     "passive-voice-0.1.0" = {
@@ -1957,13 +1957,13 @@ let
         sha512 = "Ft16BJcnapDKp0+J/rqFC3Rrk6Y/Ng4nzsC028k2jdDII/rdZ7Wd3pPT/6+vIIxRagwRc9K0IUX0Ra4fKvw+WQ==";
       };
     };
-    "unified-9.0.0" = {
+    "unified-9.1.0" = {
       name = "unified";
       packageName = "unified";
-      version = "9.0.0";
+      version = "9.1.0";
       src = fetchurl {
-        url = "https://registry.npmjs.org/unified/-/unified-9.0.0.tgz";
-        sha512 = "ssFo33gljU3PdlWLjNp15Inqb77d6JnJSfyplGJPT/a+fNRNyCBeveBAYJdO5khKdF6WVHa/yYCC7Xl6BDwZUQ==";
+        url = "https://registry.npmjs.org/unified/-/unified-9.1.0.tgz";
+        sha512 = "VXOv7Ic6twsKGJDeZQ2wwPqXs2hM0KNu5Hkg9WgAZbSD1pxhZ7p8swqg583nw1Je2fhwHy6U8aEjiI79x1gvag==";
       };
     };
     "unified-args-8.1.0" = {
@@ -2369,7 +2369,7 @@ in
       sources."p-locate-3.0.0"
       sources."p-try-2.2.0"
       sources."parse-entities-2.0.0"
-      sources."parse-json-5.0.0"
+      sources."parse-json-5.0.1"
       sources."passive-voice-0.1.0"
       sources."path-exists-3.0.0"
       sources."path-is-absolute-1.0.1"
@@ -2473,7 +2473,7 @@ in
       sources."trough-1.0.5"
       sources."typedarray-0.0.6"
       sources."unherit-1.1.3"
-      sources."unified-9.0.0"
+      sources."unified-9.1.0"
       sources."unified-args-8.1.0"
       sources."unified-engine-8.0.0"
       sources."unified-lint-rule-1.0.6"
