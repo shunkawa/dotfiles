@@ -94,6 +94,7 @@ let
       solarized-theme
       swift-mode
       swiper
+      terraform-mode
       tide
       tiny
       unfill

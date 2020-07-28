@@ -78,6 +78,7 @@ lib.mkMerge ([
         speedtest-cli
         sqlite-interactive
         stow
+        terraform
         texlive.combined.scheme-full
         toilet
         tree
