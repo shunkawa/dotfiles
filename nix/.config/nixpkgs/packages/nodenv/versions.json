@@ -1,0 +1,16 @@
+{
+  "node-build": {
+    "url": "https://github.com/nodenv/node-build",
+    "rev": "b1aa59f36ce3f207f2990934bbd97d46d94fe5d0",
+    "date": "2020-07-26T23:57:08-04:00",
+    "sha256": "0vqg8zqa9fdqg33ajangfzqqdyc1nvhqfxkp5jdakk7qk04ylxia",
+    "fetchSubmodules": false
+  },
+  "nodenv": {
+    "url": "https://github.com/nodenv/nodenv",
+    "rev": "631d0b6bf97788d875530099f5746d34926e3235",
+    "date": "2020-07-21T16:38:01-04:00",
+    "sha256": "121xlyqbjyvb6w0i7905b3g4llg51yr2dr1y2icx9vj61s6qbmlf",
+    "fetchSubmodules": false
+  }
+}

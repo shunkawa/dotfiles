@@ -1,14 +1,15 @@
 { stdenv, fetchFromGitHub }:
-
+let
+  versions = builtins.fromJSON (builtins.readFile ./versions.json);
+in
 stdenv.mkDerivation rec {
   name = "node-build";
-  version = "4.9.1";
+  version = builtins.substring 0 7 versions.node-build.rev;
 
   src = fetchFromGitHub {
     owner = "nodenv";
     repo = "node-build";
-    rev = "v${version}";
-    sha256 = "0ni7sqg318dlg21cp7alkp4dciaxm48cnrmvn9qx2yccxqzvcv53";
+    inherit (versions.node-build) rev sha256;
   };
 
   buildPhase = ''

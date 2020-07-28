@@ -1,14 +1,15 @@
 { stdenv, fetchFromGitHub }:
-
+let
+  versions = builtins.fromJSON (builtins.readFile ./versions.json);
+in
 stdenv.mkDerivation rec {
   name = "nodenv";
-  version = "1.3.0";
+  version = versions.nodenv.rev;
 
   src = fetchFromGitHub {
     owner = "nodenv";
     repo = "nodenv";
-    rev = "v${version}";
-    sha256 = "01r8dycbyw3lcqpq4a79kp0zrm5a8sr2j2sazgvsgwq99c22ss0v";
+    inherit (versions.nodenv) rev sha256;
   };
 
   dontBuild = true;
