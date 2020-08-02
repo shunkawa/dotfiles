@@ -1,10 +1,12 @@
+alias reload=". ${ZDOTDIR}/.zshrc"
+
 if test -f "${NIX_PROFILE}/etc/zsh/zshrc"; then
   source "${NIX_PROFILE}/etc/zsh/zshrc"
 else
   echo "Not found: ${NIX_PROFILE}/etc/zsh/zshrc"
 fi
 
-for i in ${HOME}/.config/zsh/functions/*; do autoload -Uz "$(basename $i)"; done
+for i in "${ZDOTDIR}/functions/"*; do autoload -Uz "$(basename $i)"; done
 
 autoload -Uz compinit
 for dump in "${COMPDUMPFILE}"(N.mh+24); do
