@@ -136,7 +136,6 @@ lib.mkMerge ([
         gimp
         libreoffice
         mpv
-        pinentry
         shellcheck # ghc isn't available from any cache on darwin
         vdirsyncer
         youtube-dl
@@ -144,7 +143,6 @@ lib.mkMerge ([
       ++ (with pkgs.ibus-engines; [ local-packages.ibus-engines.mozc uniemoji ])
       ++ (with local-packages; [ open ]))
       ++ lib.optionals stdenv.isDarwin ([
-        pinentry_mac
         (youtube-dl.override ({ phantomjsSupport = false; }))
         (mpv.override ({
           vaapiSupport = false;

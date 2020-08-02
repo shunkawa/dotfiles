@@ -1,5 +1,4 @@
 [
-  ./keyboard
   ./link-apps
   ./spotlight
 ]
