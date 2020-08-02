@@ -1,0 +1,24 @@
+#!/bin/sh
+set -eu
+
+fatal() {
+  echo '** ERROR:' "$@" >&2
+  exit 1
+}
+
+if ! (command -v readlinkf >/dev/null 2>&1); then
+  # shellcheck disable=SC2016
+  fatal '"readlinkf" command not found.  Probably, you want to add the directory this script is in to $PATH.  For example: PATH="~/.local/bin:$PATH" rebuild-darwin'
+fi
+
+NIX_PATH="${NIX_PATH}:darwin=$(readlinkf "${HOME}/.nix-defexpr")/darwin"
+NIX_PATH="${NIX_PATH}:darwin-config=$(readlinkf "${HOME}/.config/nixpkgs")/darwin-configuration.nix"
+NIX_PATH="${NIX_PATH}:nixpkgs=$(nix-build --expr "with import <nixpkgs> {}; callPackage $(readlinkf "${HOME}/.config/nixpkgs")/darwin/lib/nixpkgs.nix {}" --no-out-link)"
+
+export NIX_PATH
+
+darwin-option "${@}"
+
+# Local Variables:
+# mode: shell-script
+# End:
