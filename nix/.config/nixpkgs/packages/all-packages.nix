@@ -243,6 +243,16 @@ rec {
 
   firefox-addons = callPackage ./firefox-addons { };
 
+  yomichan-import = callPackage ./yomichan-import {
+    zero-epwing = callPackage ./yomichan-import/zero-epwing.nix {
+      eb = callPackage ./yomichan-import/eb.nix { };
+      jansson = callPackage ./yomichan-import/jansson.nix { };
+    };
+    yomichan-import = callPackage ./yomichan-import/yomichan-import.nix {
+      inherit (darwin.apple_sdk.frameworks) AppKit;
+    };
+  };
+
   nur =
     import (builtins.fetchTarball {
       # Get the revision by choosing a version from

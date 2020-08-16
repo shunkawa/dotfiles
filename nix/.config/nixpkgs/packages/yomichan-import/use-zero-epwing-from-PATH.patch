@@ -1,0 +1,59 @@
+diff --git a/epwing.go b/epwing.go
+index 0647735..f5e0e2d 100644
+--- a/epwing.go
++++ b/epwing.go
+@@ -32,7 +32,7 @@ import (
+ 	"os/exec"
+ 	"path/filepath"
+ 	"regexp"
+-	"runtime"
++	//	"runtime"
+ 	"strconv"
+ 	"strings"
+ )
+@@ -78,23 +78,23 @@ func epwingExportDb(inputPath, outputPath, language, title string, stride int, p
+ 
+ 	var data []byte
+ 	if toolExec {
+-		exePath, err := os.Executable()
+-		if err != nil {
+-			return err
+-		}
++		// exePath, err := os.Executable()
++		// if err != nil {
++		// 	return err
++		// }
+ 
+-		toolPath := filepath.Join("bin", runtime.GOOS, "zero-epwing")
+-		if runtime.GOOS == "windows" {
+-			toolPath += ".exe"
+-		}
++		// toolPath := filepath.Join("bin", runtime.GOOS, "zero-epwing")
++		// if runtime.GOOS == "windows" {
++		// 	toolPath += ".exe"
++		// }
+ 
+-		toolPath = filepath.Join(filepath.Dir(exePath), toolPath)
++		// toolPath = filepath.Join(filepath.Dir(exePath), toolPath)
+ 
+-		if _, err = os.Stat(toolPath); err != nil {
+-			return fmt.Errorf("failed to find zero-epwing in '%s'", toolPath)
+-		}
++		// if _, err = os.Stat(toolPath); err != nil {
++		// 	return fmt.Errorf("failed to find zero-epwing in '%s'", toolPath)
++		// }
+ 
+-		cmd := exec.Command(toolPath, "--entries", inputPath)
++		cmd := exec.Command("zero-epwing", "--entries", inputPath)
+ 
+ 		stdout, err := cmd.StdoutPipe()
+ 		if err != nil {
+@@ -106,7 +106,7 @@ func epwingExportDb(inputPath, outputPath, language, title string, stride int, p
+ 			return err
+ 		}
+ 
+-		log.Printf("invoking zero-epwing from '%s'...\n", toolPath)
++		log.Printf("invoking zero-epwing\n")
+ 		if err := cmd.Start(); err != nil {
+ 			return err
+ 		}

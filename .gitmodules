@@ -22,3 +22,6 @@
 [submodule "nix/.config/nixpkgs/packages/grpcurl/src/github.com/kazegusuri/grpcurl"]
 	path = nix/.config/nixpkgs/packages/grpcurl/src/github.com/kazegusuri/grpcurl
 	url = git@github.com:kazegusuri/grpcurl.git
+[submodule "nix/.config/nixpkgs/packages/yomichan-import/yomichan-import"]
+	path = nix/.config/nixpkgs/packages/yomichan-import/yomichan-import
+	url = https://github.com/FooSoft/yomichan-import
