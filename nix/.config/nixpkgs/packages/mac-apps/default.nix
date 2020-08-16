@@ -44,17 +44,7 @@ in
     homepage = https://www.alfredapp.com/;
   });
 
-  Anki = installApplication rec {
-    name = "Anki";
-    version = "2.1.21";
-    sourceRoot = "${name}.app";
-    src = pkgs.fetchurl {
-      url = "https://github.com/ankitects/anki/releases/download/${version}/anki-${version}-mac.dmg";
-      sha256 = "0cm9bb104wz0pd1mxfahi4s32hgn0wsac0i61fi12ipkwz84vq0z";
-    };
-    description = "Anki is a program which makes remembering things easy";
-    homepage = https://apps.ankiweb.net;
-  };
+  Anki = pkgs.anki;
 
   Chrome = (installApplication rec {
     name = "Chrome";
@@ -183,7 +173,7 @@ in
     homepage = https://imageoptim.com;
   });
 
-  iTerm2 = pkgs.iterm2;
+  # iTerm2 = pkgs.iterm2;
 
   Karabiner-Elements = (installApplication rec {
     name = "Karabiner-Elements";

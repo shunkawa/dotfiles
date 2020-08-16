@@ -14,10 +14,23 @@ in
     ];
   };
 
+  system.activationScripts.postActivation.text = ''
+    # Disable the sound effects on boot
+    sudo nvram SystemAudioVolume=" "
+  '';
+
+  # TODO: figure out how to do this
+  # defaults write com.apple.systemsound "com.apple.sound.uiaudio.enabled" -int 0
+
+  # TODO: even solid colors is a meme,
+  # open /System/Library/Desktop\ Pictures/Solid\ Colors/Turquoise\ Green.png
+
   system.defaults.dock.autohide = true;
   system.defaults.dock.showhidden = true;
   system.defaults.dock.show-recents = false;
   system.defaults.dock.static-only = true;
+
+  system.defaults.screencapture.location = "${builtins.getEnv "HOME"}/Desktop";
 
   system.defaults.finder.AppleShowAllExtensions = true;
   system.defaults.finder.QuitMenuItem = true;
@@ -27,18 +40,24 @@ in
   system.defaults.trackpad.Clicking = true;
   system.defaults.trackpad.TrackpadThreeFingerDrag = true;
 
-  # defaults read NSGlobalDomain prints a bunch of stuff
+  # defaults read prints a bunch of stuff
 
   # Enable tab completion for all menu bar items
   system.defaults.NSGlobalDomain.AppleKeyboardUIMode = 3;
+
+  # Disable the alternate character selection prompt that shows up when holding
+  # a key down.
   system.defaults.NSGlobalDomain.ApplePressAndHoldEnabled = false;
-  system.defaults.NSGlobalDomain.InitialKeyRepeat = 10;
-  system.defaults.NSGlobalDomain.KeyRepeat = 1;
+
+  system.defaults.NSGlobalDomain.InitialKeyRepeat = 25;
+  system.defaults.NSGlobalDomain.KeyRepeat = 6;
   system.defaults.NSGlobalDomain.NSAutomaticCapitalizationEnabled = false;
   system.defaults.NSGlobalDomain.NSAutomaticDashSubstitutionEnabled = false;
   system.defaults.NSGlobalDomain.NSAutomaticPeriodSubstitutionEnabled = false;
   system.defaults.NSGlobalDomain.NSAutomaticQuoteSubstitutionEnabled = false;
   system.defaults.NSGlobalDomain.NSAutomaticSpellingCorrectionEnabled = false;
+
+  # These don't exist in nix-darwin yet
   #system.defaults.NSGlobalDomain.NSAutomaticTextCompletionEnabled = false;
   #system.defaults.NSGlobalDomain.WebAutomaticSpellingCorrectionEnabled = false;
   #system.defaults.NSGlobalDomain.AppleLocale = "en_US";
@@ -56,11 +75,13 @@ in
   # Enable the full save dialog always
   system.defaults.NSGlobalDomain.NSNavPanelExpandedStateForSaveMode = true;
   system.defaults.NSGlobalDomain.NSNavPanelExpandedStateForSaveMode2 = true;
+  # TODO there is an equivalent thing for print https://github.com/mathiasbynens/dotfiles/blob/c886e139233320e29fd882960ba3dd388d57afd7/.macos#L55-L57
 
   # Hide the global menu bar
-  system.defaults.NSGlobalDomain._HIHideMenuBar = true;
+  system.defaults.NSGlobalDomain._HIHideMenuBar = false;
 
   services.skhd.enable = true;
+  services.skhd.package = pkgs.skhd;
   services.skhd.skhdConfig =
     let
       skhd = "${pkgs.skhd}/bin/skhd";
@@ -80,17 +101,23 @@ in
       fn - k:       ${skhd} -k "hyper - k"
       fn - l:       ${skhd} -k "hyper - l"
       fn - m:       ${skhd} -k "hyper - m"
-      fn - n [
-         "firefox": ${skhd} -k "ctrl - pagedown"
-         "chrome" : ${skhd} -k "ctrl - pagedown"
-         *        : ${skhd} -k "hyper - n"
-      ]
+      # This version of SKHD (0.3.0) doesn't support this yet
+      # fn - n [
+      #    "firefox": ${skhd} -k "ctrl - pagedown"
+      #    "chrome" : ${skhd} -k "ctrl - pagedown"
+      #    *        : ${skhd} -k "hyper - n"
+      # ]
+      fn - n:       ${skhd} -k "ctrl - pagedown"
+
       fn - o:       ${skhd} -k "hyper - o"
-      fn - p [
-         "firefox": ${skhd} -k "ctrl - pageup"
-         "chrome" : ${skhd} -k "ctrl - pageup"
-         *        : ${skhd} -k "hyper - p"
-      ]
+      # This version of SKHD (0.3.0) doesn't support this yet
+      # fn - p [
+      #    "firefox": ${skhd} -k "ctrl - pageup"
+      #    "chrome" : ${skhd} -k "ctrl - pageup"
+      #    *        : ${skhd} -k "hyper - p"
+      # ]
+      fn - p:       ${skhd} -k "ctrl - pageup"
+
       fn - p:       ${skhd} -k "hyper - p"
       fn - q:       ${skhd} -k "hyper - q"
       fn - r:       ${skhd} -k "hyper - r"
@@ -106,27 +133,39 @@ in
     '';
 
   system.keyboard.enableKeyMapping = true;
-  system.keyboard.mappings = {
-    # Bind Caps Lock to Left Function for all other keyboards.
-    "Keyboard Caps Lock" = "Keyboard Left Function (fn)";
-    # For the built-in MacBook keyboard, change the modifiers to match a
-    # traditional keyboard layout.
-    "0x27e" = {
-      "Keyboard Caps Lock" = "Keyboard Left Function (fn)";
-      "Keyboard Left Alt" = "Keyboard Left GUI";
-      "Keyboard Left Function (fn)" = "Keyboard Left Control";
-      "Keyboard Left GUI" = "Keyboard Left Alt";
-      "Keyboard Right Alt" = "Keyboard Right Control";
-      "Keyboard Right GUI" = "Keyboard Right Alt";
-    };
-  };
+  system.keyboard.mappings = [
+    {
+      productId = 273;
+      vendorId = 2131;
+      mappings = {
+        # Bind Caps Lock to Left Function for Realforce 87u.
+        "Keyboard Caps Lock" = "Keyboard Left Function (fn)";
+      };
+    }
+
+    {
+      productId = 638;
+      vendorId = 1452;
+      mappings = {
+        # For the built-in MacBook keyboard, change the modifiers to match a
+        # traditional keyboard layout.
+        "Keyboard Caps Lock" = "Keyboard Left Function (fn)";
+        "Keyboard Left Alt" = "Keyboard Left GUI";
+        "Keyboard Left Function (fn)" = "Keyboard Left Control";
+        "Keyboard Left GUI" = "Keyboard Left Alt";
+        "Keyboard Right Alt" = "Keyboard Right Control";
+        "Keyboard Right GUI" = "Keyboard Right Alt";
+      };
+    }
+  ];
+
 
   programs.zsh.enable = true;
 
   environment = {
     systemPackages = with pkgs; [
-      local-packages.mac-apps.Alfred
-      local-packages.mac-apps.Anki
+      alacritty
+      # local-packages.mac-apps.Anki
       local-packages.mac-apps.Chrome
       local-packages.mac-apps.Chromium
       local-packages.mac-apps.Contexts
@@ -137,7 +176,6 @@ in
       local-packages.mac-apps.SequelPro
       local-packages.mac-apps.Sketch
       local-packages.mac-apps.Spectacle
-      local-packages.mac-apps.iTerm2
     ];
 
     etc = {

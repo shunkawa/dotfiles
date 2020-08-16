@@ -2,7 +2,7 @@
 # startup time.
 # zmodload zsh/zprof
 
-export NIX_PROFILE=${"${NIX_PROFILE}":-"$NIX_USER_PROFILE_DIR/profile"}
+export NIX_PROFILE="${NIX_USER_PROFILE_DIR}/home-manager/home-path"
 export LC_ALL="en_US.UTF-8"
 export LANG="en_US.UTF-8"
 export LANGUAGE="en_US.UTF-8"
@@ -15,6 +15,7 @@ fpath=(
 
 PATH="${HOME}/.local/bin"
 PATH="${PATH}:${NIX_PROFILE}/bin"
+PATH="${PATH}:${NIX_USER_PROFILE_DIR}/profile/bin"
 PATH="${PATH}:/run/current-system/sw/bin"
 PATH="${PATH}:/nix/var/nix/profiles/default/bin"
 PATH="${PATH}:/usr/local/bin"

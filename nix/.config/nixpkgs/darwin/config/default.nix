@@ -1,19 +1,24 @@
-{ config, lib, pkgs, ... }:
+args@{ config, lib, pkgs, ... }:
 
 {
   imports = [
     ./environment.nix
     ./nixpkgs.nix
     ./nix-docker.nix
+    <home-manager/nix-darwin>
   ];
+
+  home-manager.users.eqyiel = import ../../home.nix;
+  home-manager.useUserPackages = true;
 
   services.nix-daemon.enable = true;
 
   nix = {
     nixPath = [
-      "darwin=/Users/${(builtins.getEnv "USER")}/.nix-defexpr/darwin"
       "darwin-config=/Users/${(builtins.getEnv "USER")}/.config/nixpkgs/darwin-configuration.nix"
-      "nixpkgs=${pkgs.callPackage ../lib/nixpkgs.nix { }}"
+      "darwin=/Users/${(builtins.getEnv "USER")}/.nix-defexpr/darwin"
+      "home-manager=${import ../lib/home-manager.nix}"
+      "nixpkgs=${import ../lib/nixpkgs.nix}"
     ];
   };
 

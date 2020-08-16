@@ -172,35 +172,6 @@ rec {
     };
   });
 
-  nixpkgs = {
-    last-known-good = (
-      import
-        (
-          pkgs.callPackage
-            ({ stdenv }: stdenv.mkDerivation {
-              name = "nixpkgs";
-
-              src = fetchGit {
-                url = ../../../.nix-defexpr/nixpkgs;
-                rev = "90441b4b47fc7280de6a5bd1a228017caaa0f97f";
-              };
-
-              dontBuild = true;
-              preferLocalBuild = true;
-
-              installPhase = ''
-                cp -a . $out
-              '';
-            }) { }
-        ) { }
-    );
-    ayanami = (pkgs.callPackage ../nixos/config/ayanami/lib/nixpkgs.nix { });
-    darwin = (pkgs.callPackage ../darwin/lib/nixpkgs.nix { });
-    home = (pkgs.callPackage ../home/lib/nixpkgs.nix { });
-    hoshijiro = (pkgs.callPackage ../nixos/config/hoshijiro/lib/nixpkgs.nix { });
-    tomoyo = (pkgs.callPackage ../nixops/realms/tomoyo.maher.fyi/lib/nixpkgs.nix { });
-  };
-
   subtitles-rs = callPackage ./subtitles-rs { };
 
   aligner = callPackage ./aligner { };
@@ -269,4 +240,15 @@ rec {
   };
 
   markdown-lint = callPackage ./markdown-lint { };
+
+  firefox-addons = callPackage ./firefox-addons { };
+
+  nur =
+    import (builtins.fetchTarball {
+      # Get the revision by choosing a version from
+      # https://github.com/nix-community/NUR/commits/master"
+      url = "https://github.com/nix-community/NUR/archive/b9649a747e43c62f50829f87426c02ac0a7c5364.tar.gz";
+      # Get the hash by running `nix-prefetch-url --unpack <url>` on the above url
+      sha256 = "0fbrwk5bd8mirrkhhnlx8ln9d9lp8bw1lz4s8wxz61m3gh0g2qii";
+    });
 }

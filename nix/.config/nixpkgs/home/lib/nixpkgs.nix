@@ -1,17 +1,7 @@
-{ stdenv }:
+# nix-prefetch-url --unpack https://github.com/NixOS/nixpkgs-channels/archive/96745f0228359a71051a1d0bda4080e7ec134ade.tar.gz
 
-stdenv.mkDerivation {
-  name = "nixpkgs";
-
-  src = fetchGit {
-    url = ../../../../.nix-defexpr/nixpkgs;
-    rev = "32b8ed738096bafb4cdb7f70347a0f63f9f40151";
-  };
-
-  dontBuild = true;
-  preferLocalBuild = true;
-
-  installPhase = ''
-    cp -a . $out
-  '';
+builtins.fetchTarball {
+  name = "nixpkgs-unstable-2020-08-15";
+  url = https://github.com/NixOS/nixpkgs-channels/archive/96745f0228359a71051a1d0bda4080e7ec134ade.tar.gz;
+  sha256 = "1jfiaib3h6gmffwsg7d434di74x5v5pbwfifqw3l1mcisxijqm3s";
 }
