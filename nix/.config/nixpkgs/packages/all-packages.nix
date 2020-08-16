@@ -239,9 +239,12 @@ rec {
     inherit (darwin.apple_sdk.frameworks) CoreAudioKit WebKit;
   };
 
-  markdown-lint = callPackage ./markdown-lint { };
-
-  firefox-addons = callPackage ./firefox-addons { };
+  remark-lint-wrapper =
+    import
+      (builtins.fetchTarball https://github.com/eqyiel/remark-lint-wrapper/archive/v1.0.0.tar.gz) {
+      inherit pkgs;
+      inherit system;
+    };
 
   yomichan-import = callPackage ./yomichan-import {
     zero-epwing = callPackage ./yomichan-import/zero-epwing.nix {

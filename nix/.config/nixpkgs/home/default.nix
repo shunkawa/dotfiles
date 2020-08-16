@@ -94,7 +94,7 @@
     goose
     grpcurl
     hiptext
-    markdown-lint
+    remark-lint-wrapper
     mu
     node-build
     nodePackages."@jasondibenedetto/plop"
