@@ -17,7 +17,10 @@ args@{ config, lib, pkgs, ... }:
     "nixpkgs=${import ./lib/nixpkgs.nix}"
   ];
 
-  nix.binaryCaches = [ "https://eqyiel.cachix.org/" ];
+  # Note that this must not contain a trailing forward slash, or you'll get
+  # errors like
+  # > warning: substituter 'https://eqyiel.cachix.org' does not have a valid signature for path '/nix/store/kpmzy88syzcqrsy527zw5200mzx00v30-emacs-yasnippet-20200604.246'
+  nix.binaryCaches = [ "https://eqyiel.cachix.org" ];
   nix.binaryCachePublicKeys = [ "eqyiel.cachix.org-1:hfFW3UakMJ2ad2vpZw8gvMrM06drgMGPAQuSI+xT8YQ=" ];
 
   nixpkgs = {
