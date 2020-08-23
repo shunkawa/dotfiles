@@ -246,9 +246,11 @@ rec {
       inherit system;
     };
 
+  eb = callPackage ./eb { };
+
   yomichan-import = callPackage ./yomichan-import {
     zero-epwing = callPackage ./yomichan-import/zero-epwing.nix {
-      eb = callPackage ./yomichan-import/eb.nix { };
+      inherit eb;
       jansson = callPackage ./yomichan-import/jansson.nix { };
     };
     yomichan-import = callPackage ./yomichan-import/yomichan-import.nix {
@@ -264,4 +266,8 @@ rec {
       # Get the hash by running `nix-prefetch-url --unpack <url>` on the above url
       sha256 = "0fbrwk5bd8mirrkhhnlx8ln9d9lp8bw1lz4s8wxz61m3gh0g2qii";
     });
+
+  qolibri = libsForQt5.callPackage ./qolibri {
+    inherit eb;
+  };
 }

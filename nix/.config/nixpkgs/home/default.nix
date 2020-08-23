@@ -57,6 +57,7 @@
     nmap
     openssh
     openssl
+    qolibri
     pandoc
     procmail # formail used for some mu hacks
     procs
