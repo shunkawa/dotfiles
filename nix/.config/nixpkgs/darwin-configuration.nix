@@ -204,7 +204,26 @@ args@{ config, lib, pkgs, ... }:
     }
 
     {
-      productId = 638;
+      # 0x27b / 635
+      productId = 635;
+      # productId = 638;
+      vendorId = 1452;
+      mappings = {
+        # For the built-in MacBook keyboard, change the modifiers to match a
+        # traditional keyboard layout.
+        "Keyboard Caps Lock" = "Keyboard Left Function (fn)";
+        "Keyboard Left Alt" = "Keyboard Left GUI";
+        "Keyboard Left Function (fn)" = "Keyboard Left Control";
+        "Keyboard Left GUI" = "Keyboard Left Alt";
+        "Keyboard Right Alt" = "Keyboard Right Control";
+        "Keyboard Right GUI" = "Keyboard Right Alt";
+      };
+    }
+
+    {
+      # Different MacBook, with a different internal keyboard ID: 0x27b = 635
+      # MacBook Pro (13-inch, 2018, Four Thunderbolt 3 Ports)
+      productId = 635;
       vendorId = 1452;
       mappings = {
         # For the built-in MacBook keyboard, change the modifiers to match a
