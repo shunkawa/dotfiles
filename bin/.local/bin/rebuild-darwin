@@ -12,13 +12,13 @@ if ! (command -v readlinkf >/dev/null 2>&1); then
   fatal '"readlinkf" command not found.  Probably, you want to add the directory this script is in to $PATH.  For example: PATH="~/.local/bin:$PATH" rebuild-darwin'
 fi
 
-NIX_PATH="nixpkgs=$(nix-instantiate --eval --expr "import $(readlinkf "${HOME}/.config/nixpkgs")/darwin/lib/nixpkgs.nix" | tr -d \")"
+NIX_PATH="nixpkgs=$(nix-instantiate --eval --expr "import $(readlinkf "${HOME}/.config/nixpkgs")/lib/nixpkgs.nix" | tr -d \")"
 
 export NIX_PATH
 
 darwin-rebuild switch \
   -I "darwin-config=$(readlinkf "${HOME}/.config/nixpkgs")/darwin-configuration.nix" \
   -I "darwin=$(readlinkf "${HOME}/.nix-defexpr")/darwin" \
-  -I "home-manager=$(nix-instantiate --eval --expr "import $(readlinkf "${HOME}/.config/nixpkgs")/darwin/lib/home-manager.nix" | tr -d \")" \
-  -I "nixpkgs=$(nix-instantiate --eval --expr "import $(readlinkf "${HOME}/.config/nixpkgs")/darwin/lib/nixpkgs.nix" | tr -d \")" \
+  -I "home-manager=$(nix-instantiate --eval --expr "import $(readlinkf "${HOME}/.config/nixpkgs")/lib/home-manager.nix" | tr -d \")" \
+  -I "nixpkgs=$(nix-instantiate --eval --expr "import $(readlinkf "${HOME}/.config/nixpkgs")/lib/nixpkgs.nix" | tr -d \")" \
   --show-trace

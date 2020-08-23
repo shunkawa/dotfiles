@@ -1,0 +1,8 @@
+#!/bin/sh
+
+set -eu
+
+export CACHIX_SIGNING_KEY="$(pass cachix/eqyiel/CACHIX_SIGNING_KEY)"
+
+nix-store --query --requisites --include-outputs /run/current-system |
+  xargs "$(nix-build -A cachix https://cachix.org/api/v1/install --no-out-link)/bin/cachix" --verbose push eqyiel

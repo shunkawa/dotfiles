@@ -270,4 +270,15 @@ rec {
   qolibri = libsForQt5.callPackage ./qolibri {
     inherit eb;
   };
+
+  nixpkgs = recurseIntoAttrs {
+    # nix-prefetch-url --unpack https://github.com/NixOS/nixpkgs-channels/archive/96745f0228359a71051a1d0bda4080e7ec134ade.tar.gz
+    "darwin-20.03-eqyiel-qtwebengine-backport-2020-08-23" =
+      import
+        (builtins.fetchTarball {
+          name = "darwin-20.03-eqyiel-qtwebengine-backport-2020-08-23";
+          url = https://github.com/eqyiel/nixpkgs/archive/e5612ebe3fd90ea2af22d475f1037ba458c194f0.tar.gz;
+          sha256 = "18bcs88b7wgn8j87xi54q0n3y8i1qf59j3i7sm6xvimbavrbcg96";
+        }) { };
+  };
 }

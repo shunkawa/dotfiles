@@ -112,8 +112,10 @@ $ "$(nix-build -A installer --no-out-link)/bin/installer"
 $ PATH="~/.local/bin:$PATH" rebuild-darwin
 ```
 
-### Bootstrap `home-manager`
+### Bootstrap `cachix`
 
 ```
-$ PATH="~/.local/bin:$PATH" rebuild-home
+~
+❯ "$(nix-build -A cachix https://cachix.org/api/v1/install --no-out-link)/bin/cachix" authtoken $(pass cachix/eqyiel/authtoken)
+Written to /Users/eqyiel/.config/cachix/cachix.dhall
 ```
