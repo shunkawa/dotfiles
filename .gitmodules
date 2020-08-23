@@ -1,6 +1,6 @@
 [submodule "nix/.nix-defexpr/darwin"]
 	path = nix/.nix-defexpr/darwin
-	url = git@github.com:LnL7/nix-darwin.git
+	url = git@github.com:eqyiel/nix-darwin.git
 [submodule "nix/.config/nixpkgs/nixops/realms/tomoyo.maher.fyi/lib/matrix-appservice-irc-nixos"]
 	path = nix/.config/nixpkgs/nixops/realms/tomoyo.maher.fyi/lib/matrix-appservice-irc-nixos
 	url = git@github.com:Ralith/matrix-appservice-irc-nixos.git
