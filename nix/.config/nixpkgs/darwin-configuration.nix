@@ -173,7 +173,6 @@ args@{ config, lib, pkgs, ... }:
          *        : ${skhd} -k "hyper - n"
       ]
       fn - o:       ${skhd} -k "hyper - o"
-      This version of SKHD (0.3.0) doesn't support this yet
       fn - p [
          "firefox": ${skhd} -k "ctrl - pageup"
          "chrome" : ${skhd} -k "ctrl - pageup"
