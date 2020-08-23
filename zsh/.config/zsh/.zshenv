@@ -2,6 +2,11 @@
 # startup time.
 # zmodload zsh/zprof
 
+# Do not source /etc/zprofile, /etc/zshrc, /etc/zlogin and
+# /etc/zlogout. /etc/zshenv will still be sourced (before reading this file) for
+# any NixOS initialization stuff.
+unsetopt GLOBAL_RCS
+
 export NIX_PROFILE="${NIX_USER_PROFILE_DIR}/home-manager/home-path"
 export LC_ALL="en_US.UTF-8"
 export LANG="en_US.UTF-8"
