@@ -36,7 +36,7 @@ stdenv.mkDerivation rec {
 
   postInstall = ''
     mkdir -p $out/Applications
-    mv qolibri.app $out/Applications
+    mv $out/bin/qolibri.app $out/Applications
 
     wrapProgram $out/Applications/qolibri.app/Contents/MacOS/qolibri \
       --set QT_QPA_PLATFORM_PLUGIN_PATH ${qtbase.bin}/lib/qt-*/plugins/platforms
