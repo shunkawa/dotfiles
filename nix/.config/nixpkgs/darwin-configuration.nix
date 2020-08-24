@@ -253,6 +253,7 @@ args@{ config, lib, pkgs, ... }:
       local-packages.mac-apps.SequelPro
       local-packages.mac-apps.Sketch
       local-packages.mac-apps.Spectacle
+      local-packages.qolibri
     ];
 
     etc = {
