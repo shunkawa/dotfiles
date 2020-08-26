@@ -85,7 +85,6 @@ let
       pkgbuild-mode
       prettier-js
       projectile
-      rjsx-mode
       s
       scss-mode
       skewer-mode
