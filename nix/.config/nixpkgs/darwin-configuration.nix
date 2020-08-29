@@ -192,24 +192,9 @@ args@{ config, lib, pkgs, ... }:
     '';
 
   system.keyboard.enableKeyMapping = true;
-  system.keyboard.mappings = [
-    {
-      productId = 273;
-      vendorId = 2131;
-      mappings = {
-        # Bind Caps Lock to Left Function for Realforce 87u.
-        "Keyboard Caps Lock" = "Keyboard Left Function (fn)";
-      };
-    }
-
-    {
-      # 0x27b / 635
-      productId = 635;
-      # productId = 638;
-      vendorId = 1452;
-      mappings = {
-        # For the built-in MacBook keyboard, change the modifiers to match a
-        # traditional keyboard layout.
+  system.keyboard.mappings =
+    let
+      macbookKeyMappings = {
         "Keyboard Caps Lock" = "Keyboard Left Function (fn)";
         "Keyboard Left Alt" = "Keyboard Left GUI";
         "Keyboard Left Function (fn)" = "Keyboard Left Control";
@@ -217,25 +202,33 @@ args@{ config, lib, pkgs, ... }:
         "Keyboard Right Alt" = "Keyboard Right Control";
         "Keyboard Right GUI" = "Keyboard Right Alt";
       };
-    }
+    in
+    [
+      {
+        productId = 273;
+        vendorId = 2131;
+        mappings = {
+          # Bind Caps Lock to Left Function for Realforce 87u.
+          "Keyboard Caps Lock" = "Keyboard Left Function (fn)";
+        };
+      }
 
-    {
-      # Different MacBook, with a different internal keyboard ID: 0x27b = 635
-      # MacBook Pro (13-inch, 2018, Four Thunderbolt 3 Ports)
-      productId = 635;
-      vendorId = 1452;
-      mappings = {
-        # For the built-in MacBook keyboard, change the modifiers to match a
-        # traditional keyboard layout.
-        "Keyboard Caps Lock" = "Keyboard Left Function (fn)";
-        "Keyboard Left Alt" = "Keyboard Left GUI";
-        "Keyboard Left Function (fn)" = "Keyboard Left Control";
-        "Keyboard Left GUI" = "Keyboard Left Alt";
-        "Keyboard Right Alt" = "Keyboard Right Control";
-        "Keyboard Right GUI" = "Keyboard Right Alt";
-      };
-    }
-  ];
+      {
+        # 0x27e = 638
+        # MacBook Pro (13-inch, 2020, Four Thunderbolt 3 ports)
+        productId = 638;
+        vendorId = 1452;
+        mappings = macbookKeyMappings;
+      }
+
+      {
+        # Different MacBook, with a different internal keyboard ID: 0x27b = 635
+        # MacBook Pro (13-inch, 2018, Four Thunderbolt 3 Ports)
+        productId = 635;
+        vendorId = 1452;
+        mappings = macbookKeyMappings;
+      }
+    ];
 
   programs.zsh.enable = true;
 
