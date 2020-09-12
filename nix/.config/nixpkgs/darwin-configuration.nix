@@ -5,7 +5,7 @@ args@{ config, lib, pkgs, ... }:
     <home-manager/nix-darwin>
   ] ++ (import ./nix-darwin-modules/module-list.nix);
 
-  home-manager.users.eqyiel = import ./home.nix;
+  home-manager.users."${builtins.getEnv "USER"}" = import ./home.nix;
   home-manager.useUserPackages = true;
 
   services.nix-daemon.enable = true;
