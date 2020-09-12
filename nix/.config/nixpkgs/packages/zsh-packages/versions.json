@@ -1,9 +1,12 @@
 {
   "pure": {
     "url": "https://github.com/sindresorhus/pure.git",
-    "rev": "3a5355b0299dbebfe8b010e1cec2c361dd8e773a",
-    "date": "2020-07-08T16:21:26+03:00",
-    "sha256": "0i89c3854pgkllmdrkcibi3lpxbwg19vwqgi6vswlpjzvlv8kw5v",
-    "fetchSubmodules": false
+    "rev": "02643fd167b6bace2f31ad248fc317e32a42d3fd",
+    "date": "2020-09-09T17:49:35+02:00",
+    "path": "/nix/store/802c4ah1mr3xmgc0qx2wmhchrlal9jyz-pure",
+    "sha256": "0m2m832hslhq1g73pfj6m5yvd02sayfz5gaz00m6ixvi2yzqqwhw",
+    "fetchSubmodules": false,
+    "deepClone": false,
+    "leaveDotGit": false
   }
 }
