@@ -23,6 +23,8 @@ args@{ config, lib, pkgs, ... }:
   nix.binaryCaches = [ "https://eqyiel.cachix.org" ];
   nix.binaryCachePublicKeys = [ "eqyiel.cachix.org-1:hfFW3UakMJ2ad2vpZw8gvMrM06drgMGPAQuSI+xT8YQ=" ];
 
+  nix.package = pkgs.nixUnstable;
+
   nixpkgs = {
     overlays = [
       (import ./packages/overlay.nix)
