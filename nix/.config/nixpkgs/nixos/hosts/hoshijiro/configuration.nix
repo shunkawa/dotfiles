@@ -453,8 +453,9 @@ rec {
     };
   };
 
-  # home-manager.users.eqyiel = import ../../../home.nix;
-  # home-manager.useUserPackages = true;
+  home-manager.users.eqyiel = import ../../../home.nix;
+  home-manager.useUserPackages = true;
+  home-manager.useGlobalPkgs = true;
 
   documentation = {
     nixos = {

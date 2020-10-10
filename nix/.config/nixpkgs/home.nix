@@ -1,15 +1,6 @@
-{ lib, ... }:
+{ lib, pkgs, ... }:
 
-# Required to get overlays, because home-manager clobbers pkgs
-# https://github.com/nix-community/home-manager/issues/616
-let pkgs = import <nixpkgs> {
-  config = {
-    allowUnfree = true;
-  };
-  overlays = [
-    (import ./packages/overlay.nix)
-  ];
-}; in lib.mkMerge [
+lib.mkMerge [
   ({
     programs.home-manager.enable = true;
     programs.home-manager.path = "<home-manager>";
@@ -27,7 +18,7 @@ let pkgs = import <nixpkgs> {
       pkgs.aspellDicts.en-computers
       pkgs.aspellDicts.en-science
       pkgs.bat
-      pkgs.bind  # provides dig
+      pkgs.bind # provides dig
       pkgs.bundler
       pkgs.coreutils
       pkgs.curl
