@@ -1,3 +1,0 @@
-#+BEGIN_EXAMPLE
-NIXPKGS="$(nix-build --expr "with import <nixpkgs> {}; callPackage $HOME/.config/nixpkgs/home/lib/nixpkgs.nix {}" --no-out-link)" "$(nix-build '<nixpkgs>' -A home.home-manager --no-out-link -I nixpkgs="${NIXPKGS}")/bin/home-manager" -v -f "$HOME/.config/nixpkgs/home.nix" -I home-manager="$(nix-build '<nixpkgs>' -A home.home-manager-src --no-out-link -I nixpkgs="${NIXPKGS}")" -I nixpkgs="${NIXPKGS}" switch
-#+END_EXAMPLE

@@ -1,17 +1,18 @@
 { config, lib, pkgs, ... }:
-
 let
-
-  sshKeys = import ./../../../common/ssh-keys.nix;
+  sshKeys = import ./config/ssh-keys.nix;
 
   secrets = import ./secrets.nix;
 
-in rec {
+in
+rec {
   imports = [
-    ./config
-    ../../common/gnome.nix
-    ../../common/steam.nix
-    ../../common/fonts.nix
+    <home-manager/nixos>
+    ./config/default-virtualhost.nix
+    ./config/nextcloud.nix
+    ./config/gnome.nix
+    ./config/steam.nix
+    ./config/fonts.nix
   ] ++ (import ./../../modules/module-list.nix);
 
   fileSystems = {
@@ -71,6 +72,11 @@ in rec {
       fsType = "zfs";
     };
 
+    "/var/lib/postgresql" = {
+      device = "/mnt/persistent/var/lib/postgresql";
+      options = [ "bind" ];
+    };
+
     "/export/home" = {
       device = "/home";
       options = [ "bind" ];
@@ -89,7 +95,6 @@ in rec {
       rules = [
         "L /var/lib/acme - - - - /mnt/persistent/var/lib/acme"
         "L /var/lib/bluetooth - - - - /mnt/persistent/var/lib/bluetooth"
-        "L /var/lib/postgresql - - - - /mnt/persistent/var/lib/postgresql"
         "L /var/lib/transmission - - - - /mnt/persistent/var/lib/transmission"
       ];
     };
@@ -112,11 +117,10 @@ in rec {
       };
     };
     cleanTmpDir = true;
-    extraModulePackages = [];
+    extraModulePackages = [ ];
     kernelModules = [ "kvm-intel" ];
     supportedFilesystems = [ "zfs" "nfs" "ntfs" ];
-    # https://discourse.nixos.org/t/disk-encryption-on-nixos-servers-how-when-to-unlock/5030/11
-    kernelParams = ["ip=192.168.1.215:::::eno1:dhcp"];
+    kernelParams = [ "acpi=off" ];
     initrd = {
       supportedFilesystems = [ "zfs" ];
       network = {
@@ -134,7 +138,7 @@ in rec {
         echo "zpool import -af; zfs load-key -a; killall zfs" >> /root/.profile
       '';
       postDeviceCommands = lib.mkAfter ''
-       zfs rollback -r rpool/ephemeral/root@blank
+        zfs rollback -r rpool/ephemeral/root@blank
       '';
       availableKernelModules = [
         "e1000e"
@@ -155,7 +159,7 @@ in rec {
     # or
     # head -c4 /dev/urandom | od -A none -t x4
     hostId = "63737ac9";
-    hostName = "hoshijiro.maher.fyi";
+    hostName = "hoshijiro";
     defaultGateway = "192.168.1.1";
     nameservers = [ "192.168.1.1" ];
     interfaces."wlp3s0" = {
@@ -202,9 +206,9 @@ in rec {
       logRefusedPackets = true;
     };
     extraHosts = ''
-        192.168.1.174 ayanami.maher.fyi
-        127.0.0.1     hoshijiro.maher.fyi
-      '';
+      192.168.1.174 ayanami.maher.fyi
+      127.0.0.1     hoshijiro.maher.fyi
+    '';
   };
 
   services = {
@@ -264,25 +268,25 @@ in rec {
         mountdPort = 32767;
         lockdPort = 32768;
         exports = ''
-            # If UID and GIDs are not the same on the client and server you'll have
-            # problems with permissions. However, you can force all access to occur as
-            # a single user and group by combining the all_squash, anonuid, and
-            # anongid export options. all_squash will map all UIDs and GIDs to the
-            # anonymous user, and anonuid and anongid set the UID and GID of the
-            # anonymous user.
-            #
-            # See: http://serverfault.com/a/241272
-            #
-            # macOS NEEDS the 'insecure' flag.  The the Darwin default is to assume
-            # the nfs'ing will take place on an "insecure" port, i.e. > 1024, while
-            # we're serving on 111.
-            #
-            # In the future, look into using users.groups.users.gid here (instead of
-            # "100").  Right now it's being held back by
-            # https://github.com/NixOS/nixpkgs/issues/17237 - until then, make sure
-            # that anongid is the the same as users.groups.users.gid!
-            /export 192.168.1.0/24(rw,async,no_subtree_check,no_root_squash,insecure)
-          '';
+          # If UID and GIDs are not the same on the client and server you'll have
+          # problems with permissions. However, you can force all access to occur as
+          # a single user and group by combining the all_squash, anonuid, and
+          # anongid export options. all_squash will map all UIDs and GIDs to the
+          # anonymous user, and anonuid and anongid set the UID and GID of the
+          # anonymous user.
+          #
+          # See: http://serverfault.com/a/241272
+          #
+          # macOS NEEDS the 'insecure' flag.  The the Darwin default is to assume
+          # the nfs'ing will take place on an "insecure" port, i.e. > 1024, while
+          # we're serving on 111.
+          #
+          # In the future, look into using users.groups.users.gid here (instead of
+          # "100").  Right now it's being held back by
+          # https://github.com/NixOS/nixpkgs/issues/17237 - until then, make sure
+          # that anongid is the the same as users.groups.users.gid!
+          /export 192.168.1.0/24(rw,async,no_subtree_check,no_root_squash,insecure)
+        '';
       };
     };
 
@@ -341,20 +345,13 @@ in rec {
 
   environment = {
     systemPackages = with pkgs; [
+      chromium
+      firefox
+      lm_sensors
       pciutils
       zfs
       zfstools
-      firefox
-      # local-packages.nextcloud-client
-      chromium
-      mpv
-      # libreoffice # broken on unstable
-      python27Packages.syncthing-gtk
-      kdeconnect
-      lm_sensors
-    ] ++ (import ./../../../common/package-lists/essentials.nix) {
-      inherit pkgs;
-    };
+    ];
 
     etc = {
       "wpa_supplicant.conf" = {
@@ -379,7 +376,7 @@ in rec {
     };
   };
 
-  nixpkgs =  {
+  nixpkgs = {
     config = {
       allowUnfree = true;
     };
@@ -393,8 +390,9 @@ in rec {
     # maxJobs = 0;
     trustedUsers = [ "root" ];
     nixPath = [
-      "nixpkgs=${pkgs.callPackage ./lib/nixpkgs.nix {}}"
+      "home-manager=${import ./lib/home-manager.nix}"
       "nixos-config=/etc/nixos/configuration.nix"
+      "nixpkgs=${import ./lib/nixpkgs.nix}"
     ];
 
     gc = {
@@ -447,6 +445,9 @@ in rec {
       };
     };
   };
+
+  # home-manager.users.eqyiel = import ../../../home.nix;
+  # home-manager.useUserPackages = true;
 
   documentation = {
     nixos = {

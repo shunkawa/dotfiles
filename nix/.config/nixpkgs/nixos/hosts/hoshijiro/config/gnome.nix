@@ -71,19 +71,22 @@
       tracker-miners
     ];
 
-    systemPackages = with pkgs; [
-      firefox
-      flac
-      gnome-mpv
-      gnome3.gnome-tweaks
-      google-chrome
-      grip
-      lame
-      pinentry-gnome
-      pinentry-curses
-      vlc
-      # local-packages.nautilus-python
-      # local-packages.indicator-kdeconnect
+    systemPackages = [
+      pkgs.flac
+      pkgs.gnome-mpv
+      pkgs.gnome3.gnome-tweaks
+      pkgs.grip
+      pkgs.ibus-engines.uniemoji
+      pkgs.lame
+      pkgs.local-packages.ibus-engines.mozc
+      pkgs.pinentry-curses
+      pkgs.pinentry-gnome
+      pkgs.xclip
+      pkgs.xorg.xdpyinfo
+      pkgs.xorg.xev
+      pkgs.xorg.xhost
+      pkgs.xorg.xkbcomp
+      pkgs.xsel
     ];
 
     etc."xdg/gtk-3.0/settings.ini" = {

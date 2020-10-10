@@ -1,10 +1,11 @@
-{ config, lib, pkgs, ... }: let
+{ config, lib, pkgs, ... }:
+let
   hostName = "cloud.maher.fyi";
-in {
+in
+{
   services.nextcloud = {
     enable = true;
     inherit hostName;
-    nginx.enable = true;
     https = true;
     caching = {
       apcu = false;
@@ -24,18 +25,6 @@ in {
     home = "/var/lib/nextcloud";
   };
 
-  systemd.services.nextcloud-setup = {
-    requires = ["postgresql.service"];
-    after = [
-      "postgresql.service"
-      "chown-redis-socket.service"
-    ];
-    preStart = ''
-      mkdir -p ${config.services.nextcloud.home}
-      chown -R ${config.users.users.nginx.name}:${config.services.nginx.group} ${config.services.nextcloud.home}
-    '';
-  };
-
   services.postgresql = {
     enable = true;
     package = pkgs.postgresql96;
@@ -49,7 +38,7 @@ in {
     # -rw-r----- 1 root postgres 158 May  7 09:45 psql-init
     initialScript = "/etc/secrets/postgres/psql-init";
   };
-  
+
 
   services.redis = {
     unixSocket = "/var/run/redis/redis.sock";
@@ -92,7 +81,7 @@ in {
   services.nginx = {
     enable = true;
     virtualHosts = {
-      "${hostName}" =  {
+      "${hostName}" = {
         forceSSL = true;
         enableACME = true;
       };

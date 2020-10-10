@@ -1,6 +1,15 @@
-{ pkgs, lib, ... }:
+{ lib, ... }:
 
-lib.mkMerge [
+# Required to get overlays, because home-manager clobbers pkgs
+# https://github.com/nix-community/home-manager/issues/616
+let pkgs = import <nixpkgs> {
+  config = {
+    allowUnfree = true;
+  };
+  overlays = [
+    (import ./packages/overlay.nix)
+  ];
+}; in lib.mkMerge [
   ({
     programs.home-manager.enable = true;
     programs.home-manager.path = "<home-manager>";
@@ -9,137 +18,125 @@ lib.mkMerge [
 
     manual.manpages.enable = false;
 
-    home.packages = with pkgs; [
-      (pass.overrideAttrs (attrs: { doInstallCheck = false; }))
-      aspell
-      aspellDicts.en
-      aspellDicts.en-computers
-      aspellDicts.en-science
-      bat
-      bind
-      bundler
-      coreutils
-      curl
-      direnv
-      du-dust
-      entr
-      exa
-      fasd
-      fd
-      file
-      findutils
-      fortune
-      fpp
-      fzf
-      ghq
-      git-lfs
-      gitAndTools.git-crypt
-      gitAndTools.gitFull
-      gitAndTools.hub
-      gitAndTools.pass-git-helper
-      gitAndTools.transcrypt
-      gnumake
-      gnupg
-      gnused
-      gnutar
-      go
-      htop
-      hyperfine
-      imagemagick
-      inkscape
-      isync
-      jhead
-      jq
-      kubernetes-helm
-      mitmproxy
-      msmtp
-      ncmpcpp
-      nix-prefetch-scripts
-      nixpkgs-fmt
-      nmap
-      openssh
-      openssl
-      pandoc
-      procmail # formail used for some mu hacks
-      procs
-      protobuf
-      pwgen
-      python3
-      qrencode
-      ripgrep
-      rsync
-      sd
-      shellcheck
-      socat
-      speedtest-cli
-      sqlite-interactive
-      stow
-      terraform
-      texlive.combined.scheme-full
-      toilet
-      tree
-      unrar
-      unzip
-      wget
-      xclip
-      xe
-      xsv
-      yq
-      yubikey-manager
-      zsh
-    ] ++ (with local-packages; [
-      comma
-      curl-verbose
-      docker-convenience-scripts
-      emacs-with-packages
-      git-archive-all
-      goose
-      grpcurl
-      hiptext
-      remark-lint-wrapper
-      mu
-      node-build
-      nodePackages."@jasondibenedetto/plop"
-      nodenv
-      pass-show-first-line
-      pinentry-wrapper
-      tmux-packages.fzf-tmux-session
-      tmux-packages.fzf-tmux-url
-      tmux-packages.powerline
-      tmux-packages.powerline-fonts
-      tmux-packages.tmux-colors-solarized
-      tmux-packages.tmux-copycat
-      tmux-packages.tmux-fpp
-      tmux-packages.tmux-open
-      tmux-packages.tmux-pain-control
-      tmux-packages.tmux-sensible
-      tmux-packages.tmux-wrapper
-      tmux-packages.tmux-yank
-      zsh-packages.grml-zsh-config
-      zsh-packages.nix-zsh-completions
-      zsh-packages.oh-my-zsh
-      zsh-packages.pure
-      zsh-packages.zsh-autosuggestions
-      zsh-packages.zsh-completions
-      zsh-packages.zsh-syntax-highlighting
-    ]) ++ lib.optionals stdenv.isLinux ([
-      anki
-      chromium
-      desmume
-      discord
-      firefox
-      gimp
-      libreoffice
-      mpv
-      vdirsyncer
-      youtube-dl
-    ]
-    ++ (with pkgs.ibus-engines; [ local-packages.ibus-engines.mozc uniemoji ])
-    ++ (with local-packages; [ open ]))
-    ++ lib.optionals stdenv.isDarwin ([
-      (youtube-dl.override ({ phantomjsSupport = false; }))
-      mpv
-    ]);
+    home.packages = [
+      (lib.lowPrio pkgs.inetutils) # prefer pkgs.whois over whois from pkgs.inetutils
+      (pkgs.pass.overrideAttrs (attrs: { doInstallCheck = false; }))
+      (pkgs.youtube-dl.override ({ phantomjsSupport = false; }))
+      pkgs.aspell
+      pkgs.aspellDicts.en
+      pkgs.aspellDicts.en-computers
+      pkgs.aspellDicts.en-science
+      pkgs.bat
+      pkgs.bind  # provides dig
+      pkgs.bundler
+      pkgs.coreutils
+      pkgs.curl
+      pkgs.direnv
+      pkgs.entr
+      pkgs.exa
+      pkgs.fasd
+      pkgs.fd
+      pkgs.ffmpeg
+      pkgs.file
+      pkgs.findutils
+      pkgs.fortune
+      pkgs.fpp
+      pkgs.fzf
+      pkgs.git-lfs
+      pkgs.gitAndTools.git-crypt
+      pkgs.gitAndTools.gitFull
+      pkgs.gitAndTools.hub
+      pkgs.gitAndTools.pass-git-helper
+      pkgs.gitAndTools.transcrypt
+      pkgs.gnumake
+      pkgs.gnupg
+      pkgs.gnused
+      pkgs.gnutar
+      pkgs.go
+      pkgs.grpcurl
+      pkgs.htop
+      pkgs.imagemagick
+      pkgs.inkscape
+      pkgs.isync
+      pkgs.jhead
+      pkgs.jq
+      pkgs.kubernetes-helm
+      pkgs.local-packages.comma
+      pkgs.local-packages.curl-verbose
+      pkgs.local-packages.docker-convenience-scripts
+      pkgs.local-packages.emacs-with-packages
+      pkgs.local-packages.git-archive-all
+      pkgs.local-packages.goose
+      pkgs.local-packages.hiptext
+      pkgs.local-packages.mu
+      pkgs.local-packages.node-build
+      pkgs.local-packages.nodePackages."@jasondibenedetto/plop"
+      pkgs.local-packages.nodenv
+      pkgs.local-packages.open
+      pkgs.local-packages.pass-show-first-line
+      pkgs.local-packages.pinentry-wrapper
+      pkgs.local-packages.remark-lint-wrapper
+      pkgs.local-packages.tmux-packages.fzf-tmux-session
+      pkgs.local-packages.tmux-packages.fzf-tmux-url
+      pkgs.local-packages.tmux-packages.powerline
+      pkgs.local-packages.tmux-packages.powerline-fonts
+      pkgs.local-packages.tmux-packages.tmux-colors-solarized
+      pkgs.local-packages.tmux-packages.tmux-copycat
+      pkgs.local-packages.tmux-packages.tmux-fpp
+      pkgs.local-packages.tmux-packages.tmux-open
+      pkgs.local-packages.tmux-packages.tmux-pain-control
+      pkgs.local-packages.tmux-packages.tmux-sensible
+      pkgs.local-packages.tmux-packages.tmux-wrapper
+      pkgs.local-packages.tmux-packages.tmux-yank
+      pkgs.local-packages.zsh-packages.grml-zsh-config
+      pkgs.local-packages.zsh-packages.nix-zsh-completions
+      pkgs.local-packages.zsh-packages.oh-my-zsh
+      pkgs.local-packages.zsh-packages.pure
+      pkgs.local-packages.zsh-packages.zsh-autosuggestions
+      pkgs.local-packages.zsh-packages.zsh-completions
+      pkgs.local-packages.zsh-packages.zsh-syntax-highlighting
+      pkgs.mitmproxy
+      pkgs.mpv
+      pkgs.msmtp
+      pkgs.ncdu
+      pkgs.ncmpcpp
+      pkgs.nix-prefetch-scripts
+      pkgs.nixpkgs-fmt
+      pkgs.nmap
+      pkgs.openssh
+      pkgs.openssl
+      pkgs.p7zip
+      pkgs.pandoc
+      pkgs.procmail # formail used for some mu hacks
+      pkgs.procs
+      pkgs.protobuf
+      pkgs.pwgen
+      pkgs.python3
+      pkgs.qrencode
+      pkgs.ripgrep
+      pkgs.rsync
+      pkgs.sd
+      pkgs.shellcheck
+      pkgs.socat
+      pkgs.speedtest-cli
+      pkgs.sqlite-interactive
+      pkgs.stow
+      pkgs.terraform
+      pkgs.texlive.combined.scheme-full
+      pkgs.toilet
+      pkgs.tree
+      pkgs.unrar
+      pkgs.unzip
+      pkgs.wget
+      pkgs.which
+      pkgs.whois # better than the one from inetutils
+      pkgs.xclip
+      pkgs.xsv
+      pkgs.yq
+      pkgs.yubikey-manager
+      pkgs.zip
+      pkgs.zsh
+    ];
   })
 
   (lib.mkIf
