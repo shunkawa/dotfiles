@@ -1,3 +1,0 @@
-#+BEGIN_EXAMPLE
-NIX_PATH="nixpkgs=$(nix-build --expr 'with import <nixpkgs> {}; callPackage ./realms/maher.fyi/lib/nixpkgs.nix {}' --no-out-link):home-manager=$(nix-build --expr 'with import <nixpkgs> {}; callPackage ./realms/maher.fyi/lib/home-manager.nix {}' --no-out-link):$NIX_PATH" ./nixops deploy -d maher.fyi --show-trace --include cloud
-#+END_EXAMPLE
