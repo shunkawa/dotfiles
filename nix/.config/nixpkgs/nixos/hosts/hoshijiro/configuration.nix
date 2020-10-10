@@ -232,6 +232,13 @@ rec {
         }
       ];
       permitRootLogin = "yes";
+      extraConfig = ''
+        # This is required in order to automatically remove files like
+        # /run/user/1000/gnupg/S.gpg-agent file after disconnecting, which is
+        # what you want if you use agent forwarding.
+        # https://github.com/drduh/YubiKey-Guide/tree/6e2109ea464d9caeae141a05574dd031156238dd#remote-machines-agent-forwardings
+        StreamLocalBindUnlink yes
+      '';
     };
 
     fail2ban = {
