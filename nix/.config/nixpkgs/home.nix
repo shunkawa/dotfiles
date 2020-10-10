@@ -123,7 +123,6 @@ lib.mkMerge [
       pkgs.whois # better than the one from inetutils
       pkgs.xclip
       pkgs.xsv
-      pkgs.yq
       pkgs.yubikey-manager
       pkgs.zip
       pkgs.zsh

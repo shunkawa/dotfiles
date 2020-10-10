@@ -270,7 +270,7 @@ rec {
       sha256 = "0fbrwk5bd8mirrkhhnlx8ln9d9lp8bw1lz4s8wxz61m3gh0g2qii";
     });
 
-  qolibri = libsForQt5.callPackage ./qolibri {
+  qolibri = nixpkgs."nixpkgs-unstable-2020-08-23".libsForQt5.callPackage ./qolibri {
     inherit eb;
   };
 
@@ -282,6 +282,15 @@ rec {
           name = "darwin-20.03-eqyiel-qtwebengine-backport-2020-08-23";
           url = https://github.com/eqyiel/nixpkgs/archive/e5612ebe3fd90ea2af22d475f1037ba458c194f0.tar.gz;
           sha256 = "18bcs88b7wgn8j87xi54q0n3y8i1qf59j3i7sm6xvimbavrbcg96";
+        })
+        { };
+
+    "nixpkgs-unstable-2020-08-23" =
+      import
+        (builtins.fetchTarball {
+          name = "nixpkgs-unstable-2020-08-23";
+          url = https://github.com/NixOS/nixpkgs-channels/archive/ddfa22167019726c015a5638e815d028031162e8.tar.gz;
+          sha256 = "03sa3h00k4qiy511gjxvpw78wdph9bn8hvfsjjq49297vavxh0cv";
         })
         { };
   };

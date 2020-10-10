@@ -123,17 +123,17 @@ rec {
     kernelParams = [ "acpi=off" ];
     initrd = {
       supportedFilesystems = [ "zfs" ];
-      network = {
-        enable = true;
-        ssh = {
-          enable = true;
-          authorizedKeys = [ sshKeys.rkm ];
-          hostKeys = [
-            "/mnt/persistent/etc/ssh/ssh_host_rsa_key"
-            "/mnt/persistent/etc/ssh/ssh_host_ed25519_key"
-          ];
-        };
-      };
+      # network = {
+      #   enable = true;
+      #   ssh = {
+      #     enable = true;
+      #     authorizedKeys = [ sshKeys.rkm ];
+      #     hostKeys = [
+      #       "/mnt/persistent/etc/ssh/ssh_host_rsa_key"
+      #       "/mnt/persistent/etc/ssh/ssh_host_ed25519_key"
+      #     ];
+      #   };
+      # };
       preDeviceCommands = ''
         echo "zpool import -af; zfs load-key -a; killall zfs" >> /root/.profile
       '';

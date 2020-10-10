@@ -7,6 +7,11 @@
 # any NixOS initialization stuff.
 unsetopt GLOBAL_RCS
 
+# TODO: it should be possible to not use this, and use the
+# /etc/profiles/per-user/$USER directory instead.  It doesn't work properly
+# right now on macOS though due to some combination of nix-darwin and
+# home-manager, there are files there but not everything is linked.  It works on
+# a NixOS system.
 export NIX_PROFILE="${NIX_USER_PROFILE_DIR}/home-manager/home-path"
 export LC_ALL="en_US.UTF-8"
 export LANG="en_US.UTF-8"
@@ -18,16 +23,13 @@ fpath=(
   ${fpath[@]}
 )
 
-PATH="${HOME}/.local/bin"
-PATH="${PATH}:${NIX_PROFILE}/bin"
-PATH="${PATH}:${NIX_USER_PROFILE_DIR}/profile/bin"
-PATH="${PATH}:/run/current-system/sw/bin"
-PATH="${PATH}:/nix/var/nix/profiles/default/bin"
-PATH="${PATH}:/usr/local/bin"
-PATH="${PATH}:/usr/bin"
-PATH="${PATH}:/bin"
-PATH="${PATH}:/usr/sbin"
-PATH="${PATH}:/sbin"
+PATH="${HOME}/.local/bin:${PATH}"
+# TODO: it should be possible to not use this, because /etc/zshenv sources a
+# file like /nix/store/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-set-environment, which
+# adds /etc/profiles/per-user/$USER/bin to $PATH.  That doesn't work reliably on
+# nix-darwin right now (there are files missing which are present in
+# "${NIX_USER_PROFILE_DIR}/home-manager/home-path").
+PATH="${NIX_PROFILE}/bin:${PATH}"
 export PATH
 
 test -d "${HOME}/.cache/zsh" || mkdir -p "${HOME}/.cache/zsh"

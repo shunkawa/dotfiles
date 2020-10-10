@@ -3,18 +3,19 @@ args@{ config, lib, pkgs, ... }:
 {
   imports = [
     <home-manager/nix-darwin>
-  ] ++ (import ./nix-darwin-modules/module-list.nix);
+  ] ++ (import ./nix-darwin/modules/module-list.nix);
 
   home-manager.users."${builtins.getEnv "USER"}" = import ./home.nix;
   home-manager.useUserPackages = true;
+  home-manager.useGlobalPkgs = true;
 
   services.nix-daemon.enable = true;
 
   nix.nixPath = [
     "darwin-config=/Users/${(builtins.getEnv "USER")}/.config/nixpkgs/darwin-configuration.nix"
     "darwin=/Users/${(builtins.getEnv "USER")}/.nix-defexpr/darwin"
-    "home-manager=${import ./lib/home-manager.nix}"
-    "nixpkgs=${import ./lib/nixpkgs.nix}"
+    "home-manager=${import ./nix-darwin/lib/home-manager.nix}"
+    "nixpkgs=${import ./nix-darwin/lib/nixpkgs.nix}"
   ];
 
   # Note that this must not contain a trailing forward slash, or you'll get
@@ -72,12 +73,12 @@ args@{ config, lib, pkgs, ... }:
 
   fonts = {
     enableFontDir = true;
-    fonts = with pkgs; [
-      dejavu_fonts
-      noto-fonts
-      noto-fonts-cjk
-      noto-fonts-emoji
-      noto-fonts-extra
+    fonts = [
+      pkgs.dejavu_fonts
+      pkgs.noto-fonts
+      pkgs.noto-fonts-cjk
+      pkgs.local-packages.nixpkgs."nixpkgs-unstable-2020-08-23".pkgs.noto-fonts-emoji # broken in 2020-10-10
+      pkgs.noto-fonts-extra
     ];
   };
 
