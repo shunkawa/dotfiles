@@ -17,12 +17,6 @@ rec {
 
   scss-lint = callPackage ./scss-lint { };
 
-  rsvp-fyi = callPackage ./rsvp.fyi {
-    grunt = nodePackages.grunt-cli;
-    nodejs = nodejs-8_x;
-    scss-lint = scss-lint;
-  };
-
   openjfx = callPackage ./openjfx { };
 
   cryptomator = callPackage ./cryptomator {
