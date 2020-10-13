@@ -150,12 +150,12 @@ in
   GIMP = (installApplication rec {
     name = "GIMP";
     major = "2.10";
-    minor = "8";
+    minor = "14";
     version = "${major}.${minor}";
     sourceRoot = "Gimp-${major}.app";
     src = pkgs.fetchurl {
-      url = "https://download.gimp.org/mirror/pub/gimp/v${major}/osx/gimp-${version}-x86_64-2.dmg";
-      sha256 = "04sggnbadvnd8sag4262varj2ivfvbqb1wyzcadnmb5lsnzjgrcf";
+      url = "https://download.gimp.org/mirror/pub/gimp/v${major}/osx/gimp-${version}-x86_64-1.dmg";
+      sha256 = "0lkyz7pwy8j366cp4cfs3cm23pzdygplnwjc2dn4z0wlz22lsraj";
     };
     description = "GIMP is a cross-platform image editor";
     homepage = https://www.gimp.org;
