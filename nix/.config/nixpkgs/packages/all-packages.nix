@@ -19,10 +19,6 @@ rec {
 
   openjfx = callPackage ./openjfx { };
 
-  cryptomator = callPackage ./cryptomator {
-    javafx = openjfx;
-  };
-
   sfnt2woff = callPackage ./sfnt2woff { };
 
   sfnt2woff-zopfli = callPackage ./sfnt2woff-zopfli { };
