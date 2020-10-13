@@ -1,9 +1,0 @@
-{
-  "emacs": {
-    "url": "git://git.sv.gnu.org/emacs.git",
-    "rev": "5715eb94e90b33ace59dd4c4ccb6e2122bc6db72",
-    "date": "2020-07-22T07:50:47-07:00",
-    "sha256": "1qxil0112sjr338igznzqxlj6860nmsy1ns7jki0kf7yrv3bx1hm",
-    "fetchSubmodules": false
-  }
-}

@@ -3,9 +3,20 @@
 with pkgs;
 
 rec {
-  emacs-git = callPackage ./emacs-git { };
-
-  emacs-with-packages = callPackage ./emacs-with-packages { emacs = emacs-git; };
+  emacs-with-packages = pkgs.emacsWithPackagesFromUsePackage {
+    alwaysEnsure = false;
+    alwaysTangle = true;
+    config = "${builtins.getEnv "HOME"}/.emacs.d/config.org";
+    package = pkgs.emacsGit;
+    # Optionally provide extra packages not in the configuration file.
+    extraEmacsPackages = epkgs: [
+      # Used by use-package
+      epkgs.diminish
+      epkgs.use-package-chords
+      # provides mu4e
+      pkgs.mu
+    ];
+  };
 
   nautilus-python = callPackage ./nautilus-python { };
 
