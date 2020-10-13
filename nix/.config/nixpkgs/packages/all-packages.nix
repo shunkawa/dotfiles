@@ -52,8 +52,6 @@ rec {
 
   pia-nm = callPackage ./pia-nm { };
 
-  nixfmt = haskellPackages.callPackage ./nixfmt { };
-
   javaws-desktop-file = callPackage ./javaws-desktop-file {
     icedtea = pkgs.icedtea8_web;
   };
