@@ -60,8 +60,6 @@ rec {
     });
   };
 
-  browserpass = callPackage ./browserpass { gnupg = pkgs.gnupg22; };
-
   libopenraw = callPackage ./libopenraw { };
 
   pia-nm = callPackage ./pia-nm { };
