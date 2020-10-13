@@ -17,8 +17,6 @@ rec {
 
   scss-lint = callPackage ./scss-lint { };
 
-  openjfx = callPackage ./openjfx { };
-
   sfnt2woff = callPackage ./sfnt2woff { };
 
   sfnt2woff-zopfli = callPackage ./sfnt2woff-zopfli { };
