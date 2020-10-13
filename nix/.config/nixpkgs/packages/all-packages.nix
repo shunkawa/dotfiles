@@ -93,8 +93,6 @@ rec {
       libgnome-keyring = gnome3.libgnome-keyring;
     };
 
-  hnix = callPackage ./hnix { };
-
   open = callPackage ./open { };
 
   pass-show-first-line = callPackage ./pass-show-first-line { };
