@@ -165,8 +165,6 @@ rec {
 
   mu = pkgs.mu;
 
-  omnisharp-roslyn = callPackage ./omnisharp-roslyn { };
-
   docker-convenience-scripts = callPackage ./docker-convenience-scripts { };
 
   pass = pkgs.pass.overrideAttrs (attrs: { doInstallCheck = false; });
