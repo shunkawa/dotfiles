@@ -28,7 +28,8 @@ args@{ config, lib, pkgs, ... }:
 
   nixpkgs = {
     overlays = [
-      (import ./packages/overlay.nix)
+      (import ./overlays/emacs-overlay.nix)
+      (import ./overlays/local-packages.nix)
     ];
     config = {
       allowUnfree = true;
