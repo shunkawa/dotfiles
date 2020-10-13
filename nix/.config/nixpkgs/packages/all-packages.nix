@@ -6,7 +6,14 @@ rec {
   emacs-with-packages = pkgs.emacsWithPackagesFromUsePackage {
     alwaysEnsure = false;
     alwaysTangle = true;
-    config = "${builtins.getEnv "HOME"}/.emacs.d/config.org";
+    config =
+      let
+        # Workaround for "builtins.toPath does not return a path #1074"
+        # https://github.com/NixOS/nix/issues/1074
+        toAbsolutePath = s: /. + s;
+      in
+      # This must be a path, not a string!
+      toAbsolutePath "${builtins.getEnv "HOME"}/.emacs.d/config.org";
     package = pkgs.emacsGit;
     # Optionally provide extra packages not in the configuration file.
     extraEmacsPackages = epkgs: [
