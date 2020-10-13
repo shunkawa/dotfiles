@@ -50,7 +50,7 @@ in
     name = "Chrome";
     # Chromium version numbers consist of 4 parts: MAJOR.MINOR.BUILD.PATCH.
     # https://www.chromium.org/developers/version-numbers
-    version = "84.0.4147.89";
+    version = "86.0.4240.80";
     sourceRoot = "Google Chrome.app";
     src = pkgs.fetchurl {
       # > Google does not offer older Versions of Chrome, in the name of Security.
@@ -61,7 +61,7 @@ in
       # To verify that the version is correct:
       # python -c 'import fileinput; import plistlib; print(plistlib.loads(bytes("".join(fileinput.input()), "utf-8"))["CFBundleShortVersionString"]);' < "$(nix-build '<nixpkgs>' -A local-packages.mac-apps.Chrome --no-out-link)/Applications/Chrome.app/Contents/Info.plist"
       url = "https://dl.google.com/chrome/mac/stable/GGRO/googlechrome.dmg";
-      sha256 = "0iix929hiwiz4jcgf8nnzi1rkm7xg7jmzb1ds28dlccdqa52cq0k";
+      sha256 = "0fwqac7pgjsvi0pdsh1k66krhgv0wrqg317fgaf1s06rdz8fl7d2";
     };
     description = "Google Chrome is a cross-platform web browser developed by Google.";
     homepage = https://www.google.com/chrome/;
@@ -125,7 +125,7 @@ in
     name = "Firefox";
     # Check the release notes for the latest stable release:
     # https://www.mozilla.org/en-US/firefox/releases/
-    version = "78.0.2";
+    version = "81.0.2";
     sourceRoot = "Firefox.app";
     src = pkgs.fetchurl {
       # Note that this filename has a space in it, so you have to provide the
@@ -138,10 +138,10 @@ in
       # > disk, builtins.path { name = ... } can be used to give it an
       # > alternative name.
       #
-      # (export VERSION="78.0.2"; nix-prefetch-url "https://ftp.mozilla.org/pub/firefox/releases/78.0.2/mac/en-US/Firefox%20${VERSION}.dmg" --name "Firefox-${VERSION}.dmg")
+      # (export VERSION="81.0.2"; nix-prefetch-url "https://ftp.mozilla.org/pub/firefox/releases/${VERSION}/mac/en-US/Firefox%20${VERSION}.dmg" --name "Firefox-${VERSION}.dmg")
       name = "Firefox-${version}.dmg";
       url = "https://ftp.mozilla.org/pub/firefox/releases/${version}/mac/en-US/Firefox%20${version}.dmg";
-      sha256 = "1jl1l7wr0pw0z8rifjms6r22gdxyvdjivxwz8ndvknwsds4nn9ya";
+      sha256 = "1khzsnrk13z2lrwqd1vc6jm3qg7vmrgy996ss61ybfb6prjjj55s";
     };
     description = "The Firefox web browser";
     homepage = https://www.mozilla.org/en-US/firefox/;
