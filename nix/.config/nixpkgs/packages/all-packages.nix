@@ -3,8 +3,6 @@
 with pkgs;
 
 rec {
-  inherit (import (callPackage ./hie-nix { })) stack2nix hies hie80 hie82;
-
   emacs-git = callPackage ./emacs-git { };
 
   emacs-with-packages = callPackage ./emacs-with-packages { emacs = emacs-git; };

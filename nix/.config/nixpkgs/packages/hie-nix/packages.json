@@ -1,9 +1,0 @@
-{
-  "hie-nix": {
-    "url": "https://github.com/domenkozar/hie-nix",
-    "rev": "1aebfd3d0d2118f2f509427d469991859e751a49",
-    "date": "2018-03-23T14:28:16+00:00",
-    "sha256": "1ajlvdriv49h2x9hsciiy608frrln8q0iaf8chabqsdk0xg6wqg1",
-    "fetchSubmodules": true
-  }
-}
