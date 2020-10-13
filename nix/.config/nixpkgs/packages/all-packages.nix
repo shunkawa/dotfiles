@@ -66,8 +66,6 @@ rec {
 
   imapnotify = callPackage ./impanotify { };
 
-  purs = callPackage ./purs { };
-
   get-hostname = callPackage ./get-hostname { };
 
   nextcloud-client =
