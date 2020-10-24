@@ -8,7 +8,10 @@ in
     inherit hostName;
     https = true;
     caching = {
-      apcu = false;
+      # Note that this only enables the module, you still need to configure it
+      # in config.php:
+      # https://docs.nextcloud.com/server/20/admin_manual/configuration_server/caching_configuration.html
+      apcu = true;
       redis = true;
       memcached = false;
     };
@@ -63,7 +66,7 @@ in
         echo "waiting for redis..."
         sleep 1
       done
-      chown ${config.users.users.redis.name}:${config.services.nginx.group} /var/run/redis/redis.sock
+      chown ${config.users.users.redis.name}:${config.users.groups.nextcloud.name} /var/run/redis/redis.sock
     '';
     after = [ "redis.service" ];
     requires = [ "redis.service" ];
