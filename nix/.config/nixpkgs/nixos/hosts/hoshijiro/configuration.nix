@@ -457,6 +457,71 @@ rec {
   home-manager.useUserPackages = true;
   home-manager.useGlobalPkgs = true;
 
+  users.users.ssmtp = {
+    createHome = false;
+    isNormalUser = false;
+    isSystemUser = true;
+    extraGroups = [
+      "${config.users.groups.systemd-journal.name}"
+    ];
+  };
+
+  services.ssmtp = {
+    # This file is one line of plain text, with a trailing newline
+    authPassFile = "/etc/secrets/ssmtp/ruben@maher.fyi";
+    authUser = "ruben@maher.fyi";
+    hostName = "smtp.fastmail.com:465";
+    domain = "hoshijiro.maher.fyi";
+    enable = true;
+    setSendmail = true;
+    settings = { Debug = true; };
+    useSTARTTLS = false;
+    useTLS = true;
+  };
+
+  services.restic.backups = {
+    nextcloud = {
+      initialize = true;
+      # This file is one line of plain text, with a trailing newline
+      passwordFile = "/etc/secrets/backups/nextcloud-password-file";
+      # This file looks like
+      # [b2]
+      # type = b2
+      # account = aaaaaaaaaaaaaaaaaaaaaaaaa
+      # key = aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+      # hard_delete = true
+      rcloneConfigFile = "/etc/secrets/backups/rclone-config-file";
+      paths = [ "/var/lib/nextcloud/" ];
+      extraBackupArgs = [
+        "--exclude=/var/lib/nextcloud/data/appdata_*"
+        "--exclude=/var/lib/nextcloud/.rnd"
+      ];
+      pruneOpts = [
+        "--keep-daily 1"
+        "--keep-weekly 7"
+        "--keep-monthly 4"
+        "--keep-yearly 12"
+      ];
+      # backups-4c5d9cfe-e605-4838-8f59-4526198a341e should be the name of a
+      # bucket that already exists.
+      repository = "rclone:b2:backups-4c5d9cfe-e605-4838-8f59-4526198a341e/nextcloud";
+      timerConfig = {
+        OnCalendar = "00:05";
+        RandomizedDelaySec = "5h";
+      };
+    };
+  };
+
+  services.local.systemd-status-mail = {
+    enable = true;
+    services = [
+      "restic-backups-nextcloud.service"
+      "acme-cloud.maher.fyi.service"
+    ];
+    fqdn = "hoshijiro.maher.fyi";
+    recipient = "ruben@maher.fyi";
+  };
+
   documentation = {
     nixos = {
       enable = false;
