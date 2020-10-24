@@ -2,7 +2,7 @@
 
 set -eu
 
-sudo nixos-rebuild switch \
+sudo --preserve-env nixos-rebuild switch \
   -I "nixos-config=${HOME}/.config/nixpkgs/nixos/hosts/hoshijiro/configuration.nix" \
   -I "home-manager=$(nix-instantiate --eval --expr "import $(readlinkf "${HOME}/.config/nixpkgs")/nixos/hosts/hoshijiro/lib/home-manager.nix" | tr -d \")" \
   -I "nixpkgs=$(nix-instantiate --eval --expr "import $(readlinkf "${HOME}/.config/nixpkgs")/nixos/hosts/hoshijiro/lib/nixpkgs.nix" | tr -d \")" \
