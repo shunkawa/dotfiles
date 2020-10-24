@@ -388,7 +388,8 @@ rec {
       allowUnfree = true;
     };
     overlays = [
-      (import ../../../packages/overlay.nix)
+      (import ../../../overlays/emacs-overlay.nix)
+      (import ../../../overlays/local-packages.nix)
     ];
   };
 
