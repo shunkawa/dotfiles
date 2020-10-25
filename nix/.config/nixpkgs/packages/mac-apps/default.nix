@@ -50,18 +50,18 @@ in
     name = "Chrome";
     # Chromium version numbers consist of 4 parts: MAJOR.MINOR.BUILD.PATCH.
     # https://www.chromium.org/developers/version-numbers
-    version = "86.0.4240.80";
+    version = "86.0.4240.111";
     sourceRoot = "Google Chrome.app";
     src = pkgs.fetchurl {
       # > Google does not offer older Versions of Chrome, in the name of Security.
       # https://superuser.com/questions/1381356/how-can-i-download-an-old-version-of-google-chrome
       #
-      # nix-prefetch-url https://dl.google.com/chrome/mac/stable/GGRO/googlechrome.Mg
+      # nix-prefetch-url https://dl.google.com/chrome/mac/stable/GGRO/googlechrome.dmg
       #
       # To verify that the version is correct:
       # python -c 'import fileinput; import plistlib; print(plistlib.loads(bytes("".join(fileinput.input()), "utf-8"))["CFBundleShortVersionString"]);' < "$(nix-build '<nixpkgs>' -A local-packages.mac-apps.Chrome --no-out-link)/Applications/Chrome.app/Contents/Info.plist"
       url = "https://dl.google.com/chrome/mac/stable/GGRO/googlechrome.dmg";
-      sha256 = "0fwqac7pgjsvi0pdsh1k66krhgv0wrqg317fgaf1s06rdz8fl7d2";
+      sha256 = "071xfqp0lzsf7a4mjxxk1cqgn0l37n0hvinpsjx7mbhqd729c9g2";
     };
     description = "Google Chrome is a cross-platform web browser developed by Google.";
     homepage = https://www.google.com/chrome/;
