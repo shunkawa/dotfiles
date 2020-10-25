@@ -5,7 +5,7 @@ in
 {
   services.nextcloud = {
     enable = true;
-    inherit hostName;
+    hostName = "cloud.maher.fyi";
     https = true;
     caching = {
       # Note that this only enables the module, you still need to configure it
@@ -84,7 +84,7 @@ in
   services.nginx = {
     enable = true;
     virtualHosts = {
-      "${hostName}" = {
+      "cloud.maher.fyi" = {
         forceSSL = true;
         enableACME = true;
       };

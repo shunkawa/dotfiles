@@ -1,18 +1,14 @@
 { config, lib, pkgs, ... }:
 let
-  sshKeys = import ./config/ssh-keys.nix;
-
-  secrets = import ./secrets.nix;
-
+  sshKeys = {
+    rkm = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDpGxQqrPj/uDrY1EZ+QpR0fRKg1mybkTT+vxpnqth2Bg+GjuCS/cqHuLoUlvN6QV/bRf194hxzsFIW2QUEs5KWfMcZnFpXX+y+mLhGhzun+OocorHn5jPMTlUNy8ruGunto+O8whaHaDcbX8FokH/MU1H3i5busH/fq/vOE7mVKNaJNcRC6U8al8NldkTHhaIEyViDAMbE5EQiuhzznUwdnRGj3ntk68l2WxVnUAwvLUs2nH5wYX+5N35IycRMT4bkY5i9CHpB4dpO7Tve7Y3JfmacA4jb2BQVpRI346s8H4kTV1+1gszV/3xtoVgekBCgxxRnNObmO9MA1xmIcTZH cardno:000603822873";
+  };
 in
 rec {
   imports = [
     <home-manager/nixos>
     ./config/default-virtualhost.nix
     ./config/nextcloud.nix
-    ./config/gnome.nix
-    ./config/steam.nix
-    ./config/fonts.nix
   ] ++ (import ./../../modules/module-list.nix);
 
   fileSystems = {
@@ -77,13 +73,8 @@ rec {
       options = [ "bind" ];
     };
 
-    "/export/home" = {
-      device = "/home";
-      options = [ "bind" ];
-    };
-
-    "/export/transmission" = {
-      device = "/mnt/persistent/var/lib/transmission";
+    "/export/media" = {
+      device = "/mnt/persistent/media";
       options = [ "bind" ];
     };
   };
@@ -212,13 +203,6 @@ rec {
   };
 
   services = {
-    local = {
-      pia-nm = {
-        enable = false;
-        inherit (secrets.services.local.pia-nm) username password;
-      };
-    };
-
     openssh = {
       enable = true;
       hostKeys = [
@@ -251,6 +235,10 @@ rec {
 
     smartd = {
       enable = true;
+      notifications.test = true;
+      notifications.mail.enable = true;
+      notifications.mail.sender = "root@hoshijiro.maher.fyi";
+      notifications.mail.recipient = "ruben@maher.fyi";
     };
 
     openntpd = {
@@ -266,12 +254,10 @@ rec {
     # Resources:
     # http://rlworkman.net/howtos/NFS_Firewall_HOWTO
     #
-    # Can mount in macOS like so:
-    # sudo mount -o rw,bg,hard,resvport,intr,noac,nfc,tcp 192.168.56.10:/home/eqyiel/shared /Volumesghost/shared
-    # You can also mount it in the Finder:  (command + k) nfs:/ghost:/home/eqyiel/shared
+    # Can mount in from macOS using Finder: (command + k) nfs://192.168.1.215/export/media
     nfs = {
       server = {
-        enable = false;
+        enable = true;
         mountdPort = 32767;
         lockdPort = 32768;
         exports = ''
@@ -284,15 +270,8 @@ rec {
           #
           # See: http://serverfault.com/a/241272
           #
-          # macOS NEEDS the 'insecure' flag.  The the Darwin default is to assume
-          # the nfs'ing will take place on an "insecure" port, i.e. > 1024, while
-          # we're serving on 111.
-          #
-          # In the future, look into using users.groups.users.gid here (instead of
-          # "100").  Right now it's being held back by
-          # https://github.com/NixOS/nixpkgs/issues/17237 - until then, make sure
-          # that anongid is the the same as users.groups.users.gid!
-          /export 192.168.1.0/24(rw,async,no_subtree_check,no_root_squash,insecure)
+          # macOS NEEDS "insecure" to be able to mount from Finder: https://apple.stackexchange.com/questions/142697/why-does-mounting-an-nfs-share-from-linux-require-the-use-of-a-privileged-port
+          /export/media 192.168.1.0/24(rw,async,insecure,no_subtree_check,all_squash,anonuid=${builtins.toString config.users.users.nobody.uid},anongid=${builtins.toString config.users.groups.nogroup.gid})
         '';
       };
     };
@@ -352,10 +331,9 @@ rec {
 
   environment = {
     systemPackages = with pkgs; [
-      chromium
-      firefox
       lm_sensors
       pciutils
+      smartmontools
       zfs
       zfstools
     ];
@@ -423,7 +401,11 @@ rec {
         openssh.authorizedKeys.keys = [
           sshKeys.rkm
         ];
-        inherit (secrets.users.users.root) initialPassword;
+        # The file should contain exactly one line, which should be the password
+        # in an encrypted form that is suitable for the chpasswd -e command.
+        # Create one like:
+        # nix-shell -p mkpasswd --command 'mkpasswd -m sha-512'
+        passwordFile = "/etc/static/secrets/users/root/password-file";
       };
 
       eqyiel = {
@@ -440,16 +422,11 @@ rec {
         openssh.authorizedKeys.keys = [
           sshKeys.rkm
         ];
-        inherit (secrets.users.users.eqyiel) initialPassword;
-      };
-
-      versapunk = {
-        home = "/home/${config.users.users.versapunk.name}";
-        createHome = true;
-        isNormalUser = false;
-        isSystemUser = false;
-        shell = pkgs.zsh;
-        inherit (secrets.users.users.versapunk) initialPassword;
+        # The file should contain exactly one line, which should be the password
+        # in an encrypted form that is suitable for the chpasswd -e command.
+        # Create one like:
+        # nix-shell -p mkpasswd --command 'mkpasswd -m sha-512'
+        passwordFile = "/etc/static/secrets/users/eqyiel/password-file";
       };
     };
   };
