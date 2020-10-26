@@ -48,6 +48,12 @@ rec {
       neededForBoot = true;
     };
 
+    "/mnt/persistent/media" = {
+      device = "tank/persistent/media";
+      fsType = "zfs";
+      neededForBoot = true;
+    };
+
     "/home" = {
       device = "/mnt/persistent/home";
       options = [ "bind" ];
