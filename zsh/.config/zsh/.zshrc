@@ -20,6 +20,52 @@ if (command -v pgrep gpg-agent >/dev/null 2>&1); then
   fi
 fi
 
+# Overwrite persistent SSH_AUTH_SOCK probably set by
+# /System/Library/LaunchAgents/com.openssh.ssh-agent.plist, which cannot be
+# disabled while "System Integrity Protection" is enabled:
+#
+# ~
+# ❯ launchctl unload -w /System/Library/LaunchAgents/com.openssh.ssh-agent.plist
+# /System/Library/LaunchAgents/com.openssh.ssh-agent.plist: Operation not
+# permitted while System Integrity Protection is engaged
+#
+# This is to prevent new terminal windows from using that value rather than the
+# one set by GPG agent.  It can't be done unconditionally because that would
+# breaks SSH agent forwarding, where "${HOME}/.gnupg/S.gpg-agent.ssh" is not the
+# thing you want.
+#
+# ~
+# ❯ echo $SSH_AUTH_SOCK
+# /Users/eqyiel/.gnupg/S.gpg-agent.ssh
+#
+# ~
+# ❯ ssh hoshijiro.maher.fyi
+# Last login: Mon Oct 26 21:56:20 2020 from 192.168.1.118
+# gpg-agent: a gpg-agent is already running - not starting a new one
+#
+# eqyiel@hoshijiro ~
+# ❯ echo $SSH_AUTH_SOCK
+# /tmp/ssh-dOarNjnCnK/agent.23737
+case "${SSH_AUTH_SOCK}" in (*"/private/tmp/com.apple.launchd"*)
+  export SSH_AUTH_SOCK="${HOME}/.gnupg/S.gpg-agent.ssh"
+esac
+
+if (command -v gpg-connect-agent >/dev/null 2>&1); then
+  # SSH has no way to tell the gpg-agent what terminal or X display it is
+  # running on. So when remotely logging into a box where a gpg-agent with SSH
+  # support is running, the pinentry will get popped up on whatever display the
+  # gpg-agent has been started. To solve this problem you may issue the command
+  #
+  # > echo UPDATESTARTUPTTY | gpg-connect-agent
+  #
+  # and the next pinentry will pop up on your display or screen. However, you
+  # need to kill the running pinentry first because only one pinentry may be
+  # running at once. If you plan to use ssh on a new display you should issue
+  # the above command before invoking ssh or any other service making use of
+  # ssh.
+  gpg-connect-agent updatestartuptty /bye > /dev/null
+fi
+
 if test -f "${NIX_PROFILE}/share/zsh/site-functions/prompt_pure_setup"; then
   # clear out residual grml prompt stuff
   zstyle ':prompt:grml:left:setup' items
