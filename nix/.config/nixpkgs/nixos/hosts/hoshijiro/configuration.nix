@@ -353,6 +353,13 @@ rec {
         source = "/mnt/persistent/etc/secrets";
       };
     };
+
+    pathsToLink = [
+      # Almost everything is installed in the user profile, but this is required
+      # so that home manager can link everything under
+      # /etc/profiles/per-user/$USER.
+      "/"
+    ];
   };
 
   programs = {
